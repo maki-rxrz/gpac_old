@@ -180,6 +180,7 @@ static void set_chapter_track(GF_ISOFile *file, u32 track, u32 chapter_ref_trak)
 GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double force_fps, u32 frames_per_sample)
 {
 	u32 track_id, i, timescale, track, stype, profile, compat, level, new_timescale, rescale, svc_mode, tile_mode;
+	s32 fullrange, vidformat, colorprim, transfer, colmatrix;
 	s32 par_d, par_n, prog_id, delay;
 	s32 tw, th, tx, ty, txtw, txth, txtx, txty;
 	Bool do_audio, do_video, do_all, disable, track_layout, text_layout, chap_ref, is_chap, is_chap_file, keep_handler, negative_cts_offset;
@@ -220,6 +221,7 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 	profile = compat = level = 0;
 	negative_cts_offset = 0;
 	tile_mode = 0;
+	fullrange = vidformat = colorprim = transfer = colmatrix = -1;
 
 	tw = th = tx = ty = txtw = txth = txtx = txty = 0;
 	par_d = par_n = -2;
@@ -348,6 +350,54 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 		else if (!strnicmp(ext+1, "chapfile=", 9)) {
 			chapter_name = gf_strdup(ext+10);
 			is_chap_file=1;
+		}
+		else if (!strnicmp(ext+1, "fullrange=", 10)) {
+			if (!stricmp(ext+11, "off")) fullrange = 0;
+			else if (!stricmp(ext+11, "on")) fullrange = 1;
+		}
+		else if (!strnicmp(ext+1, "vidformat=", 10)) {
+			int i;
+			const char * const avc_vidformat_names[] = { "component", "pal", "ntsc", "secam", "mac", "undef", NULL };
+			for( i=0; avc_vidformat_names[i]; i++ )
+			{
+				if(!strcmp(ext+11, avc_vidformat_names[i])) {
+					vidformat = i;
+					break;
+				}
+			}
+		}
+		else if (!strnicmp(ext+1, "colorprim=", 10)) {
+			int i;
+			const char * const avc_colorprim_names[] = { "", "bt709", "undef", "", "bt470m", "bt470bg", "smpte170m", "smpte240m", "film", NULL };
+			for( i=0; avc_colorprim_names[i]; i++ )
+			{
+				if(!strcmp(ext+11, avc_colorprim_names[i])) {
+					colorprim = i;
+					break;
+				}
+			}
+		}
+		else if (!strnicmp(ext+1, "transfer=", 9)) {
+			int i;
+			const char * const avc_transfer_names[]  = { "", "bt709", "undef", "", "bt470m", "bt470bg", "smpte170m", "smpte240m", "linear", "log100", "log316", NULL };
+			for( i=0; avc_transfer_names[i]; i++ )
+			{
+				if(!strcmp(ext+10, avc_transfer_names[i])) {
+					transfer = i;
+					break;
+				}
+			}
+		}
+		else if (!strnicmp(ext+1, "colmatrix=", 10)) {
+			int i;
+			const char * const avc_colmatrix_names[] = { "GBR", "bt709", "undef", "", "fcc", "bt470bg", "smpte170m", "smpte240m", "YCgCo", NULL };
+			for( i=0; avc_colmatrix_names[i]; i++ )
+			{
+				if(!strcmp(ext+11, avc_colmatrix_names[i])) {
+					colmatrix = i;
+					break;
+				}
+			}
 		}
 		/*force all composition offsets to be positive*/
 		else if (!strnicmp(ext+1, "negctts", 7)) negative_cts_offset = 1;
@@ -525,6 +575,9 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 			if (profile || compat || level)
 				gf_media_change_pl(import.dest, i+1, profile, compat, level);
 
+			if (fullrange>=0 || vidformat>=0 || colorprim>=0 || transfer>=0 || colmatrix>=0)
+				e = gf_media_change_colorprop(import.dest, i+1, fullrange, vidformat, colorprim, transfer, colmatrix);
+
 			if (gf_isom_get_media_subtype(import.dest, i+1, 1)== GF_4CC( 'm', 'p', '4', 's' ))
 				keep_sys_tracks = 1;
 
@@ -619,6 +672,10 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 
 			if (profile || compat || level)
 				gf_media_change_pl(import.dest, track, profile, compat, level);
+
+			if ((import.tk_info[i].type==GF_ISOM_MEDIA_VISUAL)
+				&& (fullrange>=0 || vidformat>=0 || colorprim>=0 || transfer>=0 || colmatrix>=0))
+				e = gf_media_change_colorprop(import.dest, track, fullrange, vidformat, colorprim, transfer, colmatrix);
 
 			if (gf_isom_get_mpeg4_subtype(import.dest, track, 1))
 				keep_sys_tracks = 1;
