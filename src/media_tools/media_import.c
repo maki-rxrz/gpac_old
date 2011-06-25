@@ -1064,7 +1064,12 @@ static GF_Err gf_import_cmp(GF_MediaImporter *import, Bool mpeg12)
 		}
 		samp->DTS += dts_inc;
 		nb_samp++;
-		gf_set_progress("Importing M4V", done_size/1024, tot_size/1024);
+		if (mpeg12) {
+			gf_set_progress("Importing M2V", done_size/1024, tot_size/1024);
+		}
+		else {
+			gf_set_progress("Importing M4V", done_size/1024, tot_size/1024);
+		}
 		done_size += samp->dataLength;
 		if (e) break;
 		if (duration && (samp->DTS > duration)) break;
@@ -1075,7 +1080,12 @@ static GF_Err gf_import_cmp(GF_MediaImporter *import, Bool mpeg12)
 	if (ref_frame && has_cts_offset)
 		gf_isom_modify_cts_offset(import->dest, track, ref_frame, (1+b_frames)*dts_inc);
 
-	gf_set_progress("Importing M4V", nb_samp, nb_samp);
+	if (mpeg12) {
+		gf_set_progress("Importing M2V", nb_samp, nb_samp);
+	}
+	else {
+		gf_set_progress("Importing M4V", nb_samp, nb_samp);
+	}
 	if (has_cts_offset) {
 		gf_import_message(import, GF_OK, "Has B-Frames (%d max consecutive B-VOPs)", max_b);
 		gf_isom_set_cts_packing(import->dest, track, 0);
@@ -1204,6 +1214,7 @@ static GF_Err gf_import_avi_video(GF_MediaImporter *import)
 		|| !stricmp(comp, "RMP4") /*Sigma - not tested*/
 		|| !stricmp(comp, "MP43") /*not tested*/
 		|| !stricmp(comp, "FMP4") /*not tested*/
+		|| !stricmp(comp, "VP6F")
 		) {
 		e = GF_OK;
 	}
@@ -6676,6 +6687,12 @@ void on_m2ts_import_data(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 					import->nb_tracks++;
 					tsimp->nb_video++;
 					break;
+				case GF_M2TS_VIDEO_VC1:
+					import->tk_info[idx].media_type = GF_4CC('V','C','-','1');
+					import->tk_info[idx].type = GF_ISOM_MEDIA_VISUAL;
+					import->tk_info[idx].lang = pes->lang;
+					import->nb_tracks++;
+					break;
 				case GF_M2TS_AUDIO_MPEG1:
 					import->tk_info[idx].media_type = GF_4CC('M','P','G','1');
 					import->tk_info[idx].type = GF_ISOM_MEDIA_AUDIO;
@@ -6814,6 +6831,10 @@ void on_m2ts_import_data(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 				stype = GF_STREAM_VISUAL;
 				oti = GPAC_OTI_VIDEO_SVC;
 				tsimp->avccfg = gf_odf_avc_cfg_new();
+				break;
+			case GF_M2TS_VIDEO_VC1:
+				mtype = GF_ISOM_MEDIA_VISUAL;
+				stype = GF_STREAM_VISUAL; oti = 0xA3;
 				break;
 			case GF_M2TS_AUDIO_MPEG1:
 				mtype = GF_ISOM_MEDIA_AUDIO;
@@ -7122,6 +7143,7 @@ void on_m2ts_import_data(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 				case GF_M2TS_VIDEO_H264: gf_import_message(import, GF_OK, "MPEG-4 AVC/H264 Video import (TS PID %d)", pck->stream->pid); break;
 				case GF_M2TS_VIDEO_HEVC: gf_import_message(import, GF_OK, "MPEG-H HEVC Video import (TS PID %d)", pck->stream->pid); break;
 				case GF_M2TS_VIDEO_SVC: gf_import_message(import, GF_OK, "H264-SVC Video import (TS PID %d)", pck->stream->pid); break;
+				case GF_M2TS_VIDEO_VC1: gf_import_message(import, GF_OK, "SMPTE VC-1 Video import (TS PID %d)", pck->stream->pid); break;
 				case GF_M2TS_AUDIO_MPEG1: gf_import_message(import, GF_OK, "MPEG-1 Audio import - SampleRate %d Channels %d Language %s (TS PID %d)", pck->stream->aud_sr, pck->stream->aud_nb_ch, gf_4cc_to_str(pck->stream->lang), pck->stream->pid); break;
 				case GF_M2TS_AUDIO_MPEG2: gf_import_message(import, GF_OK, "MPEG-2 Audio import - SampleRate %d Channels %d Language %s (TS PID %d)", pck->stream->aud_sr, pck->stream->aud_nb_ch, gf_4cc_to_str(pck->stream->lang), pck->stream->pid); break;
 				case GF_M2TS_AUDIO_AAC: gf_import_message(import, GF_OK, "MPEG-4 AAC Audio import - SampleRate %d Channels %d Language %s (TS PID %d)", pck->stream->aud_sr, pck->stream->aud_nb_ch, gf_4cc_to_str(pck->stream->lang), pck->stream->pid); break;
@@ -7822,6 +7844,7 @@ GF_Err gf_import_ac3(GF_MediaImporter *import)
 		done += samp->dataLength;
 		if (duration && (samp->DTS > duration)) break;
 		if (import->flags & GF_IMPORT_DO_ABORT) break;
+		if (done > tot_size) break;
 	}
 	MP4T_RecomputeBitRate(import->dest, track);
 	gf_set_progress("Importing AC3", tot_size, tot_size);
