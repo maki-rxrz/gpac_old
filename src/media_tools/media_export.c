@@ -313,6 +313,14 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 				strcpy(szEXT, ".theo");
 				gf_export_message(dumper, GF_OK, "Dumping Theora video sample%s", szNum);
 				break;
+			case GPAC_OTI_VIDEO_SMPTE_VC1:
+				strcpy(szEXT, ".vc1");
+				gf_export_message(dumper, GF_OK, "Dumping VC-1 video sample%s", szNum);
+				break;
+			case GPAC_OTI_VIDEO_DIRAC:
+				strcpy(szEXT, ".drc");
+				gf_export_message(dumper, GF_OK, "Dumping Dirac video sample%s", szNum);
+				break;
 			default:
 				strcpy(szEXT, ".raw");
 				gf_export_message(dumper, GF_OK, "Dumping Unknown video sample%s (OTI %d)", szNum, dcfg->objectTypeIndication);
@@ -334,8 +342,22 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 				gf_export_message(dumper, GF_OK, "Dumping MPEG-1/2 Audio (MP3) sample%s", szNum);
 				break;
 			case GPAC_OTI_MEDIA_OGG:
-				strcpy(szEXT, ".vorb");
+				strcpy(szEXT, ".ogg");
 				gf_export_message(dumper, GF_OK, "Dumping Vorbis audio sample%s", szNum);
+				break;
+			case GPAC_OTI_AUDIO_AC3:
+				strcpy(szEXT, ".ac3");
+				gf_export_message(dumper, GF_OK, "Dumping AC-3 audio sample%s", szNum);
+				break;
+			case GPAC_OTI_AUDIO_AC3_ENHANCED:
+				strcpy(szEXT, ".eac3");
+				gf_export_message(dumper, GF_OK, "Dumping E-AC-3 audio sample%s", szNum);
+				break;
+			case GPAC_OTI_AUDIO_DTS_CA:
+			case GPAC_OTI_AUDIO_DTS_HD_HR:
+			case GPAC_OTI_AUDIO_DTS_HD_MASTER:
+				strcpy(szEXT, ".dts");
+				gf_export_message(dumper, GF_OK, "Dumping %s audio sample%s", (dcfg->objectTypeIndication==0xA9) ? "DTS" : (dcfg->objectTypeIndication==0xAA) ? "DTS-HD High Resolution" : "DTS-HD Master", szNum);
 				break;
 			default:
 				strcpy(szEXT, ".raw");
@@ -378,7 +400,7 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 	} else if (m_stype==GF_ISOM_SUBTYPE_3GP_DIMS) {
 		gf_export_message(dumper, GF_OK, "Extracting DIMS sample%s", szNum);
 		strcpy(szEXT, ".dims");
-	} else if (m_stype==GF_ISOM_SUBTYPE_AC3) {
+	} else if ((m_stype==GF_ISOM_SUBTYPE_AC3) || (m_stype==GF_ISOM_SUBTYPE_SAC3)) {
 		gf_export_message(dumper, GF_OK, "Extracting AC3 sample%s", szNum);
 		strcpy(szEXT, ".ac3");
 	} else if (m_stype==GF_4CC('x','d','v','b') ) {
@@ -762,6 +784,14 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 				gf_export_message(dumper, GF_OK, "Extracting Ogg video");
 				is_ogg = 1;
 				break;
+			case GPAC_OTI_VIDEO_SMPTE_VC1:
+				strcpy(szEXT, ".vc1");
+				gf_export_message(dumper, GF_OK, "Extracting SMPTE VC-1 stream to vc1");
+				break;
+			case GPAC_OTI_VIDEO_DIRAC:
+				strcpy(szEXT, ".drc");
+				gf_export_message(dumper, GF_OK, "Extracting Dirac stream to drc");
+				break;
 			default:
 				gf_odf_desc_del((GF_Descriptor *) dcfg);
 				return gf_export_message(dumper, GF_NOT_SUPPORTED, "Unknown media in track ID %d - use NHNT instead", dumper->trackID);
@@ -779,7 +809,7 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 					strcat(szName, ".aac");
 				is_aac = 1;
 				aac_type = dcfg->objectTypeIndication - GPAC_OTI_AUDIO_AAC_MPEG2_MP;
-				gf_export_message(dumper, GF_OK, "Extracting MPEG-2 AAC");
+				gf_export_message(dumper, GF_OK, "Extracting MPEG-2 AAC stream to aac");
 				break;
 			case GPAC_OTI_AUDIO_AAC_MPEG4:
 				if (!dcfg->decoderSpecificInfo) {
@@ -793,25 +823,25 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 				is_aac = 2;
 				if (add_ext)
 					strcat(szName, ".aac");
-				gf_export_message(dumper, GF_OK, "Extracting MPEG-4 AAC");
+				gf_export_message(dumper, GF_OK, "Extracting MPEG-4 AAC stream to aac");
 				break;
 			case GPAC_OTI_AUDIO_MPEG2_PART3:
 			case GPAC_OTI_AUDIO_MPEG1:
 				if (add_ext)
 					strcat(szName, ".mp3");
-				gf_export_message(dumper, GF_OK, "Extracting MPEG-1/2 Audio (MP3)");
+				gf_export_message(dumper, GF_OK, "Extracting MPEG-1/2 Audio stream to mp3");
 				break;
 			case GPAC_OTI_MEDIA_OGG:
 				if (add_ext)
 					strcat(szName, ".ogg");
 				is_ogg = 1;
-				gf_export_message(dumper, GF_OK, "Extracting Ogg audio");
+				gf_export_message(dumper, GF_OK, "Extracting Ogg Audio stream to ogg");
 				break;
 			case GPAC_OTI_AUDIO_13K_VOICE:
 				if (add_ext)
 					strcat(szName, ".qcp"); qcp_type = 1;
 				memcpy(GUID, QCP_QCELP_GUID_1, sizeof(char)*16);
-				gf_export_message(dumper, GF_OK, "Extracting QCELP-13K (QCP file)");
+				gf_export_message(dumper, GF_OK, "Extracting QCELP-13K to qcp");
 				break;
 			case GPAC_OTI_AUDIO_EVRC_VOICE:
 				memcpy(GUID, QCP_EVRC_GUID, sizeof(char)*16);
@@ -823,7 +853,21 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 				memcpy(GUID, QCP_SMV_GUID, sizeof(char)*16);
 				if (dumper->flags & GF_EXPORT_PROBE_ONLY) dumper->flags |= GF_EXPORT_USE_QCP;
 				break;
-			case 0xD1:
+			case GPAC_OTI_AUDIO_AC3:
+				strcpy(szEXT, ".ac3");
+				gf_export_message(dumper, GF_OK, "Extracting AC-3 stream to ac3");
+				break;
+			case GPAC_OTI_AUDIO_AC3_ENHANCED:
+				strcpy(szEXT, ".eac3");
+				gf_export_message(dumper, GF_OK, "Extracting E-AC-3 stream to eac3");
+				break;
+			case GPAC_OTI_AUDIO_DTS_CA:
+			case GPAC_OTI_AUDIO_DTS_HD_HR:
+			case GPAC_OTI_AUDIO_DTS_HD_MASTER:
+				strcpy(szEXT, ".dts");
+				gf_export_message(dumper, GF_OK, "Extracting %s stream to dts", (dcfg->objectTypeIndication==GPAC_OTI_AUDIO_DTS_CA) ? "DTS" : (dcfg->objectTypeIndication==GPAC_OTI_AUDIO_DTS_HD_HR) ? "DTS-HD High Resolution" : "DTS-HD Master");
+				break;
+			case GPAC_OTI_SCENE_SVG_GZ:
 				if (dcfg->decoderSpecificInfo && (dcfg->decoderSpecificInfo->dataLength==8)
 					&& !strnicmp(dcfg->decoderSpecificInfo->data, "pvmm", 4)) {
 					qcp_type = 3;
@@ -913,7 +957,7 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 			gf_export_message(dumper, GF_OK, "Extracting Macromedia Flash Movie");
 			if (add_ext)
 				strcat(szName, ".swf");
-		} else if (m_stype==GF_ISOM_SUBTYPE_AC3) {
+		} else if ((m_stype==GF_ISOM_SUBTYPE_AC3) || (m_stype==GF_ISOM_SUBTYPE_SAC3)) {
 			gf_export_message(dumper, GF_OK, "Extracting AC3 Audio");
 			if (add_ext)
 				strcat(szName, ".ac3");
@@ -1384,7 +1428,8 @@ static GF_Err gf_media_export_avi_track(GF_MediaExporter *dumper)
 	case IBM_FORMAT_MULAW: comp = "ibm_mulaw"; break;
 	case IBM_FORMAT_ALAW: comp = "ibm_alaw"; break;
 	case IBM_FORMAT_ADPCM: comp = "ibm_adpcm"; break;
-	case 0x55: comp = "mp3"; break;
+	case WAVE_FORMAT_MP3: comp = "mp3"; break;
+	case WAVE_FORMAT_AC3: comp = "ac3"; break;
 	default: comp = "raw"; break;
 	}
 	sprintf(szOutFile, "%s.%s", dumper->out_name, comp);
@@ -2333,6 +2378,10 @@ GF_Err gf_media_export_ts_native(GF_MediaExporter *dumper)
 	case GF_M2TS_VIDEO_SVC:
 		strcat(szFile, ".264");
 		gf_export_message(dumper, GF_OK, "Extracting H264-SVC Visual stream to h264");
+		break;
+	case GF_M2TS_VIDEO_VC1:
+		strcat(szFile, ".vc1");
+		gf_export_message(dumper, GF_OK, "Extracting SMPTE VC-1 Visual stream to vc1");
 		break;
 	default:
 		strcat(szFile, ".raw");
