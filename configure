@@ -176,6 +176,8 @@ freebsd="no"
 darwin="no"
 sunos="no"
 alt_macosx_dir=""
+disable_fink="no"
+disable_macports="no"
 Mac_Applications=""
 extralibs="-lm"
 bigendian="no"
@@ -224,6 +226,8 @@ GPAC configuration options:
   --dxsdk-path=DX_PATH     specify DirectX SDK for MinGW [$dxsdk_path]
   --xulsdk-path=XUL_PATH   specify Mozilla XUL (Gecko) SDK include path [$xulsdk_path]
   --mozdir=MOZ_PATH        specify mozilla main directory path for system install
+  --disable-fink           disable libraries installed by Fink (Mac OS X only)
+  --disable-macports       disable libraries installed by MacPorts (Mac OS X only)
 
   --enable-debug           produce debug version
   --enable-gprof           enable profiling
@@ -367,6 +371,10 @@ for opt do
         --xulsdk-path=*) xulsdk_path=`echo $opt | cut -d '=' -f 2`
             ;;
         --mozdir=*) moz_path=`echo $opt | cut -d '=' -f 2`
+            ;;
+        --disable-fink) disable_fink="yes"
+            ;;
+        --disable-macports) disable_macports="yes"
             ;;
         --enable-debug) debuginfo="yes"; no_gcc_opt="yes"
             ;;
@@ -540,11 +548,11 @@ EOF
     darwin)
         js_flags=-DXP_MAC
         xul_flags=-DXP_MAC
-        if test -d /sw/bin ; then
+        if test -d /sw/bin -a "$disable_fink" = "no" ; then
             alt_macosx_dir="/sw"
             CFLAGS_DIR="-I/sw/include"
             LDFLAGS="-L/sw/lib $LDFLAGS"
-        elif test -d /opt/local/bin ; then
+        elif test -d /opt/local/bin -a "$disable_macports" = "no" ; then
             alt_macosx_dir="/opt/local"
             CFLAGS_DIR="-I/opt/local/include"
             LDFLAGS="-L/opt/local/lib $LDFLAGS"
