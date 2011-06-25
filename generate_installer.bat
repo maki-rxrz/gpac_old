@@ -1,4 +1,4 @@
-@echo off 
+@echo off
 set OLDDIR=%CD%
 cd /d %~dp0
 REM ============================================
@@ -37,18 +37,16 @@ REM ============================================
 if not exist include/gpac/revision.h echo   version couldn't be found - check include/gpac/revision.h exists
 if not exist include/gpac/revision.h goto Abort
 
-REM execute svnversion and check if the result if found within revision.h
-for /f "delims=" %%i in ('svnversion.exe') do Set VarRevisionSVN=%%i
-REM 'M', 'S', 'P', ':' are special 'svnversion' results
-for /f "delims=" %%i in ('echo %VarRevisionSVN% ^| findstr /i /r M^"') do goto RevisionAbort
-for /f "delims=" %%i in ('echo %VarRevisionSVN% ^| findstr /i /r S^"') do goto RevisionAbort
-for /f "delims=" %%i in ('echo %VarRevisionSVN% ^| findstr /i /r P^"') do goto RevisionAbort
-for /f "delims=" %%i in ('echo %VarRevisionSVN% ^| findstr /i /r :^"') do goto RevisionAbort
-for /f "delims=" %%i in ('type include\gpac\revision.h ^| findstr /i /r "%VarRevisionSVN%"') do Set VarRevisionBuild=%%i
+REM execute `git rev-list HEAD -1 --abbrev-commit` and check if the result if found within revision.h
+for /f "delims=" %%i in ('git rev-list HEAD -1 --abbrev-commit') do Set VarRevisionGIT=%%i
+for /f "tokens=3" %%a in ('findstr GPAC_SVN_REVISION "include\gpac\revision.h"') do set VarRevisionSVN=%%a
+for /f "tokens=3" %%a in ('findstr GPAC_GIT_REV_HASH "include\gpac\revision.h"') do set VarRevisionBuild=%%a
+set VarRevisionSVN=%VarRevisionSVN:"=%
+set VarRevisionBuild=%VarRevisionBuild:"=%
 echo VarRevisionBuild = %VarRevisionBuild%
-echo VarRevisionSVN   = %VarRevisionSVN%
-if !"%VarRevisionBuild%"==!"%VarRevisionSVN%" echo   local revision and last build revision are not congruent - please consider rebuilding before generating an installer
-if !"%VarRevisionBuild%"==!"%VarRevisionSVN%" goto Abort
+echo VarRevisionGIT   = %VarRevisionGIT%
+if !"%VarRevisionBuild%"==!"%VarRevisionGIT%" echo   local revision and last build revision are not congruent - please consider rebuilding before generating an installer
+if !"%VarRevisionBuild%"==!"%VarRevisionGIT%" goto Abort
 REM echo   version found: %VarRevisionSVN%
 
 move packagers\win32_64\nsis\default.out packagers\win32_64\nsis\default.out_
@@ -75,19 +73,18 @@ REM ============================================
 echo Windows GPAC installer generated - goodbye!
 REM ============================================
 REM LeaveBatchSuccess
+set VarRevisionGIT=
 set VarRevisionSVN=
 set VarRevisionBuild=
 cd /d %OLDDIR%
 exit/b 0
-
-:RevisionAbort
-echo   SVN revision "%VarRevisionSVN%" is not a simple number, you may have local modification (please check 'svnrevision' flags meaning or execute the NSIS script manually)
 
 :Abort
 echo:
 echo  *** ABORTING: CHECK ERROR MESSAGES ABOVE ***
 
 REM LeaveBatchError
+set VarRevisionGIT=
 set VarRevisionSVN=
 set VarRevisionBuild=
 cd /d %OLDDIR%
