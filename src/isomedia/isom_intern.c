@@ -772,7 +772,7 @@ GF_EdtsEntry *CreateEditEntry(u64 EditDuration, u64 MediaTime, u8 EditMode)
 
 	switch (EditMode) {
 	case GF_ISOM_EDIT_EMPTY:
-		ent->mediaRate = 1;
+		ent->mediaRate = 1<<16;
 		ent->mediaTime = -1;
 		break;
 
@@ -781,7 +781,7 @@ GF_EdtsEntry *CreateEditEntry(u64 EditDuration, u64 MediaTime, u8 EditMode)
 		ent->mediaTime = MediaTime;
 		break;
 	default:
-		ent->mediaRate = 1;
+		ent->mediaRate = 1<<16;
 		ent->mediaTime = MediaTime;
 		break;
 	}
