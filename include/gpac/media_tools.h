@@ -260,6 +260,13 @@ GF_Err gf_media_split_svc(GF_ISOFile *file, u32 track, Bool splitAll);
 /* Merge SVC layers*/
 GF_Err gf_media_merge_svc(GF_ISOFile *file, u32 track, Bool mergeAll);
 
+/*changes color property of the media - only AVC/H264 supported for now.
+Negative values keep source settings for the corresponding flags.
+If source stream has no VUI info, create one and set corresponding flags to specified values.
+In this case, any other flags are set to prefered values (typically, flag=0 or value=undef).
+*/
+GF_Err gf_media_change_colorprop(GF_ISOFile *file, u32 track, s32 fullrange, s32 vidformat, s32 colorprim, s32 transfer, s32 colmatrix);
+
 #endif /*GPAC_DISABLE_MEDIA_IMPORT*/
 
 
