@@ -1574,6 +1574,16 @@ void DumpTrackInfo(GF_ISOFile *file, u32 trackID, Bool full_dump)
 					gf_isom_get_visual_info(file, trackNum, 1, &w, &h);
 					fprintf(stderr, "JPEG2000 Stream - Visual Size %d x %d\n", w, h);
 				}
+				else if (esd->decoderConfig->objectTypeIndication==GPAC_OTI_VIDEO_SMPTE_VC1) {
+					gf_isom_get_visual_info(file, trackNum, 1, &w, &h);
+					if (full_dump) fprintf(stderr, "\t");
+					fprintf(stderr, "VC-1 Video - Visual Size %d x %d\n", w, h);
+				}
+				else if (esd->decoderConfig->objectTypeIndication==GPAC_OTI_VIDEO_DIRAC) {
+					gf_isom_get_visual_info(file, trackNum, 1, &w, &h);
+					if (full_dump) fprintf(stderr, "\t");
+					fprintf(stderr, "Dirac Video - Visual Size %d x %d\n", w, h);
+				}
 				if (!w || !h) {
 					gf_isom_get_visual_info(file, trackNum, 1, &w, &h);
 					if (full_dump) fprintf(stderr, "\t");
@@ -1655,7 +1665,7 @@ void DumpTrackInfo(GF_ISOFile *file, u32 trackID, Bool full_dump)
 				case GPAC_OTI_AUDIO_SMV_VOICE: fprintf(stderr, "SMV Audio - Sample Rate 8000 - 1 channel\n"); break;
 				case GPAC_OTI_AUDIO_13K_VOICE: fprintf(stderr, "QCELP Audio - Sample Rate 8000 - 1 channel\n"); break;
 				/*packetVideo hack for EVRC...*/
-				case 0xD1:
+				case GPAC_OTI_SCENE_SVG_GZ:
 					if (esd->decoderConfig->decoderSpecificInfo && (esd->decoderConfig->decoderSpecificInfo->dataLength==8)
 					&& !strnicmp(esd->decoderConfig->decoderSpecificInfo->data, "pvmm", 4)) {
 						if (full_dump) fprintf(stderr, "\t");
@@ -1848,7 +1858,12 @@ void DumpTrackInfo(GF_ISOFile *file, u32 trackID, Bool full_dump)
 			if (mtype==GF_ISOM_MEDIA_VISUAL) {
 				fprintf(stderr, "Visual Track - Compressor \"%s\" - Resolution %d x %d\n", udesc->compressor_name, udesc->width, udesc->height);
 			} else if (mtype==GF_ISOM_MEDIA_AUDIO) {
-				fprintf(stderr, "Audio Track - Sample Rate %d - %d channel(s)\n", udesc->samplerate, udesc->nb_channels);
+				if (msub_type == GF_ISOM_SUBTYPE_SAC3) {
+					fprintf(stderr, "AC3 Track - Sample Rate %d - %d channel(s)\n", udesc->samplerate, udesc->nb_channels);
+				}
+				else {
+					fprintf(stderr, "Audio Track - Sample Rate %d - %d channel(s)\n", udesc->samplerate, udesc->nb_channels);
+				}
 			} else {
 				fprintf(stderr, "Unknown media type\n");
 			}
