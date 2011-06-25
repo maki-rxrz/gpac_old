@@ -64,6 +64,7 @@ const char *gf_m2ts_get_stream_name(u32 streamType)
 	case GF_M2TS_VIDEO_H264: return "MPEG-4/H264 Video";
 	case GF_M2TS_VIDEO_HEVC: return "MPEG-H HEVC Video";
 	case GF_M2TS_VIDEO_SVC: return "H264-SVC Video";
+	case GF_M2TS_VIDEO_VC1: return "SMPTE VC-1 Video";
 
 	case GF_M2TS_AUDIO_AC3: return "Dolby AC3 Audio";
 	case GF_M2TS_AUDIO_DTS: return "Dolby DTS Audio";
@@ -1600,6 +1601,7 @@ static void gf_m2ts_process_pmt(GF_M2TS_Demuxer *ts, GF_M2TS_SECTION_ES *pmt, GF
 		case GF_M2TS_VIDEO_H264:
 		case GF_M2TS_VIDEO_SVC:
 		case GF_M2TS_VIDEO_HEVC:
+		case GF_M2TS_VIDEO_VC1:
 		case GF_M2TS_AUDIO_AC3:
 		case GF_M2TS_AUDIO_DTS:
 		case GF_M2TS_SUBTITLE_DVB:
