@@ -8275,6 +8275,28 @@ GF_Err gf_media_import(GF_MediaImporter *importer)
 
 
 
+GF_EXPORT
+GF_Err gf_media_change_colorprop(GF_ISOFile *file, u32 track, s32 fullrange, s32 vidformat, s32 colorprim, s32 transfer, s32 colmatrix)
+{
+	u32 stype;
+	GF_Err e = GF_OK;
+
+	stype = gf_isom_get_media_subtype(file, track, 1);
+	if (stype==GF_ISOM_SUBTYPE_AVC_H264) {
+#ifndef GPAC_DISABLE_AV_PARSERS
+		GF_AVCConfig *avcc = gf_isom_avc_config_get(file, track, 1);
+		gf_media_avc_change_colorprop(avcc, fullrange, vidformat, colorprim, transfer, colmatrix);
+		e = gf_isom_avc_config_update(file, track, 1, avcc);
+		gf_odf_avc_cfg_del(avcc);
+		if (e) return e;
+#endif
+	} else {
+		return GF_BAD_PARAM;
+	}
+
+	return e;
+}
+
 #endif /*GPAC_DISABLE_MEDIA_IMPORT*/
 
 
