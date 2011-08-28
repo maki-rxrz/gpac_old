@@ -23,8 +23,8 @@
  *
  */
 
-#include <gpac/tools.h>
-#include <gpac/network.h>
+#include "../../include/gpac/tools.h"
+#include "../../include/gpac/network.h"
 
 #if defined(_WIN32_WCE)
 

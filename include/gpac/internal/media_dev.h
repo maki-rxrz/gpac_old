@@ -27,10 +27,10 @@
 #ifndef _GF_MEDIA_DEV_H_
 #define _GF_MEDIA_DEV_H_
 
-#include <gpac/media_tools.h>
+#include "../media_tools.h"
 
 #ifndef GPAC_DISABLE_STREAMING
-#include <gpac/ietf.h>
+#include "../ietf.h"
 #endif
 
 #ifndef GPAC_DISABLE_ISOM

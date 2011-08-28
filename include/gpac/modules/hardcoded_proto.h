@@ -31,9 +31,9 @@
 extern "C" {
 #endif
 
-#include <gpac/module.h>
-#include <gpac/scenegraph.h>
-#include <gpac/compositor.h>
+#include "../module.h"
+#include "../scenegraph.h"
+#include "../compositor.h"
 
 /*interface name and version for Built-in proto User Extensions*/
 #define GF_HARDCODED_PROTO_INTERFACE		GF_4CC('G','H','P', '2')

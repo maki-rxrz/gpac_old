@@ -30,7 +30,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <gpac/thread.h>
+#include "../../include/gpac/thread.h"
 
 /*
  * The method (mode) of multithread management.

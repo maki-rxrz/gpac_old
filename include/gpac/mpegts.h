@@ -26,10 +26,10 @@
 #ifndef _GF_MPEG_TS_H_
 #define _GF_MPEG_TS_H_
 
-#include <gpac/list.h>
-#include <gpac/network.h>
-#include <gpac/thread.h>
-#include <gpac/internal/odf_dev.h>
+#include "list.h"
+#include "network.h"
+#include "thread.h"
+#include "internal/odf_dev.h"
 
 
 
@@ -912,7 +912,7 @@ void gf_m2ts_print_info(GF_M2TS_Demuxer *ts);
 
 #ifndef GPAC_DISABLE_MPEG2TS_MUX
 
-#include <gpac/esi.h>
+#include "esi.h"
 
 /*
 	MPEG-2 TS Multiplexer

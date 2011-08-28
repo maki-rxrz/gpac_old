@@ -25,7 +25,7 @@
 
 #include "javaenv.h"
 
-#include <gpac/modules/audio_out.h>
+#include "../../include/gpac/modules/audio_out.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -42,7 +42,7 @@
 
 
 /*for channel codes*/
-#include <gpac/constants.h>
+#include "../../include/gpac/constants.h"
 
 static const char android_device[] = "Android Default";
 

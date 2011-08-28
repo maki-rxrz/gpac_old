@@ -24,10 +24,10 @@
  */
 
 
-#include <gpac/modules/font.h>
-#include <gpac/list.h>
-#include <gpac/utf.h>
-#include <gpac/tools.h>
+#include "../../include/gpac/modules/font.h"
+#include "../../include/gpac/list.h"
+#include "../../include/gpac/utf.h"
+#include "../../include/gpac/tools.h"
 
 #if !defined(__GNUC__)
 # if defined(_WIN32_WCE)

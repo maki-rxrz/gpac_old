@@ -27,9 +27,9 @@
 #define _GF_SDL_OUT_H_
 
 /*driver interfaces*/
-#include <gpac/modules/audio_out.h>
-#include <gpac/modules/video_out.h>
-#include <gpac/thread.h>
+#include "../../include/gpac/modules/audio_out.h"
+#include "../../include/gpac/modules/video_out.h"
+#include "../../include/gpac/thread.h"
 
 /*SDL*/
 #include <SDL.h>

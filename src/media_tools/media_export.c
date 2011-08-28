@@ -24,22 +24,22 @@
  */
 
 
-#include <gpac/internal/media_dev.h>
-#include <gpac/mpegts.h>
-#include <gpac/constants.h>
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/mpegts.h"
+#include "../../include/gpac/constants.h"
 
 #ifndef GPAC_DISABLE_MEDIA_EXPORT
 
 #ifndef GPAC_DISABLE_AVILIB
-#include <gpac/internal/avilib.h>
+#include "../../include/gpac/internal/avilib.h"
 #endif
 
 #ifndef GPAC_DISABLE_OGG
-#include <gpac/internal/ogg.h>
+#include "../../include/gpac/internal/ogg.h"
 #endif
 
 #ifndef GPAC_DISABLE_VOBSUB
-#include <gpac/internal/vobsub.h>
+#include "../../include/gpac/internal/vobsub.h"
 #endif
 
 #ifndef GPAC_DISABLE_ZLIB

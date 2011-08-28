@@ -31,10 +31,10 @@
 extern "C" {
 #endif
 
-#include <gpac/setup.h>
+#include "setup.h"
 
-#include <gpac/html5_media.h>
-#include <gpac/internal/smjs_api.h>
+#include "html5_media.h"
+#include "internal/smjs_api.h"
 
 typedef enum
 {

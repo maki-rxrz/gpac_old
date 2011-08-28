@@ -23,17 +23,17 @@
  *
  */
 
-#include <gpac/media_tools.h>
-#include <gpac/constants.h>
-#include <gpac/base_coding.h>
-#include <gpac/mpegts.h>
+#include "../../include/gpac/media_tools.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/base_coding.h"
+#include "../../include/gpac/mpegts.h"
 
 #ifndef GPAC_DISABLE_STREAMING
-#include <gpac/internal/ietf_dev.h>
+#include "../../include/gpac/internal/ietf_dev.h"
 #endif
 
 #ifndef GPAC_DISABLE_SENG
-#include <gpac/scene_engine.h>
+#include "../../include/gpac/scene_engine.h"
 #endif
 
 #define USE_ISOBMF_REWRITE

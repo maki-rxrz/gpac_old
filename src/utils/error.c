@@ -23,7 +23,7 @@
  *
  */
 
-#include <gpac/tools.h>
+#include "../../include/gpac/tools.h"
 
 
 static char szTYPE[5];

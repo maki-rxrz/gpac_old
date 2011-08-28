@@ -30,8 +30,8 @@
 #include "libav/include/libavdevice/avdevice.h"
 #include "libav/include/libswscale/swscale.h"
 #include "libav/include/libavutil/mathematics.h"
-#include <gpac/isomedia.h>
-#include <gpac/internal/media_dev.h>
+#include "../../include/gpac/isomedia.h"
+#include "../../include/gpac/internal/media_dev.h"
 
 #include "video_scaler.h"
 //#include "libav_compat.h"
