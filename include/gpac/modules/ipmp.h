@@ -31,7 +31,7 @@
 extern "C" {
 #endif
 
-#include <gpac/module.h>
+#include "../module.h"
 
 /*
 	NOTE ON IPMP TOOLS

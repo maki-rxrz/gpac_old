@@ -21,9 +21,9 @@
 
 
 /*GPAC terminal*/
-#include <gpac/terminal.h>
+#include "../../include/gpac/terminal.h"
 /*GPAC terminal info (OD browsing)*/
-#include <gpac/term_info.h>
+#include "../../include/gpac/term_info.h"
 
 enum {
 	WM_SCENE_DONE = WM_USER + 1,
@@ -111,4 +111,3 @@ inline Osmo4 *GetApp() { return (Osmo4 *)AfxGetApp(); }
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_GPAC_H__8B06A368_E142_47E3_ABE7_0B459FC0E853__INCLUDED_)
-	

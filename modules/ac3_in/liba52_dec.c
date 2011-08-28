@@ -25,8 +25,8 @@
 
 #ifdef GPAC_HAS_LIBA52
 
-#include <gpac/modules/codec.h>
-#include <gpac/constants.h>
+#include "../../include/gpac/modules/codec.h"
+#include "../../include/gpac/constants.h"
 
 #if !defined(__GNUC__)
 # if defined(_WIN32_WCE) || defined (WIN32)

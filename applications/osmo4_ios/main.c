@@ -24,11 +24,11 @@
  */
 
 /*includes both terminal and od browser*/
-#include <gpac/terminal.h>
-#include <gpac/term_info.h>
-#include <gpac/constants.h>
-#include <gpac/options.h>
-#include <gpac/modules/service.h>
+#include "../../include/gpac/terminal.h"
+#include "../../include/gpac/term_info.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/options.h"
+#include "../../include/gpac/modules/service.h"
 
 #ifndef WIN32
 #include <pwd.h>

@@ -26,9 +26,9 @@
 #ifndef CONTROLER_H_
 #define CONTROLER_H_
 
-#include <gpac/tools.h>
-#include <gpac/thread.h>
-#include <gpac/media_tools.h>
+#include "../../include/gpac/tools.h"
+#include "../../include/gpac/thread.h"
+#include "../../include/gpac/media_tools.h"
 
 #include "register.h"
 #include "video_decoder.h"

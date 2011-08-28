@@ -24,12 +24,12 @@
  */
 
 
-#include <gpac/setup.h>
+#include "../../include/gpac/setup.h"
 
 #ifdef GPAC_HAS_MAD
 
-#include <gpac/modules/codec.h>
-#include <gpac/constants.h>
+#include "../../include/gpac/modules/codec.h"
+#include "../../include/gpac/constants.h"
 
 #if defined(_WIN32_WCE) || defined(_WIN64) || defined(__SYMBIAN32__)
 #ifndef FPM_DEFAULT
