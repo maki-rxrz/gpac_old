@@ -23,8 +23,8 @@
  *
  */
 
-#include <gpac/tools.h>
-#include <gpac/network.h>
+#include "../../include/gpac/tools.h"
+#include "../../include/gpac/network.h"
 
 #ifdef __SYMBIAN32__
 
@@ -44,7 +44,7 @@
 
 /*gpac module internals*/
 #include "module_wrap.h"
-#include <gpac/thread.h>
+#include "../../include/gpac/thread.h"
 
 
 //  Exported Functions (DLL entry point)

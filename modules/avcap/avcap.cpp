@@ -31,11 +31,11 @@
 extern "C" {
 #endif
 
-#include <gpac/modules/service.h>
-#include <gpac/modules/codec.h>
+#include "../../include/gpac/modules/service.h"
+#include "../../include/gpac/modules/codec.h"
 /*for GF_STREAM_PRIVATE_SCENE definition*/
-#include <gpac/constants.h>
-#include <gpac/download.h>
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/download.h"
 
 #ifdef __cplusplus
 }

@@ -30,7 +30,7 @@
 
 #include <stdio.h>
 #include <time.h>
-#include <gpac/list.h>
+#include "../../include/gpac/list.h"
 
 typedef struct {
 	char id[MAX_ID_SIZE];

@@ -23,10 +23,10 @@
  *
  */
 
-#include <gpac/internal/isomedia_dev.h>
-#include <gpac/internal/media_dev.h>
-#include <gpac/webvtt.h>
-#include <gpac/constants.h>
+#include "../../include/gpac/internal/isomedia_dev.h"
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/webvtt.h"
+#include "../../include/gpac/constants.h"
 
 #ifndef GPAC_DISABLE_VTT
 

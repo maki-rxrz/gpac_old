@@ -30,10 +30,10 @@
 	BY MPEG4Gen for GPAC Version 0.5.0
 */
 
-#include <gpac/nodes_mpeg4.h>
+#include "../../include/gpac/nodes_mpeg4.h"
 
 
-#include <gpac/internal/scenegraph_dev.h>
+#include "../../include/gpac/internal/scenegraph_dev.h"
 
 #ifndef GPAC_DISABLE_VRML
 

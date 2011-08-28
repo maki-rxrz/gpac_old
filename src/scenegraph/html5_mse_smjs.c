@@ -23,7 +23,7 @@
  *
  */
 
-#include <gpac/setup.h>
+#include "../../include/gpac/setup.h"
 
 #ifndef GPAC_DISABLE_SVG
 
@@ -35,7 +35,7 @@
 #endif /* XP_UNIX */
 #endif
 
-#include <gpac/html5_mse.h>
+#include "../../include/gpac/html5_mse.h"
 
 #define JSVAL_CHECK_STRING(_v) (JSVAL_IS_STRING(_v) || JSVAL_IS_NULL(_v))
 
@@ -81,7 +81,7 @@ static GFINLINE GF_SceneGraph *mediasource_get_scenegraph(JSContext *c)
     return scene;
 }
 
-#include <gpac/internal/terminal_dev.h>
+#include "../../include/gpac/internal/terminal_dev.h"
 Bool gf_term_is_type_supported(GF_Terminal *term, const char* mime);
 
 static JSBool SMJS_FUNCTION(mediasource_is_type_supported)

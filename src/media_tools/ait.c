@@ -23,7 +23,7 @@
  *
  */
 
-#include <gpac/ait.h>
+#include "../../include/gpac/ait.h"
 
 #ifdef GPAC_ENABLE_DSMCC
 

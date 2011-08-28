@@ -32,9 +32,9 @@
 #include "libavformat/avformat.h"
 #include "libavdevice/avdevice.h"
 #include "libavutil/mathematics.h"
-#include <gpac/isomedia.h>
-#include <gpac/internal/media_dev.h>
-#include <gpac/constants.h>
+#include "../../include/gpac/isomedia.h"
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/constants.h"
 #include "audio_data.h"
 #include "libav_compat.h"
 

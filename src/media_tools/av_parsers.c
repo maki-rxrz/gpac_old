@@ -23,12 +23,12 @@
  *
  */
 
-#include <gpac/internal/media_dev.h>
-#include <gpac/constants.h>
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/constants.h"
 
 #ifndef GPAC_DISABLE_OGG
-#include <gpac/internal/ogg.h>
-#include <gpac/math.h>
+#include "../../include/gpac/internal/ogg.h"
+#include "../../include/gpac/math.h"
 #endif
 
 static const struct { u32 w, h; } std_par[ ] =

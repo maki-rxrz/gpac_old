@@ -62,7 +62,7 @@
 /*the number of sockets used. This because the WinSock lib needs init*/
 static int wsa_init = 0;
 
-#include <gpac/network.h>
+#include "../../include/gpac/network.h"
 
 /*end-win32*/
 
@@ -85,7 +85,7 @@ static int wsa_init = 0;
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-#include <gpac/network.h>
+#include "../../include/gpac/network.h"
 
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR -1

@@ -139,7 +139,7 @@ This is only needed when building libgpac and modules when libgpac is not instal
 #ifdef GPAC_HAVE_CONFIG_H
 # include "config.h"
 #else
-# include <gpac/configuration.h>
+# include "../../include/gpac/configuration.h"
 #endif
 
 /*GPAC memory tracking*/
@@ -513,13 +513,13 @@ static void gf_memory_del(memory_list *p)
 #endif /*GPAC_MEMORY_TRACKING*/
 
 
-#include <gpac/tools.h>
+#include "../../include/gpac/tools.h"
 
 
 /*GPAC memory tracking*/
 #ifdef GPAC_MEMORY_TRACKING
 
-#include <gpac/thread.h>
+#include "../../include/gpac/thread.h"
 
 /*global lists of allocations and deallocations*/
 memory_list memory_add = NULL, memory_rem = NULL;

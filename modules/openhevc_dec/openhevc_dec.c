@@ -24,10 +24,10 @@
  */
 
 
-#include <gpac/modules/codec.h>
-#include <gpac/avparse.h>
-#include <gpac/constants.h>
-#include <gpac/internal/media_dev.h>
+#include "../../include/gpac/modules/codec.h"
+#include "../../include/gpac/avparse.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/internal/media_dev.h"
 
 #include "openHevcWrapper.h"
 

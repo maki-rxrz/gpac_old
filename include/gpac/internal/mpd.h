@@ -25,9 +25,9 @@
 #ifndef _MPD_H_
 #define _MPD_H_
 
-#include <gpac/constants.h>
-#include <gpac/xml.h>
-#include <gpac/media_tools.h>
+#include "../constants.h"
+#include "../xml.h"
+#include "../media_tools.h"
 
 /*TODO*/
 typedef struct

@@ -24,7 +24,7 @@
  */
 
 
-#include <gpac/dsmcc.h>
+#include "../../include/gpac/dsmcc.h"
 
 #ifdef GPAC_ENABLE_DSMCC
 
