@@ -24,7 +24,7 @@
  */
 
 #include "gdip_priv.h"
-#include <gpac/utf.h>
+#include "../../include/gpac/utf.h"
 
 
 

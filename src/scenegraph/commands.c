@@ -24,11 +24,11 @@
  */
 
 
-#include <gpac/internal/scenegraph_dev.h>
+#include "../../include/gpac/internal/scenegraph_dev.h"
 /*MPEG4 tags (for internal nodes)*/
-#include <gpac/nodes_mpeg4.h>
+#include "../../include/gpac/nodes_mpeg4.h"
 
-#include <gpac/internal/laser_dev.h>
+#include "../../include/gpac/internal/laser_dev.h"
 
 
 GF_EXPORT
