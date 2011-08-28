@@ -30,8 +30,8 @@
 extern "C" {
 #endif
 
-#include <gpac/scenegraph.h>
-#include <gpac/svg_types.h>
+#include "scenegraph.h"
+#include "svg_types.h"
 
 
 /*******************************************************************************

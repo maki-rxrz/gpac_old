@@ -23,7 +23,7 @@
  *
  */
 
-#include <gpac/tools.h>
+#include "../../include/gpac/tools.h"
 
 #if defined(GPAC_DISABLE_ISOM) || defined(GPAC_DISABLE_ISOM_WRITE)
 
@@ -32,27 +32,27 @@
 #else
 
 #ifndef GPAC_DISABLE_X3D
-#include <gpac/nodes_x3d.h>
+#include "../../include/gpac/nodes_x3d.h"
 #endif
 #ifndef GPAC_DISABLE_BIFS
-#include <gpac/internal/bifs_dev.h>
+#include "../../include/gpac/internal/bifs_dev.h"
 #endif
 #ifndef GPAC_DISABLE_VRML
-#include <gpac/nodes_mpeg4.h>
+#include "../../include/gpac/nodes_mpeg4.h"
 #endif
-#include <gpac/constants.h>
-#include <gpac/avparse.h>
-#include <gpac/media_tools.h>
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/avparse.h"
+#include "../../include/gpac/media_tools.h"
 /*for asctime and gmtime*/
 #include <time.h>
 /*ISO 639 languages*/
-#include <gpac/iso639.h>
-#include <gpac/mpegts.h>
+#include "../../include/gpac/iso639.h"
+#include "../../include/gpac/mpegts.h"
 
 #ifndef GPAC_DISABLE_SMGR
-#include <gpac/scene_manager.h>
+#include "../../include/gpac/scene_manager.h"
 #endif
-#include <gpac/internal/media_dev.h>
+#include "../../include/gpac/internal/media_dev.h"
 
 extern u32 swf_flags;
 extern Float swf_flatten_angle;

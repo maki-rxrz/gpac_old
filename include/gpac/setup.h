@@ -35,7 +35,7 @@ This is only needed when building libgpac and modules when libgpac is not instal
 #ifdef GPAC_HAVE_CONFIG_H
 # include "config.h"
 #else
-# include <gpac/configuration.h>
+# include "configuration.h"
 #endif
 
 

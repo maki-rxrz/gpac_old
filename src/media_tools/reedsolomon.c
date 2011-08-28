@@ -13,8 +13,8 @@
 
 #include <stdio.h>
 #include <ctype.h>
-#include <gpac/tools.h>
-#include <gpac/internal/reedsolomon.h>
+#include "../../include/gpac/tools.h"
+#include "../../include/gpac/internal/reedsolomon.h"
 
 #ifdef GPAC_ENABLE_MPE
 

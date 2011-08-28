@@ -23,7 +23,7 @@
  *
  */
 
-#include <gpac/bitstream.h>
+#include "../../include/gpac/bitstream.h"
 
 /*the default size for new streams allocation...*/
 #define BS_MEM_BLOCK_ALLOC_SIZE		4096

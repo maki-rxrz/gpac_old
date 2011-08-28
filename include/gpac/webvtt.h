@@ -61,7 +61,7 @@ u64 gf_webvtt_timestamp_get(GF_WebVTTTimestamp *ts);
 void gf_webvtt_cue_del(GF_WebVTTCue * cue);
 
 #ifdef GPAC_HAS_SPIDERMONKEY
-#include <gpac/internal/scenegraph_dev.h>
+#include "internal/scenegraph_dev.h"
 
 GF_Err gf_webvtt_js_addCue(GF_Node *node, const char *id,
 										  const char *start, const char *end,

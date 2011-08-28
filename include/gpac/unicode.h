@@ -35,7 +35,7 @@ extern "C" {
  *	\brief math and trigo functions.
  */
 
-#include <gpac/setup.h>
+#include "setup.h"
 
 /*!
  * \brief Unicode conversion from UTF-8 to UCS-4

@@ -31,22 +31,22 @@
 extern "C" {
 #endif
 
-#include <gpac/internal/scenegraph_dev.h>
+#include "internal/scenegraph_dev.h"
 
 /*base SVG type*/
-#include <gpac/nodes_svg.h>
+#include "nodes_svg.h"
 /*dom events*/
-#include <gpac/events.h>
+#include "events.h"
 /*dom text event*/
-#include <gpac/utf.h>
+#include "utf.h"
 
-#include <gpac/download.h>
-#include <gpac/network.h>
-#include <gpac/modules/service.h>
-#include <gpac/xml.h>
-#include <gpac/internal/terminal_dev.h>
+#include "download.h"
+#include "network.h"
+#include "modules/service.h"
+#include "xml.h"
+#include "internal/terminal_dev.h"
 
-#include <gpac/internal/smjs_api.h>
+#include "internal/smjs_api.h"
 
 typedef struct
 {

@@ -24,13 +24,13 @@
  */
 
 
-#include <gpac/constants.h>
-#include <gpac/internal/terminal_dev.h>
-#include <gpac/internal/isomedia_dev.h>
-#include <gpac/internal/media_dev.h>
-#include <gpac/internal/scenegraph_dev.h>
-#include <gpac/nodes_svg.h>
-#include <gpac/webvtt.h>
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/internal/terminal_dev.h"
+#include "../../include/gpac/internal/isomedia_dev.h"
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/internal/scenegraph_dev.h"
+#include "../../include/gpac/nodes_svg.h"
+#include "../../include/gpac/webvtt.h"
 
 #ifndef GPAC_DISABLE_VTT
 

@@ -44,8 +44,8 @@ extern "C" {
  *	@{
  */
 
-#include <gpac/ietf.h>
-#include <gpac/isomedia.h>
+#include "ietf.h"
+#include "isomedia.h"
 
 #if !defined(GPAC_DISABLE_STREAMING) && !defined(GPAC_DISABLE_ISOM)
 

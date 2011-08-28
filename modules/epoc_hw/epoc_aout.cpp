@@ -24,7 +24,7 @@
  */
 
 
-#include <gpac/modules/audio_out.h>
+#include "../../include/gpac/modules/audio_out.h"
 /*symbian audio stuff*/
 #include <mdaaudiooutputstream.h>
 #include <mda/common/audio.h>

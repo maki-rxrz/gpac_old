@@ -47,9 +47,9 @@
 extern "C" {
 #endif
 
-#include <gpac/tools.h>
-#include <gpac/config_file.h>
-#include <gpac/cache.h>
+#include "tools.h"
+#include "config_file.h"
+#include "cache.h"
 
 
 	/*!the download manager object. This is usually not used by GPAC modules*/

@@ -24,7 +24,7 @@
  */
 
 #include "sdl_out.h"
-#include <gpac/user.h>
+#include "../../include/gpac/user.h"
 
 //#include "unicode.h"
 
@@ -726,7 +726,7 @@ static void SDLVid_ShutdownWindow(SDLVidCtx *ctx)
 }
 
 #if defined SDL_TEXTINPUTEVENT_TEXT_SIZE /*&& !defined GPAC_IPHONE*/
-#include <gpac/unicode.h>
+#include "../../include/gpac/unicode.h"
 #endif
 
 
