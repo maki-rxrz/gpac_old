@@ -30,8 +30,8 @@
 #include <directfb_util.h>
 #include <direct/util.h>
 
-#include <gpac/constants.h>
-#include <gpac/events_constants.h>
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/events_constants.h"
 
 #include "directfb_out.h"
 

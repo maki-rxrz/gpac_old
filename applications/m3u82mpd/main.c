@@ -22,11 +22,9 @@
  *
  */
 
-
-#include <gpac/internal/m3u8.h>
-#include <gpac/network.h>
-#include <gpac/download.h>
-
+#include "../modules/mpd_in/m3u8.h"
+#include "../../include/gpac/network.h"
+#include "../../include/gpac/download.h"
 
 int main(int argc, char **argv)
 {
