@@ -23,7 +23,7 @@
  *
  */
 
-#include <gpac/internal/ietf_dev.h>
+#include "../../include/gpac/internal/ietf_dev.h"
 
 #ifndef GPAC_DISABLE_STREAMING
 

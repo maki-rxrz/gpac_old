@@ -33,7 +33,7 @@
 extern "C" {
 #endif
 
-#include <gpac/tools.h>
+#include "tools.h"
 
 
 /********************************************************************
@@ -279,7 +279,7 @@ enum
 
 #ifndef GPAC_DISABLE_ISOM
 
-#include <gpac/mpeg4_odf.h>
+#include "mpeg4_odf.h"
 
 /*the isomedia file*/
 typedef struct __tag_isom GF_ISOFile;

@@ -30,8 +30,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <gpac/config_file.h>
-#include <gpac/list.h>
+#include "../../include/gpac/config_file.h"
+#include "../../include/gpac/list.h"
 #include "audio_data.h"
 #include "video_data.h"
 

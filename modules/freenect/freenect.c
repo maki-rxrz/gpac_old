@@ -24,10 +24,10 @@
  */
 
 
-#include <gpac/modules/service.h>
-#include <gpac/modules/codec.h>
-#include <gpac/constants.h>
-#include <gpac/download.h>
+#include "../../include/gpac/modules/service.h"
+#include "../../include/gpac/modules/codec.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/download.h"
 
 #ifdef FREENECT_FLAT_HEADERS
 #include <libfreenect.h>
@@ -35,7 +35,7 @@
 #include <libfreenect/libfreenect.h>
 #endif
 
-#include <gpac/thread.h>
+#include "../../include/gpac/thread.h"
 
 
 #if !defined(FREENECT_DEVICE_CAMERA) && defined(FREENECT_FRAME_W)

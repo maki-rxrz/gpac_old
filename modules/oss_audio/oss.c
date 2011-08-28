@@ -47,7 +47,7 @@
 
 #endif
 
-#include <gpac/modules/audio_out.h>
+#include "../../include/gpac/modules/audio_out.h"
 
 #define OSS_AUDIO_DEVICE	"/dev/dsp"
 

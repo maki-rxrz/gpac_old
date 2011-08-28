@@ -24,7 +24,7 @@
  */
 
 
-#include <gpac/path2d.h>
+#include "../../include/gpac/path2d.h"
 
 GF_EXPORT
 GF_Path *gf_path_new()

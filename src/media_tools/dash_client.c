@@ -23,12 +23,12 @@
 *
 */
 
-#include <gpac/thread.h>
-#include <gpac/network.h>
-#include <gpac/dash.h>
-#include <gpac/internal/mpd.h>
-#include <gpac/internal/m3u8.h>
-#include <gpac/internal/isomedia_dev.h>
+#include "../../include/gpac/thread.h"
+#include "../../include/gpac/network.h"
+#include "../../include/gpac/dash.h"
+#include "../../include/gpac/internal/mpd.h"
+#include "../../include/gpac/internal/m3u8.h"
+#include "../../include/gpac/internal/isomedia_dev.h"
 #include <string.h>
 
 #ifdef _WIN32_WCE

@@ -32,7 +32,7 @@
 #include <stdlib.h>
 
 #ifdef GPAC_THREAD
-#include <gpac/thread.h>
+#include "../../include/gpac/thread.h"
 #else
 #include <pthread.h>
 #endif

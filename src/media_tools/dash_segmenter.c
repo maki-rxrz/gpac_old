@@ -23,17 +23,17 @@
  *
  */
 
-#include <gpac/internal/media_dev.h>
-#include <gpac/constants.h>
-#include <gpac/mpegts.h>
-#include <gpac/config_file.h>
-#include <gpac/network.h>
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/mpegts.h"
+#include "../../include/gpac/config_file.h"
+#include "../../include/gpac/network.h"
 #ifdef _WIN32_WCE
 #include <winbase.h>
 #else
 #include <time.h>
 #endif
-#include <gpac/internal/isomedia_dev.h>
+#include "../../include/gpac/internal/isomedia_dev.h"
 
 #ifdef GPAC_DISABLE_ISOM
 /*we should need a better way to work with sidx when no isom is defined*/
