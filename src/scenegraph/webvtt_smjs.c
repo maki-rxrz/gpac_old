@@ -24,13 +24,13 @@
  */
 
 
-#include <gpac/setup.h>
-#include <gpac/internal/scenegraph_dev.h>
-#include <gpac/webvtt.h>
+#include "../../include/gpac/setup.h"
+#include "../../include/gpac/internal/scenegraph_dev.h"
+#include "../../include/gpac/webvtt.h"
 
 #ifdef GPAC_HAS_SPIDERMONKEY
 
-#include <gpac/internal/smjs_api.h>
+#include "../../include/gpac/internal/smjs_api.h"
 
 GF_EXPORT 
 GF_Err gf_webvtt_js_addCue(GF_Node *node, const char *id, 

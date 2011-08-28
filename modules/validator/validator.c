@@ -23,12 +23,12 @@
  *
  */
 
-#include <gpac/modules/term_ext.h>
-#include <gpac/internal/terminal_dev.h>
-#include <gpac/internal/compositor_dev.h>
-#include <gpac/internal/media_dev.h>
-#include <gpac/xml.h>
-#include <gpac/options.h>
+#include "../../include/gpac/modules/term_ext.h"
+#include "../../include/gpac/internal/terminal_dev.h"
+#include "../../include/gpac/internal/compositor_dev.h"
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/xml.h"
+#include "../../include/gpac/options.h"
 
 typedef struct __validation_module
 {

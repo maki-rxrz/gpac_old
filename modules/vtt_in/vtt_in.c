@@ -24,10 +24,10 @@
  */
 
 
-#include <gpac/internal/terminal_dev.h>
-#include <gpac/scene_manager.h>
-#include <gpac/constants.h>
-#include <gpac/modules/js_usr.h>
+#include "../../include/gpac/internal/terminal_dev.h"
+#include "../../include/gpac/scene_manager.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/modules/js_usr.h"
 
 #ifndef GPAC_DISABLE_VTT
 

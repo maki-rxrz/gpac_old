@@ -27,7 +27,7 @@
 
 #ifndef GPAC_DISABLE_ISOM
 
-#include <gpac/ismacryp.h>
+#include "../../include/gpac/ismacryp.h"
 
 ISOMChannel *isor_get_channel(ISOMReader *reader, LPNETCHANNEL channel)
 {

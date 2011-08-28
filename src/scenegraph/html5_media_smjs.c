@@ -24,18 +24,18 @@
  */
 
 
-#include <gpac/internal/scenegraph_dev.h>
+#include "../../include/gpac/internal/scenegraph_dev.h"
 
 /*base SVG type*/
-#include <gpac/nodes_svg.h>
+#include "../../include/gpac/nodes_svg.h"
 /*dom events*/
-#include <gpac/events.h>
+#include "../../include/gpac/events.h"
 /*dom text event*/
-#include <gpac/utf.h>
+#include "../../include/gpac/utf.h"
 
-#include <gpac/download.h>
-#include <gpac/network.h>
-#include <gpac/xml.h>
+#include "../../include/gpac/download.h"
+#include "../../include/gpac/network.h"
+#include "../../include/gpac/xml.h"
 
 #ifndef GPAC_DISABLE_SVG
 
@@ -48,8 +48,8 @@
 
 #ifdef GPAC_HAS_SPIDERMONKEY
 
-#include <gpac/internal/smjs_api.h>
-#include <gpac/html5_media.h>
+#include "../../include/gpac/internal/smjs_api.h"
+#include "../../include/gpac/html5_media.h"
 
 /***********************************************************
  *
@@ -72,10 +72,10 @@ void gf_svg_set_attributeNS(GF_Node *n, u32 ns_code, char *name, char *val);
 
 /* including terminal dev for MediaObject */
 
-#include <gpac/internal/terminal_dev.h>
+#include "../../include/gpac/internal/terminal_dev.h"
 
 /* including Compositor dev for TextureHandler and AudioInput */
-#include <gpac/internal/compositor_dev.h>
+#include "../../include/gpac/internal/compositor_dev.h"
 
 static GF_HTML_MediaRuntime *html_media_rt = NULL;
 

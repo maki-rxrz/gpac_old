@@ -29,8 +29,8 @@
 #include "offscreen_cache.h"
 #include "mpeg4_grouping.h"
 
-#include <gpac/modules/hardcoded_proto.h>
-#include <gpac/internal/terminal_dev.h>
+#include "../../include/gpac/modules/hardcoded_proto.h"
+#include "../../include/gpac/internal/terminal_dev.h"
 
 #ifndef GPAC_DISABLE_VRML
 

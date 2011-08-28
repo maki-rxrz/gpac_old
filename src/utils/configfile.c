@@ -23,8 +23,8 @@
  *
  */
 
-#include <gpac/config_file.h>
-#include <gpac/list.h>
+#include "../../include/gpac/config_file.h"
+#include "../../include/gpac/list.h"
 
 #define MAX_INI_LINE			2046
 
