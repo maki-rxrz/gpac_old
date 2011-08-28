@@ -23,9 +23,9 @@
  *
  */
 
-#include <gpac/mpegts.h>
-#include <gpac/constants.h>
-#include <gpac/media_tools.h>
+#include "../../include/gpac/mpegts.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/media_tools.h"
 
 #if !defined(GPAC_DISABLE_MPEG2TS_MUX)
 

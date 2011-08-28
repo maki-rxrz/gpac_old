@@ -30,9 +30,9 @@
 extern "C" {
 #endif
 
-#include <gpac/list.h>
-#include <gpac/bitstream.h>
-#include <gpac/sync_layer.h>
+#include "list.h"
+#include "bitstream.h"
+#include "sync_layer.h"
 
 /***************************************
 			Descriptors Tag

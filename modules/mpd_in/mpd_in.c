@@ -23,12 +23,12 @@
  *
  */
 
-#include <gpac/modules/service.h>
+#include "../../include/gpac/modules/service.h"
 
 #ifndef GPAC_DISABLE_DASH_CLIENT
 
-#include <gpac/dash.h>
-#include <gpac/internal/terminal_dev.h>
+#include "../../include/gpac/dash.h"
+#include "../../include/gpac/internal/terminal_dev.h"
 
 
 typedef struct __mpd_module

@@ -23,7 +23,7 @@
  *
  */
 
-#include <gpac/setup.h>
+#include "../../include/gpac/setup.h"
 
 #ifdef GPAC_HAS_FAAD
 
@@ -39,9 +39,9 @@
 
 #include <faad.h>
 
-#include <gpac/modules/codec.h>
-#include <gpac/constants.h>
-#include <gpac/avparse.h>
+#include "../../include/gpac/modules/codec.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/avparse.h"
 
 
 typedef struct

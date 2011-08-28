@@ -29,14 +29,14 @@ extern "C" {
 #endif
 
 
-#include <gpac/configuration.h>
-#include <gpac/mpegts.h>
-#include <gpac/tools.h>
-#include <gpac/events.h>
-#include <gpac/options.h>
-#include <gpac/terminal.h>
-#include <gpac/internal/terminal_dev.h>
-#include <gpac/term_info.h>
+#include "../../../../include/gpac/configuration.h"
+#include "../../../../include/gpac/mpegts.h"
+#include "../../../../include/gpac/tools.h"
+#include "../../../../include/gpac/events.h"
+#include "../../../../include/gpac/options.h"
+#include "../../../../include/gpac/terminal.h"
+#include "../../../../include/gpac/internal/terminal_dev.h"
+#include "../../../../include/gpac/term_info.h"
 #include <hbbtvbrowserpluginapi.h>
 
 #ifdef __cplusplus
