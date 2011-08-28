@@ -31,9 +31,9 @@
 extern "C" {
 #endif
 
-#include <gpac/mpegts.h>
+#include "mpegts.h"
 #include <string.h>
-#include <gpac/bitstream.h>
+#include "bitstream.h"
 
 
 #ifndef GPAC_DISABLE_MPEG2TS
