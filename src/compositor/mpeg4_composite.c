@@ -25,7 +25,7 @@
 
 
 
-#include <gpac/internal/scenegraph_dev.h>
+#include "../../include/gpac/internal/scenegraph_dev.h"
 
 #include "nodes_stacks.h"
 #include "visual_manager.h"

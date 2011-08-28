@@ -23,9 +23,9 @@
  *
  */
 
-#include <gpac/modules/service.h>
-#include <gpac/internal/terminal_dev.h>
-#include <gpac/html5_mse.h>
+#include "../../include/gpac/modules/service.h"
+#include "../../include/gpac/internal/terminal_dev.h"
+#include "../../include/gpac/html5_mse.h"
 
 typedef struct __mse_module
 {

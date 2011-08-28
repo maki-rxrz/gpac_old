@@ -23,8 +23,8 @@
  *
  */
 
-#include <gpac/tools.h>
-#include <gpac/isomedia.h>
+#include "../../../include/gpac/tools.h"
+#include "../../../include/gpac/isomedia.h"
 
 int main(int argc, char **argv)
 {

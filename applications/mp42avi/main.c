@@ -23,11 +23,11 @@
  *
  */
 
-#include <gpac/isomedia.h>
-#include <gpac/compositor.h>
-#include <gpac/scenegraph.h>
-#include <gpac/bifs.h>
-#include <gpac/options.h>
+#include "../../include/gpac/isomedia.h"
+#include "../../include/gpac/compositor.h"
+#include "../../include/gpac/scenegraph.h"
+#include "../../include/gpac/bifs.h"
+#include "../../include/gpac/options.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -62,8 +62,8 @@ typedef struct tagBITMAPINFOHEADER{
 #define GPAC_CFG_FILE ".gpacrc"
 #endif
 
-#include <gpac/internal/avilib.h>
-#include <gpac/internal/compositor_dev.h>
+#include "../../include/gpac/internal/avilib.h"
+#include "../../include/gpac/internal/compositor_dev.h"
 
 void PrintVersion()
 {

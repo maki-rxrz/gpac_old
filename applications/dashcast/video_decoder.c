@@ -25,7 +25,7 @@
 
 #include "video_decoder.h"
 #include <time.h>
-#include <gpac/network.h>
+#include "../../include/gpac/network.h"
 
 
 //#define DASHCAST_DEBUG_TIME_

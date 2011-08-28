@@ -23,10 +23,10 @@
  *
  */
 
-#include <gpac/internal/media_dev.h>
-#include <gpac/bitstream.h>
-#include <gpac/thread.h>
-#include <gpac/list.h>
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/bitstream.h"
+#include "../../include/gpac/thread.h"
+#include "../../include/gpac/list.h"
 
 enum
 {

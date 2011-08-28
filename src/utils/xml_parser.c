@@ -24,8 +24,8 @@
  */
 
 
-#include <gpac/xml.h>
-#include <gpac/utf.h>
+#include "../../include/gpac/xml.h"
+#include "../../include/gpac/utf.h"
 
 #ifndef GPAC_DISABLE_ZLIB
 /*since 0.2.2, we use zlib for xmt/x3d reading to handle gz files*/
@@ -1909,8 +1909,8 @@ GF_XMLNode* gf_xml_dom_node_new(const char* ns, const char* name){
 }
 
 
-#include <gpac/bitstream.h>
-#include <gpac/base_coding.h>
+#include "../../include/gpac/bitstream.h"
+#include "../../include/gpac/base_coding.h"
 
 #define XML_SCAN_INT(_fmt, _value)	\
 	{\

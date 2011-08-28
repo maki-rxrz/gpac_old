@@ -32,7 +32,7 @@
 extern "C" {
 #endif
 
-#include <gpac/scenegraph_vrml.h>
+#include "scenegraph_vrml.h"
 
 
 /*
@@ -152,7 +152,7 @@ void gf_mo_unload_xlink_resource(GF_Node *node, GF_MediaObject *mo);
 /*returns scene graph associated with a scene/document object, or NULL if wrong type or not loaded*/
 GF_SceneGraph *gf_mo_get_scenegraph(GF_MediaObject *mo);
 
-#include <gpac/scenegraph_svg.h>
+#include "scenegraph_svg.h"
 void gf_mo_del(GF_MediaObject *mo);
 
 GF_DOMEventTarget  *gf_mo_event_target_add_node(GF_MediaObject *mo, GF_Node *n);

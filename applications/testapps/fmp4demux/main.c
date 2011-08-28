@@ -24,9 +24,9 @@
  */
 //#define GPAC_HAVE_CONFIG_H
 
-#include <gpac/tools.h>
-#include <gpac/isomedia.h>
-#include <gpac/thread.h>
+#include "../../../include/gpac/tools.h"
+#include "../../../include/gpac/isomedia.h"
+#include "../../../include/gpac/thread.h"
 
 #define BUFFER_BLOC_SIZE 1000
 #define MAX_BUFFER_SIZE 200000

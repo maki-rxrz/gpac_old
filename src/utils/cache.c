@@ -23,15 +23,15 @@
 *
 */
 
-#include <gpac/cache.h>
-#include <gpac/network.h>
-#include <gpac/download.h>
-#include <gpac/token.h>
-#include <gpac/thread.h>
-#include <gpac/list.h>
-#include <gpac/base_coding.h>
-#include <gpac/tools.h>
-#include <gpac/config_file.h>
+#include "../../include/gpac/cache.h"
+#include "../../include/gpac/network.h"
+#include "../../include/gpac/download.h"
+#include "../../include/gpac/token.h"
+#include "../../include/gpac/thread.h"
+#include "../../include/gpac/list.h"
+#include "../../include/gpac/base_coding.h"
+#include "../../include/gpac/tools.h"
+#include "../../include/gpac/config_file.h"
 #include <stdio.h>
 #include <string.h>
 

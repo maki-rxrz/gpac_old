@@ -28,7 +28,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <gpac/thread.h>
+#include "../../include/gpac/thread.h"
 
 
 typedef struct MessageQueueNode {

@@ -23,7 +23,7 @@
  *
  */
 
-#include <gpac/utf.h>
+#include "../../include/gpac/utf.h"
 
 #ifndef GPAC_DISABLE_SVG
 

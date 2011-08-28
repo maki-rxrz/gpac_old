@@ -26,9 +26,9 @@
 #ifndef _GF_SWF_DEV_H_
 #define _GF_SWF_DEV_H_
 
-#include <gpac/scene_manager.h>
-#include <gpac/color.h>
-#include <gpac/media_tools.h>
+#include "../scene_manager.h"
+#include "../color.h"
+#include "../media_tools.h"
 
 #define SWF_TWIP_SCALE				(1/20.0f)
 

@@ -23,8 +23,8 @@
  *
  */
 
-#include <gpac/base_coding.h>
-#include <gpac/constants.h>
+#include "../../include/gpac/base_coding.h"
+#include "../../include/gpac/constants.h"
 
 static const char base_64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 

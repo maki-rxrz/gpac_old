@@ -24,8 +24,8 @@
  *
  */
 
-#include <gpac/tools.h>
-#include <gpac/isomedia.h>
+#include "../../../include/gpac/tools.h"
+#include "../../../include/gpac/isomedia.h"
 
 static void process_samples_from_track(GF_ISOFile *movie, u32 track_id, u32 *sample_index)
 {

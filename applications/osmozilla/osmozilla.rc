@@ -11,7 +11,7 @@
 
 /*do not include setup.h*/
 #define _GF_SETUP_H_
-#include <gpac/tools.h>
+#include "../../include/gpac/tools.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS

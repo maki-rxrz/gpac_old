@@ -24,11 +24,11 @@
  */
 
 
-#include <gpac/download.h>
-#include <gpac/network.h>
+#include "../../include/gpac/download.h"
+#include "../../include/gpac/network.h"
 
 #ifndef GPAC_DISABLE_SMGR
-#include <gpac/scene_manager.h>
+#include "../../include/gpac/scene_manager.h"
 #endif
 
 #ifdef GPAC_DISABLE_ISOM
@@ -42,20 +42,20 @@
 #include <fcntl.h>
 #endif
 
-#include <gpac/media_tools.h>
+#include "../../include/gpac/media_tools.h"
 
 /*RTP packetizer flags*/
 #ifndef GPAC_DISABLE_STREAMING
-#include <gpac/ietf.h>
+#include "../../include/gpac/ietf.h"
 #endif
 
 #ifndef GPAC_DISABLE_MCRYPT
-#include <gpac/ismacryp.h>
+#include "../../include/gpac/ismacryp.h"
 #endif
 
-#include <gpac/constants.h>
+#include "../../include/gpac/constants.h"
 
-#include <gpac/internal/mpd.h>
+#include "../../include/gpac/internal/mpd.h"
 
 #include <time.h>
 
