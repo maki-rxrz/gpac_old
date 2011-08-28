@@ -22,15 +22,15 @@
  *
  */
 
-#include <gpac/mpegts.h>
+#include "../../include/gpac/mpegts.h"
 
 
 #ifndef GPAC_DISABLE_MPEG2TS
 
 #include <string.h>
-#include <gpac/constants.h>
-#include <gpac/internal/media_dev.h>
-#include <gpac/download.h>
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/download.h"
 
 #ifdef GPAC_CONFIG_LINUX
 #include <unistd.h>
@@ -39,11 +39,11 @@
 //#define FORCE_DISABLE_MPEG4SL_OVER_MPEG2TS
 
 #ifdef GPAC_ENABLE_MPE
-#include <gpac/dvb_mpe.h>
+#include "../../include/gpac/dvb_mpe.h"
 #endif
 
 #ifdef GPAC_ENABLE_DSMCC
-#include <gpac/ait.h>
+#include "../../include/gpac/ait.h"
 #endif
 
 #define DEBUG_TS_PACKET 0

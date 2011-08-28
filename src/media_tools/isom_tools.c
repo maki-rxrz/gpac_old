@@ -25,9 +25,9 @@
 
 
 
-#include <gpac/internal/media_dev.h>
-#include <gpac/constants.h>
-#include <gpac/config_file.h>
+#include "../../include/gpac/internal/media_dev.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/config_file.h"
 
 #ifndef GPAC_DISABLE_ISOM_WRITE
 GF_EXPORT

@@ -9,10 +9,10 @@
 extern "C" {
 #endif
 
-#include <gpac/mpegts.h>
-#include <gpac/dsmcc.h>
+#include "mpegts.h"
+#include "dsmcc.h"
 #include <string.h>
-#include <gpac/bitstream.h>
+#include "bitstream.h"
 
 
 #ifndef GPAC_DISABLE_MPEG2TS

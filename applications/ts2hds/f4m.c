@@ -27,7 +27,7 @@
 
 #include "ts2hds.h"
 
-#include <gpac/base_coding.h>
+#include "../../include/gpac/base_coding.h"
 
 #define ADOBE_INLINED_BOOTSTRAP
 //#define ADOBE_RECURSIVE_PLAYLISTS /*recursive playlist don't seem to work*/
