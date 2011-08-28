@@ -28,7 +28,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <gpac/thread.h>
+#include "../../include/gpac/thread.h"
 
 #ifdef WIN32
 #define SEM

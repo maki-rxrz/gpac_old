@@ -26,8 +26,8 @@
 #ifndef _GF_VOBSUB_H_
 #define _GF_VOBSUB_H_
 
-#include <gpac/tools.h>
-#include <gpac/list.h>
+#include "../tools.h"
+#include "../list.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -24,7 +24,7 @@
  */
 
 
-#include <gpac/modules/audio_out.h>
+#include "../../include/gpac/modules/audio_out.h"
 #include <windows.h>
 
 #define MAX_AUDIO_BUFFER	30
@@ -61,7 +61,7 @@ typedef struct
 #ifdef USE_WAVE_EXT
 
 /*for channel codes*/
-#include <gpac/constants.h>
+#include "../../include/gpac/constants.h"
 
 #ifndef WAVE_FORMAT_EXTENSIBLE
 #define  WAVE_FORMAT_EXTENSIBLE   0xFFFE

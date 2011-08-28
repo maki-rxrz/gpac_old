@@ -25,7 +25,7 @@
 
 
 
-#include <gpac/internal/bifs_dev.h>
+#include "../../include/gpac/internal/bifs_dev.h"
 
 
 #ifndef GPAC_DISABLE_BIFS

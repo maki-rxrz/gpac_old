@@ -29,7 +29,7 @@
 #include <string.h>
 #include <time.h>
 
-#include <gpac/list.h>
+#include "../../../include/gpac/list.h"
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 

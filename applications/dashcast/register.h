@@ -34,7 +34,7 @@
 #endif
 #include "libavformat/avformat.h"
 
-#include <gpac/thread.h>
+#include "../../include/gpac/thread.h"
 
 /*
  * Register all codecs and define

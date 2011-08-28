@@ -30,7 +30,7 @@
 #undef _DEBUG
 #undef DEBUG
 
-#include <gpac/list.h>
+#include "../../../include/gpaclist.h"
 
 
 #include <time.h>

@@ -22,8 +22,8 @@
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-#include <gpac/map.h>
-#include <gpac/list.h>
+#include "../../include/gpac/map.h"
+#include "../../include/gpac/list.h"
 
 struct _tag_map
 {

@@ -40,7 +40,7 @@
 #define GPAC_VERSION_MINOR 1
 #define GPAC_VERSION_MICRO 0
 
-#include <gpac/revision.h>
+#include "revision.h"
 #define GPAC_FULL_VERSION       GPAC_VERSION"-rev"GPAC_GIT_VERSION
 
 

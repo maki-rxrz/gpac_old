@@ -27,7 +27,7 @@
 #define VIDEO_SCALER_H_
 
 #include <stdlib.h>
-#include <gpac/list.h>
+#include "../../include/gpac/list.h"
 
 #include "video_data.h"
 

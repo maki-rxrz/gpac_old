@@ -24,7 +24,7 @@
  */
 
 #include "module_wrap.h"
-#include <gpac/network.h>
+#include "../../include/gpac/network.h"
 
 #if defined(WIN32) || defined(_WIN32_WCE)
 #include <windows.h>
