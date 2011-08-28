@@ -24,9 +24,9 @@
  */
 
 
-#include <gpac/tools.h>
-#include <gpac/constants.h>
-#include <gpac/color.h>
+#include "../../include/gpac/tools.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/color.h"
 
 
 /* YUV -> RGB conversion loading two lines at each call */

@@ -28,9 +28,9 @@
 #define _IMG_IN_H
 
 /*all codecs are regular */
-#include <gpac/modules/codec.h>
-#include <gpac/modules/service.h>
-#include <gpac/constants.h>
+#include "../../include/gpac/modules/codec.h"
+#include "../../include/gpac/modules/service.h"
+#include "../../include/gpac/constants.h"
 
 enum
 {

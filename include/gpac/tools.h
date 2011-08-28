@@ -30,8 +30,8 @@
 extern "C" {
 #endif
 
-#include <gpac/setup.h>
-#include <gpac/version.h>
+#include "setup.h"
+#include "version.h"
 
 
 /*! \file "gpac/tools.h"

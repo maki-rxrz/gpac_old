@@ -31,9 +31,9 @@
 extern "C" {
 #endif
 
-#include <gpac/isomedia.h>
-#include <gpac/avparse.h>
-#include <gpac/config_file.h>
+#include "isomedia.h"
+#include "avparse.h"
+#include "config_file.h"
 
 /*computes file hash. If file is ISO-based, computre hash according to OMA (P)DCF (without MutableDRMInformation box)*/
 GF_Err gf_media_get_file_hash(const char *file, u8 hash[20]);
