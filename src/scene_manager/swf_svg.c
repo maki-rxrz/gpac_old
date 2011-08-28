@@ -22,10 +22,10 @@
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-#include <gpac/utf.h>
-#include <gpac/xml.h>
-#include <gpac/internal/swf_dev.h>
-#include <gpac/internal/scenegraph_dev.h>
+#include "../../include/gpac/utf.h"
+#include "../../include/gpac/xml.h"
+#include "../../include/gpac/internal/swf_dev.h"
+#include "../../include/gpac/internal/scenegraph_dev.h"
 
 #ifndef GPAC_DISABLE_VRML
 

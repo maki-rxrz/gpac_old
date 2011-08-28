@@ -23,13 +23,13 @@
  *
  */
 
-#include <gpac/terminal.h>
-#include <gpac/internal/terminal_dev.h>
-#include <gpac/modules/codec.h>
-#include <gpac/constants.h>
-#include <gpac/modules/service.h>
-#include <gpac/thread.h>
-#include <gpac/media_tools.h>
+#include "../../include/gpac/terminal.h"
+#include "../../include/gpac/internal/terminal_dev.h"
+#include "../../include/gpac/modules/codec.h"
+#include "../../include/gpac/constants.h"
+#include "../../include/gpac/modules/service.h"
+#include "../../include/gpac/thread.h"
+#include "../../include/gpac/media_tools.h"
 
 #include <jni.h>
 #include <android/log.h>

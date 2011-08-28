@@ -24,8 +24,8 @@
  */
 
 
-#include <gpac/modules/video_out.h>
-#include <gpac/scenegraph_svg.h>
+#include "../../include/gpac/modules/video_out.h"
+#include "../../include/gpac/scenegraph_svg.h"
 
 #include "directfb_out.h"
 
