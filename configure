@@ -1253,7 +1253,7 @@ if $pkg_config --exists libavcodec libavformat libswscale 2> /dev/null  ; then
     has_ffmpeg="system"
 else
     ffmpeg_cflags=""
-    ffmpeg_lflags="-lz -lavcodec -lavformat"
+    ffmpeg_lflags="-lz -lavcodec -lavformat -lswscale -lavutil"
 fi
 
 cat > $TMPC << EOF
