@@ -1297,7 +1297,7 @@ fi
 #look for FFMPEG support
 
 ffmpeg_cflags=""
-ffmpeg_lflags="-lz -lavcodec -lavformat -lavutil -lswscale"
+ffmpeg_lflags="-lz -lavcodec -lavformat -lavutil -lswscale -lavutil"
 if test "$pkg_config" != "no"; then
   if $pkg_config --exists libavcodec libavformat libswscale 2> /dev/null  ; then
     ffmpeg_cflags=`$pkg_config --cflags libavcodec libavformat libswscale libavutil`
