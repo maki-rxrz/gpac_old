@@ -721,7 +721,7 @@ EOF
             mozjs_pkgcfg="mozjs"
         elif $pkg_config --exists mozjs185 2> /dev/null  ; then
             mozjs_pkgcfg="mozjs185"
-	fi
+        fi
 
         if test $mozjs_pkgcfg != "no" ; then
             js_flags=`$pkg_config --cflags $mozjs_pkgcfg`
@@ -819,14 +819,14 @@ EOF
             #dc added end
         else
             if $pkg_config --exists mozilla-js 2> /dev/null  ; then
-		mozjs_pkgcfg="mozilla-js"
+                mozjs_pkgcfg="mozilla-js"
             elif $pkg_config --exists mozjs 2> /dev/null  ; then
-		mozjs_pkgcfg="mozjs"
+                mozjs_pkgcfg="mozjs"
             elif $pkg_config --exists mozjs185 2> /dev/null  ; then
-		mozjs_pkgcfg="mozjs185"
-	    fi
+                mozjs_pkgcfg="mozjs185"
+            fi
 
-	    if test mozjs_pkgcfg != "no" ; then
+            if test $mozjs_pkgcfg != "no" ; then
                 js_flags=`$pkg_config --cflags $mozjs_pkgcfg`
                 js_lib_pkg=`$pkg_config --libs $mozjs_pkgcfg`
                 if $cc -o $TMPO $TMPC $js_flags $js_lib_pkg $LDFLAGS -lpthread 2> /dev/null  ; then
@@ -889,33 +889,33 @@ cat > $TMPC << EOF
 #include <jsapi.h>
 int main( void ) { jsval *vp; JSObject *obj = JS_NewObjectForConstructor(c, vp); }
 EOF
-	                if $cc -o $TMPO $TMPC $js_flags $LDFLAGS $js_lib 2> /dev/null  ; then
-	                    js_flags="-DUSE_FFDEV_12 $js_flags"
-	                elif ! grep JS_ConstructObject $js_inc/jsapi.h > /dev/null 2>&1 ; then
-	                    	js_flags="-DUSE_FFDEV_16 $js_flags"
-	                elif grep JSHandleObject $js_inc/jsapi.h > /dev/null 2>&1 ; then
-	                    	js_flags="-DUSE_FFDEV_15 $js_flags"
-                        else
-				js_flags="-DUSE_FFDEV_14 $js_flags"
-         		fi
+                    if $cc -o $TMPO $TMPC $js_flags $LDFLAGS $js_lib 2> /dev/null  ; then
+                        js_flags="-DUSE_FFDEV_12 $js_flags"
+                    elif ! grep JS_ConstructObject $js_inc/jsapi.h > /dev/null 2>&1 ; then
+                        js_flags="-DUSE_FFDEV_16 $js_flags"
+                    elif grep JSHandleObject $js_inc/jsapi.h > /dev/null 2>&1 ; then
+                        js_flags="-DUSE_FFDEV_15 $js_flags"
+                    else
+                        js_flags="-DUSE_FFDEV_14 $js_flags"
+                    fi
                 else
 cat > $TMPC << EOF
 #include <jsapi.h>
 int main( void ) { JSContext *cx; JS_SetContextThread(cx); }
 EOF
-		        if $cc -o $TMPO $TMPC $js_flags $LDFLAGS $js_lib 2> /dev/null  ; then
+                    if $cc -o $TMPO $TMPC $js_flags $LDFLAGS $js_lib 2> /dev/null  ; then
 cat > $TMPC << EOF
 #include <jsapi.h>
 int main( void ) { JSContext *cx; JS_SetRuntimeThread(cx); }
 EOF
-			        if $cc -o $TMPO $TMPC $js_flags $LDFLAGS $js_lib 2> /dev/null  ; then
-			            js_flags="$js_flags"
-			        else
-			            js_flags="-DNO_JS_RUNTIMETHREAD $js_flags"
-			        fi
-		        else
-		            js_flags="-DUSE_FFDEV_11 $js_flags"
-		        fi
+                    if $cc -o $TMPO $TMPC $js_flags $LDFLAGS $js_lib 2> /dev/null  ; then
+                        js_flags="$js_flags"
+                    else
+                        js_flags="-DNO_JS_RUNTIMETHREAD $js_flags"
+                    fi
+                    else
+                        js_flags="-DUSE_FFDEV_11 $js_flags"
+                    fi
                 fi
             fi
         fi
@@ -2799,9 +2799,9 @@ echo "GPAC_USE_TINYGL=$has_tinygl" >> config.mak
 echo "OGL_INCLS=$INCL3D" >> config.mak
 
 if test "$disable_isoff" = "yes" -o "$disable_isoff_write" = "yes" ; then
-	echo "DISABLE_ISOFF=yes" >> config.mak
+    echo "DISABLE_ISOFF=yes" >> config.mak
 else
-        echo "DISABLE_ISOFF=no" >> config.mak
+    echo "DISABLE_ISOFF=no" >> config.mak
 fi
 
 echo "HAS_OPENGL=$has_opengl" >> config.mak
