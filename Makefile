@@ -125,6 +125,7 @@ uninstall:
 
 installdylib:
 ifeq ($(CONFIG_WIN32),yes)
+	$(INSTALL) -d "$(DESTDIR)$(prefix)/bin"
 	$(INSTALL) $(INSTFLAGS) -m 755 bin/gcc/libgpac.$(DYN_LIB_SUFFIX) $(DESTDIR)$(prefix)/bin
 ifeq ($(STRIPINSTALL),yes)
 	$(STRIP) $(DESTDIR)$(prefix)/bin/libgpac.$(DYN_LIB_SUFFIX)
