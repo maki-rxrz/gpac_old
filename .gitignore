@@ -47,3 +47,8 @@
 config.h
 config.mak
 revision.h
+core
+*.kdev4
+.kdev*
+gmon.out
+*.dmg
