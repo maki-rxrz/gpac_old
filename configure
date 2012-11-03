@@ -341,9 +341,9 @@ for opt do
             ;;
         --source-path=*) source_path=`echo $opt | cut -d '=' -f 2`
             ;;
-        --cross-prefix=*) cross_prefix=`echo $opt | cut -d '=' -f 2` && echo "\ncross-prefix detected: $cross_prefix"
+        --cross-prefix=*) cross_prefix=`echo $opt | cut -d '=' -f 2` && printf "\ncross-prefix detected: $cross_prefix\n"
             ;;
-        --target-os=*) targetos=`echo $opt | cut -d '=' -f 2 | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz` && echo "\ntarget-os detected: $targetos"
+        --target-os=*) targetos=`echo $opt | cut -d '=' -f 2 | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz` && printf "\ntarget-os detected: $targetos\n"
             ;;
         --cc=*) cc=`echo $opt | cut -d '=' -f 2`
             ;;
