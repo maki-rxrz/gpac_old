@@ -28,7 +28,7 @@
 #include "ts2hds.h"
 
 //we need to write Adobe custom boxes
-#include <gpac/internal/isomedia_dev.h>
+#include "../../include/gpac/internal/isomedia_dev.h"
 
 GF_Err adobize_segment(GF_ISOFile *isom_file, AdobeHDSCtx *ctx)
 {

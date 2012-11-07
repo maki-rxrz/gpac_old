@@ -25,7 +25,7 @@
  *
  */
 
-#include <gpac/media_tools.h>
+#include "../../include/gpac/media_tools.h"
 
 //f4m
 typedef struct __tag_adobe_stream AdobeStream;
