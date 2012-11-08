@@ -43,6 +43,7 @@
 #endif
 #include "../../include/gpac/network.h"
 
+#include <mbstring.h>
 extern char *split_file_name(char *path);
 
 #ifndef GPAC_DISABLE_ISOM_WRITE
@@ -2098,7 +2099,7 @@ GF_Err cat_multiple_files(GF_ISOFile *dest, char *fileName, u32 import_flags, Do
 	cat_enum.allow_add_in_command = allow_add_in_command;
 
 	strcpy(cat_enum.szPath, fileName);
-	sep = strrchr(cat_enum.szPath, GF_PATH_SEPARATOR);
+	sep = _mbsrchr(cat_enum.szPath, GF_PATH_SEPARATOR);
 	if (!sep) sep = strrchr(cat_enum.szPath, '/');
 	if (!sep) {
 		strcpy(cat_enum.szPath, ".");
@@ -2597,7 +2598,7 @@ GF_ISOFile *package_file(char *file_name, char *fcc, const char *tmpdir, Bool ma
 	root_dir[0] = 0;
 	if (make_wgt) {
 		WGTEnum wgt;
-		char *sep = strrchr(file_name, '\\');
+		char *sep = _mbsrchr(file_name, '\\');
 		if (!sep) sep = strrchr(file_name, '/');
 		if (sep) {
 			char c = sep[1];
@@ -2694,7 +2695,7 @@ GF_ISOFile *package_file(char *file_name, char *fcc, const char *tmpdir, Bool ma
 		if (make_wgt) {
 			char *sep;
 			while (1) {
-				sep = strchr(name, '\\');
+				sep = _mbsrchr(name, '\\');
 				if (!sep) break;
 				sep[0] = '/';
 			}
