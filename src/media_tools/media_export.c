@@ -683,14 +683,18 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 	if ((m_stype==GF_ISOM_SUBTYPE_MPEG4) || (m_stype==GF_ISOM_SUBTYPE_MPEG4_CRYP))
 		dcfg = gf_isom_get_decoder_config(dumper->file, track, 1);
 
-	if (dumper->out_name && strrchr(dumper->out_name, '.')) {
-		char *out_name;
-		if ((out_name = _mbsrchr(dumper->out_name, '\\'))
-		 || (out_name = _mbsrchr(dumper->out_name, '/')))
-			out_name++;
-		if (!out_name)
-			out_name = dumper->out_name;
-		add_ext = (strrchr(out_name, '.')==NULL) ? 1 : 0;
+	if (dumper->out_name) {
+		if (strrchr(dumper->out_name, '.')) {
+			char *out_name;
+			if ((out_name = _mbsrchr(dumper->out_name, '\\'))
+			 || (out_name = _mbsrchr(dumper->out_name, '/')))
+				out_name++;
+			if (!out_name)
+				out_name = dumper->out_name;
+			add_ext = (strrchr(out_name, '.')==NULL) ? 1 : 0;
+		}
+		else
+			add_ext = 1;
 	}
 	strcpy(szName, dumper->out_name ? dumper->out_name : "");
 	if (dcfg) {
