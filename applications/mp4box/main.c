@@ -752,7 +752,7 @@ void PrintUsage()
 }
 
 
-static char *split_file_name(char *path)
+extern char *split_file_name(char *path)
 {
 	char *file_name;
 	if ((file_name = _mbsrchr(path, '\\'))
