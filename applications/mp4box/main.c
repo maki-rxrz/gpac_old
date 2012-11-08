@@ -59,6 +59,8 @@
 
 #include <time.h>
 
+#include <mbstring.h>
+
 #define BUFFSIZE	8192
 
 /*in fileimport.c*/
@@ -734,6 +736,18 @@ void PrintUsage()
 }
 
 
+static char *split_file_name(char *path)
+{
+	char *file_name;
+	if ((file_name = _mbsrchr(path, '\\'))
+	 || (file_name = strrchr(path, '/')))
+		file_name++;
+	if (!file_name)
+		file_name = path;
+	return file_name;
+}
+
+
 void scene_coding_log(void *cbk, u32 log_level, u32 log_tool, const char *fmt, va_list vlist)
 {
 	FILE *logs = cbk;
@@ -1042,7 +1056,7 @@ void remove_systems_tracks(GF_ISOFile *file)
 u32 get_file_type_by_ext(char *inName)
 {
 	u32 type = 0;
-	char *ext = strrchr(inName, '.');
+	char *ext = strrchr(split_file_name(inName), '.');
 	if (ext) {
 		char *sep;
 		if (!strcmp(ext, ".gz")) ext = strrchr(ext-1, '.');
@@ -2668,7 +2682,7 @@ int mp4boxMain(int argc, char **argv)
 			MP4BOX_EXIT_WITH_CODE(1);
 		}
 		strcpy(outfile, outName ? outName : inName);
-		if (strchr(outfile, '.')) {
+		if (strchr(split_file_name(outfile), '.')) {
 			while (outfile[strlen(outfile)-1] != '.') outfile[strlen(outfile)-1] = 0;
 			outfile[strlen(outfile)-1] = 0;
 		}
@@ -2808,7 +2822,7 @@ int mp4boxMain(int argc, char **argv)
 		if (do_log) {
 			char logfile[5000];
 			strcpy(logfile, inName);
-			if (strchr(logfile, '.')) {
+			if (strchr(split_file_name(logfile), '.')) {
 				while (logfile[strlen(logfile)-1] != '.') logfile[strlen(logfile)-1] = 0;
 				logfile[strlen(logfile)-1] = 0;
 			}
@@ -2816,7 +2830,7 @@ int mp4boxMain(int argc, char **argv)
 			logs = gf_f64_open(logfile, "wt");
 		}
 		strcpy(outfile, outName ? outName : inName);
-		if (strchr(outfile, '.')) {
+		if (strchr(split_file_name(outfile), '.')) {
 			while (outfile[strlen(outfile)-1] != '.') outfile[strlen(outfile)-1] = 0;
 			outfile[strlen(outfile)-1] = 0;
 		}
@@ -3049,8 +3063,8 @@ int mp4boxMain(int argc, char **argv)
 	}
 
 	strcpy(outfile, outName ? outName : inName);
-	if (strrchr(outfile, '.')) {
-		char *szExt = strrchr(outfile, '.');
+	if (strrchr(split_file_name(outfile), '.')) {
+		char *szExt = strrchr(split_file_name(outfile), '.');
 
 		/*turn on 3GP saving*/
 		if (!stricmp(szExt, ".3gp") || !stricmp(szExt, ".3gpp") || !stricmp(szExt, ".3g2"))
@@ -3378,7 +3392,7 @@ int mp4boxMain(int argc, char **argv)
 
 			if (pack_file) {
 				strcpy(outfile, rel_name ? rel_name + 1 : inName);
-				rel_name = strrchr(outfile, '.');
+				rel_name = strrchr(split_file_name(outfile), '.');
 				if (rel_name) rel_name[0] = 0;
 				strcat(outfile, ".m21");
 			}
@@ -3627,7 +3641,7 @@ int mp4boxMain(int argc, char **argv)
 				tlen = (u32) fread(d, sizeof(char), tlen, t);
 				fclose(t);
 
-				ext = strrchr(val, '.');
+				ext = strrchr(split_file_name(val), '.');
 				if (!stricmp(ext, ".png")) tlen |= 0x80000000;
 				e = gf_isom_apple_set_tag(file, GF_ISOM_ITUNE_COVER_ART, d, tlen);
 				gf_free(d);
