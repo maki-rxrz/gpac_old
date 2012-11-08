@@ -3465,7 +3465,7 @@ int mp4boxMain(int argc, char **argv)
 		if (outName) {
 			strcpy(outfile, outName);
 		} else {
-			char *rel_name = strrchr(inName, GF_PATH_SEPARATOR);
+			char *rel_name = _mbsrchr(inName, GF_PATH_SEPARATOR);
 			if (!rel_name) rel_name = strrchr(inName, '/');
 
 			strcpy(outfile, "");
