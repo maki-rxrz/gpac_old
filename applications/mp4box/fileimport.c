@@ -43,6 +43,8 @@
 #endif
 #include "../../include/gpac/network.h"
 
+extern char *split_file_name(char *path);
+
 #ifndef GPAC_DISABLE_ISOM_WRITE
 
 #include "../../include/gpac/xml.h"
@@ -998,9 +1000,14 @@ GF_Err split_isomedia_file(GF_ISOFile *mp4, Double split_dur, u32 split_size_kb,
 
 
 	strcpy(szName, inName);
-	ext = strrchr(szName, '.');
-	if (ext) ext[0] = 0;
-	ext = strrchr(inName, '.');
+	ext = strrchr(split_file_name(szName), '.');
+	if (ext) {
+		ext[0] = 0;
+		ext = strrchr(split_file_name(inName), '.');
+	} else {
+		static const char null_str = '\0';
+		ext = (char *)&null_str;
+	}
 
 	dest = NULL;
 
@@ -2283,7 +2290,7 @@ GF_Err EncodeBIFSChunk(GF_SceneManager *ctx, char *bifsOutputFile, GF_Err (*AUCa
 	FILE *f;
 
 	strcpy(szRad, bifsOutputFile);
-	ext = strrchr(szRad, '.');
+	ext = strrchr(split_file_name(szRad), '.');
 	if (ext) ext[0] = 0;
 
 
@@ -2478,7 +2485,7 @@ GF_Err EncodeFileChunk(char *chunkFile, char *bifs, char *inputContext, char *ou
 
 		/*check if we dump to BT, XMT or encode to MP4*/
 		strcpy(szF, outputContext);
-		ext = strrchr(szF, '.');
+		ext = strrchr(split_file_name(szF), '.');
 		d_mode = GF_SM_DUMP_BT;
 		do_enc = 0;
 		if (ext) {
@@ -2691,7 +2698,7 @@ GF_ISOFile *package_file(char *file_name, char *fcc, const char *tmpdir, Bool ma
 
 
 		mime = encoding = NULL;
-		ext = strrchr(item, '.');
+		ext = strrchr(split_file_name(item), '.');
 		if (!stricmp(ext, ".gz")) ext = strrchr(ext-1, '.');
 
 		if (!stricmp(ext, ".jpg") || !stricmp(ext, ".jpeg")) mime = "image/jpeg";
