@@ -46,6 +46,8 @@
 #include <zlib.h>
 #endif
 
+#include <mbstring.h>
+
 GF_Err gf_media_export_nhml(GF_MediaExporter *dumper, Bool dims_doc);
 
 static GF_Err gf_export_message(GF_MediaExporter *dumper, GF_Err e, char *format, ...)
@@ -452,7 +454,15 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 	}
 	if (dumper->flags & GF_EXPORT_PROBE_ONLY) return GF_OK;
 
-	ext_start = strrchr(dumper->out_name, '.');
+	if (dumper->out_name && strrchr(dumper->out_name, '.')) {
+		char *out_name;
+		if ((out_name = _mbsrchr(dumper->out_name, '\\'))
+		 || (out_name = strrchr(dumper->out_name, '/')))
+			out_name++;
+		if (!out_name)
+			out_name = dumper->out_name;
+		ext_start = strrchr(out_name, '.');
+	}
 
 	if (dumper->out_name && !strcmp(dumper->out_name, "std"))
 		is_stdout = 1;
@@ -679,7 +689,7 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 	return GF_NOT_SUPPORTED;
 #else
 	GF_Err e = GF_OK;
-	Bool add_ext;
+	Bool add_ext = 0;
 	GF_DecoderConfig *dcfg;
 	GF_GenericSampleDescription *udesc;
 	char szName[1000], szEXT[5], GUID[16];
@@ -723,7 +733,19 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 	if ((m_stype==GF_ISOM_SUBTYPE_MPEG4) || (m_stype==GF_ISOM_SUBTYPE_MPEG4_CRYP))
 		dcfg = gf_isom_get_decoder_config(dumper->file, track, 1);
 
-	add_ext = (dumper->out_name && strrchr(dumper->out_name , '.')==NULL) ? 1 : 0;
+	if (dumper->out_name) {
+		if (strrchr(dumper->out_name, '.')) {
+			char *out_name;
+			if ((out_name = _mbsrchr(dumper->out_name, '\\'))
+			 || (out_name = strrchr(dumper->out_name, '/')))
+				out_name++;
+			if (!out_name)
+				out_name = dumper->out_name;
+			add_ext = (strrchr(out_name, '.')==NULL) ? 1 : 0;
+		}
+		else
+			add_ext = 1;
+	}
 	strcpy(szName, dumper->out_name ? dumper->out_name : "");
 	if (dcfg) {
 		switch (dcfg->streamType) {
