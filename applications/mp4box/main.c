@@ -1073,10 +1073,20 @@ void remove_systems_tracks(GF_ISOFile *file)
 u32 get_file_type_by_ext(char *inName)
 {
 	u32 type = 0;
-	char *ext = strrchr(split_file_name(inName), '.');
+	char *file_name = split_file_name(inName);
+	char *ext = strrchr(file_name, '.');
 	if (ext) {
 		char *sep;
-		if (!strcmp(ext, ".gz")) ext = strrchr(ext-1, '.');
+		if (!strcmp(ext, ".gz")) {
+			char *gz_ext = ext;
+			while (ext != file_name) {
+				ext--;
+				if (ext[0] == '.')
+					break;
+			}
+			if (ext == file_name)
+				ext = gz_ext;
+		}
 		ext+=1;
 		sep = strchr(ext, '.');
 		if (sep) sep[0] = 0;

@@ -2695,6 +2695,7 @@ GF_ISOFile *package_file(char *file_name, char *fcc, const char *tmpdir, Bool ma
 	for (i=0; i<count; i++) {
 		char *ext, *mime, *encoding, *name = NULL;
 		char *item = gf_list_get(imports, i);
+		char *item_name;
 
 		name = gf_strdup(item + skip_chars);
 
@@ -2713,8 +2714,18 @@ GF_ISOFile *package_file(char *file_name, char *fcc, const char *tmpdir, Bool ma
 
 
 		mime = encoding = NULL;
-		ext = strrchr(split_file_name(item), '.');
-		if (!stricmp(ext, ".gz")) ext = strrchr(ext-1, '.');
+		item_name = split_file_name(item);
+		ext = strrchr(item_name, '.');
+		if (!stricmp(ext, ".gz")) {
+			char *gz_ext = ext;
+			while (ext != item_name) {
+				ext--;
+				if (ext[0] == '.')
+					break;
+			}
+			if (ext == item_name)
+				ext = gz_ext;
+		}
 
 		if (!stricmp(ext, ".jpg") || !stricmp(ext, ".jpeg")) mime = "image/jpeg";
 		else if (!stricmp(ext, ".png")) mime = "image/png";
