@@ -42,11 +42,13 @@
 #include "../../include/gpac/nodes_mpeg4.h"
 #endif
 
+extern char *split_file_name(char *path);
+
 #ifndef GPAC_DISABLE_ISOM_WRITE
 
 #include "../../include/gpac/xml.h"
 
-typedef struct 
+typedef struct
 {
 	const char *root_file;
 	const char *dir;
@@ -185,7 +187,7 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 	memset(&import, 0, sizeof(GF_MediaImporter));
 
 	strcpy(szName, inName);
-	ext = strrchr(inName, '.');
+	ext = strrchr(split_file_name(inName), '.');
 	if (!ext) {
 		fprintf(stderr, "Unknown input file type\n");
 		return GF_BAD_PARAM;
@@ -457,7 +459,7 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 				}
 			}
 		}
-		else if (!strnicmp(ext, "prog_id=", 8)) { 
+		else if (!strnicmp(ext, "prog_id=", 8)) {
 			prog_id = atoi(ext+8);
 			do_all = 0;
 		}
@@ -845,7 +847,7 @@ malloc_fail:
 			} else if (rvc_predefined>0) {
 				gf_isom_set_rvc_config(import.dest, track, 1, rvc_predefined, NULL, NULL, 0);
 			}
-			
+
 			gf_isom_set_composition_offset_mode(import.dest, track, negative_cts_offset);
 
 			/*when importing SVC we ALWAYS have AVC+SVC single track mode*/
@@ -933,9 +935,14 @@ GF_Err split_isomedia_file(GF_ISOFile *mp4, Double split_dur, u32 split_size_kb,
 
 
 	strcpy(szName, inName);
-	ext = strrchr(szName, '.');
-	if (ext) ext[0] = 0;
-	ext = strrchr(inName, '.');
+	ext = strrchr(split_file_name(szName), '.');
+	if (ext) {
+		ext[0] = 0;
+		ext = strrchr(split_file_name(inName), '.');
+	} else {
+		static const char null_str = '\0';
+		ext = (char *)&null_str;
+	}
 
 	dest = NULL;
 
@@ -1497,14 +1504,14 @@ GF_Err cat_isomedia_file(GF_ISOFile *dest, char *fileName, u32 import_flags, Dou
 	Double aligned_to_DTS = 0;
 
 	if (strchr(fileName, '*')) return cat_multiple_files(dest, fileName, import_flags, force_fps, frames_per_sample, tmp_dir, force_cat, align_timelines);
-	
+
 	multi_cat = strchr(fileName, '+');
 	if (multi_cat) {
 		multi_cat[0] = 0;
 		multi_cat = &multi_cat[1];
 	}
 	opts = strchr(fileName, ':');
-	if (opts && (opts[1]=='\\')) 
+	if (opts && (opts[1]=='\\'))
 		opts = strchr(fileName, ':');
 
 	e = GF_OK;
@@ -1524,7 +1531,7 @@ GF_Err cat_isomedia_file(GF_ISOFile *dest, char *fileName, u32 import_flags, Dou
 	while (multi_cat) {
 		char *sep = strchr(multi_cat, '+');
 		if (sep) sep[0] = 0;
-		
+
 		e = import_file(orig, multi_cat, import_flags, force_fps, frames_per_sample);
 		if (e) {
 			gf_isom_delete(orig);
@@ -1756,11 +1763,11 @@ GF_Err cat_isomedia_file(GF_ISOFile *dest, char *fileName, u32 import_flags, Dou
 				u32 dst_timescale = 0;
 				u32 idx;
 				for (idx=0; idx<nb_tracks; idx++) {
-					if (max_timescale < gf_isom_get_media_timescale(orig, idx+1)) 
-						max_timescale = gf_isom_get_media_timescale(orig, idx+1); 
+					if (max_timescale < gf_isom_get_media_timescale(orig, idx+1))
+						max_timescale = gf_isom_get_media_timescale(orig, idx+1);
 				}
 				if (dst_timescale < max_timescale) {
-					dst_timescale = gf_isom_get_media_timescale(dest, dst_tk); 
+					dst_timescale = gf_isom_get_media_timescale(dest, dst_tk);
 					idx = max_timescale / dst_timescale;
 					if (dst_timescale * idx < max_timescale) idx ++;
 					dst_timescale *= idx;
@@ -1856,12 +1863,12 @@ GF_Err cat_isomedia_file(GF_ISOFile *dest, char *fileName, u32 import_flags, Dou
 
 					dur *= rescale;
 					prev_dur *= rescale;
-					
-					/*safety test: some files have broken edit lists. If no more than 2 entries, check that the segment duration 
+
+					/*safety test: some files have broken edit lists. If no more than 2 entries, check that the segment duration
 					is less or equal to the movie duration*/
 					if (prev_dur < segmentDuration) {
 						fprintf(stderr, "Warning: suspicious edit list entry found: duration %g sec but longest track duration before cat is %g - fixing it\n", (Double) (s64) segmentDuration/1000.0, prev_dur/1000);
-						segmentDuration = (u64) (s64) ( (Double) (s64) (dest_track_dur_before_cat - mediaTime) * rescale ); 
+						segmentDuration = (u64) (s64) ( (Double) (s64) (dest_track_dur_before_cat - mediaTime) * rescale );
 					}
 
 					segmentDuration += (u64) (s64) dur;
@@ -2015,7 +2022,7 @@ GF_Err EncodeFile(char *in, GF_ISOFile *mp4, GF_SMEncodeOptions *opts, FILE *log
 #ifndef GPAC_DISABLE_SCENE_STATS
 	GF_StatManager *statsman = NULL;
 #endif
-	
+
 	sg = gf_sg_new();
 	ctx = gf_sm_new(sg);
 	memset(&load, 0, sizeof(GF_SceneLoader));
@@ -2170,7 +2177,7 @@ GF_Err EncodeBIFSChunk(GF_SceneManager *ctx, char *bifsOutputFile, GF_Err (*AUCa
 	FILE *f;
 
 	strcpy(szRad, bifsOutputFile);
-	ext = strrchr(szRad, '.');
+	ext = strrchr(split_file_name(szRad), '.');
 	if (ext) ext[0] = 0;
 
 
@@ -2365,7 +2372,7 @@ GF_Err EncodeFileChunk(char *chunkFile, char *bifs, char *inputContext, char *ou
 
 		/*check if we dump to BT, XMT or encode to MP4*/
 		strcpy(szF, outputContext);
-		ext = strrchr(szF, '.');
+		ext = strrchr(split_file_name(szF), '.');
 		d_mode = GF_SM_DUMP_BT;
 		do_enc = 0;
 		if (ext) {
@@ -2578,7 +2585,7 @@ GF_ISOFile *package_file(char *file_name, char *fcc, const char *tmpdir, Bool ma
 
 
 		mime = encoding = NULL;
-		ext = strrchr(item, '.');
+		ext = strrchr(split_file_name(item), '.');
 		if (!stricmp(ext, ".gz")) ext = strrchr(ext-1, '.');
 
 		if (!stricmp(ext, ".jpg") || !stricmp(ext, ".jpeg")) mime = "image/jpeg";
