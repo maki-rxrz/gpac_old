@@ -112,7 +112,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_new) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_read) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_write) )
-#pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_available_for_read ) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_available_for_read) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_del) )
 #endif
 
@@ -745,7 +745,9 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_set_watermark) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_set_edit_segment) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_modify_edit_segment) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_isom_modify_edit_segment2) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_append_edit_segment) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_isom_append_edit_segment2) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_remove_edit_segments) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_remove_edit_segment) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_set_media_language) )
@@ -1079,6 +1081,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_media_avc_rewrite_samples) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_media_split_svc) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_media_merge_svc) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_media_change_colorprop) )
 #endif /*GPAC_DISABLE_MEDIA_IMPORT*/
 
 #ifndef GPAC_DISABLE_ISOM_WRITE
@@ -1103,7 +1106,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_decrypt) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_encrypt) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_set_state) )
-#endif GPAC_DISABLE_MCRYPT
+#endif /*GPAC_DISABLE_MCRYPT*/
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_csum) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_file) )
 
@@ -1648,7 +1651,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(variant_playlist_del) )
 
 
-#pragma comment (linker, EXPORT_SYMBOL(TSDemux_Demux_Setup))
+#pragma comment (linker, EXPORT_SYMBOL(TSDemux_Demux_Setup) )
 #pragma comment (linker, EXPORT_SYMBOL(TSDemux_DemuxPlay) )
 #pragma comment (linker, EXPORT_SYMBOL(TSDemux_CloseDemux) )
 
