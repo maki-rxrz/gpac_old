@@ -573,6 +573,16 @@ LD_SONAME="-Wl,-h,$(LIB)"
 LINKLIBS+= -lrt
 endif
 
+ifeq ($(CONFIG_WIN32), yes)
+EXPORT_DEF=$(LIB:.$(DYN_LIB_SUFFIX)=.def)
+EXPORT_LIB=$(LIB:.$(DYN_LIB_SUFFIX)=.lib)
+LD_SONAME="-Wl,--out-implib,../bin/gcc/$(LIB).a,--output-def,../bin/gcc/$(EXPORT_DEF)"
+arch=i386
+ifeq ($(TARGET_ARCH_X64), yes)
+arch=i386:x86-64
+endif
+endif
+
 SRCS := $(OBJS:.o=.c)
 
 all: lib
@@ -605,7 +615,9 @@ else
 	$(AR) cr ../bin/gcc/libgpac_static.a $(OBJS)
 	$(RANLIB) ../bin/gcc/libgpac_static.a
 	$(CC) $(SHFLAGS) $(LD_SONAME) $(LDFLAGS) -o ../bin/gcc/$@ $(OBJS) $(EXTRALIBS)
-ifeq (,$(findstring yes, $(CONFIG_WIN32)))
+ifeq ($(CONFIG_WIN32), yes)
+	$(DLLTOOL) -m $(arch) -d ../bin/gcc/$(EXPORT_DEF) -l ../bin/gcc/$(EXPORT_LIB) -D $(LIB)
+else
 	mv ../bin/gcc/$@ ../bin/gcc/$@.$(VERSION_SONAME)
 	ln -sf $@.$(VERSION_SONAME) ../bin/gcc/$@.$(VERSION_MAJOR)
 	ln -sf $@.$(VERSION_SONAME) ../bin/gcc/$@
@@ -623,9 +635,15 @@ clean:
 	rm -rf ../bin/gcc/libgpac_static.a ../bin/gcc/libgpac.so \
 		../bin/gcc/libgpac.so.$(VERSION_MAJOR) \
 		../bin/gcc/libgpac.so.$(VERSION_SONAME)
+ifeq ($(CONFIG_WIN32), yes)
+	rm -f ../bin/gcc/$(EXPORT_LIB) ../bin/gcc/$(LIB).a
+endif
 
 distclean: clean
 	rm -f Makefile.bak .depend
+ifeq ($(CONFIG_WIN32), yes)
+	rm -f ../bin/gcc/$(EXPORT_DEF)
+endif
 
 
 # include dependency files if they exist

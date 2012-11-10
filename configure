@@ -45,6 +45,7 @@ ar="ar"
 ranlib="ranlib"
 make="make"
 strip="strip"
+dlltool="dlltool"
 pkg_config="pkg-config"
 windres="windres"
 readelf="readelf"
@@ -398,6 +399,7 @@ ranlib="${cross_prefix}${ranlib}"
 strip="${cross_prefix}${strip}"
 pkg_config="${pkg_config}"
 windres="${cross_prefix}${windres}"
+dlltool="${cross_prefix}${dlltool}"
 
 if test -z "$cross_prefix" ; then
     # If --cross-prefix is not specified, assume native build
@@ -2755,6 +2757,7 @@ echo "WINDRES=$windres" >> config.mak
 fi
 echo "INSTALL=$install" >> config.mak
 echo "LIBTOOL=libtool" >> config.mak
+echo "DLLTOOL=$dlltool" >> config.mak
 
 echo "INSTFLAGS=$instflags" >> config.mak
 echo "OPTFLAGS=$CFLAGS" >> config.mak
@@ -2772,6 +2775,9 @@ fi
 
 if test "$cpu" = "x86" ; then
     echo "TARGET_ARCH_X86=yes" >> config.mak
+    if test "$is_64" = "yes"; then
+    echo "TARGET_ARCH_X64=yes" >> config.mak
+    fi
 elif test "$cpu" = "armv4l" ; then
     echo "TARGET_ARCH_ARMV4L=yes" >> config.mak
 elif test "$cpu" = "alpha" ; then

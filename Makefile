@@ -140,7 +140,9 @@ ifeq ($(CONFIG_WIN32),yes)
 ifeq ($(STRIPINSTALL),yes)
 	$(STRIP) $(DESTDIR)$(prefix)/bin/libgpac.$(DYN_LIB_SUFFIX)
 endif
-	cp -p $(DESTDIR)$(prefix)/bin/libgpac.$(DYN_LIB_SUFFIX) "$(DESTDIR)$(prefix)/$(libdir)"
+	$(INSTALL) $(INSTFLAGS) bin/gcc/libgpac.$(DYN_LIB_SUFFIX).a $(DESTDIR)$(prefix)/$(libdir)
+	$(INSTALL) $(INSTFLAGS) bin/gcc/libgpac.def $(DESTDIR)$(prefix)/$(libdir)
+	$(INSTALL) $(INSTFLAGS) bin/gcc/libgpac.lib $(DESTDIR)$(prefix)/bin
 else
 ifeq ($(CONFIG_DARWIN),yes)
 	$(INSTALL) -m 755 bin/gcc/libgpac.$(DYN_LIB_SUFFIX) $(DESTDIR)$(prefix)/$(libdir)/libgpac.$(VERSION).$(DYN_LIB_SUFFIX)
@@ -164,7 +166,9 @@ endif
 uninstalldylib:
 ifeq ($(CONFIG_WIN32),yes)
 	rm -f $(DESTDIR)$(prefix)/bin/libgpac.$(DYN_LIB_SUFFIX)
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/libgpac.$(DYN_LIB_SUFFIX)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/libgpac.$(DYN_LIB_SUFFIX)*
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/libgpac.def
+	rm -f $(DESTDIR)$(prefix)/bin/libgpac.lib
 else
 ifeq ($(CONFIG_DARWIN),yes)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/libgpac.$(DYN_LIB_SUFFIX)
