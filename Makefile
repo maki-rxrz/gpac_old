@@ -48,12 +48,12 @@ distclean:
 	$(MAKE) -C src distclean
 	$(MAKE) -C applications distclean
 	$(MAKE) -C modules distclean
-	rm -f config.mak config.h include/gpac/revision.h
+	rm -f config.mak config.h $(SRC_PATH)/include/gpac/revision.h
 
 dep:	depend
 
 # tar release (use 'make -k tar' on a checkouted tree)
-FILE=gpac-$(shell grep "\#define GPAC_VERSION " include/gpac/version.h | \
+FILE=gpac-$(shell grep "\#define GPAC_VERSION " $(SRC_PATH)/include/gpac/version.h | \
                     cut -d "\"" -f 2 )
 
 tar:
