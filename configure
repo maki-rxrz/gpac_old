@@ -3228,4 +3228,16 @@ Libs: -L\${libdir} -lgpac
 Libs.private: $extralibs
 EOF
 
+#generate the export definition file.
+if test "$win32" = "yes" ; then
+    makedef_gpac="${source_path}/src/makedef_gpac.c"
+    grep '#include.*' ${source_path}/src/export.cpp > $makedef_gpac
+    echo "int main(int argc,char **argv){ if (argc<2) return -1; FILE *def = fopen(argv[1],\"wt\"); if (!def) return -1; fprintf(def,\"EXPORTS\n\");" >> $makedef_gpac
+    sed -e 's/#include.*//' -e 's/#pragma comment (linker, EXPORT_SYMBOL(/fprintf(def,"    /' -e 's/) )/\\n");/' -e 's/))/\\n");/' ${source_path}/src/export.cpp >> $makedef_gpac
+    echo "fclose(def);return 0;}" >> $makedef_gpac
+    $cc -o ./makedef_gpac $makedef_gpac -DGPAC_HAVE_CONFIG_H -I.
+    ./makedef_gpac "./bin/gcc/libgpac.def"
+    rm -f $makedef_gpac ./makedef_gpac*
+fi
+
 echo "Done - type 'make help' for make info, 'make' to build"

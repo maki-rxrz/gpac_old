@@ -576,7 +576,8 @@ endif
 ifeq ($(CONFIG_WIN32), yes)
 EXPORT_DEF=$(LIB:.$(DYN_LIB_SUFFIX)=.def)
 EXPORT_LIB=$(LIB:.$(DYN_LIB_SUFFIX)=.lib)
-LD_SONAME="-Wl,--out-implib,../bin/gcc/$(LIB).a,--output-def,../bin/gcc/$(EXPORT_DEF)"
+LD_SONAME="-Wl,--out-implib,../bin/gcc/$(LIB).a"
+LDFLAGS+=../bin/gcc/$(EXPORT_DEF)
 arch=i386
 ifeq ($(TARGET_ARCH_X64), yes)
 arch=i386:x86-64
