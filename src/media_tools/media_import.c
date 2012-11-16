@@ -1047,8 +1047,6 @@ static GF_Err gf_import_avi_video(GF_MediaImporter *import)
 	char *comp, *frame;
 	avi_t *in;
 
-	if (import->trackID>1) return GF_OK;
-
 	test = gf_f64_open(import->in_name, "rb");
 	if (!test) return gf_import_message(import, GF_URL_ERROR, "Opening %s failed", import->in_name);
 	fclose(test);
@@ -1078,7 +1076,10 @@ static GF_Err gf_import_avi_video(GF_MediaImporter *import)
 		AVI_close(in);
 		return GF_OK;
 	}
-
+	if (import->trackID>1) {
+		AVI_close(in);
+		return GF_OK;
+	}
 	destroy_esd = 0;
 	frame = NULL;
 	AVI_seek_start(in);
@@ -1409,10 +1410,9 @@ GF_Err gf_import_avi_audio(GF_MediaImporter *import)
 	unsigned char temp[4];
 	avi_t *in;
 
-	if (import->flags & GF_IMPORT_PROBE_ONLY) return GF_OK;
-
 	/*video only, ignore*/
 	if (import->trackID==1) return GF_OK;
+
 
 	test = gf_f64_open(import->in_name, "rb");
 	if (!test) return gf_import_message(import, GF_URL_ERROR, "Opening file %s failed", import->in_name);
