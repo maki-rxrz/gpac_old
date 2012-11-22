@@ -1,25 +1,25 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
- *  This file is part of GPAC 
+ *  This file is part of GPAC
  *
  *  GPAC is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -112,7 +112,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_new) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_read) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_write) )
-#pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_available_for_read ) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_available_for_read) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_del) )
 #endif
 
@@ -1111,7 +1111,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_decrypt) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_encrypt) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_set_state) )
-#endif GPAC_DISABLE_MCRYPT
+#endif /*GPAC_DISABLE_MCRYPT*/
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_csum) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_file) )
 
@@ -1465,7 +1465,7 @@
 #ifdef GPAC_HAS_SPIDERMONKEY
 #ifndef GPAC_DISABLE_SVG
 #pragma comment (linker, EXPORT_SYMBOL(gf_sg_handle_dom_event_for_vrml) )
-#endif 
+#endif
 #endif
 
 #endif /*GPAC_DISABLE_VRML*/
@@ -1658,7 +1658,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(variant_playlist_del) )
 
 
-#pragma comment (linker, EXPORT_SYMBOL(TSDemux_Demux_Setup))
+#pragma comment (linker, EXPORT_SYMBOL(TSDemux_Demux_Setup) )
 #pragma comment (linker, EXPORT_SYMBOL(TSDemux_DemuxPlay) )
 #pragma comment (linker, EXPORT_SYMBOL(TSDemux_CloseDemux) )
 

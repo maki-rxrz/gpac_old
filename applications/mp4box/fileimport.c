@@ -46,7 +46,7 @@
 
 #include "../../include/gpac/xml.h"
 
-typedef struct 
+typedef struct
 {
 	const char *root_file;
 	const char *dir;
@@ -176,7 +176,7 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 	new_timescale = 1;
 	rescale = 0;
 	text_layout = 0;
-	/*0: merge all 
+	/*0: merge all
 	  1: split base and all SVC in two tracks
 	  2: split all base and SVC layers in dedicated tracks
 	 */
@@ -457,7 +457,7 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 				}
 			}
 		}
-		else if (!strnicmp(ext, "prog_id=", 8)) { 
+		else if (!strnicmp(ext, "prog_id=", 8)) {
 			prog_id = atoi(ext+8);
 			do_all = 0;
 		}
@@ -511,7 +511,7 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 	import.video_fps = force_fps;
 	import.frames_per_sample = frames_per_sample;
 	import.flags = import_flags;
-	
+
 	if (!import.nb_tracks) {
 		u32 count, o_count;
 		o_count = gf_isom_get_track_count(import.dest);
@@ -844,7 +844,7 @@ malloc_fail:
 			} else if (rvc_predefined>0) {
 				gf_isom_set_rvc_config(import.dest, track, 1, rvc_predefined, NULL, NULL, 0);
 			}
-			
+
 			gf_isom_set_composition_offset_mode(import.dest, track, negative_cts_offset);
 
 			if (gf_isom_get_avc_svc_type(import.dest, track, 1)>=GF_ISOM_AVCTYPE_AVC_SVC)
@@ -1504,14 +1504,14 @@ GF_Err cat_isomedia_file(GF_ISOFile *dest, char *fileName, u32 import_flags, Dou
 	Double aligned_to_DTS = 0;
 
 	if (strchr(fileName, '*')) return cat_multiple_files(dest, fileName, import_flags, force_fps, frames_per_sample, tmp_dir, force_cat, align_timelines);
-	
+
 	multi_cat = strchr(fileName, '+');
 	if (multi_cat) {
 		multi_cat[0] = 0;
 		multi_cat = &multi_cat[1];
 	}
 	opts = strchr(fileName, ':');
-	if (opts && (opts[1]=='\\')) 
+	if (opts && (opts[1]=='\\'))
 		opts = strchr(fileName, ':');
 
 	e = GF_OK;
@@ -1531,7 +1531,7 @@ GF_Err cat_isomedia_file(GF_ISOFile *dest, char *fileName, u32 import_flags, Dou
 	while (multi_cat) {
 		char *sep = strchr(multi_cat, '+');
 		if (sep) sep[0] = 0;
-		
+
 		e = import_file(orig, multi_cat, import_flags, force_fps, frames_per_sample);
 		if (e) {
 			gf_isom_delete(orig);
@@ -1763,11 +1763,11 @@ GF_Err cat_isomedia_file(GF_ISOFile *dest, char *fileName, u32 import_flags, Dou
 				u32 dst_timescale = 0;
 				u32 idx;
 				for (idx=0; idx<nb_tracks; idx++) {
-					if (max_timescale < gf_isom_get_media_timescale(orig, idx+1)) 
-						max_timescale = gf_isom_get_media_timescale(orig, idx+1); 
+					if (max_timescale < gf_isom_get_media_timescale(orig, idx+1))
+						max_timescale = gf_isom_get_media_timescale(orig, idx+1);
 				}
 				if (dst_timescale < max_timescale) {
-					dst_timescale = gf_isom_get_media_timescale(dest, dst_tk); 
+					dst_timescale = gf_isom_get_media_timescale(dest, dst_tk);
 					idx = max_timescale / dst_timescale;
 					if (dst_timescale * idx < max_timescale) idx ++;
 					dst_timescale *= idx;
@@ -1863,12 +1863,12 @@ GF_Err cat_isomedia_file(GF_ISOFile *dest, char *fileName, u32 import_flags, Dou
 
 					dur *= rescale;
 					prev_dur *= rescale;
-					
-					/*safety test: some files have broken edit lists. If no more than 2 entries, check that the segment duration 
+
+					/*safety test: some files have broken edit lists. If no more than 2 entries, check that the segment duration
 					is less or equal to the movie duration*/
 					if (prev_dur < segmentDuration) {
 						fprintf(stderr, "Warning: suspicious edit list entry found: duration %g sec but longest track duration before cat is %g - fixing it\n", (Double) (s64) segmentDuration/1000.0, prev_dur/1000);
-						segmentDuration = (u64) (s64) ( (Double) (s64) (dest_track_dur_before_cat - mediaTime) * rescale ); 
+						segmentDuration = (u64) (s64) ( (Double) (s64) (dest_track_dur_before_cat - mediaTime) * rescale );
 					}
 
 					segmentDuration += (u64) (s64) dur;
@@ -2022,7 +2022,7 @@ GF_Err EncodeFile(char *in, GF_ISOFile *mp4, GF_SMEncodeOptions *opts, FILE *log
 #ifndef GPAC_DISABLE_SCENE_STATS
 	GF_StatManager *statsman = NULL;
 #endif
-	
+
 	sg = gf_sg_new();
 	ctx = gf_sm_new(sg);
 	memset(&load, 0, sizeof(GF_SceneLoader));
