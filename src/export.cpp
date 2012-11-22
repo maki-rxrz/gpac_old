@@ -114,7 +114,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_new) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_read) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_write) )
-#pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_available_for_read ) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_available_for_read) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_ringbuffer_del) )
 #endif
 
@@ -1208,7 +1208,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_decrypt) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_encrypt) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_set_state) )
-#endif GPAC_DISABLE_MCRYPT
+#endif /*GPAC_DISABLE_MCRYPT*/
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_csum) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_csum_hexa) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_file) )
@@ -1764,7 +1764,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(variant_playlist_del) )
 
 
-#pragma comment (linker, EXPORT_SYMBOL(gf_m2ts_demuxer_setup))
+#pragma comment (linker, EXPORT_SYMBOL(gf_m2ts_demuxer_setup) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_m2ts_demuxer_play) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_m2ts_demuxer_close) )
 

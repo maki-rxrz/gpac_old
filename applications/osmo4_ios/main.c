@@ -106,7 +106,7 @@ void PrintUsage()
 		"\t-rti fileName:  logs run-time info (FPS, CPU, Mem usage) to file\n"
 		"\t-rtix fileName: same as -rti but driven by GPAC logs\n"
 		"\t-quiet:         removes script message, buffering and downloading status\n"
-		"\t-opt	option:    Overrides an option in the configuration file. String format is section:key=value\n"
+		"\t-opt option:    Overrides an option in the configuration file. String format is section:key=value\n"
 		"\t-log-file file: sets output log file.\n"
 		"\t-log-level lev: sets log level. Possible values are:\n"
 		"\t        \"error\"      : logs only error messages\n"
@@ -141,7 +141,7 @@ void PrintUsage()
 #else
 		"\t-no-thread:     disables thread usage (except for audio)\n"
 #endif
-		"\t-no-audio:	   disables audio \n"
+		"\t-no-audio:      disables audio \n"
 		"\t-no-wnd:        uses windowless mode (Win32 only)\n"
 		"\t-align vh:      specifies v and h alignment for windowless mode\n"
 		"                   possible v values: t(op), m(iddle), b(ottom)\n"
@@ -157,7 +157,7 @@ void PrintUsage()
 		"\t-rgbds:         dumps the RGBDS pixel format texture\n"
 		"                   with -avi [times]: dumps an rgbds-format .avi\n"
 		"\t-rgbd:          dumps the RGBD pixel format texture\n"
-		"					with -avi [times]: dumps an rgbd-format .avi\n"
+		"                   with -avi [times]: dumps an rgbd-format .avi\n"
 		"\t-depth:         dumps depthmap (z-buffer) frames\n"
 		"                   with -avi [times]: dumps depthmap in grayscale .avi\n"
 		"                   with -bmp: dumps depthmap in grayscale .bmp\n"
