@@ -34,7 +34,7 @@
 #include "../../include/gpac/user.h"
 
 
-#ifndef GPAC_DISABLE_LOADER_BT
+#if !defined(GPAC_DISABLE_LOADER_BT) && !defined(GPAC_DISABLE_ZLIB)
 
 #include "../../include/gpac/mpeg4_odf.h"
 

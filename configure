@@ -307,7 +307,7 @@ Configuration options for libgpac - all options can be enabled with --enable-opt
 Extra libraries configuration. You can turn a libray off or force using the local version in gpac/extra_lib/
   --use-js=OPT             force SpiderMonkey ECMAScript OPT=[no,local]
   --use-ft=OPT             force FreeType OPT=[no,local]
-  --use-zlib=OPT           force ZLIB OPT=[no,local]
+  --use-zlib=OPT           force ZLIB OPT=[no,system,local]
   --use-jpeg=OPT           force JPEG OPT=[no,local]
   --use-png=OPT            force PNG OPT=[no,local]
   --use-faad=OPT           force FAAD OPT=[no,local]
@@ -672,7 +672,7 @@ if test "$cross_prefix" = "" ; then
       has_zlib="system"
   fi
 fi
-if test "$has_zlib" = "no" ; then
+if test "$has_zlib" = "force-no" ; then
   if $cc -o $TMPO $TMPC -I"$local_inc/zlib" -L$local_lib -lz 2> /dev/null  ; then
     has_zlib="local"
   fi
@@ -1794,8 +1794,13 @@ for opt do
                         echo
                     fi
                 fi
+				has_zlib=$tmp_has_zlib
+			elif test "$tmp_has_zlib" = "no" ; then
+				echo 
+				echo "WARNING!! : you have forced not to use ZLIB. This will disable some core functionalities of GPAC."
+				echo 
+				has_zlib="force-no"
             fi
-            has_png=$tmp_has_png
             ;;
         --use-ogg=*) has_ogg=${opt#--use-ogg=}
             ;;
@@ -2720,6 +2725,9 @@ else
     echo "#define GPAC_HAS_SPIDERMONKEY" >> $TMPH
 fi
 echo "CONFIG_ZLIB=$has_zlib" >> config.mak
+if test "$has_zlib" = "no" ; then
+    echo "#define GPAC_DISABLE_ZLIB" >> $TMPH
+fi
 echo "CONFIG_FT=$has_ft" >> config.mak
 
 echo "CONFIG_JPEG=$has_jpeg" >> config.mak
