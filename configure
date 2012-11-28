@@ -690,7 +690,7 @@ has_zlib="no"
       has_zlib="system"
   fi
 #fi
-if test "$has_zlib" = "force-no" ; then
+if test "$has_zlib" = "no" ; then
   if $cc -o $TMPO $TMPC -I"$local_inc/zlib" -L$local_lib -lz 2> /dev/null  ; then
     has_zlib="local"
   fi
