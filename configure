@@ -1796,12 +1796,12 @@ for opt do
                         echo
                     fi
                 fi
-				has_zlib=$tmp_has_zlib
-			elif test "$tmp_has_zlib" = "no" ; then
-				echo 
-				echo "WARNING!! : you have forced not to use ZLIB. This will disable some core functionalities of GPAC."
-				echo 
-				has_zlib="force-no"
+                has_zlib=$tmp_has_zlib
+            elif test "$tmp_has_zlib" = "no" ; then
+                echo 
+                echo "WARNING!! : you have forced not to use ZLIB. This will disable some core functionalities of GPAC."
+                echo 
+                has_zlib="force-no"
             fi
             ;;
         --use-ogg=*) has_ogg=${opt#--use-ogg=}
