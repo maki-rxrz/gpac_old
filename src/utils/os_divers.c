@@ -406,7 +406,9 @@ GF_Err gf_move_file(const char *fileName, const char *newFileName)
 	return (MoveFile(fileName, newFileName) == 0 ) ? GF_IO_ERR : GF_OK;
 #else
 	/* success is == 0 */
-	return ( rename(fileName, newFileName) == 0) ? GF_OK : GF_IO_ERR;
+	char cmd[1024];
+	snprintf(cmd, sizeof(cmd)-1, "mv %s %s", fileName, newFileName);
+	return ( system(cmd) == 0) ? GF_OK : GF_IO_ERR;
 #endif
 }
 
@@ -1930,7 +1932,7 @@ GF_GlobalLock * gf_create_PID_file( const char * resourceName )
 	{
 		int sz = 100;
 		char * buf = gf_malloc( sz );
-		sz = snprintf(buf, sz, "%ld\n", (long) getpid());
+		sz = snprintf(buf, sz-1, "%ld\n", (long) getpid());
 		if (write(fd, buf, sz) != sz){
 			gf_free(buf);
 			goto exit;

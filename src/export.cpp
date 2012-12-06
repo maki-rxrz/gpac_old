@@ -698,7 +698,8 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_get_sample_rap_roll_info) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_reset_fragment_info) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_get_track_original_id) )
-
+#pragma comment (linker, EXPORT_SYMBOL(gf_isom_set_nalu_extract_mode) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_isom_get_nalu_extract_mode) )
 
 # ifndef GPAC_DISABLE_ISOM_DUMP
 #pragma comment (linker, EXPORT_SYMBOL(gf_isom_dump) )
@@ -1740,6 +1741,8 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_dash_group_segment_switch_forced) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_dash_group_current_segment_start_time) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_dash_group_get_presentation_time_offset) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_dash_group_get_video_info) )
+
 
 #endif
 
