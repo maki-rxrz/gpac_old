@@ -44,6 +44,8 @@ typedef struct __mpd_module
 
 	Bool connection_ack_sent;
 	Bool in_seek;
+	Bool memory_storage;
+	Bool use_max_res, immediate_switch;
     Double previous_start_range;
 	/*max width & height in all active representations*/
 	u32 width, height;
@@ -315,9 +317,11 @@ void mpdin_dash_io_delete_cache_file(GF_DASHFileIO *dashio, GF_DASHFileIOSession
 
 GF_DASHFileIOSession mpdin_dash_io_create(GF_DASHFileIO *dashio, Bool persistent, const char *url)
 {
+	GF_DownloadSession *sess;
 	u32 flags = GF_NETIO_SESSION_NOT_THREADED;
 	GF_MPD_In *mpdin = (GF_MPD_In *)dashio->udta;
-	GF_DownloadSession *sess;
+	if (mpdin->memory_storage)
+		flags |= GF_NETIO_SESSION_MEMORY_CACHE;
 
 	if (persistent) flags |= GF_NETIO_SESSION_PERSISTENT;
 	sess = gf_term_download_new(mpdin->service, url, flags, NULL, NULL);
@@ -335,9 +339,9 @@ GF_Err mpdin_dash_io_setup_from_url(GF_DASHFileIO *dashio, GF_DASHFileIOSession 
 {
 	return gf_dm_sess_setup_from_url((GF_DownloadSession *)session, url);
 }
-GF_Err mpdin_dash_io_set_range(GF_DASHFileIO *dashio, GF_DASHFileIOSession session, u64 start_range, u64 end_range)
+GF_Err mpdin_dash_io_set_range(GF_DASHFileIO *dashio, GF_DASHFileIOSession session, u64 start_range, u64 end_range, Bool discontinue_cache)
 {
-	return gf_dm_sess_set_range((GF_DownloadSession *)session, start_range, end_range);
+	return gf_dm_sess_set_range((GF_DownloadSession *)session, start_range, end_range, discontinue_cache);
 }
 GF_Err mpdin_dash_io_init(GF_DASHFileIO *dashio, GF_DASHFileIOSession session)
 {
@@ -529,6 +533,19 @@ GF_Err MPD_ConnectService(GF_InputService *plug, GF_ClientService *serv, const c
     else if (opt && !strcmp(opt, "minQuality")) first_select_mode = GF_DASH_SELECT_QUALITY_LOWEST;
     else if (opt && !strcmp(opt, "maxQuality")) first_select_mode = GF_DASH_SELECT_QUALITY_HIGHEST;
     else first_select_mode = GF_DASH_SELECT_BANDWIDTH_LOWEST;
+
+	opt = gf_modules_get_option((GF_BaseInterface *)plug, "DASH", "MemoryStorage");
+	if (!opt) gf_modules_set_option((GF_BaseInterface *)plug, "DASH", "MemoryStorage", "no");
+	mpdin->memory_storage = (opt && !strcmp(opt, "yes")) ? 1 : 0;
+
+	opt = gf_modules_get_option((GF_BaseInterface *)plug, "DASH", "UseMaxResolution");
+	if (!opt) gf_modules_set_option((GF_BaseInterface *)plug, "DASH", "UseMaxResolution", "yes");
+	mpdin->use_max_res = (!opt || !strcmp(opt, "yes")) ? 1 : 0;
+
+	opt = gf_modules_get_option((GF_BaseInterface *)plug, "DASH", "ImmediateSwitching");
+	if (!opt) gf_modules_set_option((GF_BaseInterface *)plug, "DASH", "ImmediateSwitching", "no");
+	mpdin->immediate_switch = (opt && !strcmp(opt, "yes")) ? 1 : 0;
+	
 	
 	mpdin->in_seek = 0;
 	mpdin->previous_start_range = -1;
@@ -543,7 +560,7 @@ GF_Err MPD_ConnectService(GF_InputService *plug, GF_ClientService *serv, const c
 
 	/*dash thread starts at the end of gf_dash_open */
 	e = gf_dash_open(mpdin->dash, url);
-	if (!mpdin->dash) {
+	if (e) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_DASH, ("[MPD_IN] Error - cannot initialize DASH Client for %s: %s\n", url, gf_error_to_string(e) ));
         gf_term_on_connect(mpdin->service, NULL, e);
 		return GF_OK;
@@ -624,12 +641,12 @@ GF_Err MPD_ServiceCommand(GF_InputService *plug, GF_NetworkCommand *com)
         return GF_NOT_SUPPORTED;
 
 	case GF_NET_SERVICE_HAS_FORCED_VIDEO_SIZE:
-		com->par.width = mpdin->width;
-		com->par.height = mpdin->height;
+		com->par.width = mpdin->use_max_res ? mpdin->width : 0;
+		com->par.height = mpdin->use_max_res ? mpdin->height : 0;
         return GF_OK;
 
 	case GF_NET_SERVICE_QUALITY_SWITCH:
-		gf_dash_switch_quality(mpdin->dash, com->switch_quality.up);
+		gf_dash_switch_quality(mpdin->dash, com->switch_quality.up, mpdin->immediate_switch);
         return GF_OK;
 	}
 	/*not supported*/

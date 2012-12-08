@@ -156,6 +156,17 @@ struct __DownloadedCacheEntryStruct
 	/*start and end range of the cache*/
 	u64 range_start, range_end;
 
+	Bool continue_file;
+	Bool file_exists;
+
+	u32 previousRangeContentLength;
+
+	/**
+	* Set to 1 if file is not stored on disk
+	*/
+	Bool memory_stored;
+	u32 mem_allocated;
+	u8 *mem_storage;
 };
 
 Bool delete_cache_files(void *cbck, char *item_name, char *item_path) {
@@ -362,7 +373,7 @@ static const char * default_cache_file_suffix = ".dat";
 
 static const char * cache_file_info_suffix = ".txt";
 
-DownloadedCacheEntry gf_cache_create_entry ( GF_DownloadManager * dm, const char * cache_directory, const char * url , u64 start_range, u64 end_range)
+DownloadedCacheEntry gf_cache_create_entry ( GF_DownloadManager * dm, const char * cache_directory, const char * url , u64 start_range, u64 end_range, Bool mem_storage)
 {
 	char tmp[_CACHE_TMP_SIZE];
 	u8 hash[_CACHE_HASH_SIZE];
@@ -408,14 +419,12 @@ DownloadedCacheEntry gf_cache_create_entry ( GF_DownloadManager * dm, const char
 		GF_LOG(GF_LOG_WARNING, GF_LOG_NETWORK, ("gf_cache_create_entry:%d : OUT of memory !\n", __LINE__));
 		return NULL;
 	}
-	GF_LOG(GF_LOG_DEBUG, GF_LOG_NETWORK,
-		("[CACHE] gf_cache_create_entry:%d, entry=%p\n", __LINE__, entry));
+	GF_LOG(GF_LOG_DEBUG, GF_LOG_NETWORK, ("[CACHE] gf_cache_create_entry:%d, entry=%p\n", __LINE__, entry));
 
 	entry->url = gf_strdup ( url );
 	entry->hash = gf_strdup ( tmp );
 
-	/* Sizeof cache directory + hash + possible extension */
-	entry->cache_filename = gf_malloc ( strlen ( cache_directory ) + strlen(cache_file_prefix) + strlen(tmp) + _CACHE_MAX_EXTENSION_SIZE + 1);
+	entry->memory_stored = mem_storage;
 
 	entry->cacheSize = 0;
 	entry->contentLength = 0;
@@ -429,17 +438,26 @@ DownloadedCacheEntry gf_cache_create_entry ( GF_DownloadManager * dm, const char
 	entry->range_start = start_range;
 	entry->range_end = end_range;
 
+#ifdef ENABLE_WRITE_MX
 	{
 		char name[1024];
 		snprintf(name, sizeof(name)-1, "CachedEntryWriteMx=%p, url=%s", (void*) entry, url);
-#ifdef ENABLE_WRITE_MX
 		entry->write_mutex = gf_mx_new(name);
 		assert( entry->write_mutex);
-#endif
 	}
+#endif
+
 	entry->deletableFilesOnDelete = 0;
 	entry->write_session = NULL;
 	entry->sessions = gf_list_new();
+
+	if (entry->memory_stored) {
+		entry->cache_filename = gf_malloc ( strlen ("gmem://") + 8 + strlen("@") + 16 + 1);
+	} else {
+		/* Sizeof cache directory + hash + possible extension */
+		entry->cache_filename = gf_malloc ( strlen ( cache_directory ) + strlen(cache_file_prefix) + strlen(tmp) + _CACHE_MAX_EXTENSION_SIZE + 1);
+	}
+
 	if ( !entry->hash || !entry->url || !entry->cache_filename || !entry->sessions)
 	{
 		GF_Err err;
@@ -449,6 +467,13 @@ DownloadedCacheEntry gf_cache_create_entry ( GF_DownloadManager * dm, const char
 		assert ( err == GF_OK );
 		return NULL;
 	}
+
+	if (entry->memory_stored) {
+		sprintf(entry->cache_filename, "gmem://%d@%p", entry->contentLength, entry->mem_storage);
+		return entry;	
+	}
+
+
 	tmp[0] = '\0';
 	strcpy ( entry->cache_filename, cache_directory );
 	strcat( entry->cache_filename, cache_file_prefix );
@@ -497,7 +522,13 @@ DownloadedCacheEntry gf_cache_create_entry ( GF_DownloadManager * dm, const char
 			entry->flags |= CORRUPTED;
 
 		keyValue = gf_cfg_get_key(entry->properties, CACHE_SECTION_NAME, CACHE_SECTION_NAME_RANGE);
-		if (keyValue) sscanf(keyValue, LLD"-"LLD, &entry->range_start, &entry->range_end);
+		if (keyValue) {
+			u64 s, e;
+			sscanf(keyValue, LLD"-"LLD, &s, &e);
+			/*mark as corrupted if not same range (we don't support this for the time being ...*/
+			if ((s!=entry->range_start) || (e!=entry->range_end))
+				entry->flags |= CORRUPTED;
+		}
 	}
 	gf_cache_check_if_cache_file_is_corrupted(entry);
 
@@ -506,7 +537,11 @@ DownloadedCacheEntry gf_cache_create_entry ( GF_DownloadManager * dm, const char
 
 GF_Err gf_cache_set_content_length( const DownloadedCacheEntry entry, u32 length ) {
 	CHECK_ENTRY;
-	entry->contentLength = length;
+	if (entry->continue_file) {
+		entry->contentLength = entry->previousRangeContentLength + length;
+	} else {
+		entry->contentLength = length;
+	}
 	return GF_OK;
 }
 
@@ -557,10 +592,29 @@ GF_Err gf_cache_open_write_cache( const DownloadedCacheEntry entry, const GF_Dow
 	gf_mx_p(entry->write_mutex);
 #endif
 	entry->write_session = sess;
-	assert( ! entry->writeFilePtr);
-	GF_LOG(GF_LOG_INFO, GF_LOG_NETWORK,
-		("[CACHE] Opening cache file %s for write (%s)...\n", entry->cache_filename, entry->url));
-	entry->writeFilePtr = gf_f64_open(entry->cache_filename, "wb");
+	if (!entry->continue_file) {
+		assert( ! entry->writeFilePtr);
+		assert( ! entry->mem_storage);
+		entry->written_in_cache = 0;
+	}
+
+	if (entry->memory_stored) {
+		GF_LOG(GF_LOG_INFO, GF_LOG_NETWORK, ("[CACHE] Opening cache file %s for write (%s)...\n", entry->cache_filename, entry->url));
+		if (entry->mem_allocated <= entry->contentLength) {
+			if (entry->contentLength) entry->mem_allocated = entry->contentLength;
+			else if (!entry->mem_allocated) entry->mem_allocated = 1024;
+			entry->mem_storage = gf_realloc(entry->mem_storage, sizeof(char)* (entry->mem_allocated + 2) );
+		}
+		if (!entry->mem_allocated) {
+			GF_LOG(GF_LOG_ERROR, GF_LOG_NETWORK, ("[CACHE] Failed to create memory storage for file %s\n", entry->url));
+			return GF_OUT_OF_MEM;
+		}
+		sprintf(entry->cache_filename, "gmem://%d@%p", entry->contentLength, entry->mem_storage);
+		return GF_OK;
+	}
+
+	GF_LOG(GF_LOG_INFO, GF_LOG_NETWORK, ("[CACHE] Opening cache file %s for write (%s)...\n", entry->cache_filename, entry->url));
+	entry->writeFilePtr = gf_f64_open(entry->cache_filename, entry->continue_file ? "a+b" : "wb");
 	if (!entry->writeFilePtr) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_NETWORK,
 			("[CACHE] Error while opening cache file %s for writting.\n", entry->cache_filename));
@@ -570,7 +624,9 @@ GF_Err gf_cache_open_write_cache( const DownloadedCacheEntry entry, const GF_Dow
 #endif
 		return GF_IO_ERR;
 	}
-	entry->written_in_cache = 0;
+	entry->file_exists = 1;
+	if (entry->continue_file )
+		gf_f64_seek(entry->writeFilePtr, 0, SEEK_END);
 	return GF_OK;
 }
 
@@ -578,10 +634,24 @@ GF_Err gf_cache_write_to_cache( const DownloadedCacheEntry entry, const GF_Downl
 	u32 readen;
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_NETWORK, ("[CACHE] gf_cache_write_to_cache:%d\n", __LINE__));
 	CHECK_ENTRY;
-	if (!data || !entry->writeFilePtr || sess != entry->write_session) {
-		GF_LOG(GF_LOG_WARNING, GF_LOG_NETWORK, ("Incorrect parameter : data=%p, entry->writeFilePtr=%p at "__FILE__, data, entry->writeFilePtr));
+
+	if (!data || (!entry->writeFilePtr && !entry->mem_storage) || sess != entry->write_session) {
+		GF_LOG(GF_LOG_WARNING, GF_LOG_NETWORK, ("Incorrect parameter : data=%p, writeFilePtr=%p mem_storage=%p at "__FILE__, data, entry->writeFilePtr, entry->mem_storage));
 		return GF_BAD_PARAM;
 	}
+		
+	if (entry->memory_stored) {
+		if (entry->written_in_cache + size > entry->mem_allocated) {
+			entry->mem_storage = gf_realloc(entry->mem_storage, (entry->mem_allocated+size+2));
+			entry->mem_allocated += size;
+			sprintf(entry->cache_filename, "gmem://%d@%p", entry->contentLength, entry->mem_storage);
+		}
+		memcpy(entry->mem_storage + entry->written_in_cache, data, size);
+		entry->written_in_cache += size;
+		memset(entry->mem_storage + entry->written_in_cache, 0, 2);
+		return GF_OK;
+	}
+
 	readen = gf_fwrite(data, sizeof(char), size, entry->writeFilePtr);
 	if (readen > 0)
 		entry->written_in_cache+= readen;
@@ -671,7 +741,7 @@ GF_Err gf_cache_delete_entry ( const DownloadedCacheEntry entry )
 		gf_mx_del(entry->write_mutex);
 	}
 #endif
-	if (entry->deletableFilesOnDelete) {
+	if (entry->file_exists && entry->deletableFilesOnDelete) {
 		GF_LOG(GF_LOG_INFO, GF_LOG_NETWORK, ("[CACHE] url %s cleanup, deleting %s...\n", entry->url, entry->cache_filename));
 		if (GF_OK != gf_delete_file(entry->cache_filename))
 			GF_LOG(GF_LOG_WARNING, GF_LOG_NETWORK, ("[CACHE] gf_cache_delete_entry:%d, failed to delete file %s\n", __LINE__, entry->cache_filename));
@@ -738,6 +808,9 @@ GF_Err gf_cache_delete_entry ( const DownloadedCacheEntry entry )
 		gf_list_del(entry->sessions);
 		entry->sessions = NULL;
 	}
+
+	if (entry->mem_storage) 
+		gf_free(entry->mem_storage);
 	gf_free (entry);
 	return GF_OK;
 }
@@ -832,3 +905,11 @@ FILE *gf_cache_get_file_pointer(const DownloadedCacheEntry entry)
 	if (entry) return entry->writeFilePtr;
 	return NULL;
 }
+
+void gf_cache_set_end_range(DownloadedCacheEntry entry, u64 range_end)
+{
+	entry->previousRangeContentLength = entry->contentLength;
+	entry->range_end = range_end;
+	entry->continue_file = 1;
+}
+

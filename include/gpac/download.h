@@ -170,6 +170,9 @@ extern "C" {
         GF_NETIO_SESSION_NOT_CACHED	=	1<<1,
 		/*indicates that the connection to the server should be kept once the download is successfully completed*/
         GF_NETIO_SESSION_PERSISTENT =	1<<2,
+		/*file is stored in memory, and the cache name is set to gpac://%u@%p, where %d is the size in bytes and %d is the the pointer to the memory.
+		Memory cached files are destroyed upon downloader destruction*/
+        GF_NETIO_SESSION_MEMORY_CACHE	=	1<<3,
     };
 
 
@@ -318,9 +321,10 @@ extern "C" {
      *\param sess the download session
      *\param start_range HTTP download start range in byte 
      *\param end_range HTTP download end range in byte 
+     *\param discontinue If set, forces a new cache entry if byte range are not continuous. Otherwise a single cache entry is used to reconstruct the file
      *\note this can only be used when the session is not threaded
      */
-	GF_Err gf_dm_sess_set_range(GF_DownloadSession *sess, u64 start_range, u64 end_range);
+	GF_Err gf_dm_sess_set_range(GF_DownloadSession *sess, u64 start_range, u64 end_range, Bool discontinue_cache);
     /*!
      *\brief get cache file name
      *
