@@ -38,8 +38,8 @@
 #include "../../include/gpac/thread.h"
 
 
-#ifndef FREENECT_RESOLUTION_HIGH
-//#define FREENECT_MINIMAL
+#if !defined(FREENECT_DEVICE_CAMERA) && defined(FREENECT_FRAME_W)
+#define FREENECT_MINIMAL
 #endif
 
 
