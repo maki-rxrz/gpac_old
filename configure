@@ -194,6 +194,7 @@ OSS_CFLAGS=""
 OSS_LDFLAGS=""
 INSTFLAGS=""
 is_64="no"
+GPAC_CONFIG_EXTRA_INFORMATION=""
 
 
 
@@ -386,6 +387,8 @@ for opt do
         --enable-pic) want_pic="yes";
             ;;
         --verbose) verbose="yes";
+            ;;
+        --extra-information=*) GPAC_CONFIG_EXTRA_INFORMATION="${opt#--extra-information=}"; GPAC_CONFIGURATION=`echo "$GPAC_CONFIGURATION" | sed -e "s/ $opt//" -e "s/$opt[ ]*//"`
             ;;
     esac
 done
@@ -3141,6 +3144,11 @@ fi
 
 echo "SRC_PATH=$source_path" >> config.mak
 echo "LOCAL_INC_PATH=$local_inc" >> config.mak
+
+#extra information of builders
+if test "$GPAC_CONFIG_EXTRA_INFORMATION" != "" ; then
+    echo "#define GPAC_CONFIG_EXTRA_INFORMATION \"$GPAC_CONFIG_EXTRA_INFORMATION\"" >> $TMPH
+fi
 
 
 echo "#endif" >> $TMPH

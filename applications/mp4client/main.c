@@ -221,6 +221,9 @@ void PrintUsage()
 		"\t-help:          show this screen\n"
 		"\n"
 		"MP4Client - GPAC command line player and dumper - version "GPAC_FULL_VERSION"\n"
+#ifdef GPAC_CONFIG_EXTRA_INFORMATION
+		GPAC_CONFIG_EXTRA_INFORMATION "\n"
+#endif
 		"GPAC Written by Jean Le Feuvre (c) 2001-2005 - ENST (c) 2005-200X\n"
 		"GPAC Configuration: " GPAC_CONFIGURATION "\n"
 		"Features: %s\n",
