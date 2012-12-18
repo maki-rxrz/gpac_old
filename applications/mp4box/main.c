@@ -182,6 +182,9 @@ u32 nb_itunes_tags = sizeof(itags) / sizeof(itunes_tag);
 void PrintVersion()
 {
 	fprintf(stderr, "MP4Box - GPAC version " GPAC_FULL_VERSION "\n"
+#ifdef GPAC_CONFIG_EXTRA_INFORMATION
+		GPAC_CONFIG_EXTRA_INFORMATION "\n"
+#endif
 		"GPAC Copyright (c) Telecom ParisTech 2000-2012\n"
 		"GPAC Configuration: " GPAC_CONFIGURATION "\n"
 		"Features: %s\n", gpac_features());
