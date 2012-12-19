@@ -11,15 +11,15 @@
 *  it under the terms of the GNU Lesser General Public License as published by
 *  the Free Software Foundation; either version 2, or (at your option)
 *  any later version.
-*   
+*
 *  GPAC is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 *  GNU Lesser General Public License for more details.
-*   
+*
 *  You should have received a copy of the GNU Lesser General Public
 *  License along with this library; see the file COPYING.  If not, write to
-*  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+*  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
 #include <gpac/media_tools.h>
@@ -31,7 +31,7 @@
 #define UDP_BUFFER_SIZE	64484
 
 /* adapted from http://svn.assembla.com/svn/legend/segmenter/segmenter.c */
-static GF_Err write_manifest(char *manifest, char *segment_dir, u32 segment_duration, char *segment_prefix, char *http_prefix, 
+static GF_Err write_manifest(char *manifest, char *segment_dir, u32 segment_duration, char *segment_prefix, char *http_prefix,
 							 u32 first_segment, u32 last_segment, Bool end) {
 								 FILE *manifest_fp;
 								 u32 i;
@@ -79,7 +79,7 @@ static GF_Err write_manifest(char *manifest, char *segment_dir, u32 segment_dura
 								 }
 }
 
-void usage() 
+void usage()
 {
 	fprintf(stderr, "usage: udptsseg -src=UDP -dst-file=FILE -segment-duration=DUR -segment-dir=DIR -segment-manifest=M3U8 -segment-http-prefix=P -segment-number=N\n"
 		"-src=UDP                udp://address:port providing the input transport stream\n"
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 	u32 last_segment_size = 0;
 	u32 read = 0;
 	u32 towrite = 0;
-	u32 leftinbuffer = 0;			
+	u32 leftinbuffer = 0;
 
 	fprintf(stdout, "UDP Transport Stream Segmenter\n");
 
@@ -138,7 +138,7 @@ int main(int argc, char **argv)
 	/*****************/
 	for (i = 1; i < (u32) argc ; i++) {
 		arg = argv[i];
-		if (!strnicmp(arg, "-src=udp://",11)) { 
+		if (!strnicmp(arg, "-src=udp://",11)) {
 			char *sep;
 			arg+=11;
 			sep = strchr(arg+6, ':');
@@ -165,7 +165,7 @@ int main(int argc, char **argv)
 			segment_http_prefix = gf_strdup(arg+21);
 		} else if (!strnicmp(arg, "-segment-number=", 16)) {
 			segment_number = atoi(arg+16);
-		} 
+		}
 	}
 	fprintf(stdout, "Listening to TS input on %s:%d\n", input_ip, input_port);
 	fprintf(stdout, "Creating %d sec. segments in directory %s\n", segment_duration, segment_dir);
@@ -207,12 +207,12 @@ int main(int argc, char **argv)
 		}
 		fprintf(stderr, "Processing %s segment\r", segment_name);
 		ts_out = gf_strdup(segment_name);
-		if (!segment_manifest) { 
+		if (!segment_manifest) {
 			sprintf(segment_manifest_default, "%s.m3u8", segment_prefix);
 			segment_manifest = segment_manifest_default;
 		}
 		//write_manifest(segment_manifest, segment_dir, segment_duration, segment_prefix, segment_http_prefix, segment_index, 0, 0);
-	} 
+	}
 	ts_output_file = fopen(ts_out, "wb");
 	if (!ts_output_file) {
 		fprintf(stderr, "Error opening %s\n", ts_out);
@@ -240,7 +240,7 @@ int main(int argc, char **argv)
 					while (input_buffer[i] != 0x47 && i < leftinbuffer) i++;
 					fprintf(stderr, "Warning: data in buffer not starting with the MPEG-2 TS sync byte, skipping %d bytes of %d\n", i, leftinbuffer);
 					if (i < leftinbuffer) memmove(input_buffer, input_buffer+i, leftinbuffer-i);
-					leftinbuffer -=i;					
+					leftinbuffer -=i;
 				}
 				if ((leftinbuffer % 188) != 0) {
 					fprintf(stderr, "Warning: data in buffer with a size (%d bytes) not multiple of 188 bytes\n", leftinbuffer);
@@ -255,7 +255,7 @@ int main(int argc, char **argv)
 			if (ts_output_file != NULL) {
 				u32 now = gf_sys_clock();
 				if (towrite) {
-					gf_fwrite(input_buffer, 1, towrite, ts_output_file); 
+					gf_fwrite(input_buffer, 1, towrite, ts_output_file);
 					if (towrite < leftinbuffer) {
 						fprintf(stderr, "Warning: wrote %d bytes, keeping %d bytes\n", towrite, (leftinbuffer-towrite));
 						memmove(input_buffer, input_buffer+towrite, leftinbuffer-towrite);
@@ -263,7 +263,7 @@ int main(int argc, char **argv)
 					leftinbuffer -= towrite;
 					last_segment_size += towrite;
 				}
-				if ((now - last_segment_time) > segment_duration*1000) { 
+				if ((now - last_segment_time) > segment_duration*1000) {
 					last_segment_time = now;
 					fclose(ts_output_file);
 					fprintf(stderr, "Closing segment %s (%d bytes)\n", segment_name, last_segment_size);
@@ -298,10 +298,10 @@ int main(int argc, char **argv)
 						gf_delete_file(old_segment_name);
 						fprintf(stderr, "Deleting segment %s\n", old_segment_name);
 					}
-					write_manifest(segment_manifest, segment_dir, segment_duration, segment_prefix, segment_http_prefix, 
+					write_manifest(segment_manifest, segment_dir, segment_duration, segment_prefix, segment_http_prefix,
 						//								   (segment_index >= segment_number/2 ? segment_index - segment_number/2 : 0), segment_index >1 ? segment_index-1 : 0, 0);
 						( (segment_index > segment_number ) ? segment_index - segment_number : 0), segment_index >1 ? segment_index-1 : 0, 0);
-				} 
+				}
 			}
 
 			//}

@@ -13,15 +13,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -65,7 +65,7 @@ void PrintStreamerUsage()
 		);
 }
 
-int stream_file_rtp(int argc, char **argv) 
+int stream_file_rtp(int argc, char **argv)
 {
 	GF_ISOMRTPStreamer *file_streamer;
 	char *sdp_file = "session.sdp";
@@ -118,7 +118,7 @@ int stream_file_rtp(int argc, char **argv)
 			check--;
 			if (!check) {
 				if (gf_prompt_has_input()) {
-					char c = (char) gf_prompt_get_char(); 
+					char c = (char) gf_prompt_get_char();
 					if (c=='q') break;
 				}
 				check = 50;
@@ -133,7 +133,7 @@ int stream_file_rtp(int argc, char **argv)
 
 void PrintLiveUsage()
 {
-	fprintf(stderr, 
+	fprintf(stderr,
 
 		"Live scene encoder options:\n"
 		"-dst=IP    destination IP - default: NULL\n"
@@ -163,7 +163,7 @@ void PrintLiveUsage()
 		"GPAC version: " GPAC_FULL_VERSION "\n"
 		"");
 }
-typedef struct 
+typedef struct
 {
 	GF_RTPStreamer *rtp;
 	Bool manual_rtcp;
@@ -181,7 +181,7 @@ typedef struct
 	u32 critical;
 } RTPChannel;
 
-typedef struct 
+typedef struct
 {
 	GF_SceneEngine *seng;
 	Bool force_carousel, carousel_generation;
@@ -234,7 +234,7 @@ static void live_session_callback(void *calling_object, u16 ESID, char *data, u3
 
 	while ( (rtpch = gf_list_enum(livesess->streams, &i))) {
 		if (rtpch->ESID == ESID) {
-			
+
 			/*store carousel data*/
 			if (livesess->carousel_generation && rtpch->carousel_period) {
 				if (rtpch->carousel_alloc < size) {
@@ -330,7 +330,7 @@ static void live_session_setup(LiveSession *livesess, char *ip, u16 port, u32 pa
 		switch (st) {
 		case GF_STREAM_OD:
 		case GF_STREAM_SCENE:
-			rtpch->rtp = gf_rtp_streamer_new_extended(st, oti, ts, ip, port, path_mtu, ttl, ifce_addr, 
+			rtpch->rtp = gf_rtp_streamer_new_extended(st, oti, ts, ip, port, path_mtu, ttl, ifce_addr,
 								 GP_RTP_PCK_SYSTEMS_CAROUSEL, (char *) config, config_len,
 								 96, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4);
 
@@ -462,7 +462,7 @@ int live_session(int argc, char **argv)
 	gf_sys_init(0);
 
 	memset(&livesess, 0, sizeof(LiveSession));
-	
+
 	gf_log_set_tool_level(GF_LOG_ALL, GF_LOG_INFO);
 
 	for (i=1; i<argc; i++) {
@@ -478,7 +478,7 @@ int live_session(int argc, char **argv)
 		else if (!strnicmp(arg, "-dims", 5)) load_type = GF_SM_LOAD_DIMS;
 		else if (!strnicmp(arg, "-src=", 5)) src_name = arg+5;
         else if (!strnicmp(arg, "-udp=", 5)) { sk_port = atoi(arg+5); udp = 1; }
-        else if (!strnicmp(arg, "-tcp=", 5)) { sk_port = atoi(arg+5); udp = 0; }		
+        else if (!strnicmp(arg, "-tcp=", 5)) { sk_port = atoi(arg+5); udp = 0; }
 	}
 	if (!filename) {
 		fprintf(stderr, "Missing filename\n");
@@ -604,7 +604,7 @@ int live_session(int argc, char **argv)
 					while (getchar()!='\n') {}
 					e = gf_seng_encode_from_string(livesess.seng, 0, 1, szCom, live_session_callback);
 					if (e) fprintf(stderr, "Processing command failed: %s\n", gf_error_to_string(e));
-					livesess.critical = 0;				
+					livesess.critical = 0;
 					e = gf_seng_aggregate_context(livesess.seng, 0);
 
 				}
@@ -792,7 +792,7 @@ int live_session(int argc, char **argv)
 			gf_sleep(10);
 			continue;
 		}
-		ch = next_carousel(&livesess, &next_time); 
+		ch = next_carousel(&livesess, &next_time);
 		if ((ch==NULL) || (next_time > 20)) {
 			gf_sleep(20);
 			continue;

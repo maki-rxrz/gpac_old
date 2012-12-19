@@ -46,7 +46,7 @@ class V4Node {
     // retrieves the node _DEF_ name (node has a Node ID)
     wxString GetName();
 
-    
+
 
   private:
     // various accesses to the node

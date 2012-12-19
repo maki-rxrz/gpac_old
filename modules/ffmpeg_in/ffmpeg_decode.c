@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -808,7 +808,7 @@ redecode:
 			ffd->previous_par = (ctx->sample_aspect_ratio.num<<16) | ctx->sample_aspect_ratio.den;
 		}
 
-		/*we didn't get any picture: wait for a picture before resizing output buffer, otherwise we will have no 
+		/*we didn't get any picture: wait for a picture before resizing output buffer, otherwise we will have no
 		video in the output buffer*/
 		if (!gotpic) {
 			ffd->needs_output_resize = 1;
@@ -1024,9 +1024,9 @@ static u32 FFDEC_CanHandleStream(GF_BaseDecoder *plug, u32 StreamType, GF_ESD *e
 			codec_id = CODEC_ID_MJPEG;
 			/*return maybe supported as FFMPEG JPEG decoder has some issues with many files, so let's use it only if no
 			other dec is available*/
-			if (avcodec_find_decoder(codec_id) != NULL) 
+			if (avcodec_find_decoder(codec_id) != NULL)
 				return GF_CODEC_MAYBE_SUPPORTED;
-			
+
 			return GF_CODEC_NOT_SUPPORTED;
 		default:
 			return GF_CODEC_NOT_SUPPORTED;

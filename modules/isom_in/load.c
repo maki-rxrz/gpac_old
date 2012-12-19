@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #include "isom_in.h"
@@ -94,7 +94,7 @@ void isor_declare_objects(ISOMReader *read)
 	count = gf_isom_get_track_count(read->mov);
 	for (i=0; i<count; i++) {
 		if (!gf_isom_is_track_enabled(read->mov, i+1)) continue;
-	
+
 		switch (gf_isom_get_media_type(read->mov, i+1)) {
 		case GF_ISOM_MEDIA_AUDIO:
 		case GF_ISOM_MEDIA_VISUAL:
@@ -171,7 +171,7 @@ void isor_declare_objects(ISOMReader *read)
 
 
 GF_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 #ifndef GPAC_DISABLE_ISOM
@@ -186,14 +186,14 @@ const u32 *QueryInterfaces()
 }
 
 GF_EXPORT
-GF_BaseInterface *LoadInterface(u32 InterfaceType) 
+GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
 #ifndef GPAC_DISABLE_ISOM
-	if (InterfaceType == GF_NET_CLIENT_INTERFACE) 
+	if (InterfaceType == GF_NET_CLIENT_INTERFACE)
 		return (GF_BaseInterface *)isor_client_load();
 #endif
 #ifndef GPAC_DISABLE_ISOM_WRITE
-	if (InterfaceType == GF_STREAMING_MEDIA_CACHE) 
+	if (InterfaceType == GF_STREAMING_MEDIA_CACHE)
 		return (GF_BaseInterface *)isow_load_cache();
 #endif
 	return NULL;

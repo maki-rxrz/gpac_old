@@ -243,7 +243,7 @@ GF_AbstractTSMuxer * ts_amux_new(GF_AVRedirect * avr, u32 videoBitrateInBitsPerS
         return NULL;
     }
 #endif
-	
+
 	dump_format(ts->oc, 0, avr->destination, 1);
     GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[AVRedirect] DUMPING to %s...\n", ts->destination));
 

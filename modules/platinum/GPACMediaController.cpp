@@ -2,25 +2,25 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2009-2012
  *			All rights reserved
  *
- *  This file is part of GPAC / Platinum UPnP module 
+ *  This file is part of GPAC / Platinum UPnP module
  *
  *  GPAC is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
  *	----------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ GPAC_MediaController::~GPAC_MediaController()
 
 
 
-bool 
+bool
 GPAC_MediaController::OnMRAdded(PLT_DeviceDataReference& device)
 {
     NPT_String uuid = device->GetUUID();
@@ -89,7 +89,7 @@ GPAC_MediaController::OnMRAdded(PLT_DeviceDataReference& device)
 }
 
 
-void 
+void
 GPAC_MediaController::OnMRRemoved(PLT_DeviceDataReference& device)
 {
     NPT_String uuid = device->GetUUID();
@@ -111,7 +111,7 @@ GPAC_MediaController::OnMRRemoved(PLT_DeviceDataReference& device)
 	gf_mx_v(m_ControlPointLock);
 }
 
-bool 
+bool
 GPAC_MediaController::OnMSAdded(PLT_DeviceDataReference& device)
 {
     NPT_String uuid = device->GetUUID();
@@ -151,8 +151,8 @@ GPAC_MediaController::OnMSRemoved(PLT_DeviceDataReference& device)
 
 
 NPT_Result
-GPAC_MediaController::OnActionResponse(NPT_Result           res, 
-                                      PLT_ActionReference& action, 
+GPAC_MediaController::OnActionResponse(NPT_Result           res,
+                                      PLT_ActionReference& action,
                                       void*                userdata)
 {
 	return NPT_SUCCESS;
@@ -178,7 +178,7 @@ void GPAC_MediaController::OnMRStateVariablesChanged(PLT_Service* service, NPT_L
 		}
 	}
 	if (render_idx < 0) return;
-	
+
 	count = vars->GetItemCount();
 	for (i=0; i<count; i++) {
 		PLT_StateVariable *svar;
@@ -219,7 +219,7 @@ void GPAC_MediaController::OnBrowseResult(NPT_Result res, PLT_DeviceDataReferenc
     delete data;
 }
 
-void 
+void
 GPAC_MediaController::OnMSStateVariablesChanged(PLT_Service* service, NPT_List<PLT_StateVariable*>* vars)
 {
 	GPAC_MediaServerItem *ms = NULL;
@@ -234,7 +234,7 @@ GPAC_MediaController::OnMSStateVariablesChanged(PLT_Service* service, NPT_List<P
 		}
 		ms = NULL;
 	}
-	
+
 	if (!ms) {
 		gf_mx_v(m_ControlPointLock);
 		return;
@@ -261,9 +261,9 @@ GPAC_MediaController::OnMSStateVariablesChanged(PLT_Service* service, NPT_List<P
                 value = (index<0)?"":value.SubString(index+1);
 
 				m_pUPnP->ContainerChanged(ms->m_device, item_id, update_id);
-            }       
+            }
         }
-    }        
+    }
 	gf_mx_v(m_ControlPointLock);
 }
 
@@ -274,14 +274,14 @@ GPAC_MediaController::WaitForResponse(NPT_SharedVariable& shared_var)
 }
 
 
-NPT_Result 
+NPT_Result
 GPAC_MediaController::Browse(PLT_BrowseDataReference& browse_data,
-                             PLT_DeviceDataReference& device, 
-                             const char*              object_id, 
-                             NPT_Int32                index, 
+                             PLT_DeviceDataReference& device,
+                             const char*              object_id,
+                             NPT_Int32                index,
                              NPT_Int32                count,
                              bool                     browse_metadata,
-                             const char*              filter, 
+                             const char*              filter,
                              const char*              sort)
 {
     NPT_Result res;
@@ -298,13 +298,13 @@ GPAC_MediaController::Browse(PLT_BrowseDataReference& browse_data,
         browse_metadata,
         filter,
         sort,
-        new PLT_BrowseDataReference(browse_data));		
+        new PLT_BrowseDataReference(browse_data));
     NPT_CHECK_SEVERE(res);
 
     return WaitForResponse(browse_data->shared_var);
 }
 
-NPT_Result 
+NPT_Result
 GPAC_MediaController::Browse(GPAC_MediaServerItem *server, const char *object_id, const char *filter)
 {
     NPT_Result res = NPT_FAILURE;
@@ -314,7 +314,7 @@ GPAC_MediaController::Browse(GPAC_MediaServerItem *server, const char *object_id
 	server->m_BrowseResults = NULL;
 
 
-	do {	
+	do {
         PLT_BrowseDataReference browse_data(new PLT_BrowseData());
 
         // send off the browse packet.  Note that this will
@@ -327,9 +327,9 @@ GPAC_MediaController::Browse(GPAC_MediaServerItem *server, const char *object_id
             1024,
             false,
             filter,
-            "");		
+            "");
         NPT_CHECK_LABEL_WARNING(res, done);
-        
+
         if (NPT_FAILED(browse_data->res)) {
             res = browse_data->res;
             NPT_CHECK_LABEL_WARNING(res, done);

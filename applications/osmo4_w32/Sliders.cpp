@@ -48,9 +48,9 @@ END_MESSAGE_MAP()
 // Sliders message handlers
 
 
-void Sliders::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void Sliders::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
-	
+
 	Osmo4 *app = GetApp();
 	if (pScrollBar->GetDlgCtrlID() == ID_SLIDER) {
 		switch (nSBCode) {
@@ -82,7 +82,7 @@ void Sliders::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CDialog::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
-void Sliders::OnSize(UINT nType, int cx, int cy) 
+void Sliders::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
 
@@ -109,13 +109,13 @@ void Sliders::OnSize(UINT nType, int cx, int cy)
 }
 
 /*we sure don't want to close this window*/
-void Sliders::OnClose() 
+void Sliders::OnClose()
 {
 	u32 i = 0;
 	return;
 }
 
-BOOL Sliders::PreTranslateMessage(MSG* pMsg) 
+BOOL Sliders::PreTranslateMessage(MSG* pMsg)
 {
 	if (pMsg->message == WM_KEYDOWN) {
 		GetApp()->m_pMainWnd->SetFocus();
@@ -126,7 +126,7 @@ BOOL Sliders::PreTranslateMessage(MSG* pMsg)
 }
 
 
-BOOL Sliders::OnInitDialog() 
+BOOL Sliders::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	m_AudioVol.SetRange(0, 100);

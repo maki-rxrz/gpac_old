@@ -1,25 +1,25 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2009-2012
  *			All rights reserved
  *
- *  This file is part of GPAC / Platinum UPnP module 
+ *  This file is part of GPAC / Platinum UPnP module
  *
  *  GPAC is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
  *	----------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ public:
 	if is_hidden is set, directory is not visible during BrowseDirectChildren
 	if alias is NULL, a CRC32 of the path name will be used
 	*/
-	GPAC_MediaDirectory(const char *alias, const char *path, Bool is_hidden = 0)  
+	GPAC_MediaDirectory(const char *alias, const char *path, Bool is_hidden = 0)
 	{
 		m_Path = path;
 		m_Path.Replace('/', NPT_FilePath::Separator);
@@ -66,14 +66,14 @@ public:
 class GPAC_VirtualFile
 {
 public:
-	GPAC_VirtualFile(const char *uri="", const char *val="", const char *mime="", Bool temporary=0) 
+	GPAC_VirtualFile(const char *uri="", const char *val="", const char *mime="", Bool temporary=0)
 	{
 		m_URI = uri;
 		m_Content = val;
 		m_MIME = mime;
 		m_temporary = temporary;
 	}
-	bool operator==(const GPAC_VirtualFile & v1) { 
+	bool operator==(const GPAC_VirtualFile & v1) {
 		return m_URI==v1.m_URI;
 	}
 
@@ -98,8 +98,8 @@ public:
     void ShareVirtualResource(const char *res_uri, const char *res_val, const char *res_mime, Bool temporary = 0);
 
 protected:
-    virtual NPT_Result OnBrowseDirectChildren(PLT_ActionReference&          action, 
-												const char*                   object_id, 
+    virtual NPT_Result OnBrowseDirectChildren(PLT_ActionReference&          action,
+												const char*                   object_id,
 												const char*                   filter,
 												NPT_UInt32                    starting_index,
 												NPT_UInt32                    requested_count,
@@ -108,24 +108,24 @@ protected:
 
 	virtual NPT_Result GetFilePath(const char* object_id, NPT_String& filepath);
 
-    virtual NPT_Result ServeFile(NPT_HttpRequest&              request, 
+    virtual NPT_Result ServeFile(NPT_HttpRequest&              request,
                                  const NPT_HttpRequestContext& context,
                                  NPT_HttpResponse&             response,
                                  const NPT_String&             file_path);
 
-    virtual PLT_MediaObject* BuildFromFilePath(const NPT_String&             filepath, 
+    virtual PLT_MediaObject* BuildFromFilePath(const NPT_String&             filepath,
                                                const PLT_HttpRequestContext& context,
                                                bool                          with_count = true,
                                                bool                          keep_extension_in_title = false);
 
-    PLT_MediaObject* BuildFromFilePathAndHost(const NPT_String&        filepath, 
+    PLT_MediaObject* BuildFromFilePathAndHost(const NPT_String&        filepath,
                                        const PLT_HttpRequestContext *context = NULL,
                                        bool                     with_count = true,
                                        bool                     keep_extension_in_title = false,
 									   const char *for_host = NULL);
 
 	NPT_Result ServeVirtualFile(NPT_HttpResponse& response,
-                          GPAC_VirtualFile  *vfile, 
+                          GPAC_VirtualFile  *vfile,
                           NPT_Position      start,
                           NPT_Position      end,
                           bool              request_is_head);

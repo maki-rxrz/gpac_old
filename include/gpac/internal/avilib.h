@@ -5,23 +5,23 @@
  *  multiple audio track support Copyright (C) 2002 Thomas Östreich
  *
  *  Original code:
- *  Copyright (C) 1999 Rainer Johanni <Rainer@Johanni.de> 
+ *  Copyright (C) 1999 Rainer Johanni <Rainer@Johanni.de>
  *
  *  This file is part of transcode, a linux video stream processing tool
- *      
+ *
  *  transcode is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  transcode is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -76,7 +76,7 @@ typedef struct _avistdindex_entry {
     u32 dwSize;                  // bit 31 is set if this is NOT a keyframe
 } avistdindex_entry;
 
-// Standard index 
+// Standard index
 typedef struct _avistdindex_chunk {
     char           fcc[4];                 // ix##
     u32 dwSize;                 // size of this chunk
@@ -89,7 +89,7 @@ typedef struct _avistdindex_chunk {
     u32  dwReserved3;            // must be 0
     avistdindex_entry *aIndex;
 } avistdindex_chunk;
-    
+
 
 // Base Index Form 'indx'
 typedef struct _avisuperindex_chunk {
@@ -105,7 +105,7 @@ typedef struct _avisuperindex_chunk {
     avisuperindex_entry *aIndex;           // where are the ix## chunks
     avistdindex_chunk **stdindex;          // the ix## chunks itself (array)
 } avisuperindex_chunk;
-    
+
 
 
 typedef struct track_s
@@ -126,9 +126,9 @@ typedef struct track_s
     char   audio_tag[4];      /* Tag of audio data */
     long   audio_posc;        /* Audio position: chunk */
     long   audio_posb;        /* Audio position: byte within chunk */
- 
-    u64  a_codech_off;       /* absolut offset of audio codec information */ 
-    u64  a_codecf_off;       /* absolut offset of audio codec information */ 
+
+    u64  a_codech_off;       /* absolut offset of audio codec information */
+    u64  a_codecf_off;       /* absolut offset of audio codec information */
 
     audio_index_entry *audio_index;
     avisuperindex_chunk *audio_superindex;
@@ -163,10 +163,10 @@ typedef struct
 
 typedef struct
 {
-  u32 fcc_type; 
-  u32 fcc_handler; 
-  u32 dw_flags; 
-  u32 dw_caps; 
+  u32 fcc_type;
+  u32 fcc_handler;
+  u32 dw_flags;
+  u32 dw_caps;
   u16 w_priority;
   u16 w_language;
   u32 dw_scale;
@@ -185,10 +185,10 @@ typedef struct
 
 typedef struct
 {
-  
+
   FILE *fdes;              /* File descriptor of AVI file */
   long   mode;              /* 0 for reading, 1 for writing */
-  
+
   long   width;             /* Width  of a video frame */
   long   height;            /* Height of a video frame */
   double fps;               /* Frames per second */
@@ -200,34 +200,34 @@ typedef struct
   long   video_pos;         /* Number of next frame to be read
 			       (if index present) */
   alAVISTREAMHEADER video_stream_header;
-  
+
   u32 max_len;    /* maximum video chunk present */
-  
+
   track_t track[AVI_MAX_TRACKS];  // up to AVI_MAX_TRACKS audio tracks supported
-  
+
   s64  pos;               /* position in file */
   long   n_idx;             /* number of index entries actually filled */
   long   max_idx;           /* number of index entries actually allocated */
-  
-  s64  v_codech_off;      /* absolut offset of video codec (strh) info */ 
-  s64  v_codecf_off;      /* absolut offset of video codec (strf) info */ 
-  
+
+  s64  v_codech_off;      /* absolut offset of video codec (strh) info */
+  s64  v_codecf_off;      /* absolut offset of video codec (strf) info */
+
   u8 (*idx)[16]; /* index entries (AVI idx1 tag) */
 
   video_index_entry *video_index;
   avisuperindex_chunk *video_superindex;  /* index of indices */
   int is_opendml;           /* set to 1 if this is an odml file with multiple index chunks */
-  
+
   s64  last_pos;          /* Position of last frame written */
   u32 last_len;   /* Length of last frame written */
   int must_use_index;       /* Flag if frames are duplicated */
   s64  movi_start;
   int total_frames;         /* total number of frames if dmlh is present */
-  
-  u32 anum;            // total number of audio tracks 
-  u32 aptr;            // current audio working track 
+
+  u32 anum;            // total number of audio tracks
+  u32 aptr;            // current audio working track
   char *index_file;    // read the avi index from this file
-  
+
   alBITMAPINFOHEADER *bitmap_info_header;
   alWAVEFORMATEX *wave_format_ex[AVI_MAX_TRACKS];
   alAVISTREAMHEADER stream_headers[AVI_MAX_TRACKS];
@@ -379,7 +379,7 @@ long AVI_get_audio_vbr(avi_t *AVI);
 void AVI_set_comment_fd(avi_t *AVI, int fd);
 int  AVI_get_comment_fd(avi_t *AVI);
 
-struct riff_struct 
+struct riff_struct
 {
   u8 id[4];   /* RIFF */
   u32 len;
@@ -387,13 +387,13 @@ struct riff_struct
 };
 
 
-struct chunk_struct 
+struct chunk_struct
 {
 	u8 id[4];
 	u32 len;
 };
 
-struct common_struct 
+struct common_struct
 {
 	u16 wFormatTag;
 	u16 wChannels;
@@ -403,7 +403,7 @@ struct common_struct
 	u16 wBitsPerSample;  /* Only for PCM */
 };
 
-struct wave_header 
+struct wave_header
 {
 	struct riff_struct   riff;
 	struct chunk_struct  format;

@@ -1,25 +1,25 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2009-2012
  *			All rights reserved
  *
- *  This file is part of GPAC / Platinum UPnP module 
+ *  This file is part of GPAC / Platinum UPnP module
  *
  *  GPAC is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
  *	----------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ NPT_SET_LOCAL_LOGGER("gpac.media.server.file")
 GPAC_FileMediaServer::GPAC_FileMediaServer(const char*  friendly_name,
                         bool         show_ip,
                         const char*  uuid,
-						NPT_UInt16   port) : PLT_FileMediaServer("", friendly_name, show_ip, uuid, port) 
+						NPT_UInt16   port) : PLT_FileMediaServer("", friendly_name, show_ip, uuid, port)
 {
 }
 
@@ -62,8 +62,8 @@ void GPAC_FileMediaServer::AddSharedDirectory(const char *path, const char *alia
 
 
 NPT_Result
-GPAC_FileMediaServer::OnBrowseDirectChildren(PLT_ActionReference&          action, 
-												const char*                   object_id, 
+GPAC_FileMediaServer::OnBrowseDirectChildren(PLT_ActionReference&          action,
+												const char*                   object_id,
 												const char*                   filter,
 												NPT_UInt32                    start_index,
 												NPT_UInt32                    req_count,
@@ -97,7 +97,7 @@ GPAC_FileMediaServer::OnBrowseDirectChildren(PLT_ActionReference&          actio
                 num_returned++;
             }
             cur_index++;
-            total_matches++;        
+            total_matches++;
         }
     };
 
@@ -111,8 +111,8 @@ GPAC_FileMediaServer::OnBrowseDirectChildren(PLT_ActionReference&          actio
     return NPT_SUCCESS;
 }
 
-NPT_Result 
-GPAC_FileMediaServer::ServeFile(NPT_HttpRequest&              request, 
+NPT_Result
+GPAC_FileMediaServer::ServeFile(NPT_HttpRequest&              request,
                                  const NPT_HttpRequestContext& context,
                                  NPT_HttpResponse&             response,
                                  const NPT_String&             _file_path)
@@ -167,26 +167,26 @@ GPAC_FileMediaServer::ServeFile(NPT_HttpRequest&              request,
     if (path.Compare(uri_path.Left(path.GetLength()), true) == 0) {
         NPT_Position start, end;
         PLT_HttpHelper::GetRange(request, start, end);
-        
+
         return PLT_FileServer::ServeFile(response,
-                                         file_path, 
-                                         start, 
-                                         end, 
+                                         file_path,
+                                         start,
+                                         end,
                                          !request.GetMethod().Compare("HEAD"));
-    } 
+    }
 
     // Album Art requested
     path = m_AlbumArtBaseUri.GetPath();
     if (path.Compare(uri_path.Left(path.GetLength()), true) == 0) {
         return OnAlbumArtRequest(response, file_path);
-    } 
-    
+    }
+
     return NPT_FAILURE;
 }
 
 NPT_Result
-GPAC_FileMediaServer::GetFilePath(const char* object_id, 
-                                 NPT_String& filepath) 
+GPAC_FileMediaServer::GetFilePath(const char* object_id,
+                                 NPT_String& filepath)
 {
     if (!object_id) return NPT_ERROR_INVALID_PARAMETERS;
 
@@ -215,7 +215,7 @@ GPAC_FileMediaServer::GetFilePath(const char* object_id,
 }
 
 PLT_MediaObject*
-GPAC_FileMediaServer::BuildFromFilePath(const NPT_String&        filepath, 
+GPAC_FileMediaServer::BuildFromFilePath(const NPT_String&        filepath,
                                        const PLT_HttpRequestContext &context,
                                        bool                     with_count,
                                        bool                     keep_extension_in_title)
@@ -225,7 +225,7 @@ GPAC_FileMediaServer::BuildFromFilePath(const NPT_String&        filepath,
 }
 
 PLT_MediaObject*
-GPAC_FileMediaServer::BuildFromFilePathAndHost(const NPT_String&        __filepath, 
+GPAC_FileMediaServer::BuildFromFilePathAndHost(const NPT_String&        __filepath,
                                        const PLT_HttpRequestContext *context,
                                        bool                     with_count /* = true */,
                                        bool                     keep_extension_in_title /* = false */,
@@ -237,7 +237,7 @@ GPAC_FileMediaServer::BuildFromFilePathAndHost(const NPT_String&        __filepa
 	unsigned int len;
 
     /* retrieve the entry type (directory or file) */
-    NPT_FileInfo info; 
+    NPT_FileInfo info;
     NPT_CHECK_LABEL_FATAL(NPT_File::GetInfo(__filepath, &info), failure);
 
 	len = 0;
@@ -267,7 +267,7 @@ GPAC_FileMediaServer::BuildFromFilePathAndHost(const NPT_String&        __filepa
 
         /* Set the resource file size */
         resource.m_Size = info.m_Size;
- 
+
         /* format the resource URI */
         NPT_String url = "0" + filepath;
 
@@ -304,8 +304,8 @@ GPAC_FileMediaServer::BuildFromFilePathAndHost(const NPT_String&        __filepa
         /* Look to see if a metadatahandler exists for this extension */
         PLT_MetadataHandler* handler = NULL;
         NPT_Result res = NPT_ContainerFind(
-            m_MetadataHandlers, 
-            PLT_MetadataHandlerFinder(NPT_FilePath::FileExtension(filepath)), 
+            m_MetadataHandlers,
+            PLT_MetadataHandlerFinder(NPT_FilePath::FileExtension(filepath)),
             handler);
         if (NPT_SUCCEEDED(res) && handler) {
             /* if it failed loading data, reset the metadatahandler so we don't use it */
@@ -320,10 +320,10 @@ GPAC_FileMediaServer::BuildFromFilePathAndHost(const NPT_String&        __filepa
                 handler->GetDescription(object->m_Description.long_description);
 
                 /* assign album art uri if we haven't yet */
-                /* prepend the album art base URI and url encode it */ 
+                /* prepend the album art base URI and url encode it */
                 if (object->m_ExtraInfo.album_art_uri.GetLength() == 0) {
-                    object->m_ExtraInfo.album_art_uri = 
-						NPT_Uri::PercentEncode(BuildResourceUri(m_AlbumArtBaseUri, ip.ToString(), url), 
+                    object->m_ExtraInfo.album_art_uri =
+						NPT_Uri::PercentEncode(BuildResourceUri(m_AlbumArtBaseUri, ip.ToString(), url),
                                                NPT_Uri::UnsafeCharsToEncode);
                 }
 
@@ -424,7 +424,7 @@ NPT_String GPAC_FileMediaServer::GetResourceURI(const char *url, const char *for
 		}
 		/*if no parent directory, we don't allow sharing of the resource*/
 		if (nb_sep!=2) return "";
-		
+
 		char sep = abs_url[len-i];
 		abs_url[len-i] = 0;
 		newdir = abs_url;
@@ -482,7 +482,7 @@ void GPAC_FileMediaServer::ShareVirtualResource(const char *res_uri, const char 
 				the_uri += "?";
 			else if (!strnicmp(sep, "%5c", 3))
 				the_uri += "/";
-			else 
+			else
 				the_uri += " ";
 			uri= sep+3;
 			continue;
@@ -500,12 +500,12 @@ void GPAC_FileMediaServer::ShareVirtualResource(const char *res_uri, const char 
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_NETWORK, ("[UPnP] sharing virtual file %s as %s\n", res_uri, (const char *)the_uri));
 }
 
-NPT_Result 
+NPT_Result
 GPAC_FileMediaServer::ServeVirtualFile(NPT_HttpResponse& response,
-                          GPAC_VirtualFile  *vfile, 
+                          GPAC_VirtualFile  *vfile,
                           NPT_Position      start,
                           NPT_Position      end,
-                          bool              request_is_head) 
+                          bool              request_is_head)
 {
     NPT_LargeSize            total_len;
     NPT_Result               result;
@@ -551,7 +551,7 @@ GPAC_FileMediaServer::ServeVirtualFile(NPT_HttpResponse& response,
         }
 
         // in case the range request was invalid or we can't seek then respond appropriately
-        if (start_offset == (NPT_Position)-1 || end_offset == (NPT_Position)-1 || 
+        if (start_offset == (NPT_Position)-1 || end_offset == (NPT_Position)-1 ||
             start_offset > end_offset || NPT_FAILED(stream->Seek(start_offset))) {
             response.SetStatus(416, "Requested range not satisfiable");
         } else {

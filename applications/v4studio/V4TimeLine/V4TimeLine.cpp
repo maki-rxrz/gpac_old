@@ -125,25 +125,25 @@ u32 V4TimeLine::GetSelectedID() const {
 }
 
 
-// AddCommand -- 
+// AddCommand --
 void V4TimeLine::AddCommand(GF_Command * c) {
   clicked->AddCommand(c);
 }
 
 
-// DeleteCommand -- 
+// DeleteCommand --
 void V4TimeLine::DeleteCommand(u32 n) {
   clicked->DeleteCommand(n);
 }
 
 
-// GetCommand -- 
+// GetCommand --
 GF_Command * V4TimeLine::GetCommand(u32 n) {
   return clicked->GetCommand(n);
 }
 
 
-// SetLength -- 
+// SetLength --
 void V4TimeLine::SetLength(const unsigned int length_) {
   hdr->SetLength(length_);
 

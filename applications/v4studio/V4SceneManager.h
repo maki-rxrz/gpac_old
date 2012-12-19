@@ -1,7 +1,7 @@
 #ifndef _V4SceneManager_H
 #define _V4SceneManager_H
 
-#include "safe_include.h" 
+#include "safe_include.h"
 #include <gpac/scene_manager.h>
 #include <gpac/compositor.h>
 #include <gpac/internal/terminal_dev.h> // MPEG4CLIENT
@@ -34,10 +34,10 @@ public:
 	/* file management functions */
 
 	void SaveFile(const char * path);
-	
-	void LoadCommon(); 
-	void LoadNew(); 
-	void LoadFile(const char *path); 
+
+	void LoadCommon();
+	void LoadNew();
+	void LoadFile(const char *path);
 
 	/* Node management functions */
 
@@ -141,7 +141,7 @@ protected:
   u8  frameRate;
   u32 length;            // in frames!
   u32 units;             // = 1000
-	
+
 };
 
 #endif

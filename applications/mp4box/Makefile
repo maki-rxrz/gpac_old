@@ -15,7 +15,7 @@ LDFLAGS+=-pg
 endif
 
 #common obj
-OBJS=main.o filedump.o fileimport.o 
+OBJS=main.o filedump.o fileimport.o
 ifeq ($(DISABLE_STREAMING),no)
 OBJS+=live.o
 endif
@@ -55,20 +55,20 @@ endif
 endif
 
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 all: $(PROG)
 
 $(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) $(LINKFLAGS)
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(PROG)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

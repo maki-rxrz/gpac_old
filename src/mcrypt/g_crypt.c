@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -59,11 +59,11 @@ static GF_Crypt *gf_crypt_open_intern(const char *algorithm, const char *mode, B
 {
 	GF_Crypt *td;
 	if ((!algorithm || !mode) && !is_check) return NULL;
-	
+
 	GF_SAFEALLOC(td, GF_Crypt);
 	if (td==NULL) return NULL;
 
-	
+
 	if (algorithm && !gf_crypt_assign_algo(td, algorithm)) {
 		gf_free(td);
 		return NULL;
@@ -136,7 +136,7 @@ GF_Err gf_crypt_set_key(GF_Crypt *td, void *key, u32 keysize, const void *IV)
 }
 
 GF_EXPORT
-GF_Err gf_crypt_set_state(GF_Crypt *td, const void *iv, int size) 
+GF_Err gf_crypt_set_state(GF_Crypt *td, const void *iv, int size)
 {
 	if (!td) return GF_BAD_PARAM;
 	return td->_mcrypt_set_state(td->abuf, (void *) iv, size);
@@ -150,7 +150,7 @@ GF_Err gf_crypt_get_state(GF_Crypt *td, void *iv, int *size)
 
 u32 gf_crypt_get_block_size(GF_Crypt *td) { return td ? td->algo_block_size : 0; }
 
-u32 gf_crypt_get_iv_size(GF_Crypt *td) 
+u32 gf_crypt_get_iv_size(GF_Crypt *td)
 {
 	if (!td) return 0;
 	if (td->is_block_algo_mode) return td->algo_block_size;
@@ -216,8 +216,8 @@ GF_Err gf_crypt_init(GF_Crypt *td, void *key, u32 lenofkey, const void *IV)
 	}
 
 	td->keyword_given = (char*)gf_malloc(sizeof(char)*gf_crypt_get_key_size(td));
-	if (td->keyword_given==NULL) return GF_OUT_OF_MEM; 
-	
+	if (td->keyword_given==NULL) return GF_OUT_OF_MEM;
+
 	memmove(td->keyword_given, key, lenofkey);
 
 	td->akey = (char*)gf_malloc(sizeof(char)*td->algo_size);

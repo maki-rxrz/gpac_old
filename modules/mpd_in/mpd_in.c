@@ -31,12 +31,12 @@
 #include <gpac/internal/terminal_dev.h>
 
 
-typedef struct __mpd_module 
+typedef struct __mpd_module
 {
     /* GPAC Service object (i.e. how this module is seen by the terminal)*/
     GF_ClientService *service;
 	GF_InputService *plug;
-	
+
 	GF_DashClient *dash;
 
 	/*interface to mpd parser*/
@@ -51,7 +51,7 @@ typedef struct __mpd_module
 	u32 width, height;
 } GF_MPD_In;
 
-typedef struct 
+typedef struct
 {
 	GF_InputService *segment_ifce;
 	Bool service_connected;
@@ -105,7 +105,7 @@ static GF_Err MPD_ClientQuery(GF_InputService *ifce, GF_NetworkCommand *param)
 		param->url_query.next_url = NULL;
 		param->url_query.start_range = 0;
 		param->url_query.end_range = 0;
-		
+
 		mpdin->in_seek = 0;
 
 		for (i=0; i<gf_dash_get_group_count(mpdin->dash); i++) {
@@ -116,7 +116,7 @@ static GF_Err MPD_ClientQuery(GF_InputService *ifce, GF_NetworkCommand *param)
 				gf_dash_group_get_segment_init_url(mpdin->dash, i, &param->url_query.start_range, &param->url_query.end_range);
 				return GF_OK;
 			}
-		}		
+		}
 		return GF_SERVICE_ERROR;
 	}
 
@@ -146,8 +146,8 @@ static GF_Err MPD_ClientQuery(GF_InputService *ifce, GF_NetworkCommand *param)
 				break;
 			}
 			group=NULL;
-		}		
-		
+		}
+
 		if (!group) {
 			return GF_SERVICE_ERROR;
 		}
@@ -155,7 +155,7 @@ static GF_Err MPD_ClientQuery(GF_InputService *ifce, GF_NetworkCommand *param)
 		while (gf_dash_is_running(mpdin->dash) ) {
 			group_done=0;
 			nb_segments_cached = gf_dash_group_get_num_segments_ready(mpdin->dash, group_idx, &group_done);
-			if (nb_segments_cached>=2) 
+			if (nb_segments_cached>=2)
 				break;
 
 			if (group_done) {
@@ -171,12 +171,12 @@ static GF_Err MPD_ClientQuery(GF_InputService *ifce, GF_NetworkCommand *param)
 						}
 						gf_sleep(20);
 					}
-				} 
+				}
 				return GF_EOS;
 			}
             gf_sleep(16);
         }
-	
+
 		nb_segments_cached = gf_dash_group_get_num_segments_ready(mpdin->dash, group_idx, &group_done);
         if (nb_segments_cached < 2) {
             GF_LOG(GF_LOG_INFO, GF_LOG_DASH, ("[MPD_IN] No more file in cache, EOS\n"));
@@ -189,7 +189,7 @@ static GF_Err MPD_ClientQuery(GF_InputService *ifce, GF_NetworkCommand *param)
 			gf_dash_group_discard_segment(mpdin->dash, group_idx);
 		}
 
-		gf_dash_group_get_next_segment_location(mpdin->dash, group_idx, &param->url_query.next_url, &param->url_query.start_range, &param->url_query.end_range, 
+		gf_dash_group_get_next_segment_location(mpdin->dash, group_idx, &param->url_query.next_url, &param->url_query.start_range, &param->url_query.end_range,
 								&param->url_query.next_url_init_or_switch_segment, &param->url_query.switch_start_range , &param->url_query.switch_end_range,
 								&src_url);
 
@@ -242,7 +242,7 @@ static GF_Err MPD_LoadMediaService(GF_MPD_In *mpdin, u32 group_index, const char
 		for (i=0; i< gf_modules_get_count(mpdin->service->term->user->modules); i++) {
 			GF_InputService *ifce = (GF_InputService *) gf_modules_load_interface(mpdin->service->term->user->modules, i, GF_NET_CLIENT_INTERFACE);
 			if (!ifce) continue;
-			
+
 			if (ifce->CanHandleURL && ifce->CanHandleURL(ifce, init_segment_name)) {
 				GF_MPDGroup *group;
 				GF_SAFEALLOC(group, GF_MPDGroup);
@@ -410,7 +410,7 @@ GF_Err mpdin_dash_io_on_dash_event(GF_DASHFileIO *dashio, GF_DASHEventType dash_
 
 		/*select input services if possible*/
 		for (i=0; i<gf_dash_get_group_count(mpdin->dash); i++) {
-			const char *mime, *init_segment;			
+			const char *mime, *init_segment;
 			if (!gf_dash_is_group_selected(mpdin->dash, i))
 				continue;
 
@@ -463,7 +463,7 @@ GF_Err mpdin_dash_io_on_dash_event(GF_DASHFileIO *dashio, GF_DASHEventType dash_
 				}
 				gf_modules_close_interface((GF_BaseInterface *) group->segment_ifce);
 			}
-			gf_free(group);			
+			gf_free(group);
 			gf_dash_set_group_udta(mpdin->dash, i, NULL);
 		}
 		mpdin->service->subservice_disconnect = 0;
@@ -545,8 +545,8 @@ GF_Err MPD_ConnectService(GF_InputService *plug, GF_ClientService *serv, const c
 	opt = gf_modules_get_option((GF_BaseInterface *)plug, "DASH", "ImmediateSwitching");
 	if (!opt) gf_modules_set_option((GF_BaseInterface *)plug, "DASH", "ImmediateSwitching", "no");
 	mpdin->immediate_switch = (opt && !strcmp(opt, "yes")) ? 1 : 0;
-	
-	
+
+
 	mpdin->in_seek = 0;
 	mpdin->previous_start_range = -1;
 
@@ -595,7 +595,7 @@ GF_Err MPD_CloseService(GF_InputService *plug)
     GF_MPD_In *mpdin = (GF_MPD_In*) plug->priv;
     assert( mpdin );
     GF_LOG(GF_LOG_DEBUG, GF_LOG_DASH, ("[MPD_IN] Received Close Service (%p) request from terminal\n", mpdin->service));
-   
+
 	if (mpdin->dash)
 		gf_dash_close(mpdin->dash);
 
@@ -651,7 +651,7 @@ GF_Err MPD_ServiceCommand(GF_InputService *plug, GF_NetworkCommand *com)
 	}
 	/*not supported*/
 	if (!com->base.on_channel) return GF_NOT_SUPPORTED;
-	
+
 	segment_ifce = MPD_GetInputServiceForChannel(mpdin, com->base.on_channel);
 	if (!segment_ifce) return GF_NOT_SUPPORTED;
 
@@ -678,16 +678,16 @@ GF_Err MPD_ServiceCommand(GF_InputService *plug, GF_NetworkCommand *com)
 
 			if (!gf_dash_in_period_setup(mpdin->dash) && !com->play.dash_segment_switch && ! mpdin->in_seek) {
 				Bool skip_seek;
-				
+
 				mpdin->in_seek = 1;
-				
+
 				/*if start range request is the same as previous one, don't process it
 				- this happens at period switch when new objects are declared*/
 				skip_seek = (mpdin->previous_start_range==com->play.start_range) ? 1 : 0;
 				mpdin->previous_start_range = com->play.start_range;
 
 				gf_dash_seek(mpdin->dash, com->play.start_range);
-			} 
+			}
 			/*For MPEG-2 TS or formats not using Init Seg: since objects are declared and started once the first
 			segment is playing, we will stay in playback_start_range!=-1 until next segment (because we won't have a query_next),
 			which will prevent seeking until then ... we force a reset of playback_start_range to allow seeking asap*/
@@ -764,7 +764,7 @@ Bool MPD_CanHandleURLInService(GF_InputService *plug, const char *url)
 		u32 i;
 		for (i=0;i<gf_dash_get_group_count(mpdin->dash); i++) {
 			if (!gf_dash_is_group_selected(mpdin->dash, i)) continue;
-			
+
 			mudta = gf_dash_get_group_udta(mpdin->dash, i);
 			segment_ifce = mudta->segment_ifce;
 			if (mudta && mudta->segment_ifce && mudta->segment_ifce->CanHandleURLInService) {
