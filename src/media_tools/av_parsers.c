@@ -2748,8 +2748,8 @@ GF_Err gf_media_avc_change_par(GF_AVCConfig *avcc, s32 ar_n, s32 ar_d)
 		}
 
 		/*SPS still contains emulation bytes*/
-		no_emulation_buf = gf_malloc((slc->size-1)*sizeof(char));
-		no_emulation_buf_size = avc_remove_emulation_bytes(slc->data+1, no_emulation_buf, slc->size-1);
+		no_emulation_buf = gf_malloc((slc->size)*sizeof(char));
+		no_emulation_buf_size = avc_remove_emulation_bytes(slc->data, no_emulation_buf, slc->size);
 
 		orig = gf_bs_new(no_emulation_buf, no_emulation_buf_size, GF_BITSTREAM_READ);
 		gf_bs_read_data(orig, no_emulation_buf, no_emulation_buf_size);
@@ -2812,9 +2812,9 @@ GF_Err gf_media_avc_change_par(GF_AVCConfig *avcc, s32 ar_n, s32 ar_d)
 		/*set anti-emulation*/
 		gf_bs_get_content(mod, (char **) &no_emulation_buf, &flag);
 		emulation_bytes = avc_emulation_bytes_add_count(no_emulation_buf, flag);
-		if (flag+emulation_bytes+1>slc->size)
+		if (flag+emulation_bytes>slc->size)
 			slc->data = (char*)gf_realloc(slc->data, flag+emulation_bytes);
-		slc->size = avc_add_emulation_bytes(no_emulation_buf, slc->data+1, flag)+1;
+		slc->size = avc_add_emulation_bytes(no_emulation_buf, slc->data, flag);
 
 		gf_bs_del(mod);
 		gf_free(no_emulation_buf);
