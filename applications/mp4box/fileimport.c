@@ -41,6 +41,7 @@
 #ifndef GPAC_DISABLE_VRML
 #include "../../include/gpac/nodes_mpeg4.h"
 #endif
+#include "../../include/gpac/network.h"
 
 #include <mbstring.h>
 extern char *split_file_name(char *path);
@@ -609,8 +610,16 @@ GF_Err import_file(GF_ISOFile *dest, char *inName, u32 import_flags, Double forc
 				e = gf_media_change_par(import.dest, i+1, par_n, par_d);
 			}
 			if (handler_name) gf_isom_set_handler_name(import.dest, i+1, handler_name);
-			else if (!keep_handler) gf_isom_set_handler_name(import.dest, i+1, "Imported with GPAC " GPAC_FULL_VERSION);
+			else if (!keep_handler) {
+				char szHName[1024];
+				const char *fName = gf_url_get_resource_name((const  char *)inName);
+				fName = strchr(fName, '.');
+				if (fName) fName += 1;
+				else fName = "?";
 
+				sprintf(szHName, "*%s@GPAC%s", fName, GPAC_FULL_VERSION);
+				gf_isom_set_handler_name(import.dest, i+1, szHName);
+			}
 			if (handler) gf_isom_set_media_type(import.dest, i+1, handler);
 			if (disable) gf_isom_set_track_enabled(import.dest, i+1, 0);
 
@@ -802,8 +811,16 @@ malloc_fail:
 				e = gf_media_change_par(import.dest, track, par_n, par_d);
 			}
 			if (handler_name) gf_isom_set_handler_name(import.dest, track, handler_name);
-			else if (!keep_handler) gf_isom_set_handler_name(import.dest, track, "Imported with GPAC " GPAC_FULL_VERSION);
+			else if (!keep_handler) {
+				char szHName[1024];
+				const char *fName = gf_url_get_resource_name((const  char *)inName);
+				fName = strchr(fName, '.');
+				if (fName) fName += 1;
+				else fName = "?";
 
+				sprintf(szHName, "%s@GPAC%s", fName, GPAC_FULL_VERSION);
+				gf_isom_set_handler_name(import.dest, track, szHName);
+			}
 			if (handler) gf_isom_set_media_type(import.dest, track, handler);
 
 			if (group) {
