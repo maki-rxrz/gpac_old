@@ -15,7 +15,7 @@
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.	
+ *  GNU Lesser General Public License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
@@ -47,7 +47,7 @@ static void Anchor_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->description);
 	gf_sg_mfstring_del(p->parameter);
 	gf_sg_mfurl_del(p->url);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -321,9 +321,9 @@ GF_Node *AnimationStream_Create()
 static void Appearance_Del(GF_Node *node)
 {
 	M_Appearance *p = (M_Appearance *) node;
-	gf_node_unregister((GF_Node *) p->material, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->texture, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->textureTransform, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->material, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->texture, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->textureTransform, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -425,7 +425,7 @@ GF_Node *Appearance_Create()
 static void AudioBuffer_Del(GF_Node *node)
 {
 	M_AudioBuffer *p = (M_AudioBuffer *) node;
-	gf_node_unregister_children((GF_Node *) p, p->children);	
+	gf_node_unregister_children((GF_Node *) p, p->children);
 	gf_sg_mfint32_del(p->phaseGroup);
 	gf_node_free((GF_Node *) p);
 }
@@ -767,7 +767,7 @@ static void AudioDelay_Del(GF_Node *node)
 {
 	M_AudioDelay *p = (M_AudioDelay *) node;
 	gf_sg_mfint32_del(p->phaseGroup);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -913,7 +913,7 @@ static void AudioFX_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->score);
 	gf_sg_mffloat_del(p->params);
 	gf_sg_mfint32_del(p->phaseGroup);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -1080,7 +1080,7 @@ static void AudioMix_Del(GF_Node *node)
 	M_AudioMix *p = (M_AudioMix *) node;
 	gf_sg_mffloat_del(p->matrix);
 	gf_sg_mfint32_del(p->phaseGroup);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -1248,7 +1248,7 @@ static void AudioSource_Del(GF_Node *node)
 	M_AudioSource *p = (M_AudioSource *) node;
 	gf_sg_mfurl_del(p->url);
 	gf_sg_mfint32_del(p->phaseGroup);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -1439,7 +1439,7 @@ static void AudioSwitch_Del(GF_Node *node)
 	M_AudioSwitch *p = (M_AudioSwitch *) node;
 	gf_sg_mfint32_del(p->whichChoice);
 	gf_sg_mfint32_del(p->phaseGroup);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -1912,7 +1912,7 @@ GF_Node *Background2D_Create()
 static void Billboard_Del(GF_Node *node)
 {
 	M_Billboard *p = (M_Billboard *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -2311,8 +2311,8 @@ GF_Node *Circle_Create()
 static void Collision_Del(GF_Node *node)
 {
 	M_Collision *p = (M_Collision *) node;
-	gf_node_unregister((GF_Node *) p->proxy, (GF_Node *) p);	
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->proxy, (GF_Node *) p);
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -2655,9 +2655,9 @@ GF_Node *ColorInterpolator_Create()
 static void CompositeTexture2D_Del(GF_Node *node)
 {
 	M_CompositeTexture2D *p = (M_CompositeTexture2D *) node;
-	gf_node_unregister((GF_Node *) p->background, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->viewport, (GF_Node *) p);	
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->background, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->viewport, (GF_Node *) p);
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -2823,11 +2823,11 @@ GF_Node *CompositeTexture2D_Create()
 static void CompositeTexture3D_Del(GF_Node *node)
 {
 	M_CompositeTexture3D *p = (M_CompositeTexture3D *) node;
-	gf_node_unregister((GF_Node *) p->background, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->fog, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->navigationInfo, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->viewpoint, (GF_Node *) p);	
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->background, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->fog, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->navigationInfo, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->viewpoint, (GF_Node *) p);
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -3105,7 +3105,7 @@ GF_Node *Conditional_Create()
 	GF_SAFEALLOC(p, M_Conditional);
 	if(!p) return NULL;
 	gf_node_setup((GF_Node *)p, TAG_MPEG4_Conditional);
-	p->buffer.commandList = gf_list_new();	
+	p->buffer.commandList = gf_list_new();
 
 	/*default field values*/
 	return (GF_Node *)p;
@@ -3664,7 +3664,7 @@ GF_Node *CoordinateInterpolator2D_Create()
 static void Curve2D_Del(GF_Node *node)
 {
 	M_Curve2D *p = (M_Curve2D *) node;
-	gf_node_unregister((GF_Node *) p->point, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->point, (GF_Node *) p);
 	gf_sg_mfint32_del(p->type);
 	gf_node_free((GF_Node *) p);
 }
@@ -4378,9 +4378,9 @@ static void ElevationGrid_Del(GF_Node *node)
 {
 	M_ElevationGrid *p = (M_ElevationGrid *) node;
 	gf_sg_mffloat_del(p->set_height);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);
 	gf_sg_mffloat_del(p->height);
 	gf_node_free((GF_Node *) p);
 }
@@ -5006,11 +5006,11 @@ GF_Node *Extrusion_Create()
 static void Face_Del(GF_Node *node)
 {
 	M_Face *p = (M_Face *) node;
-	gf_node_unregister((GF_Node *) p->fap, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->fdp, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->fit, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->ttsSource, (GF_Node *) p);	
-	gf_node_unregister_children((GF_Node *) p, p->renderedFace);	
+	gf_node_unregister((GF_Node *) p->fap, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->fdp, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->fit, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->ttsSource, (GF_Node *) p);
+	gf_node_unregister_children((GF_Node *) p, p->renderedFace);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -5128,7 +5128,7 @@ GF_Node *Face_Create()
 static void FaceDefMesh_Del(GF_Node *node)
 {
 	M_FaceDefMesh *p = (M_FaceDefMesh *) node;
-	gf_node_unregister((GF_Node *) p->faceSceneGraphNode, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->faceSceneGraphNode, (GF_Node *) p);
 	gf_sg_mfint32_del(p->intervalBorders);
 	gf_sg_mfint32_del(p->coordIndex);
 	gf_sg_mfvec3f_del(p->displacements);
@@ -5242,8 +5242,8 @@ GF_Node *FaceDefMesh_Create()
 static void FaceDefTables_Del(GF_Node *node)
 {
 	M_FaceDefTables *p = (M_FaceDefTables *) node;
-	gf_node_unregister_children((GF_Node *) p, p->faceDefMesh);	
-	gf_node_unregister_children((GF_Node *) p, p->faceDefTransform);	
+	gf_node_unregister_children((GF_Node *) p, p->faceDefMesh);
+	gf_node_unregister_children((GF_Node *) p, p->faceDefTransform);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -5367,7 +5367,7 @@ GF_Node *FaceDefTables_Create()
 static void FaceDefTransform_Del(GF_Node *node)
 {
 	M_FaceDefTransform *p = (M_FaceDefTransform *) node;
-	gf_node_unregister((GF_Node *) p->faceSceneGraphNode, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->faceSceneGraphNode, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -5498,8 +5498,8 @@ GF_Node *FaceDefTransform_Create()
 static void FAP_Del(GF_Node *node)
 {
 	M_FAP *p = (M_FAP *) node;
-	gf_node_unregister((GF_Node *) p->viseme, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->expression, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->viseme, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->expression, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -6517,10 +6517,10 @@ GF_Node *FAP_Create()
 static void FDP_Del(GF_Node *node)
 {
 	M_FDP *p = (M_FDP *) node;
-	gf_node_unregister((GF_Node *) p->featurePointsCoord, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->textureCoord, (GF_Node *) p);	
-	gf_node_unregister_children((GF_Node *) p, p->faceDefTables);	
-	gf_node_unregister_children((GF_Node *) p, p->faceSceneGraph);	
+	gf_node_unregister((GF_Node *) p->featurePointsCoord, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->textureCoord, (GF_Node *) p);
+	gf_node_unregister_children((GF_Node *) p, p->faceDefTables);
+	gf_node_unregister_children((GF_Node *) p, p->faceSceneGraph);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -7145,7 +7145,7 @@ static void Form_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->groups);
 	gf_sg_mfstring_del(p->constraints);
 	gf_sg_mfint32_del(p->groupsIndex);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -7304,7 +7304,7 @@ GF_Node *Form_Create()
 static void Group_Del(GF_Node *node)
 {
 	M_Group *p = (M_Group *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -7514,10 +7514,10 @@ static void IndexedFaceSet_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->set_coordIndex);
 	gf_sg_mfint32_del(p->set_normalIndex);
 	gf_sg_mfint32_del(p->set_texCoordIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mfint32_del(p->coordIndex);
 	gf_sg_mfint32_del(p->normalIndex);
@@ -7772,9 +7772,9 @@ static void IndexedFaceSet2D_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->set_colorIndex);
 	gf_sg_mfint32_del(p->set_coordIndex);
 	gf_sg_mfint32_del(p->set_texCoordIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mfint32_del(p->coordIndex);
 	gf_sg_mfint32_del(p->texCoordIndex);
@@ -7960,8 +7960,8 @@ static void IndexedLineSet_Del(GF_Node *node)
 	M_IndexedLineSet *p = (M_IndexedLineSet *) node;
 	gf_sg_mfint32_del(p->set_colorIndex);
 	gf_sg_mfint32_del(p->set_coordIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mfint32_del(p->coordIndex);
 	gf_node_free((GF_Node *) p);
@@ -8109,8 +8109,8 @@ static void IndexedLineSet2D_Del(GF_Node *node)
 	M_IndexedLineSet2D *p = (M_IndexedLineSet2D *) node;
 	gf_sg_mfint32_del(p->set_colorIndex);
 	gf_sg_mfint32_del(p->set_coordIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mfint32_del(p->coordIndex);
 	gf_node_free((GF_Node *) p);
@@ -8341,7 +8341,7 @@ GF_Node *Inline_Create()
 static void LOD_Del(GF_Node *node)
 {
 	M_LOD *p = (M_LOD *) node;
-	gf_node_unregister_children((GF_Node *) p, p->level);	
+	gf_node_unregister_children((GF_Node *) p, p->level);
 	gf_sg_mffloat_del(p->range);
 	gf_node_free((GF_Node *) p);
 }
@@ -8457,9 +8457,9 @@ GF_Node *LOD_Create()
 static void Layer2D_Del(GF_Node *node)
 {
 	M_Layer2D *p = (M_Layer2D *) node;
-	gf_node_unregister((GF_Node *) p->background, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->viewport, (GF_Node *) p);	
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->background, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->viewport, (GF_Node *) p);
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -8599,11 +8599,11 @@ GF_Node *Layer2D_Create()
 static void Layer3D_Del(GF_Node *node)
 {
 	M_Layer3D *p = (M_Layer3D *) node;
-	gf_node_unregister((GF_Node *) p->background, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->fog, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->navigationInfo, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->viewpoint, (GF_Node *) p);	
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->background, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->fog, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->navigationInfo, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->viewpoint, (GF_Node *) p);
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -8760,7 +8760,7 @@ static void Layout_Del(GF_Node *node)
 {
 	M_Layout *p = (M_Layout *) node;
 	gf_sg_mfstring_del(p->justify);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -9438,7 +9438,7 @@ GF_Node *Material_Create()
 static void Material2D_Del(GF_Node *node)
 {
 	M_Material2D *p = (M_Material2D *) node;
-	gf_node_unregister((GF_Node *) p->lineProps, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->lineProps, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -10101,7 +10101,7 @@ static void OrderedGroup_Del(GF_Node *node)
 {
 	M_OrderedGroup *p = (M_OrderedGroup *) node;
 	gf_sg_mffloat_del(p->order);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -10942,8 +10942,8 @@ GF_Node *PointLight_Create()
 static void PointSet_Del(GF_Node *node)
 {
 	M_PointSet *p = (M_PointSet *) node;
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -11037,8 +11037,8 @@ GF_Node *PointSet_Create()
 static void PointSet2D_Del(GF_Node *node)
 {
 	M_PointSet2D *p = (M_PointSet2D *) node;
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -12555,8 +12555,8 @@ GF_Node *Script_Create()
 static void Shape_Del(GF_Node *node)
 {
 	M_Shape *p = (M_Shape *) node;
-	gf_node_unregister((GF_Node *) p->appearance, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->appearance, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -12650,7 +12650,7 @@ GF_Node *Shape_Create()
 static void Sound_Del(GF_Node *node)
 {
 	M_Sound *p = (M_Sound *) node;
-	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -12864,7 +12864,7 @@ GF_Node *Sound_Create()
 static void Sound2D_Del(GF_Node *node)
 {
 	M_Sound2D *p = (M_Sound2D *) node;
-	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -13428,7 +13428,7 @@ GF_Node *SpotLight_Create()
 static void Switch_Del(GF_Node *node)
 {
 	M_Switch *p = (M_Switch *) node;
-	gf_node_unregister_children((GF_Node *) p, p->choice);	
+	gf_node_unregister_children((GF_Node *) p, p->choice);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -13645,7 +13645,7 @@ static void Text_Del(GF_Node *node)
 	M_Text *p = (M_Text *) node;
 	gf_sg_mfstring_del(p->string);
 	gf_sg_mffloat_del(p->length);
-	gf_node_unregister((GF_Node *) p->fontStyle, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->fontStyle, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -14275,7 +14275,7 @@ GF_Node *TouchSensor_Create()
 static void Transform_Del(GF_Node *node)
 {
 	M_Transform *p = (M_Transform *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -14462,7 +14462,7 @@ GF_Node *Transform_Create()
 static void Transform2D_Del(GF_Node *node)
 {
 	M_Transform2D *p = (M_Transform2D *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -20406,8 +20406,8 @@ GF_Node *BAP_Create()
 static void BDP_Del(GF_Node *node)
 {
 	M_BDP *p = (M_BDP *) node;
-	gf_node_unregister_children((GF_Node *) p, p->bodyDefTables);	
-	gf_node_unregister_children((GF_Node *) p, p->bodySceneGraph);	
+	gf_node_unregister_children((GF_Node *) p, p->bodyDefTables);
+	gf_node_unregister_children((GF_Node *) p, p->bodySceneGraph);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -20501,9 +20501,9 @@ GF_Node *BDP_Create()
 static void Body_Del(GF_Node *node)
 {
 	M_Body *p = (M_Body *) node;
-	gf_node_unregister((GF_Node *) p->bdp, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->bap, (GF_Node *) p);	
-	gf_node_unregister_children((GF_Node *) p, p->renderedBody);	
+	gf_node_unregister((GF_Node *) p->bdp, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->bap, (GF_Node *) p);
+	gf_node_unregister_children((GF_Node *) p, p->renderedBody);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -20876,8 +20876,8 @@ GF_Node *BodySegmentConnectionHint_Create()
 static void DirectiveSound_Del(GF_Node *node)
 {
 	M_DirectiveSound *p = (M_DirectiveSound *) node;
-	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->perceptualParameters, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->perceptualParameters, (GF_Node *) p);
 	gf_sg_mffloat_del(p->directivity);
 	gf_sg_mffloat_del(p->angles);
 	gf_sg_mffloat_del(p->frequency);
@@ -21757,7 +21757,7 @@ static void TemporalTransform_Del(GF_Node *node)
 	gf_sg_mfurl_del(p->url);
 	gf_sg_mfint32_del(p->stretchMode);
 	gf_sg_mfint32_del(p->shrinkMode);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -21975,7 +21975,7 @@ static void TemporalGroup_Del(GF_Node *node)
 {
 	M_TemporalGroup *p = (M_TemporalGroup *) node;
 	gf_sg_mffloat_del(p->priority);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -22331,7 +22331,7 @@ GF_Node *InputSensor_Create()
 	GF_SAFEALLOC(p, M_InputSensor);
 	if(!p) return NULL;
 	gf_node_setup((GF_Node *)p, TAG_MPEG4_InputSensor);
-	p->buffer.commandList = gf_list_new();	
+	p->buffer.commandList = gf_list_new();
 
 	/*default field values*/
 	p->enabled = 1;
@@ -22346,9 +22346,9 @@ GF_Node *InputSensor_Create()
 static void MatteTexture_Del(GF_Node *node)
 {
 	M_MatteTexture *p = (M_MatteTexture *) node;
-	gf_node_unregister((GF_Node *) p->surfaceA, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->surfaceB, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->alphaSurface, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->surfaceA, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->surfaceB, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->alphaSurface, (GF_Node *) p);
 	gf_sg_sfstring_del(p->operation);
 	gf_sg_mffloat_del(p->parameter);
 	gf_node_free((GF_Node *) p);
@@ -22875,7 +22875,7 @@ GF_Node *MediaSensor_Create()
 static void BitWrapper_Del(GF_Node *node)
 {
 	M_BitWrapper *p = (M_BitWrapper *) node;
-	gf_node_unregister((GF_Node *) p->node, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->node, (GF_Node *) p);
 	gf_sg_mfurl_del(p->url);
 	gf_sg_sfstring_del(p->buffer);
 	gf_node_free((GF_Node *) p);
@@ -23098,7 +23098,7 @@ GF_Node *CoordinateInterpolator4D_Create()
 static void DepthImage_Del(GF_Node *node)
 {
 	M_DepthImage *p = (M_DepthImage *) node;
-	gf_node_unregister((GF_Node *) p->diTexture, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->diTexture, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -23234,7 +23234,7 @@ static void FFD_Del(GF_Node *node)
 	gf_sg_mffloat_del(p->uKnot);
 	gf_sg_mffloat_del(p->vKnot);
 	gf_sg_mffloat_del(p->wKnot);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -23600,10 +23600,10 @@ GF_Node *Implicit_Create()
 static void XXLFM_Appearance_Del(GF_Node *node)
 {
 	M_XXLFM_Appearance *p = (M_XXLFM_Appearance *) node;
-	gf_node_unregister((GF_Node *) p->blendList, (GF_Node *) p);	
-	gf_node_unregister_children((GF_Node *) p, p->lightMapList);	
-	gf_node_unregister_children((GF_Node *) p, p->tileList);	
-	gf_node_unregister((GF_Node *) p->vertexFrameList, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->blendList, (GF_Node *) p);
+	gf_node_unregister_children((GF_Node *) p, p->lightMapList);
+	gf_node_unregister_children((GF_Node *) p, p->tileList);
+	gf_node_unregister((GF_Node *) p->vertexFrameList, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -23934,8 +23934,8 @@ GF_Node *XXLFM_FrameList_Create()
 static void XXLFM_LightMap_Del(GF_Node *node)
 {
 	M_XXLFM_LightMap *p = (M_XXLFM_LightMap *) node;
-	gf_node_unregister((GF_Node *) p->surfaceMapList, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->viewMapList, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->surfaceMapList, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->viewMapList, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -24077,7 +24077,7 @@ static void XXLFM_SurfaceMapList_Del(GF_Node *node)
 {
 	M_XXLFM_SurfaceMapList *p = (M_XXLFM_SurfaceMapList *) node;
 	gf_sg_mfint32_del(p->tileIndex);
-	gf_node_unregister((GF_Node *) p->triangleCoordinate, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->triangleCoordinate, (GF_Node *) p);
 	gf_sg_mfint32_del(p->triangleIndex);
 	gf_sg_mfint32_del(p->viewMapIndex);
 	gf_node_free((GF_Node *) p);
@@ -24198,8 +24198,8 @@ GF_Node *XXLFM_SurfaceMapList_Create()
 static void XXLFM_ViewMapList_Del(GF_Node *node)
 {
 	M_XXLFM_ViewMapList *p = (M_XXLFM_ViewMapList *) node;
-	gf_node_unregister((GF_Node *) p->textureOrigin, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->textureSize, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->textureOrigin, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->textureSize, (GF_Node *) p);
 	gf_sg_mfint32_del(p->tileIndex);
 	gf_sg_mfint32_del(p->vertexIndex);
 	gf_node_free((GF_Node *) p);
@@ -24321,13 +24321,13 @@ static void MeshGrid_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->set_coordIndex);
 	gf_sg_mfint32_del(p->set_normalIndex);
 	gf_sg_mfint32_del(p->set_texCoordIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->gridCoord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->gridCoord, (GF_Node *) p);
 	gf_sg_mfint32_del(p->nLevels);
-	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);
 	gf_sg_mfint32_del(p->nSlices);
-	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);
 	gf_sg_mffloat_del(p->vertexOffset);
 	gf_sg_mfint32_del(p->vertexLink);
 	gf_sg_mfint32_del(p->colorIndex);
@@ -24657,7 +24657,7 @@ static void NonLinearDeformer_Del(GF_Node *node)
 {
 	M_NonLinearDeformer *p = (M_NonLinearDeformer *) node;
 	gf_sg_mffloat_del(p->extend);
-	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -24777,7 +24777,7 @@ static void NurbsCurve_Del(GF_Node *node)
 {
 	M_NurbsCurve *p = (M_NurbsCurve *) node;
 	gf_sg_mfint32_del(p->set_colorIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
 	gf_sg_mfvec4f_del(p->controlPoint);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mffloat_del(p->knot);
@@ -24941,7 +24941,7 @@ static void NurbsCurve2D_Del(GF_Node *node)
 {
 	M_NurbsCurve2D *p = (M_NurbsCurve2D *) node;
 	gf_sg_mfint32_del(p->set_colorIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
 	gf_sg_mfvec3f_del(p->controlPoint);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mffloat_del(p->knot);
@@ -25106,9 +25106,9 @@ static void NurbsSurface_Del(GF_Node *node)
 	M_NurbsSurface *p = (M_NurbsSurface *) node;
 	gf_sg_mfint32_del(p->set_colorIndex);
 	gf_sg_mfint32_del(p->set_texColorIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
 	gf_sg_mfvec4f_del(p->controlPoint);
-	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mfint32_del(p->texColorIndex);
 	gf_sg_mffloat_del(p->uKnot);
@@ -25375,7 +25375,7 @@ GF_Node *NurbsSurface_Create()
 static void OctreeImage_Del(GF_Node *node)
 {
 	M_OctreeImage *p = (M_OctreeImage *) node;
-	gf_node_unregister_children((GF_Node *) p, p->images);	
+	gf_node_unregister_children((GF_Node *) p, p->images);
 	gf_sg_mfint32_del(p->octree);
 	gf_sg_mfint32_del(p->voxelImageIndex);
 	gf_node_free((GF_Node *) p);
@@ -25491,9 +25491,9 @@ GF_Node *OctreeImage_Create()
 static void XXParticles_Del(GF_Node *node)
 {
 	M_XXParticles *p = (M_XXParticles *) node;
-	gf_node_unregister_children((GF_Node *) p, p->influences);	
-	gf_node_unregister((GF_Node *) p->init, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->primitive, (GF_Node *) p);	
+	gf_node_unregister_children((GF_Node *) p, p->influences);
+	gf_node_unregister((GF_Node *) p->init, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->primitive, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -27361,7 +27361,7 @@ static void SBBone_Del(GF_Node *node)
 	gf_sg_mffloat_del(p->sectionPosition);
 	gf_sg_mfint32_del(p->skinCoordIndex);
 	gf_sg_mffloat_del(p->skinCoordWeight);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -27697,7 +27697,7 @@ GF_Node *SBBone_Create()
 static void SBMuscle_Del(GF_Node *node)
 {
 	M_SBMuscle *p = (M_SBMuscle *) node;
-	gf_node_unregister((GF_Node *) p->muscleCurve, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->muscleCurve, (GF_Node *) p);
 	gf_sg_mfint32_del(p->skinCoordIndex);
 	gf_sg_mffloat_del(p->skinCoordWeight);
 	gf_node_free((GF_Node *) p);
@@ -27853,7 +27853,7 @@ static void SBSegment_Del(GF_Node *node)
 	M_SBSegment *p = (M_SBSegment *) node;
 	gf_sg_mfvec3f_del(p->momentsOfInertia);
 	gf_sg_sfstring_del(p->name);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -28010,7 +28010,7 @@ static void SBSite_Del(GF_Node *node)
 {
 	M_SBSite *p = (M_SBSite *) node;
 	gf_sg_sfstring_del(p->name);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -28198,16 +28198,16 @@ GF_Node *SBSite_Create()
 static void SBSkinnedModel_Del(GF_Node *node)
 {
 	M_SBSkinnedModel *p = (M_SBSkinnedModel *) node;
-	gf_node_unregister_children((GF_Node *) p, p->bones);	
-	gf_node_unregister_children((GF_Node *) p, p->muscles);	
+	gf_node_unregister_children((GF_Node *) p, p->bones);
+	gf_node_unregister_children((GF_Node *) p, p->muscles);
 	gf_sg_sfstring_del(p->name);
-	gf_node_unregister_children((GF_Node *) p, p->segments);	
-	gf_node_unregister_children((GF_Node *) p, p->sites);	
-	gf_node_unregister_children((GF_Node *) p, p->skeleton);	
-	gf_node_unregister_children((GF_Node *) p, p->skin);	
-	gf_node_unregister((GF_Node *) p->skinCoord, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->skinNormal, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->weighsComputationSkinCoord, (GF_Node *) p);	
+	gf_node_unregister_children((GF_Node *) p, p->segments);
+	gf_node_unregister_children((GF_Node *) p, p->sites);
+	gf_node_unregister_children((GF_Node *) p, p->skeleton);
+	gf_node_unregister_children((GF_Node *) p, p->skin);
+	gf_node_unregister((GF_Node *) p->skinCoord, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->skinNormal, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->weighsComputationSkinCoord, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -28441,7 +28441,7 @@ static void SBVCAnimation_Del(GF_Node *node)
 {
 	M_SBVCAnimation *p = (M_SBVCAnimation *) node;
 	gf_sg_mfurl_del(p->url);
-	gf_node_unregister_children((GF_Node *) p, p->virtualCharacters);	
+	gf_node_unregister_children((GF_Node *) p, p->virtualCharacters);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -28720,8 +28720,8 @@ GF_Node *ScalarAnimator_Create()
 static void SimpleTexture_Del(GF_Node *node)
 {
 	M_SimpleTexture *p = (M_SimpleTexture *) node;
-	gf_node_unregister((GF_Node *) p->depth, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->texture, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->depth, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->texture, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -28808,7 +28808,7 @@ static void SolidRep_Del(GF_Node *node)
 {
 	M_SolidRep *p = (M_SolidRep *) node;
 	gf_sg_mfint32_del(p->densityList);
-	gf_node_unregister((GF_Node *) p->solidTree, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->solidTree, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -28928,10 +28928,10 @@ static void SubdivisionSurface_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->set_creaseVertexIndex);
 	gf_sg_mfint32_del(p->set_dartVertexIndex);
 	gf_sg_mfint32_del(p->set_texCoordIndex);
-	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);	
-	gf_node_unregister_children((GF_Node *) p, p->sectors);	
+	gf_node_unregister((GF_Node *) p->color, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->coord, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->texCoord, (GF_Node *) p);
+	gf_node_unregister_children((GF_Node *) p, p->sectors);
 	gf_sg_mfint32_del(p->invisibleEdgeIndex);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mfint32_del(p->coordIndex);
@@ -29403,7 +29403,7 @@ GF_Node *SubdivSurfaceSector_Create()
 static void WaveletSubdivisionSurface_Del(GF_Node *node)
 {
 	M_WaveletSubdivisionSurface *p = (M_WaveletSubdivisionSurface *) node;
-	gf_node_unregister((GF_Node *) p->baseMesh, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->baseMesh, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -29513,9 +29513,9 @@ GF_Node *WaveletSubdivisionSurface_Create()
 static void Clipper2D_Del(GF_Node *node)
 {
 	M_Clipper2D *p = (M_Clipper2D *) node;
-	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->transform, (GF_Node *) p);	
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->transform, (GF_Node *) p);
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -29651,7 +29651,7 @@ GF_Node *Clipper2D_Create()
 static void ColorTransform_Del(GF_Node *node)
 {
 	M_ColorTransform *p = (M_ColorTransform *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -30139,7 +30139,7 @@ static void LinearGradient_Del(GF_Node *node)
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfcolor_del(p->keyValue);
 	gf_sg_mffloat_del(p->opacity);
-	gf_node_unregister((GF_Node *) p->transform, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->transform, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -30316,9 +30316,9 @@ GF_Node *LinearGradient_Create()
 static void PathLayout_Del(GF_Node *node)
 {
 	M_PathLayout *p = (M_PathLayout *) node;
-	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);
 	gf_sg_mfint32_del(p->alignment);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -30513,7 +30513,7 @@ static void RadialGradient_Del(GF_Node *node)
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfcolor_del(p->keyValue);
 	gf_sg_mffloat_del(p->opacity);
-	gf_node_unregister((GF_Node *) p->transform, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->transform, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -30902,7 +30902,7 @@ GF_Node *SynthesizedTexture_Create()
 static void TransformMatrix2D_Del(GF_Node *node)
 {
 	M_TransformMatrix2D *p = (M_TransformMatrix2D *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -31283,7 +31283,7 @@ GF_Node *Viewport_Create()
 static void XCurve2D_Del(GF_Node *node)
 {
 	M_XCurve2D *p = (M_XCurve2D *) node;
-	gf_node_unregister((GF_Node *) p->point, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->point, (GF_Node *) p);
 	gf_sg_mfint32_del(p->type);
 	gf_node_free((GF_Node *) p);
 }
@@ -31646,8 +31646,8 @@ static void XLineProperties_Del(GF_Node *node)
 {
 	M_XLineProperties *p = (M_XLineProperties *) node;
 	gf_sg_mffloat_del(p->dashes);
-	gf_node_unregister((GF_Node *) p->texture, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->textureTransform, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->texture, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->textureTransform, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -31892,7 +31892,7 @@ static void AdvancedAudioBuffer_Del(GF_Node *node)
 {
 	M_AdvancedAudioBuffer *p = (M_AdvancedAudioBuffer *) node;
 	gf_sg_mfint32_del(p->phaseGroup);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -32202,7 +32202,7 @@ static void AudioChannelConfig_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->ambComponentIndex);
 	gf_sg_mffloat_del(p->ambBackwardMatrix);
 	gf_sg_mfint32_del(p->ambSoundfieldResolution);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -32543,7 +32543,7 @@ GF_Node *AudioChannelConfig_Create()
 static void DepthImageV2_Del(GF_Node *node)
 {
 	M_DepthImageV2 *p = (M_DepthImageV2 *) node;
-	gf_node_unregister((GF_Node *) p->diTexture, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->diTexture, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -32684,8 +32684,8 @@ GF_Node *DepthImageV2_Create()
 static void MorphShape_Del(GF_Node *node)
 {
 	M_MorphShape *p = (M_MorphShape *) node;
-	gf_node_unregister((GF_Node *) p->baseShape, (GF_Node *) p);	
-	gf_node_unregister_children((GF_Node *) p, p->targetShapes);	
+	gf_node_unregister((GF_Node *) p->baseShape, (GF_Node *) p);
+	gf_node_unregister_children((GF_Node *) p, p->targetShapes);
 	gf_sg_mffloat_del(p->weights);
 	gf_node_free((GF_Node *) p);
 }
@@ -32805,7 +32805,7 @@ static void MultiTexture_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->function);
 	gf_sg_mfint32_del(p->mode);
 	gf_sg_mfint32_del(p->source);
-	gf_node_unregister_children((GF_Node *) p, p->texture);	
+	gf_node_unregister_children((GF_Node *) p, p->texture);
 	gf_sg_mfvec3f_del(p->cameraVector);
 	gf_node_free((GF_Node *) p);
 }
@@ -32947,7 +32947,7 @@ static void PointTextureV2_Del(GF_Node *node)
 	M_PointTextureV2 *p = (M_PointTextureV2 *) node;
 	gf_sg_mfcolor_del(p->color);
 	gf_sg_mfint32_del(p->depth);
-	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);
 	gf_sg_mfvec3f_del(p->splatU);
 	gf_sg_mfvec3f_del(p->splatV);
 	gf_node_free((GF_Node *) p);
@@ -33100,7 +33100,7 @@ static void SBVCAnimationV2_Del(GF_Node *node)
 	M_SBVCAnimationV2 *p = (M_SBVCAnimationV2 *) node;
 	gf_sg_mfint32_del(p->activeUrlIndex);
 	gf_sg_mfurl_del(p->url);
-	gf_node_unregister_children((GF_Node *) p, p->virtualCharacters);	
+	gf_node_unregister_children((GF_Node *) p, p->virtualCharacters);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -33269,11 +33269,11 @@ GF_Node *SBVCAnimationV2_Create()
 static void SimpleTextureV2_Del(GF_Node *node)
 {
 	M_SimpleTextureV2 *p = (M_SimpleTextureV2 *) node;
-	gf_node_unregister((GF_Node *) p->depth, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->splatU, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->splatV, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->texture, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->depth, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->normal, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->splatU, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->splatV, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->texture, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -33383,7 +33383,7 @@ GF_Node *SimpleTextureV2_Create()
 static void SurroundingSound_Del(GF_Node *node)
 {
 	M_SurroundingSound *p = (M_SurroundingSound *) node;
-	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -33550,7 +33550,7 @@ GF_Node *SurroundingSound_Create()
 static void Transform3DAudio_Del(GF_Node *node)
 {
 	M_Transform3DAudio *p = (M_Transform3DAudio *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -33750,8 +33750,8 @@ GF_Node *Transform3DAudio_Create()
 static void WideSound_Del(GF_Node *node)
 {
 	M_WideSound *p = (M_WideSound *) node;
-	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->perceptualParameters, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->source, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->perceptualParameters, (GF_Node *) p);
 	gf_sg_mffloat_del(p->size);
 	gf_node_free((GF_Node *) p);
 }
@@ -34001,8 +34001,8 @@ GF_Node *WideSound_Create()
 static void ScoreShape_Del(GF_Node *node)
 {
 	M_ScoreShape *p = (M_ScoreShape *) node;
-	gf_node_unregister((GF_Node *) p->score, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->score, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->geometry, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -34428,7 +34428,7 @@ GF_Node *MusicScore_Create()
 static void FootPrintSetNode_Del(GF_Node *node)
 {
 	M_FootPrintSetNode *p = (M_FootPrintSetNode *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -34515,7 +34515,7 @@ GF_Node *FootPrintSetNode_Create()
 static void FootPrintNode_Del(GF_Node *node)
 {
 	M_FootPrintNode *p = (M_FootPrintNode *) node;
-	gf_node_unregister((GF_Node *) p->footprint, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->footprint, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -34609,10 +34609,10 @@ GF_Node *FootPrintNode_Create()
 static void BuildingPartNode_Del(GF_Node *node)
 {
 	M_BuildingPartNode *p = (M_BuildingPartNode *) node;
-	gf_node_unregister((GF_Node *) p->footprint, (GF_Node *) p);	
-	gf_node_unregister_children((GF_Node *) p, p->alternativeGeometry);	
-	gf_node_unregister_children((GF_Node *) p, p->roofs);	
-	gf_node_unregister_children((GF_Node *) p, p->facades);	
+	gf_node_unregister((GF_Node *) p->footprint, (GF_Node *) p);
+	gf_node_unregister_children((GF_Node *) p, p->alternativeGeometry);
+	gf_node_unregister_children((GF_Node *) p, p->roofs);
+	gf_node_unregister_children((GF_Node *) p, p->facades);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -34933,7 +34933,7 @@ static void FacadeNode_Del(GF_Node *node)
 	gf_sg_sfurl_del(p->FacadePrimitive);
 	gf_sg_mfint32_del(p->NbFacadeCellsByStorey);
 	gf_sg_mffloat_del(p->StoreyHeight);
-	gf_node_unregister_children((GF_Node *) p, p->FacadeCellsArray);	
+	gf_node_unregister_children((GF_Node *) p, p->FacadeCellsArray);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -35117,7 +35117,7 @@ GF_Node *FacadeNode_Create()
 static void Shadow_Del(GF_Node *node)
 {
 	M_Shadow *p = (M_Shadow *) node;
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -35534,13 +35534,13 @@ GF_Node *EnvironmentTest_Create()
 static void KeyNavigator_Del(GF_Node *node)
 {
 	M_KeyNavigator *p = (M_KeyNavigator *) node;
-	gf_node_unregister((GF_Node *) p->sensor, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->left, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->right, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->up, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->down, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->select, (GF_Node *) p);	
-	gf_node_unregister((GF_Node *) p->quit, (GF_Node *) p);	
+	gf_node_unregister((GF_Node *) p->sensor, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->left, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->right, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->up, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->down, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->select, (GF_Node *) p);
+	gf_node_unregister((GF_Node *) p->quit, (GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 
@@ -35698,7 +35698,7 @@ static void SpacePartition_Del(GF_Node *node)
 {
 	M_SpacePartition *p = (M_SpacePartition *) node;
 	gf_sg_sfurl_del(p->SPStream);
-	gf_sg_vrml_parent_destroy((GF_Node *) p);	
+	gf_sg_vrml_parent_destroy((GF_Node *) p);
 	gf_node_free((GF_Node *) p);
 }
 

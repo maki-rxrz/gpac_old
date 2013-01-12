@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -58,7 +58,7 @@ GF_Err gf_rtp_decode_rtcp(GF_RTPChannel *ch, char *pck, u32 pck_size, Bool *has_
 	GF_Err e = GF_OK;
 
 	if (has_sr) *has_sr=0;
-	
+
 	//bad RTCP packet
 	if (pck_size < 4 ) return GF_NON_COMPLIANT_BITSTREAM;
 	bs = gf_bs_new(pck, pck_size, GF_BITSTREAM_READ);
@@ -74,7 +74,7 @@ GF_Err gf_rtp_decode_rtcp(GF_RTPChannel *ch, char *pck, u32 pck_size, Bool *has_
 		rtcp_hdr.Padding = gf_bs_read_int(bs, 1);
 		rtcp_hdr.Count = gf_bs_read_int(bs, 5);
 		rtcp_hdr.PayloadType = gf_bs_read_u8(bs);
-		rtcp_hdr.Length = gf_bs_read_u16(bs);	
+		rtcp_hdr.Length = gf_bs_read_u16(bs);
 
 		//check pck size
 		if (pck_size < (u32) (rtcp_hdr.Length + 1) * 4) {
@@ -95,7 +95,7 @@ GF_Err gf_rtp_decode_rtcp(GF_RTPChannel *ch, char *pck, u32 pck_size, Bool *has_
 			}
 			first = 0;
 		}
-			
+
 		//specific extensions
 		switch (rtcp_hdr.PayloadType) {
 		//Sender report - we assume there's only one sender
@@ -130,7 +130,7 @@ GF_Err gf_rtp_decode_rtcp(GF_RTPChannel *ch, char *pck, u32 pck_size, Bool *has_
 #else
 				const char *ascTime = "Not Available";
 #endif
-				GF_LOG(GF_LOG_INFO, GF_LOG_RTP, ("[RTP] RTCP SR: SSRC %d - RTP Time %d - Nb Pck %d - Nb Bytes %d - Time %s\n", 
+				GF_LOG(GF_LOG_INFO, GF_LOG_RTP, ("[RTP] RTCP SR: SSRC %d - RTP Time %d - Nb Pck %d - Nb Bytes %d - Time %s\n",
 									ch->SenderSSRC,
 									ch->last_SR_rtp_time,
 									ch->total_pck,
@@ -139,7 +139,7 @@ GF_Err gf_rtp_decode_rtcp(GF_RTPChannel *ch, char *pck, u32 pck_size, Bool *has_
 				));
 			}
 #endif
-			
+
 			//common encoding for SR and RR
 			goto process_reports;
 
@@ -234,7 +234,7 @@ process_reports:
 			gf_bs_read_u8(bs);
 			gf_bs_read_u8(bs);
 			gf_bs_read_u8(bs);
-			
+
 			rtcp_hdr.Length -= 2;
 
 			//till endd of pck
@@ -279,7 +279,7 @@ static u32 RTCP_FormatReport(GF_RTPChannel *ch, GF_BitStream *bs, u32 NTP_Time)
 	gf_bs_write_int(bs, 0, 1);
 	//count - only one for now in RR, 0 in sender mode
 	gf_bs_write_int(bs, !is_sr, 5);
-	//if we have sent stuff send an SR, otherwise an RR. We need to determine whether 
+	//if we have sent stuff send an SR, otherwise an RR. We need to determine whether
 	//we are active or not
 	//type
 	gf_bs_write_u8(bs, is_sr ? 200 : 201);
@@ -324,7 +324,7 @@ static u32 RTCP_FormatReport(GF_RTPChannel *ch, GF_BitStream *bs, u32 NTP_Time)
 	extended = ( (ch->num_sn_loops << 16) | ch->last_pck_sn);
 	expected = extended - ch->rtp_first_SN;
 	expect_diff = expected - ch->tot_num_pck_expected;
-	loss_diff = expect_diff - ch->last_num_pck_rcv;	
+	loss_diff = expect_diff - ch->last_num_pck_rcv;
 
 	if (!expect_diff || (loss_diff <= 0)) loss_diff = 0;
 	else loss_diff = (loss_diff<<8) / expect_diff;
@@ -339,7 +339,7 @@ static u32 RTCP_FormatReport(GF_RTPChannel *ch, GF_BitStream *bs, u32 NTP_Time)
 	//Extend sequence number
 	gf_bs_write_u32(bs, extended);
 
-	
+
 	//Jitter
 	//RTP specs annexe A.8
 	gf_bs_write_u32(bs, ( ch->Jitter >> 4));
@@ -359,7 +359,7 @@ static u32 RTCP_FormatReport(GF_RTPChannel *ch, GF_BitStream *bs, u32 NTP_Time)
 #else
 		const char *ascTime = "Not Available";
 #endif
-		GF_LOG(GF_LOG_DEBUG, GF_LOG_RTP, ("[RTP] RTCP-RR\t%d\t%d\t%d\t%d\t%d\t%s\n", 
+		GF_LOG(GF_LOG_DEBUG, GF_LOG_RTP, ("[RTP] RTCP-RR\t%d\t%d\t%d\t%d\t%d\t%s\n",
 						ch->SSRC,
 						ch->Jitter >> 4,
 						extended,
@@ -394,12 +394,12 @@ static u32 RTCP_FormatSDES(GF_RTPChannel *ch, GF_BitStream *bs)
 	}
 	//add SSRC
 	length += 1;
-	
+
 	//common part as usual
 	gf_bs_write_int(bs, 2, 2);
-	//notify padding? according to RFC1889 "In a compound RTCP packet, padding should 
-	//only be required on the last individual packet because the compound packet is 
-	//encrypted as a whole" -> we write it without notifying it (this is a bit messy in 
+	//notify padding? according to RFC1889 "In a compound RTCP packet, padding should
+	//only be required on the last individual packet because the compound packet is
+	//encrypted as a whole" -> we write it without notifying it (this is a bit messy in
 	//the spec IMO)
 	gf_bs_write_int(bs, 0, 1);
 	gf_bs_write_int(bs, 1, 5);
@@ -414,7 +414,7 @@ static u32 RTCP_FormatSDES(GF_RTPChannel *ch, GF_BitStream *bs)
 	//CNAME type
 	gf_bs_write_u8(bs, 1);
 	//length and cname
-	gf_bs_write_u8(bs, strlen(ch->CName));	
+	gf_bs_write_u8(bs, strlen(ch->CName));
 	gf_bs_write_data(bs, ch->CName, strlen(ch->CName));
 
 	gf_bs_write_u8(bs, 0);
@@ -475,7 +475,7 @@ GF_Err gf_rtp_send_bye(GF_RTPChannel *ch,
 	if (ch->rtcp) {
 		e = gf_sk_send(ch->rtcp, report_buf, report_size);
 	} else {
-		if (RTP_TCPCallback) 
+		if (RTP_TCPCallback)
 			e = RTP_TCPCallback(rtsp_cbk, report_buf, report_size);
 		else
 			e = GF_BAD_PARAM;
@@ -485,7 +485,7 @@ GF_Err gf_rtp_send_bye(GF_RTPChannel *ch,
 }
 
 GF_EXPORT
-GF_Err gf_rtp_send_rtcp_report(GF_RTPChannel *ch, 
+GF_Err gf_rtp_send_rtcp_report(GF_RTPChannel *ch,
 						GF_Err (*RTP_TCPCallback)(void *cbk, char *pck, u32 pck_size),
 						void *rtsp_cbk)
 {
@@ -519,7 +519,7 @@ GF_Err gf_rtp_send_rtcp_report(GF_RTPChannel *ch,
 	if (ch->rtcp) {
 		e = gf_sk_send(ch->rtcp, report_buf, report_size);
 	} else {
-		if (RTP_TCPCallback) 
+		if (RTP_TCPCallback)
 			e = RTP_TCPCallback(rtsp_cbk, report_buf, report_size);
 		else
 			e = GF_BAD_PARAM;
@@ -528,7 +528,7 @@ GF_Err gf_rtp_send_rtcp_report(GF_RTPChannel *ch,
 	ch->rtcp_bytes_sent += report_size;
 
 	gf_free(report_buf);
-	
+
 	if (!e) {
 		//Update the channel record if no error - otherwise next RTCP will triger an RR
 		ch->last_num_pck_rcv = ch->last_num_pck_expected = ch->last_num_pck_loss = 0;

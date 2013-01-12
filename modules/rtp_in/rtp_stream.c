@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #include "rtp_in.h"
@@ -31,7 +31,7 @@
 void RP_ConfirmChannelConnect(RTPStream *ch, GF_Err e)
 {
 	GF_NetworkCommand com;
-	
+
 	/*in case the channel has been disconnected while SETUP was issued&processed. We also could
 	clean up the command stack*/
 	if (!ch->channel) return;
@@ -74,7 +74,7 @@ GF_Err RP_InitStream(RTPStream *ch, Bool ResetOnly)
 			if (sOpt) reorder_size = atoi(sOpt);
 			else reorder_size = 10;
 
-		
+
 			ip_ifce = gf_modules_get_option((GF_BaseInterface *) gf_term_get_service_interface(ch->owner->service), "Network", "DefaultMCastInterface");
 			if (!ip_ifce) {
 				const char *mob_on = gf_modules_get_option((GF_BaseInterface *) gf_term_get_service_interface(ch->owner->service), "Network", "MobileIPEnabled");
@@ -163,15 +163,15 @@ RTPStream *RP_NewStream(RTPClient *rtp, GF_SDPMedia *media, GF_SDPInfo *sdp, RTP
 		else if (!stricmp(att->Name, "mpeg4-odid") && att->Value) ODID = atoi(att->Value);
 		else if (!stricmp(att->Name, "range") && !range) range = gf_rtsp_range_parse(att->Value);
 		else if (!stricmp(att->Name, "x-stream-state") ) {
-			sscanf(att->Value, "server-port=%u-%u;ssrc=%X;npt=%g;seq=%u;rtptime=%u", 
+			sscanf(att->Value, "server-port=%u-%u;ssrc=%X;npt=%g;seq=%u;rtptime=%u",
 				&s_port_first, &s_port_last, &ssrc, &CurrentTime, &rtp_seq, &rtp_time);
 			is_migration = 1;
 		}
 		else if (!stricmp(att->Name, "x-server-port") ) {
 			sscanf(att->Value, "%u-%u", &s_port_first, &s_port_last);
-		} else if (!stricmp(att->Name, "rvc-config-predef")) { 
+		} else if (!stricmp(att->Name, "rvc-config-predef")) {
 			rvc_predef = atoi(att->Value);
-		} else if (!stricmp(att->Name, "rvc-config")) { 
+		} else if (!stricmp(att->Name, "rvc-config")) {
 			rvc_config_att = att->Value;
 		}
 	}
@@ -199,7 +199,7 @@ RTPStream *RP_NewStream(RTPClient *rtp, GF_SDPMedia *media, GF_SDPInfo *sdp, RTP
 	/*do we support transport*/
 	if (strcmp(media->Profile, "RTP/AVP") && strcmp(media->Profile, "RTP/AVP/TCP")
 		&& strcmp(media->Profile, "RTP/SAVP") && strcmp(media->Profile, "RTP/SAVP/TCP")
-		) return NULL; 
+		) return NULL;
 
 	/*check RTP map. For now we only support 1 RTPMap*/
 	if (media->fmt_list || (gf_list_count(media->RTPMaps) > 1)) return NULL;
@@ -263,7 +263,7 @@ RTPStream *RP_NewStream(RTPClient *rtp, GF_SDPMedia *media, GF_SDPInfo *sdp, RTP
 	/*setup NAT keep-alive*/
 	ctrl = (char *) gf_modules_get_option((GF_BaseInterface *) gf_term_get_service_interface(rtp->service), "Streaming", "NATKeepAlive");
 	if (ctrl) gf_rtp_enable_nat_keepalive(tmp->rtp_ch, atoi(ctrl));
-	
+
 	tmp->range_start = Start;
 	tmp->range_end = End;
 	if (End != -1.0) tmp->flags |= RTP_HAS_RANGE;
@@ -277,9 +277,9 @@ RTPStream *RP_NewStream(RTPClient *rtp, GF_SDPMedia *media, GF_SDPInfo *sdp, RTP
 		tmp->status = RTP_SessionResume;
 	}
 
-	if (rvc_predef) { 
+	if (rvc_predef) {
 		tmp->depacketizer->sl_map.rvc_predef = rvc_predef ;
-	} else if (rvc_config_att) { 
+	} else if (rvc_config_att) {
 		char *rvc_data=NULL;
 		u32 rvc_size;
 		Bool is_gz = 0;
@@ -309,7 +309,7 @@ RTPStream *RP_NewStream(RTPClient *rtp, GF_SDPMedia *media, GF_SDPInfo *sdp, RTP
 			}
 		}
 	}
-	
+
 	return tmp;
 }
 
@@ -339,9 +339,9 @@ void RP_ProcessRTP(RTPStream *ch, char *pck, u32 size)
 
 		/*it may happen that we still receive packets from a previous "play" request. If this is the case,
 		filter until we reach the indicated rtptime*/
-		if (ch->rtp_ch->rtp_time 
-			&& (ch->rtp_ch->rtp_first_SN > hdr.SequenceNumber) 
-			&& (ch->rtp_ch->rtp_time < hdr.TimeStamp) 
+		if (ch->rtp_ch->rtp_time
+			&& (ch->rtp_ch->rtp_first_SN > hdr.SequenceNumber)
+			&& (ch->rtp_ch->rtp_time < hdr.TimeStamp)
 		) {
 			GF_LOG(GF_LOG_WARNING, GF_LOG_RTP, ("[RTP] Rejecting too early packet (TS %d vs signaled rtp time %d - diff %d ms)\n",
 				hdr.TimeStamp, ch->rtp_ch->rtp_time, ((hdr.TimeStamp - ch->rtp_ch->rtp_time)*1000) / ch->rtp_ch->TimeScale));
@@ -352,11 +352,11 @@ void RP_ProcessRTP(RTPStream *ch, char *pck, u32 size)
 
 		/*this is the first packet on the channel (no PAUSE)*/
 		if (ch->check_rtp_time == RTP_SET_TIME_RTP) {
-			/*Note: in a SEEK with RTSP, the rtp-info time given by the server is 
+			/*Note: in a SEEK with RTSP, the rtp-info time given by the server is
 			the rtp time of the desired range. But the server may (and should) send from
 			the previous I frame on video, so the time of the first rtp packet after
 			a SEEK can actually be less than CurrentStart. We don't drop these
-			packets in order to see the maximum video. We could drop it, this would mean 
+			packets in order to see the maximum video. We could drop it, this would mean
 			wait for next RAP...*/
 
 			memset(&com, 0, sizeof(com));
@@ -390,7 +390,7 @@ void RP_ProcessRTP(RTPStream *ch, char *pck, u32 size)
 		}
 		ch->check_rtp_time = RTP_SET_TIME_NONE;
 	}
-	
+
 	gf_rtp_depacketizer_process(ch->depacketizer, &hdr, pck + PayloadStart, size - PayloadStart);
 
 	/*last check: signal EOS if we're close to end range in case the server do not send RTCP BYE*/
@@ -503,7 +503,7 @@ void RP_ReadStream(RTPStream *ch)
 
 	/*and send the report*/
 	if (ch->flags & RTP_ENABLE_RTCP) gf_rtp_send_rtcp_report(ch->rtp_ch, SendTCPData, ch);
-	
+
 	if (tot_size) ch->owner->udp_time_out = 0;
 
 	/*detect timeout*/

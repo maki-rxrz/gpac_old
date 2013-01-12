@@ -831,7 +831,7 @@ static void dom_node_inserted(JSContext *c, GF_Node *n, GF_Node *parent, s32 pos
 			gf_dom_listener_build_ex(parent, 0, 0, n, NULL);
 		}
 		gf_node_init(n);
-		
+
 
 #ifndef GPAC_DISABLE_SVG
 		if (n->sgprivate->interact && n->sgprivate->interact->dom_evt) {
@@ -968,7 +968,7 @@ static JSBool SMJS_FUNCTION(xml_node_remove_child)
 	tag = gf_node_get_tag(n);
 	if (tag==TAG_DOMText) return JS_TRUE;
 	par = (GF_ParentNode*)n;
-	
+
 	/*if node is present in parent, unregister*/
 	if (gf_node_list_del_child(&par->children, old_node)) {
 		gf_node_unregister(old_node, n);
@@ -1584,7 +1584,7 @@ DECL_FINALIZE( dom_element_finalize)
 	dom_node_finalize(c, obj);
 }
 
-static SMJS_FUNC_PROP_GET( dom_element_getProperty) 
+static SMJS_FUNC_PROP_GET( dom_element_getProperty)
 
 	u32 prop_id;
 	GF_Node *n = dom_get_node(c, obj);
@@ -1806,7 +1806,7 @@ static void gf_dom_add_handler_listener(GF_Node *n, u32 evtType, char *handlerCo
 		gf_node_get_attribute_by_tag(listen, TAG_XMLEV_ATT_event, 0, 0, &info);
 		if (!info.far_ptr || (((XMLEV_Event*)info.far_ptr)->type != evtType)) continue;
 
-		/* found a listener for this event, override the handler 
+		/* found a listener for this event, override the handler
 		TODO: FIX this, there may be a listener/handler already set with JS, why overriding ? */
 		gf_node_get_attribute_by_tag(listen, TAG_XMLEV_ATT_handler, 0, 0, &info);
 		assert(info.far_ptr);
@@ -1862,7 +1862,7 @@ static void gf_svg_set_attribute(GF_Node *n, char * ns, char *name, char *val)
 		if (gf_node_get_attribute_by_tag(n, TAG_SVG_ATT_attributeName, 0, 0, &info) == GF_OK) {
 			SMIL_AttributeName *attname = (SMIL_AttributeName *)info.far_ptr;
 
-			/*parse the attribute name even if the target is not found, because a namespace could be specified and 
+			/*parse the attribute name even if the target is not found, because a namespace could be specified and
 			only valid for the current node*/
 			if (!attname->type) {
 				char *sep;
@@ -1907,7 +1907,7 @@ static void gf_svg_set_attribute(GF_Node *n, char * ns, char *name, char *val)
 				GF_LOG(GF_LOG_WARNING, GF_LOG_SCRIPT, ("Cannot retrieve attribute 'attributeName'\n"));
 				return;
 			}
-		
+
 			attname = (SMIL_AttributeName *)attType.far_ptr;
 			if (!attname->type && attname->name) {
 				GF_Node *anim_target = gf_smil_anim_get_target(n);
@@ -1949,7 +1949,7 @@ static JSBool SMJS_FUNCTION(xml_element_set_attribute)
 	if (!n) return JS_TRUE;
 	if ((argc < 2)) return JS_TRUE;
 
-	if (!JSVAL_CHECK_STRING(argv[0])) 
+	if (!JSVAL_CHECK_STRING(argv[0]))
 		return JS_TRUE;
 
 	idx = 1;
@@ -1957,7 +1957,7 @@ static JSBool SMJS_FUNCTION(xml_element_set_attribute)
 	/*NS version*/
 	if (argc==3) {
 		char *sep;
-		if (!JSVAL_CHECK_STRING(argv[1])) 
+		if (!JSVAL_CHECK_STRING(argv[1]))
 			return JS_TRUE;
 		ns = js_get_utf8(c, argv[0]);
 		gf_sg_add_namespace(n->sgprivate->scenegraph, ns, NULL);
@@ -1988,7 +1988,7 @@ static JSBool SMJS_FUNCTION(xml_element_set_attribute)
 	} else {
 		goto exit;
 	}
-	if (!name || !val) 
+	if (!name || !val)
 		goto exit;
 
 
@@ -2049,7 +2049,7 @@ static JSBool SMJS_FUNCTION(xml_element_elements_by_tag)
 	new_obj = JS_NewObject(c, &dom_rt->domNodeListClass._class, 0, 0);
 	SMJS_SET_PRIVATE(c, new_obj, nl);
 	SMJS_SET_RVAL( OBJECT_TO_JSVAL(new_obj) );
-	
+
 	SMJS_FREE(c, name);
 	return JS_TRUE;
 }
@@ -2094,7 +2094,7 @@ static JSBool SMJS_FUNCTION(xml_element_set_id)
 
 /*dom3 character/text/comment*/
 
-static SMJS_FUNC_PROP_GET( dom_text_getProperty) 
+static SMJS_FUNC_PROP_GET( dom_text_getProperty)
 
 	u32 prop_id;
 	GF_DOMText *txt = (GF_DOMText*)dom_get_node(c, obj);
@@ -2553,7 +2553,7 @@ static void xml_http_state_change(XMLHTTPContext *ctx)
 	GF_SceneGraph *scene;
 	GF_Node *n;
 	jsval rval;
-	
+
 	gf_sg_lock_javascript(ctx->c, 1);
 	if (ctx->onreadystatechange)
 		JS_CallFunction(ctx->c, ctx->_this, ctx->onreadystatechange, 0, NULL, &rval);
@@ -2605,7 +2605,7 @@ static JSBool SMJS_FUNCTION(xml_http_open)
 	}
 
 	ctx->method = gf_strdup(val);
-	
+
 	SMJS_FREE(c, val);
 
 	/*concatenate URL*/
@@ -2925,7 +2925,7 @@ static JSBool SMJS_FUNCTION(xml_http_send)
 	if (!strncmp(ctx->url, "http://", 7)) {
 		GF_Err e;
 
-		ctx->sess = gf_dm_sess_new(par.dnld_man, ctx->url, ctx->async ? 0 : GF_NETIO_SESSION_NOT_THREADED, xml_http_on_data, ctx, &e);			
+		ctx->sess = gf_dm_sess_new(par.dnld_man, ctx->url, ctx->async ? 0 : GF_NETIO_SESSION_NOT_THREADED, xml_http_on_data, ctx, &e);
 		if (!ctx->sess) return JS_TRUE;
 
 		/*start our download (whether the session is threaded or not)*/
@@ -2938,7 +2938,7 @@ static JSBool SMJS_FUNCTION(xml_http_send)
 	} else {
 		u64 fsize;
 		FILE * xmlf;
-		
+
 		if (ctx->data) gf_free(ctx->data);
 		ctx->data = NULL;
 		ctx->size = 0;
@@ -2961,11 +2961,11 @@ static JSBool SMJS_FUNCTION(xml_http_send)
 		}
 		ctx->readyState = 2;
 		xml_http_state_change(ctx);
-		
+
 		gf_f64_seek(xmlf, 0, SEEK_END);
 		fsize = gf_f64_tell(xmlf);
 		gf_f64_seek(xmlf, 0, SEEK_SET);
-		
+
 		ctx->data = gf_malloc(sizeof(char)*(size_t)(fsize+1));
 		fsize = fread(ctx->data, sizeof(char), (size_t)fsize, xmlf);
 		fclose(xmlf);

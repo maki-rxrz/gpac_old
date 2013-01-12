@@ -48,7 +48,7 @@ public:
 
 
 
-protected: 
+protected:
 	DECLARE_DYNAMIC(CMainFrame)
 
 // Attributes

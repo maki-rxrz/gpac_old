@@ -20,7 +20,7 @@ class V4NodePool {
 
     // Constructor
     V4NodePool() { count = 0; }
-    
+
     // Adds a node to the pool
     V4Node& AddNode(GF_Node * node=NULL); // node may be modified, don't use const GF_Node *
 

@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #ifndef RTP_IN_H
@@ -91,7 +91,7 @@ typedef struct
 //	Bool handle_announce;
 
 	Double last_ntp;
-	
+
 	Bool session_migration;
 } RTPClient;
 
@@ -117,7 +117,7 @@ typedef struct _rtp_session
 	GF_RTSPSession *session;
 	/*session ID for aggregated stream control*/
 	char *session_id;
-	
+
 	/*session control string*/
 	char *control;
 
@@ -175,7 +175,7 @@ enum
 	RTP_INTERLEAVED = (1<<2),
 	/*broadcast emultaion is on (no time control for stream)*/
 	RTP_FORCE_BROADCAST = (1<<3),
-	
+
 	/*RTP channel runtime flags*/
 
 	/*set if next command (PLAY/PAUSE) is to be skipped (aggregation control)*/
@@ -203,7 +203,7 @@ typedef struct
 {
 	/*module*/
 	RTPClient *owner;
-	
+
 	/*channel flags*/
 	u32 flags;
 
@@ -221,7 +221,7 @@ typedef struct
 	/*logical app channel*/
 	LPNETCHANNEL channel;
 	u32 status;
-	
+
 	u32 ES_ID, OD_ID;
 	char *control;
 

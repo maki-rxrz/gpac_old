@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 #include <gpac/isomedia.h>
@@ -80,7 +80,7 @@ typedef struct __m2ts_mux_stream {
 
 	/*average stream bit-rate in bit/sec*/
 	u32 bit_rate;
-	
+
 	/*multiplexer time - NOT THE PCR*/
 	M2TS_Time time;
 
@@ -176,11 +176,11 @@ struct __m2ts_mux {
 
 	/*multiplexer time, incremented each time a packet is sent
       used to monitor the sending of muxer related data (PAT, ...) */
-	M2TS_Time time; 
-    
+	M2TS_Time time;
+
     /* Time of the muxer when the first call to process is made (first packet sent?) */
     M2TS_Time init_ts_time;
-	
+
     /* System time when the muxer is started */
     u32 init_sys_time;
 

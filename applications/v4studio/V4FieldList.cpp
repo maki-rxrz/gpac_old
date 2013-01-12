@@ -1,4 +1,4 @@
-#include "safe_include.h" 
+#include "safe_include.h"
 
 // For compilers that supports precompilation , includes "wx/wx.h"
 #include "wx/wxprec.h"
@@ -15,9 +15,9 @@
 #include "V4StudioFrame.h"
 
 BEGIN_EVENT_TABLE(V4FieldList, wxGrid)
-	EVT_GRID_CELL_CHANGE(V4FieldList::OnCellChanged) 
-	EVT_GRID_CELL_LEFT_CLICK(V4FieldList::OnCellLeftClick) 
-	EVT_GRID_CELL_RIGHT_CLICK(V4FieldList::OnCellRightClick) 
+	EVT_GRID_CELL_CHANGE(V4FieldList::OnCellChanged)
+	EVT_GRID_CELL_LEFT_CLICK(V4FieldList::OnCellLeftClick)
+	EVT_GRID_CELL_RIGHT_CLICK(V4FieldList::OnCellRightClick)
 	EVT_GRID_CELL_LEFT_DCLICK(V4FieldList::OnCellLeftDClick)
 END_EVENT_TABLE()
 
@@ -43,7 +43,7 @@ V4FieldList::V4FieldList(wxWindow *parent_, wxSize size) : wxGrid(parent_, -1, w
 	parent = (V4StudioFrame *) parent_;
 }
 
-V4FieldList::~V4FieldList() 
+V4FieldList::~V4FieldList()
 {
 	s32 i;
 	for (i=gf_list_count(positions)-1; i>=0; i--) {
@@ -55,7 +55,7 @@ V4FieldList::~V4FieldList()
 	gf_list_del(positions);
 }
 
-void V4FieldList::Create() 
+void V4FieldList::Create()
 {
 	GF_Node *node = m_pNode;
 
@@ -107,7 +107,7 @@ void V4FieldList::Create()
 	AutoSizeColumns(true);
 }
 
-void V4FieldList::InsertOneFieldRow(u32 pos, GF_FieldInfo field) 
+void V4FieldList::InsertOneFieldRow(u32 pos, GF_FieldInfo field)
 {
 	InsertRows(pos, 1);
 	gf_list_add(positions, new Position(field.fieldIndex, -1));
@@ -117,7 +117,7 @@ void V4FieldList::InsertOneFieldRow(u32 pos, GF_FieldInfo field)
 	SetCellFieldValue(field, pos);
 }
 
-void V4FieldList::SetFieldValue(GF_FieldInfo f, wxString *value, int pos) 
+void V4FieldList::SetFieldValue(GF_FieldInfo f, wxString *value, int pos)
 {
 	void *ptr = NULL;
 	s32 type = -1;
@@ -152,10 +152,10 @@ void V4FieldList::SetFieldValue(GF_FieldInfo f, wxString *value, int pos)
 			break;
 		default:
 			break;
-	}	
+	}
 }
 
-void V4FieldList::GetFieldValue(GF_FieldInfo f, wxString *s, int pos) 
+void V4FieldList::GetFieldValue(GF_FieldInfo f, wxString *s, int pos)
 {
 	void *ptr = NULL;
 	s32 type = -1;
@@ -192,12 +192,12 @@ void V4FieldList::GetFieldValue(GF_FieldInfo f, wxString *s, int pos)
 			break;
 		default:
 			break;
-	}	
+	}
 	gf_node_dirty_set(m_pNode, 0, 1);
 }
 
 // OnCellChanged -- user has validated the changes made to a field, updates the node with the new value
-void V4FieldList::OnCellChanged(wxGridEvent &evt) 
+void V4FieldList::OnCellChanged(wxGridEvent &evt)
 {
 	u32 row;
 	GF_FieldInfo field;
@@ -231,7 +231,7 @@ void V4FieldList::OnCellChanged(wxGridEvent &evt)
 		  if (pSelected->fieldPosition >= 0) {
 			  SetFieldValue(field, &value, pSelected->fieldPosition);
 		  } else {
-			  GenMFField *mf = (GenMFField *)field.far_ptr;		
+			  GenMFField *mf = (GenMFField *)field.far_ptr;
 			  void *ptr;
 			  gf_sg_vrml_mf_insert(mf, field.fieldType, &ptr, mf->count);
 			  SetFieldValue(field, &value, mf->count-1);
@@ -265,13 +265,13 @@ void V4FieldList::OnCellChanged(wxGridEvent &evt)
 	parent->Update();
 }
 
-void V4FieldList::SetLog(wxString s) 
+void V4FieldList::SetLog(wxString s)
 {
 	V4StudioFrame *parent = (V4StudioFrame *)this->GetParent();
 	parent->GetStatusBar()->SetStatusText(s);
 }
 
-void V4FieldList::SetCellFieldValue(GF_FieldInfo field, u32 pos) 
+void V4FieldList::SetCellFieldValue(GF_FieldInfo field, u32 pos)
 {
 	wxString buf;
 	if (gf_sg_vrml_is_sf_field(field.fieldType)) {
@@ -290,7 +290,7 @@ void V4FieldList::SetCellFieldValue(GF_FieldInfo field, u32 pos)
 }
 
 // OnCellLeftClick -- draws columns for multivalued fields
-void V4FieldList::OnCellLeftClick(wxGridEvent &evt) 
+void V4FieldList::OnCellLeftClick(wxGridEvent &evt)
 {
 	u32 col = evt.GetCol();
 	u32 row = evt.GetRow();
@@ -340,7 +340,7 @@ void V4FieldList::OnCellLeftClick(wxGridEvent &evt)
 		DeleteRows(row+1, mf->count);
 		for (s32 j = mf->count-1; j>=0; j--) {
 			Position *p = (Position *)gf_list_get(positions,row+1+j);
-			delete p; 
+			delete p;
 			p = NULL;
 			gf_list_rem(positions, row+1+j);
 		}
@@ -348,7 +348,7 @@ void V4FieldList::OnCellLeftClick(wxGridEvent &evt)
 	evt.Skip();
 }
 
-void V4FieldList::OnCellRightClick(wxGridEvent &evt) 
+void V4FieldList::OnCellRightClick(wxGridEvent &evt)
 {
 	int row = evt.GetRow();
 	GF_FieldInfo field;
@@ -370,7 +370,7 @@ void V4FieldList::OnCellRightClick(wxGridEvent &evt)
 	if (pSelected->fieldPosition == -1) {
 		evt.Skip();
 		return;
-	} 
+	}
 
 	InsertRows(row, 1);
 	gf_list_insert(positions, new Position(pSelected->fieldIndex, pSelected->fieldPosition), row);
@@ -385,7 +385,7 @@ void V4FieldList::OnCellRightClick(wxGridEvent &evt)
 }
 
 // OnCellLeftDClick -- Edit a given field
-void V4FieldList::OnCellLeftDClick(wxGridEvent &evt) 
+void V4FieldList::OnCellLeftDClick(wxGridEvent &evt)
 {
 	int row = evt.GetRow();
 	GF_FieldInfo field;
@@ -418,14 +418,14 @@ void V4FieldList::OnCellLeftDClick(wxGridEvent &evt)
 		gf_sg_vrml_mf_get_item(field.far_ptr, field.fieldType, &ptr, pSelected->fieldPosition);
 		type = gf_sg_vrml_get_sf_type(field.fieldType);
 	}
-	
+
 	if (type== GF_SG_VRML_SFCOLOR) {
 		wxColourDialog cd(this);
 		if (cd.ShowModal() == wxID_OK)
 		{
 			wxColourData retData = cd.GetColourData();
 			wxColour col = retData.GetColour();
-			((SFColor *)ptr)->red = col.Red()/255.0f;					
+			((SFColor *)ptr)->red = col.Red()/255.0f;
 			((SFColor *)ptr)->green = col.Green()/255.0f;
 			((SFColor *)ptr)->blue = col.Blue()/255.0f;
 		} else {

@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -138,14 +138,14 @@ void group_3d_traverse(GF_Node *n, GroupingNode *group, GF_TraverseState *tr_sta
 */
 
 
-typedef struct 
+typedef struct
 {
 	/*the associated child (can be a group or a shape)*/
 	GF_Node *child;
 
 	/*child bounds before and after placement*/
 	GF_Rect original, final;
-	
+
 	/*layout run-time scroll*/
 	Fixed scroll_x, scroll_y;
 
@@ -161,7 +161,7 @@ typedef struct
 #define PARENT_MPEG4_STACK_2D	\
 			GROUPING_MPEG4_STACK_2D	\
 			/*list of ChildGroup drawn (can be fully transparents) - used for post placement*/	\
-			GF_List *groups;	
+			GF_List *groups;
 
 
 typedef struct _parent_node_2d

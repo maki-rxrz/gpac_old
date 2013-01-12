@@ -37,7 +37,7 @@ class V4TimeLineLine : public wxWindow {
   public:
     // Constructor
     V4TimeLineLine(V4TimeLine * parent, unsigned int _pos, unsigned long frame=0);
-  
+
     // retrieves the X positon of the grid
     unsigned int GetOffset() const;
 

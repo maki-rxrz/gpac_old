@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -34,7 +34,7 @@ static u32 OGG_CanHandleStream(GF_BaseDecoder *dec, u32 StreamType, GF_ESD *esd,
 		/*media type query*/
 		if (!esd) return GF_CODEC_STREAM_TYPE_SUPPORTED;
 		dsi = esd->decoderConfig->decoderSpecificInfo ? esd->decoderConfig->decoderSpecificInfo->data : NULL;
-		
+
 		switch (esd->decoderConfig->objectTypeIndication) {
 #ifdef GPAC_HAS_THEORA
 		case GPAC_OTI_MEDIA_OGG:
@@ -43,7 +43,7 @@ static u32 OGG_CanHandleStream(GF_BaseDecoder *dec, u32 StreamType, GF_ESD *esd,
 			}
 			return GF_CODEC_NOT_SUPPORTED;
 #endif
-		default: 
+		default:
 			return GF_CODEC_NOT_SUPPORTED;
 		}
 	}
@@ -62,7 +62,7 @@ static u32 OGG_CanHandleStream(GF_BaseDecoder *dec, u32 StreamType, GF_ESD *esd,
 			}
 			return GF_CODEC_NOT_SUPPORTED;
 #endif
-		default: 
+		default:
 			return GF_CODEC_NOT_SUPPORTED;
 		}
 	}
