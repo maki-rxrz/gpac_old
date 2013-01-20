@@ -9,7 +9,7 @@
 //
 #include "afxres.h"
 
-#include <gpac/version.h>
+#include "../../include/gpac/version.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS

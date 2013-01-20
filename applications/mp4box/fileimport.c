@@ -41,7 +41,7 @@
 #ifndef GPAC_DISABLE_VRML
 #include "../../include/gpac/nodes_mpeg4.h"
 #endif
-#include <gpac/network.h>
+#include "../../include/gpac/network.h"
 
 #include <mbstring.h>
 extern char *split_file_name(char *path);
