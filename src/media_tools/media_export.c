@@ -46,7 +46,9 @@
 #include <zlib.h>
 #endif
 
+#if defined(__MINGW32__)
 #include <mbstring.h>
+#endif
 
 GF_Err gf_media_export_nhml(GF_MediaExporter *dumper, Bool dims_doc);
 
@@ -459,7 +461,11 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 
 	if (dumper->out_name && strrchr(dumper->out_name, '.')) {
 		char *out_name;
+#if defined(__MINGW32__)
 		if ((out_name = _mbsrchr(dumper->out_name, '\\'))
+#else
+		if ((out_name = strrchr(dumper->out_name, '\\'))
+#endif
 		 || (out_name = strrchr(dumper->out_name, '/')))
 			out_name++;
 		if (!out_name)
@@ -739,7 +745,11 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 	if (dumper->out_name) {
 		if (strrchr(dumper->out_name, '.')) {
 			char *out_name;
+#if defined(__MINGW32__)
 			if ((out_name = _mbsrchr(dumper->out_name, '\\'))
+#else
+			if ((out_name = strrchr(dumper->out_name, '\\'))
+#endif
 			 || (out_name = strrchr(dumper->out_name, '/')))
 				out_name++;
 			if (!out_name)
