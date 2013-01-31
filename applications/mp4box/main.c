@@ -59,7 +59,9 @@
 
 #include <time.h>
 
+#if defined(__MINGW32__)
 #include <mbstring.h>
+#endif
 
 #define BUFFSIZE	8192
 
@@ -755,7 +757,11 @@ void PrintUsage()
 extern char *split_file_name(char *path)
 {
 	char *file_name;
+#if defined(__MINGW32__)
 	if ((file_name = _mbsrchr(path, '\\'))
+#else
+	if ((file_name = strrchr(path, '\\'))
+#endif
 	 || (file_name = strrchr(path, '/')))
 		file_name++;
 	if (!file_name)
@@ -3465,7 +3471,11 @@ int mp4boxMain(int argc, char **argv)
 		if (outName) {
 			strcpy(outfile, outName);
 		} else {
+#if defined(__MINGW32__)
 			char *rel_name = _mbsrchr(inName, GF_PATH_SEPARATOR);
+#else
+			char *rel_name = strrchr(inName, GF_PATH_SEPARATOR);
+#endif
 			if (!rel_name) rel_name = strrchr(inName, '/');
 
 			strcpy(outfile, "");
