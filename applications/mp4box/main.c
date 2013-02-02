@@ -59,7 +59,7 @@
 
 #include <time.h>
 
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) || defined(_MSC_VER)
 #include <mbstring.h>
 #endif
 
@@ -741,12 +741,12 @@ void PrintUsage()
 extern char *split_file_name(char *path)
 {
 	char *file_name;
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) || defined(_MSC_VER)
 	if ((file_name = _mbsrchr(path, '\\'))
-#else
-	if ((file_name = strrchr(path, '\\'))
-#endif
 	 || (file_name = strrchr(path, '/')))
+#else
+	if ((file_name = strrchr(path, GF_PATH_SEPARATOR)))
+#endif
 		file_name++;
 	if (!file_name)
 		file_name = path;
@@ -3385,7 +3385,7 @@ int mp4boxMain(int argc, char **argv)
 		if (outName) {
 			strcpy(outfile, outName);
 		} else {
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) || defined(_MSC_VER)
 			char *rel_name = _mbsrchr(inName, GF_PATH_SEPARATOR);
 #else
 			char *rel_name = strrchr(inName, GF_PATH_SEPARATOR);
