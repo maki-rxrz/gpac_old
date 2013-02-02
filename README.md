@@ -24,7 +24,8 @@ This is fork repository of the GPAC SVN repository.
 > **_Github_**   
 > 
 > wipple's GPAC repository   
-> https://github.com/wipple/GPAC
+> https://github.com/wipple/gpac   
+> https://github.com/wipple/GPAC-old
 > 
 > golgol7777's GPAC repository   
 > https://github.com/golgol7777/gpac
