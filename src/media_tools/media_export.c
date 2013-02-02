@@ -46,7 +46,7 @@
 #include <zlib.h>
 #endif
 
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) || defined(_MSC_VER)
 #include <mbstring.h>
 #endif
 
@@ -461,12 +461,12 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 
 	if (dumper->out_name && strrchr(dumper->out_name, '.')) {
 		char *out_name;
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) || defined(_MSC_VER)
 		if ((out_name = _mbsrchr(dumper->out_name, '\\'))
-#else
-		if ((out_name = strrchr(dumper->out_name, '\\'))
-#endif
 		 || (out_name = strrchr(dumper->out_name, '/')))
+#else
+		if ((out_name = strrchr(dumper->out_name, GF_PATH_SEPARATOR)))
+#endif
 			out_name++;
 		if (!out_name)
 			out_name = dumper->out_name;
@@ -745,12 +745,12 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 	if (dumper->out_name) {
 		if (strrchr(dumper->out_name, '.')) {
 			char *out_name;
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) || defined(_MSC_VER)
 			if ((out_name = _mbsrchr(dumper->out_name, '\\'))
-#else
-			if ((out_name = strrchr(dumper->out_name, '\\'))
-#endif
 			 || (out_name = strrchr(dumper->out_name, '/')))
+#else
+			if ((out_name = strrchr(dumper->out_name, GF_PATH_SEPARATOR)))
+#endif
 				out_name++;
 			if (!out_name)
 				out_name = dumper->out_name;
