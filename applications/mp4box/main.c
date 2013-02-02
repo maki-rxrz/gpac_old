@@ -311,6 +311,7 @@ void PrintDASHUsage()
 			" -cprt string         adds copyright string to MPD\n"
 			" -dash-live[=F] dur   generates a live DASH session using dur segment duration, optionnally writing live context to F\n"
 			"                       MP4Box will run the live session until \'q\' is pressed or a fatal error occurs.\n"
+			" -ddbg-live[=F] dur   same as -dash-live without time regulation for debug purposes.\n"
 			" -dash-ctx FILE       stores/restore DASH timing from FILE.\n"
 			" -dynamic             uses dynamic MPD type instead of static.\n"
 			" -mpd-refresh TIME    specifies MPD update time in seconds.\n"
@@ -1335,6 +1336,7 @@ enum
 	if (brand_add) gf_free(brand_add); \
 	if (brand_rem) gf_free(brand_rem); \
 	if (dash_inputs) gf_free(dash_inputs); \
+	gf_sys_close();	\
 	return __ret_code; \
 
 
@@ -1417,6 +1419,7 @@ int mp4boxMain(int argc, char **argv)
 	Bool daisy_chain_sidx=0;
 	Bool single_segment=0;
 	Bool single_file=0;
+	Bool segment_timeline=0;
 	GF_DashProfile dash_profile = GF_DASH_PROFILE_UNKNOWN;
 	Bool use_url_template=0;
 	Bool seg_at_rap=0;
@@ -1429,11 +1432,6 @@ int mp4boxMain(int argc, char **argv)
 	const char *dash_title = NULL;
 	const char *dash_source = NULL;
 	const char *dash_more_info = NULL;
-
-	if (argc < 2) {
-		PrintUsage();
-		MP4BOX_EXIT_WITH_CODE(1);
-	}
 
 	nb_tsel_acts = nb_add = nb_cat = nb_track_act = nb_sdp_ex = max_ptime = raw_sample_num = nb_meta_act = rtp_rate = major_brand = nb_alt_brand_add = nb_alt_brand_rem = car_dur = minor_version = 0;
 	e = GF_OK;
@@ -1476,6 +1474,26 @@ int mp4boxMain(int argc, char **argv)
 	swf_flatten_angle = 0.0f;
 	tmpdir = NULL;
 
+
+
+	for (i = 1; i < (u32) argc ; i++) {
+		if (!strcmp(argv[i], "-mem-track")) {
+#ifdef GPAC_MEMORY_TRACKING
+			enable_mem_tracker = 1;
+#else
+			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n");
+#endif
+			break;
+		}
+	}
+
+	gf_sys_init(enable_mem_tracker);
+	if (argc < 2) {
+		PrintUsage();
+		MP4BOX_EXIT_WITH_CODE(1);
+	}
+
+
 	/*parse our args*/
 	for (i = 1; i < (u32) argc ; i++) {
 		arg = argv[i];
@@ -1508,6 +1526,8 @@ int mp4boxMain(int argc, char **argv)
 		else if (!stricmp(arg, "-version")) { PrintVersion(); MP4BOX_EXIT_WITH_CODE(0); }
 		else if (!stricmp(arg, "-sdp")) print_sdp = 1;
 		else if (!stricmp(arg, "-quiet")) quiet = 2;
+		else if (!strcmp(argv[i], "-mem-track")) continue;
+
 		else if (!stricmp(arg, "-logs")) {
 			CHECK_NEXT_ARG
 			gf_logs = argv[i+1];
@@ -1714,13 +1734,7 @@ int mp4boxMain(int argc, char **argv)
 		}
 		else if (!stricmp(arg, "-cprt")) { CHECK_NEXT_ARG cprt = argv[i+1]; i++; if (!dash_duration) open_edit = 1; }
 		else if (!stricmp(arg, "-chap")) { CHECK_NEXT_ARG chap_file = argv[i+1]; i++; open_edit = 1; }
-		else if (!strcmp(arg, "-mem-track")) {
-#ifdef GPAC_MEMORY_TRACKING
-			enable_mem_tracker = 1;
-#else
-			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n");
-#endif
-		} else if (!strcmp(arg, "-strict-error")) {
+		else if (!strcmp(arg, "-strict-error")) {
 			gf_log_set_strict_error(1);
 		} else if (!stricmp(arg, "-inter") || !stricmp(arg, "-old-inter")) {
 			CHECK_NEXT_ARG
@@ -1830,8 +1844,9 @@ int mp4boxMain(int argc, char **argv)
 			if ((arg[13]=='=') && arg[14]) {
 				if (!strcmp( &arg[14], "simulate")) use_url_template = 2;
 			}
-		}
-		else if (!stricmp(arg, "-itags")) { CHECK_NEXT_ARG itunes_tags = argv[i+1]; i++; open_edit = 1; }
+		} else if (!stricmp(arg, "-segment-timeline")) {
+			segment_timeline = 1;
+		} else if (!stricmp(arg, "-itags")) { CHECK_NEXT_ARG itunes_tags = argv[i+1]; i++; open_edit = 1; }
 #ifndef GPAC_DISABLE_ISOM_HINTING
 		else if (!stricmp(arg, "-hint")) { open_edit = 1; HintIt = 1; }
 		else if (!stricmp(arg, "-unhint")) { open_edit = 1; remove_hint = 1; }
@@ -2506,7 +2521,10 @@ int mp4boxMain(int argc, char **argv)
 	}
 
 	/*init libgpac*/
-	gf_sys_init(enable_mem_tracker);
+	if (enable_mem_tracker) {
+		gf_sys_close();
+		gf_sys_init(enable_mem_tracker);
+	}
 
 	if (gf_logs) {
 		gf_log_set_tools_levels(gf_logs);
@@ -2786,7 +2804,8 @@ int mp4boxMain(int argc, char **argv)
 		strcpy(szMPD, outfile);
 		strcat(szMPD, ".mpd");
 
-		fprintf(stderr, "Live DASH-ing - press 'q' to quit, 's' to save context and quit\n");
+		if (dash_dynamic)
+			fprintf(stderr, "Live DASH-ing - press 'q' to quit, 's' to save context and quit\n");
 
 		if (!dash_ctx_file && dash_live) {
 			dash_ctx = gf_cfg_new(NULL, NULL);
@@ -2810,9 +2829,10 @@ int mp4boxMain(int argc, char **argv)
 		}
 
 		while (!do_abort) {
+
 			e = gf_dasher_segment_files(szMPD, dash_inputs, nb_dash_inputs, dash_profile, dash_title, dash_source, cprt, dash_more_info,
 										(const char **) mpd_base_urls, nb_mpd_base_urls,
-									   use_url_template, single_segment, single_file, bitstream_switching_mode,
+									   use_url_template, segment_timeline,  single_segment, single_file, bitstream_switching_mode,
 									   seg_at_rap, dash_duration, seg_name, seg_ext,
 									   interleaving_time, subsegs_per_sidx, daisy_chain_sidx, frag_at_rap, tmpdir,
 									   dash_ctx, dash_dynamic, mpd_update_time, time_shift_depth, dash_subduration, min_buffer, ast_shift_sec);
@@ -2827,11 +2847,14 @@ int mp4boxMain(int argc, char **argv)
 						if (c=='q') { do_abort = 1; break; }
 						if (c=='s') { do_abort = 2; break; }
 					}
-					if (sleep_for<100) break;
 
-					if (dash_dynamic != 2) {
-						gf_sleep(100);
+					if (dash_dynamic == 2) {
+						break;
 					}
+					if (sleep_for<100)
+						break;
+					gf_sleep(100);
+
 					sleep_for = gf_dasher_next_update_time(dash_ctx, mpd_update_time);
 				}
 			} else {
@@ -2852,7 +2875,6 @@ int mp4boxMain(int argc, char **argv)
 		}
 		if (e) fprintf(stderr, "Error DASHing file: %s\n", gf_error_to_string(e));
 
-		gf_sys_close();
 		MP4BOX_EXIT_WITH_CODE( (e!=GF_OK) ? 1 : 0 );
 	}
 
@@ -3185,7 +3207,6 @@ int mp4boxMain(int argc, char **argv)
 	}
 	if (!open_edit && !needSave) {
 		if (file) gf_isom_delete(file);
-		gf_sys_close();
 		MP4BOX_EXIT_WITH_CODE(0);
 	}
 
@@ -3249,7 +3270,6 @@ int mp4boxMain(int argc, char **argv)
 	if (!encode) {
 		if (!file) {
 			fprintf(stderr, "Nothing to do - exiting\n");
-			gf_sys_close();
 			MP4BOX_EXIT_WITH_CODE(0);
 		}
 		if (outName) {
@@ -3598,7 +3618,6 @@ int mp4boxMain(int argc, char **argv)
 			if (gf_delete_file(inName)) fprintf(stderr, "Error removing file %s\n", inName);
 			else if (gf_move_file(outfile, inName)) fprintf(stderr, "Error renaming file %s to %s\n", outfile, inName);
 		}
-		gf_sys_close();
 		MP4BOX_EXIT_WITH_CODE( (e!=GF_OK) ? 1 : 0 );
 	}
 #endif
@@ -3714,21 +3733,17 @@ int mp4boxMain(int argc, char **argv)
 	} else {
 		gf_isom_delete(file);
 	}
-	/*close libgpac*/
-	gf_sys_close();
 
 	if (e) fprintf(stderr, "Error: %s\n", gf_error_to_string(e));
 	MP4BOX_EXIT_WITH_CODE( (e!=GF_OK) ? 1 : 0 );
 #else
 	/*close libgpac*/
-	gf_sys_close();
 	gf_isom_delete(file);
 	fprintf(stderr, "Error: Read-only version of MP4Box.\n");
 	MP4BOX_EXIT_WITH_CODE(1);
 #endif
 err_exit:
 	/*close libgpac*/
-	gf_sys_close();
 	if (file) gf_isom_delete(file);
 	fprintf(stderr, "\n\tError: %s\n", gf_error_to_string(e));
 	MP4BOX_EXIT_WITH_CODE(1);
