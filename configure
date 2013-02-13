@@ -493,7 +493,7 @@ case $target_os in
     sunos)
         make="gmake"
         readelf="greadelf"
-        LDFLAGS="${opt#--extra-ldflags=}"
+        LDFLAGS="$LDFLAGS"
         instflags=""
         #check for 64-bit
         cat > $TMPC << EOF

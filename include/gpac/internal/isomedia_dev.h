@@ -906,7 +906,8 @@ typedef struct
 	u16 compression_id;				\
 	u16 packet_size;				\
 	u16 samplerate_hi;				\
-	u16 samplerate_lo;
+	u16 samplerate_lo;				\
+	u8 extensions[36];				\
 
 
 typedef struct
@@ -2415,7 +2416,7 @@ struct __tag_isom {
 	u64 segment_start;
 
 	GF_List *moof_list;
-	Bool use_segments, moof_first, append_segment;
+	Bool use_segments, moof_first, append_segment, styp_written;
 
 	/*used when building single-indexed self initializing media segments*/
 	GF_SegmentIndexBox *root_sidx;
