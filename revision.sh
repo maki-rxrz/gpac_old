@@ -34,7 +34,7 @@ if [ -d ".git" ]; then
  fi
 fi
 if test "$svn_revision" = "" ; then
-    svn_revision="4310"
+    svn_revision="4325"
     git_version="$svn_revision"
 fi
 revision=$svn_revision
