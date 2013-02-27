@@ -465,7 +465,7 @@ static void gf_rtp_switch_quality(RTPClient *rtp, Bool switch_up)
 {
 	u32 i,count;
 	RTPStream *ch, *cur_ch;
-	
+
 	count = gf_list_count(rtp->channels);
 	/*find the current stream*/
 	ch = cur_ch = NULL;
@@ -498,9 +498,9 @@ static void gf_rtp_switch_quality(RTPClient *rtp, Bool switch_up)
 					rtp->cur_mid = ch->mid;
 					break;
 				}
-			
+
 			}
-		}	
+		}
 	}
 	else
 	{
@@ -525,9 +525,9 @@ static void gf_rtp_switch_quality(RTPClient *rtp, Bool switch_up)
 					gf_rtp_set_info_rtp(ch->rtp_ch, 0, 0, 0);*/
 					rtp->cur_mid = ch->mid;
 					break;
-				}		
+				}
 			}
-		}	
+		}
 	}
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_CODEC, ("Switch from ES%d to ES %d\n", cur_ch->mid, ch->mid));
 	return;
@@ -867,7 +867,7 @@ void RTP_Delete(GF_BaseInterface *bi)
 #endif
 
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
@@ -879,7 +879,7 @@ const u32 *QueryInterfaces()
 	return si;
 }
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
 #ifndef GPAC_DISABLE_STREAMING
@@ -888,7 +888,7 @@ GF_BaseInterface *LoadInterface(u32 InterfaceType)
 	return NULL;
 }
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 void ShutdownInterface(GF_BaseInterface *ifce)
 {
 	switch (ifce->InterfaceType) {
@@ -899,3 +899,5 @@ void ShutdownInterface(GF_BaseInterface *ifce)
 #endif
 	}
 }
+
+GPAC_MODULE_STATIC_DELARATION( rtp_in )

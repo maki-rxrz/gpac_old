@@ -226,7 +226,7 @@ static GF_ObjectDescriptor *RP_GetChannelOD(RTPStream *ch, u32 ch_idx)
 			GF_ESD *the_esd;
 
 			the_channel = (RTPStream *)gf_list_get(ch->owner->channels, i);
-			if (the_channel->base_stream == ch->mid) 
+			if (the_channel->base_stream == ch->mid)
 			{
 				the_esd = RP_GetChannelESD(the_channel, i);
 				the_esd->dependsOnESID = the_channel->prev_stream;
@@ -234,7 +234,7 @@ static GF_ObjectDescriptor *RP_GetChannelOD(RTPStream *ch, u32 ch_idx)
 			}
 		}
 	}
-	
+
 	return od;
 }
 

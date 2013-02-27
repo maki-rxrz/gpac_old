@@ -28,6 +28,13 @@
 #include "../../include/gpac/modules/codec.h"
 #include "../../include/gpac/constants.h"
 
+#if !defined(__GNUC__)
+# if defined(_WIN32_WCE) || defined (WIN32)
+#  pragma comment(lib, "liba52")
+# endif
+#endif
+
+
 #ifndef uint32_t
 #define uint32_t u32
 #endif
