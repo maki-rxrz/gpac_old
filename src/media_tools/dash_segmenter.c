@@ -898,14 +898,14 @@ restart_fragmentation_pass:
 	while ( (count = gf_list_count(fragmenters)) ) {
 
 		if (switch_segment) {
-			SegmentDuration = 0;
-			switch_segment = GF_FALSE;
-			first_sample_in_segment = GF_TRUE;
-
 			if (dash_cfg && dash_cfg->subduration && (segment_start_time + MaxSegmentDuration/2 >= 1000*dash_cfg->subduration)) {
 				/*done with file (next segment will exceppe of more than half the requested subduration : store all fragmenters state and abord*/
 				break;
 			}
+
+			SegmentDuration = 0;
+			switch_segment = GF_FALSE;
+			first_sample_in_segment = GF_TRUE;
 
 			if (simulation_pass) {
 				segments_info = (u32 *)gf_realloc(segments_info, sizeof(u32) * (nb_segments_info+1) );
@@ -3950,15 +3950,5 @@ exit:
 	return e;
 }
 
-
-
-#ifndef GPAC_DISABLE_ISOM_FRAGMENTS
-GF_EXPORT
-GF_Err gf_media_fragment_file(GF_ISOFile *input, const char *output_file, Double max_duration_sec)
-{
-	return gf_media_isom_segment_file(input, output_file, max_duration_sec, NULL, NULL, 0);
-}
-
-#endif /*GPAC_DISABLE_ISOM_FRAGMENTS*/
 
 
