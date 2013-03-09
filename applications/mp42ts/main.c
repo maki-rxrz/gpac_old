@@ -2240,7 +2240,7 @@ int main(int argc, char **argv)
 	}
 
 	gf_m2ts_mux_update_config(muxer, 1);
-	
+
 	if (nb_pck_pack>1) {
 		ts_pack_buffer = gf_malloc(sizeof(char) * 188 * nb_pck_pack);
 	}
@@ -2411,7 +2411,7 @@ do_flush:
 			}
 		}
 		if (status==GF_M2TS_STATE_EOS) {
-			if (ts_pack_buffer) 
+			if (ts_pack_buffer)
 				goto do_flush;
 			break;
 		}

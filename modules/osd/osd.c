@@ -124,7 +124,7 @@ void osd_on_resize(GF_Node *hdl, GF_DOM_Event *event, GF_Node *observer)
 		gf_node_dirty_set((GF_Node *) osd->ct2d, GF_SG_NODE_DIRTY, 1);
 
 		if (osd->transform) {
-			osd->transform->translation.y = INT2FIX( (event->screen_rect.height - osd->ct2d->pixelHeight) ) / 2;
+			osd->transform->translation.y = INT2FIX( (FIX2INT(event->screen_rect.height) - osd->ct2d->pixelHeight) / 2 ) ;
 			gf_node_dirty_set((GF_Node *) osd->transform, GF_SG_NODE_DIRTY, 1);
 		}
 	}
@@ -273,7 +273,7 @@ void osd_delete(GF_BaseInterface *ifce)
 	gf_free(dr);
 }
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
@@ -283,14 +283,14 @@ const u32 *QueryInterfaces()
 	return si;
 }
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
 	if (InterfaceType == GF_TERM_EXT_INTERFACE) return (GF_BaseInterface *)osd_new();
 	return NULL;
 }
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 void ShutdownInterface(GF_BaseInterface *ifce)
 {
 	switch (ifce->InterfaceType) {
@@ -299,3 +299,5 @@ void ShutdownInterface(GF_BaseInterface *ifce)
 		break;
 	}
 }
+
+GPAC_MODULE_STATIC_DELARATION( osd )

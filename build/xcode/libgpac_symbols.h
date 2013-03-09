@@ -236,7 +236,7 @@ extern void (*gf_term_set_speed)(GF_Terminal *term, Fixed speed);
 extern u32 (*gf_cfg_get_key_count)(GF_Config *cfgFile, const char *secName);
 #undef gf_term_object_subscene_type
 extern u32 (*gf_term_object_subscene_type)(GF_Terminal *term, GF_ObjectManager *odm);
-#undef gf_term_get_framerate 
+#undef gf_term_get_framerate
 extern Double (*gf_term_get_framerate)(GF_Terminal *term, Bool absoluteFPS);
 #undef gf_error_to_string
 extern const char *(*gf_error_to_string)(GF_Err e);

@@ -92,7 +92,7 @@ static GF_Err gf_media_update_par(GF_ISOFile *file, u32 track)
 		gf_m4v_get_config(esd->decoderConfig->decoderSpecificInfo->data, esd->decoderConfig->decoderSpecificInfo->dataLength, &dsi);
 		if (esd) gf_odf_desc_del((GF_Descriptor *) esd);
 
-		if ((dsi.par_num>1) && (dsi.par_num>1))
+		if ((dsi.par_num>1) && (dsi.par_den>1))
 			tk_w = dsi.width * dsi.par_num / dsi.par_den;
 	} else {
 		return GF_OK;
@@ -218,6 +218,7 @@ static GF_Err gf_import_still_image(GF_MediaImporter *import, Bool mult_desc_all
 		import->tk_info[0].video_info.width = w;
 		import->tk_info[0].video_info.height = h;
 		import->nb_tracks = 1;
+		gf_free(data);
 		if (dsi) gf_free(dsi);
 		return GF_OK;
 	}
@@ -284,6 +285,115 @@ static GF_Err gf_import_still_image(GF_MediaImporter *import, Bool mult_desc_all
 		samp->data = NULL;
 	}
 	gf_set_progress("Importing Image", 1, 1);
+
+	gf_isom_sample_del(&samp);
+
+exit:
+	gf_free(data);
+	if (import->esd && destroy_esd) {
+		gf_odf_desc_del((GF_Descriptor *) import->esd);
+		import->esd = NULL;
+	}
+	return e;
+}
+
+static GF_Err gf_import_afx_sc3dmc(GF_MediaImporter *import, Bool mult_desc_allowed)
+{
+	GF_Err e;
+	Bool destroy_esd;
+	u32 size, track, di, dsi_len;
+	GF_ISOSample *samp;
+	u8 OTI;
+	char *dsi, *data;
+	FILE *src;
+
+	if (import->flags & GF_IMPORT_PROBE_ONLY) {
+		import->tk_info[0].track_num = 1;
+		import->tk_info[0].type = GF_ISOM_MEDIA_SCENE;
+		import->tk_info[0].media_type = GPAC_OTI_SCENE_AFX;
+		import->tk_info[0].flags = GF_IMPORT_USE_DATAREF | GF_IMPORT_NO_DURATION;
+		import->nb_tracks = 1;
+		return GF_OK;
+	}
+
+	src = gf_f64_open(import->in_name, "rb");
+	if (!src) return gf_import_message(import, GF_URL_ERROR, "Opening file %s failed", import->in_name);
+
+	gf_f64_seek(src, 0, SEEK_END);
+	size = (u32) gf_f64_tell(src);
+	gf_f64_seek(src, 0, SEEK_SET);
+	data = (char*)gf_malloc(sizeof(char)*size);
+	size = fread(data, sizeof(char), size, src);
+	fclose(src);
+
+	OTI = GPAC_OTI_SCENE_AFX;
+
+	dsi = (char *)gf_malloc(1);
+	dsi_len = 1;
+	dsi[0] = GPAC_AFX_SCALABLE_COMPLEXITY;
+
+	e = GF_OK;
+	destroy_esd = 0;
+	if (!import->esd) {
+		import->esd = gf_odf_desc_esd_new(0);
+		destroy_esd = 1;
+	}
+	/*update stream type/oti*/
+	if (!import->esd->decoderConfig) import->esd->decoderConfig = (GF_DecoderConfig *) gf_odf_desc_new(GF_ODF_DCD_TAG);
+	if (!import->esd->slConfig) import->esd->slConfig = (GF_SLConfig *) gf_odf_desc_new(GF_ODF_SLC_TAG);
+	import->esd->decoderConfig->streamType = GF_STREAM_SCENE;
+	import->esd->decoderConfig->objectTypeIndication = OTI;
+	import->esd->decoderConfig->bufferSizeDB = size;
+	import->esd->decoderConfig->avgBitrate = 8*size;
+	import->esd->decoderConfig->maxBitrate = 8*size;
+	import->esd->slConfig->timestampResolution = 1000;
+
+	if (dsi) {
+		if (!import->esd->decoderConfig->decoderSpecificInfo) import->esd->decoderConfig->decoderSpecificInfo = (GF_DefaultDescriptor *) gf_odf_desc_new(GF_ODF_DSI_TAG);
+		if (import->esd->decoderConfig->decoderSpecificInfo->data) gf_free(import->esd->decoderConfig->decoderSpecificInfo->data);
+		import->esd->decoderConfig->decoderSpecificInfo->data = dsi;
+		import->esd->decoderConfig->decoderSpecificInfo->dataLength = dsi_len;
+	}
+
+
+	track = 0;
+	if (mult_desc_allowed)
+		track = gf_isom_get_track_by_id(import->dest, import->esd->ESID);
+	if (!track)
+		track = gf_isom_new_track(import->dest, import->esd->ESID, GF_ISOM_MEDIA_SCENE, 1000);
+	if (!track) {
+		e = gf_isom_last_error(import->dest);
+		goto exit;
+	}
+	gf_isom_set_track_enabled(import->dest, track, 1);
+	if (!import->esd->ESID) import->esd->ESID = gf_isom_get_track_id(import->dest, track);
+	import->final_trackID = import->esd->ESID;
+
+	e = gf_isom_new_mpeg4_description(import->dest, track, import->esd, (import->flags & GF_IMPORT_USE_DATAREF) ? import->in_name : NULL, NULL, &di);
+	if (e) goto exit;
+	//gf_isom_set_visual_info(import->dest, track, di, w, h);
+	samp = gf_isom_sample_new();
+	samp->IsRAP = 1;
+	samp->dataLength = size;
+	if (import->initial_time_offset) samp->DTS = (u64) (import->initial_time_offset*1000);
+
+	gf_import_message(import, GF_OK, "%s import %s", "SC3DMC", import->in_name);
+
+	/*we must start a track from DTS = 0*/
+	if (!gf_isom_get_sample_count(import->dest, track) && samp->DTS) {
+		/*todo - we could add an edit list*/
+		samp->DTS=0;
+	}
+
+	gf_set_progress("Importing SC3DMC", 0, 1);
+	if (import->flags & GF_IMPORT_USE_DATAREF) {
+		e = gf_isom_add_sample_reference(import->dest, track, di, samp, (u64) 0);
+	} else {
+		samp->data = data;
+		e = gf_isom_add_sample(import->dest, track, di, samp);
+		samp->data = NULL;
+	}
+	gf_set_progress("Importing SC3DMC", 1, 1);
 
 	gf_isom_sample_del(&samp);
 
@@ -4612,6 +4722,9 @@ exit:
 
 static GF_Err gf_import_hevc(GF_MediaImporter *import)
 {
+#ifdef GPAC_DISABLE_HEVC
+	return GF_NOT_SUPPORTED;
+#else
 	u64 nal_start, nal_end, total_size;
 	u32 nal_size, track, trackID, di, cur_samp, nb_i, nb_idr, nb_p, nb_b, nb_sp, nb_si, nb_sei, max_w, max_h, max_total_delay;
 	s32 idx, sei_recovery_frame_count;
@@ -5351,6 +5464,7 @@ exit:
 	gf_bs_del(bs);
 	fclose(mdia);
 	return e;
+#endif //GPAC_DISABLE_HEVC
 }
 
 #endif /*GPAC_DISABLE_AV_PARSERS*/
@@ -6105,8 +6219,11 @@ typedef struct
 	GF_AVCConfig *avccfg;
 	AVCState avc;
 
+#ifndef GPAC_DISABLE_HEVC
 	GF_HEVCConfig *hevccfg;
 	HEVCState hevc;
+#endif //GPAC_DISABLE_HEVC
+
 #endif
 	Bool force_next_au_start;
 	Bool stream_setup;
@@ -6309,6 +6426,7 @@ void m2ts_rewrite_avc_sample(GF_MediaImporter *import, GF_TSImport *tsimp)
 	gf_isom_sample_del(&samp);
 }
 
+#ifndef GPAC_DISABLE_HEVC
 static void hevc_cfg_add_nalu(GF_HEVCConfig *hevccfg, u8 nal_type, char *data, u32 data_len)
 {
 	u32 i, count;
@@ -6336,6 +6454,7 @@ static void hevc_cfg_add_nalu(GF_HEVCConfig *hevccfg, u8 nal_type, char *data, u
 		ar->array_completeness = 0;
 	}
 }
+#endif //GPAC_DISABLE_HEVC
 
 void on_m2ts_import_data(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 {
@@ -6570,7 +6689,9 @@ void on_m2ts_import_data(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 				mtype = GF_ISOM_MEDIA_VISUAL;
 				stype = GF_STREAM_VISUAL;
 				oti = GPAC_OTI_VIDEO_HEVC;
+#ifndef GPAC_DISABLE_HEVC
 				tsimp->hevccfg = gf_odf_hevc_cfg_new();
+#endif //GPAC_DISABLE_HEVC
 				break;
 			case GF_M2TS_VIDEO_VC1:
 				mtype = GF_ISOM_MEDIA_VISUAL;
@@ -6764,6 +6885,7 @@ void on_m2ts_import_data(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 
 			/*avc data for the current sample is stored in annex-B, as we don't know the size of each nal
 			when called back (depending on PES packetization, the end of the nal could be in following pes)*/
+#ifndef GPAC_DISABLE_HEVC
 			else if (tsimp->hevccfg && !pck->data[0] && !pck->data[1]) {
 				s32 idx;
 				Bool add_sps, is_subseq = 0;
@@ -6848,6 +6970,7 @@ void on_m2ts_import_data(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 					tsimp->force_next_au_start = 0;
 				}
 			}
+#endif //GPAC_DISABLE_HEVC
 
 			if (!is_au_start) {
 				e = gf_isom_append_sample_data(import->dest, tsimp->track, (char*)pck->data, pck->data_len);
@@ -7988,6 +8111,9 @@ GF_Err gf_media_import(GF_MediaImporter *importer)
 	/*DIMS*/
 	if (!strnicmp(ext, ".dml", 4) || !stricmp(fmt, "DIMS") )
 		return gf_import_nhml_dims(importer, 1);
+	/*SC3DMC*/
+	if (!strnicmp(ext, ".s3d", 4) || !stricmp(fmt, "SC3DMC") )
+		return gf_import_afx_sc3dmc(importer, 1);
 
 	if (!strnicmp(ext, ".txt", 4) || !strnicmp(ext, ".chap", 5) || !stricmp(fmt, "CHAP") )
 		return gf_media_import_chapters_file(importer);

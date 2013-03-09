@@ -881,6 +881,7 @@ const char *gf_m4a_get_profile_name(u8 audio_pl)
 
 #ifndef GPAC_DISABLE_AV_PARSERS
 
+GF_EXPORT
 u32 gf_m4a_get_profile(GF_M4ADecSpecInfo *cfg)
 {
 	switch (cfg->base_object_type) {
@@ -3039,6 +3040,9 @@ exit:
 }
 
 
+
+#ifndef GPAC_DISABLE_HEVC
+
 /**********
 HEVC parsing
 **********/
@@ -3649,6 +3653,7 @@ s32 gf_media_hevc_parse_nalu(GF_BitStream *bs, HEVCState *hevc, u8 *nal_unit_typ
 	return ret;
 }
 
+#endif //GPAC_DISABLE_HEVC
 
 static u32 AC3_FindSyncCode(u8 *buf, u32 buflen)
 {

@@ -25,6 +25,7 @@
 
 #include "../../include/gpac/terminal.h"
 #include "../../include/gpac/internal/terminal_dev.h"
+#include "../../include/gpac/internal/compositor_dev.h"
 #include "../../include/gpac/modules/codec.h"
 #include "../../include/gpac/constants.h"
 #include "../../include/gpac/modules/service.h"
@@ -483,19 +484,19 @@ void Java_com_gpac_Osmo4_Preview_processFrameBuf( JNIEnv* env, jobject thiz, jby
 	jbyte *jdata;
 	jsize len;
 
-	if ( ctx->started )
+	if ( ctx->started && ctx->term && ctx->term->compositor && ctx->term->compositor->audio_renderer)
 	{
 		len = (*env)->GetArrayLength(env, arr);
 		jdata = (*env)->GetByteArrayElements(env,arr,0);
 
-		convTime = gf_term_get_time(ctx->term);
+		//convTime = gf_term_get_time(ctx->term);
 
 		data = (u8*)jdata;//(u8*)decodeYUV420SP((char*)jdata, ctx->width, ctx->height); //
 		datasize = len;//ctx->width * ctx->height * CAM_PIXEL_SIZE;//
 
 		cts = gf_term_get_time(ctx->term);
 
-		convTime = cts - convTime;
+		//convTime = cts - convTime;
 
 		memset(&hdr, 0, sizeof(hdr));
 		hdr.compositionTimeStampFlag = 1;
@@ -688,7 +689,7 @@ void CAM_client_del(GF_BaseInterface *bi)
 	gf_free(bi);
 }
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
@@ -698,7 +699,7 @@ const u32 *QueryInterfaces()
 	return si;
 }
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
 	if (InterfaceType == GF_NET_CLIENT_INTERFACE)
@@ -706,10 +707,12 @@ GF_BaseInterface *LoadInterface(u32 InterfaceType)
 	return NULL;
 }
 
-GF_EXPORT
+GPAC_MODULE_EXPORT
 void ShutdownInterface(GF_BaseInterface *ifce)
 {
 	switch (ifce->InterfaceType) {
 	case GF_NET_CLIENT_INTERFACE: CAM_client_del(ifce); break;
 	}
 }
+
+GPAC_MODULE_STATIC_DELARATION( droid_cam )

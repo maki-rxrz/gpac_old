@@ -58,7 +58,8 @@ void gf_ringbuffer_del(GF_Ringbuffer * ringbuffer){
  * pointer.
  * \param The ringbuffer
  */
-static u32 gf_ringbuffer_available_for_write (GF_Ringbuffer * rb)
+GF_EXPORT
+u32 gf_ringbuffer_available_for_write (GF_Ringbuffer * rb)
 {
   u32 w, r;
 
