@@ -1190,7 +1190,7 @@ void gf_sc_reload_config(GF_Compositor *compositor)
 	else compositor->draw_normals = GF_NORMALS_NONE;
 
 	sOpt = gf_cfg_get_key(compositor->user->config, "Compositor", "DisableGLUScale");
-	compositor->disable_glu_scale = (sOpt && !stricmp(sOpt, "yes") ) ? 1 : 0;
+    compositor->disable_glu_scale = (sOpt && !stricmp(sOpt, "yes") ) ? 1 : 0;
 
 	sOpt = gf_cfg_get_key(compositor->user->config, "Compositor", "DisableRectExt");
 	compositor->disable_rect_ext = (sOpt && !stricmp(sOpt, "yes") ) ? 1 : 0;
@@ -1264,8 +1264,8 @@ void gf_sc_reload_config(GF_Compositor *compositor)
 
 	sOpt = gf_cfg_get_key(compositor->user->config, "Compositor", "CameraLayout");
 	if (!sOpt) {
-		sOpt = "OffAxis";
-		gf_cfg_set_key(compositor->user->config, "Compositor", "CameraLayout", "OffAxis");
+		sOpt = "Straight";
+		gf_cfg_set_key(compositor->user->config, "Compositor", "CameraLayout", "Straight");
 	}
 	if (!strcmp(sOpt, "Linear")) compositor->visual->camera_layout = GF_3D_CAMERA_LINEAR;
 	else if (!strcmp(sOpt, "Circular")) compositor->visual->camera_layout = GF_3D_CAMERA_CIRCULAR;
@@ -2955,12 +2955,12 @@ const char *gf_sc_get_selected_text(GF_Compositor *compositor)
 	srcp = compositor->sel_buffer;
 	if (compositor->selected_text) gf_free(compositor->selected_text);
 	compositor->selected_text = gf_malloc(sizeof(char)*2*compositor->sel_buffer_len);
-	len = gf_utf8_wcstombs(compositor->selected_text, 2*compositor->sel_buffer_len, &srcp);
+	len = gf_utf8_wcstombs((char *) compositor->selected_text, 2*compositor->sel_buffer_len, &srcp);
 	if ((s32)len<0) len = 0;
 	compositor->selected_text[len] = 0;
 	gf_sc_lock(compositor, GF_FALSE);
 
-	return compositor->selected_text;
+	return (const char *) compositor->selected_text;
 }
 
 

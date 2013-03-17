@@ -2013,7 +2013,7 @@ static GF_Err swf_def_hdr_jpeg(SWFReader *read)
 	read->jpeg_hdr_size = read->size;
 	if (read->size) {
 		read->jpeg_hdr = gf_malloc(sizeof(char)*read->size);
-		swf_read_data(read, read->jpeg_hdr, read->size);
+		swf_read_data(read, (char *) read->jpeg_hdr, read->size);
 	}
 	return GF_OK;
 }
@@ -2057,7 +2057,7 @@ static GF_Err swf_def_bits_jpeg(SWFReader *read, u32 version)
 		size-=2;
 	}
 	buf = gf_malloc(sizeof(u8)*size);
-	swf_read_data(read, buf, size);
+	swf_read_data(read, (char *) buf, size);
 	if (version==1) {
 		gf_fwrite(buf, 1, size, file);
 	} else {
@@ -2089,19 +2089,19 @@ static GF_Err swf_def_bits_jpeg(SWFReader *read, u32 version)
 		GF_BitStream *bs;
 
 		/*decompress jpeg*/
-		bs = gf_bs_new(buf+skip, size-skip, GF_BITSTREAM_READ);
+		bs = gf_bs_new( (char *) buf+skip, size-skip, GF_BITSTREAM_READ);
 		gf_img_parse(bs, &oti, &osize, &w, &h, NULL, NULL);
 		gf_bs_del(bs);
 
 		osize = w*h*4;
 		raw = gf_malloc(sizeof(char)*osize);
 		memset(raw, 0, sizeof(char)*osize);
-		e = gf_img_jpeg_dec(buf+skip, size-skip, &w, &h, &pf, raw, &osize, 4);
+		e = gf_img_jpeg_dec( (char *) buf+skip, size-skip, &w, &h, &pf, raw, &osize, 4);
 		assert(e == GF_OK);
 
 		/*read alpha map and decompress it*/
 		if (size<AlphaPlaneSize) buf = gf_realloc(buf, sizeof(u8)*AlphaPlaneSize);
-		swf_read_data(read, buf, AlphaPlaneSize);
+		swf_read_data(read, (char *) buf, AlphaPlaneSize);
 
 		osize = w*h;
 		dst = gf_malloc(sizeof(char)*osize);
@@ -2121,7 +2121,7 @@ static GF_Err swf_def_bits_jpeg(SWFReader *read, u32 version)
 
 		osize = w*h*4;
 		buf = gf_realloc(buf, sizeof(char)*osize);
-		gf_img_png_enc(raw, w, h, h*4, GF_PIXEL_RGBA, buf, &osize);
+		gf_img_png_enc(raw, w, h, h*4, GF_PIXEL_RGBA, (char *)buf, &osize);
 
 		file = gf_f64_open(szName, "wb");
 		gf_fwrite(buf, 1, osize, file);

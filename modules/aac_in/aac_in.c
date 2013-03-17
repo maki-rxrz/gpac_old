@@ -53,7 +53,7 @@ typedef struct
 	Bool done;
 	u32 is_inline;
 
-	unsigned char *data;
+	char *data;
 	u32 data_size;
 	GF_SLHeader sl_hdr;
 
@@ -303,7 +303,7 @@ static void AAC_OnLiveData(AACReader *read, const char *data, u32 data_size)
 
 	if (read->needs_connection) {
 		read->needs_connection = 0;
-		bs = gf_bs_new(read->data, read->data_size, GF_BITSTREAM_READ);
+		bs = gf_bs_new((const char *)read->data, read->data_size, GF_BITSTREAM_READ);
 		sync = ADTS_SyncFrame(bs, 0, &hdr);
 		gf_bs_del(bs);
 		if (!sync) return;
@@ -326,7 +326,7 @@ static void AAC_OnLiveData(AACReader *read, const char *data, u32 data_size)
 	/*need a full adts header*/
 	if (read->data_size<=7) return;
 
-	bs = gf_bs_new(read->data, read->data_size, GF_BITSTREAM_READ);
+	bs = gf_bs_new((const char *)read->data, read->data_size, GF_BITSTREAM_READ);
 	hdr.frame_size = pos = 0;
 	while (ADTS_SyncFrame(bs, 0, &hdr)) {
 		pos = (u32) gf_bs_get_position(bs);

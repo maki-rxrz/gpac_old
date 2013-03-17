@@ -24,6 +24,8 @@
  */
 
 
+#include "../../include/gpac/setup.h"
+
 #ifdef GPAC_HAS_MAD
 
 #include "../../include/gpac/modules/codec.h"

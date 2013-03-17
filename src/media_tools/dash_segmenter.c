@@ -254,7 +254,6 @@ GF_Err gf_media_get_rfc_6381_codec_name(GF_ISOFile *movie, u32 track, char *szCo
 {
 	GF_ESD *esd;
 	GF_AVCConfig *avcc;
-	GF_AVCConfigSlot *sps;
 	u32 subtype = gf_isom_is_media_encrypted(movie, track, 1);
 	if (!subtype) subtype = gf_isom_get_media_subtype(movie, track, 1);
 
@@ -296,13 +295,7 @@ GF_Err gf_media_get_rfc_6381_codec_name(GF_ISOFile *movie, u32 track, char *szCo
 	case GF_ISOM_SUBTYPE_AVC4_H264:
 	case GF_ISOM_SUBTYPE_SVC_H264:
 		avcc = gf_isom_avc_config_get(movie, track, 1);
-		sps = gf_list_get(avcc->sequenceParameterSets, 0);
-		if (sps)
-			sprintf(szCodec, "%s.%02x%02x%02x", gf_4cc_to_str(subtype), (u8) sps->data[1], (u8) sps->data[2], (u8) sps->data[3]);
-		else {
-			GF_LOG(GF_LOG_WARNING, GF_LOG_AUTHOR, ("[ISOM Tools] AVC/SVC SPS not known - setting codecs string to default value \"%s\"\n", gf_4cc_to_str(subtype) ));
-			sprintf(szCodec, "%s", gf_4cc_to_str(subtype));
-		}
+		sprintf(szCodec, "%s.%02x%02x%02x", gf_4cc_to_str(subtype), avcc->AVCProfileIndication, avcc->profile_compatibility, avcc->AVCLevelIndication);
 		gf_odf_avc_cfg_del(avcc);
 		return GF_OK;
 	default:
@@ -567,7 +560,7 @@ static GF_Err gf_media_isom_segment_file(GF_ISOFile *input, const char *output_f
 	}
 	index_start_range = index_end_range = 0;
 
-	tfref = NULL;
+	tf = tfref = NULL;
 	file_duration = 0;
 	width = height = sample_rate = nb_channels = sar_w = sar_h = fps_num = fps_denum = 0;
 	langCode[0]=0;
@@ -639,7 +632,7 @@ static GF_Err gf_media_isom_segment_file(GF_ISOFile *input, const char *output_f
 									 &defaultDuration, &defaultSize, &defaultDescriptionIndex, &defaultRandomAccess, &defaultPadding, &defaultDegradationPriority);
 		}
 
-		gf_media_get_rfc_6381_codec_name(input, i+1, szCodec);
+		gf_media_get_rfc_6381_codec_name(bs_switch_segment ? bs_switch_segment : input, i+1, szCodec);
 		if (strlen(szCodecs)) strcat(szCodecs, ",");
 		strcat(szCodecs, szCodec);
 
@@ -791,11 +784,13 @@ static GF_Err gf_media_isom_segment_file(GF_ISOFile *input, const char *output_f
 	}
 
 
-	if (!tfref) tfref = (GF_ISOMTrackFragmenter *)gf_list_get(fragmenters, 0);
+	if (!tfref)
+		tfref = (GF_ISOMTrackFragmenter *)gf_list_get(fragmenters, 0);
 	tfref->is_ref_track = GF_TRUE;
 	tfref_timescale = tfref->TimeScale;
 	ref_track_id = tfref->TrackID;
-	if (tfref->all_sample_raps) split_seg_at_rap = GF_TRUE;
+	if (tfref->all_sample_raps)
+		split_seg_at_rap = GF_TRUE;
 
 
 	if (!dash_moov_setup) {
@@ -975,20 +970,27 @@ restart_fragmentation_pass:
 			s32 roll_distance;
 			u32 SAP_type = 0;
 			/*start with ref*/
-			if (tfref && split_seg_at_rap ) {
+			if (tfref && split_seg_at_rap) {
 				if (i==0) {
 					tf = tfref;
-					has_rap=GF_FALSE;
+					has_rap = GF_FALSE;
 				} else {
-					tf = (GF_ISOMTrackFragmenter *)gf_list_get(fragmenters, i-1);
-					if (tf == tfref) {
-						tf = (GF_ISOMTrackFragmenter *)gf_list_get(fragmenters, i);
+					u32 j;
+					for (j=0; j<=i; j++) {
+						if (gf_list_get(fragmenters, j) == tfref) {
+							tf = (GF_ISOMTrackFragmenter *)gf_list_get(fragmenters, i);
+							break;
+						} else if (i == j) {
+							tf = (GF_ISOMTrackFragmenter *)gf_list_get(fragmenters, i-1);
+							break;
+						}
 					}
+					assert(tf);
 				}
 			} else {
 				tf = (GF_ISOMTrackFragmenter *)gf_list_get(fragmenters, i);
 				if (tf == tfref)
-					has_rap=GF_FALSE;
+					has_rap = GF_FALSE;
 			}
 			if (tf->done) continue;
 
@@ -1194,7 +1196,8 @@ restart_fragmentation_pass:
 					if (split_sample_duration)
 						tf->split_sample_dts_shift += defaultDuration;
 
-					if (tf==tfref) last_ref_cts = tf->last_sample_cts;
+					if (tf==tfref)
+						last_ref_cts = tf->last_sample_cts;
 
 					break;
 				}
@@ -1322,7 +1325,8 @@ restart_fragmentation_pass:
 			tf->next_sample_dts = 0;
 			tf->FragmentLength = 0;
 			tf->SampleNum = 0;
-			if (tf->is_ref_track) tfref = tf;
+			if (tf->is_ref_track)
+				tfref = tf;
 		}
 		goto restart_fragmentation_pass;
 	}
@@ -1759,9 +1763,9 @@ static GF_Err dasher_isom_classify_input(GF_DashSegInput *dash_inputs, u32 nb_da
 				}
 			}
 			if (mtype==GF_ISOM_MEDIA_VISUAL) {
-				u32 w1, h1, w2, h2;
+				u32 w1, h1, w2, h2, sap_type;
 				Bool rap, roll;
-				u32 roll_dist, sap_type;
+				s32 roll_dist;
 
 				gf_isom_get_track_layout_info(set_file, j+1, &w1, &h1, NULL, NULL, NULL);
 				gf_isom_get_track_layout_info(in, j+1, &w2, &h2, NULL, NULL, NULL);
@@ -3142,8 +3146,8 @@ static GF_Err write_mpd_header(FILE *mpd, const char *mpd_name, GF_Config *dash_
 
 		*(LONGLONG *) &filet = (sec - GF_NTP_SEC_1900_TO_1970) * 10000000 + TIMESPEC_TO_FILETIME_OFFSET;
 
-#undef TIMESPEC_TO_FILETIME_OFFSET 
-		
+#undef TIMESPEC_TO_FILETIME_OFFSET
+
 		FileTimeToSystemTime(&filet, &syst);
 		fprintf(mpd, " on %d-%02d-%02dT%02d:%02d:%02dZ", syst.wYear, syst.wMonth, syst.wDay, syst.wHour, syst.wMinute, syst.wSecond);
 		GF_LOG(GF_LOG_INFO, GF_LOG_DASH, ("[DASH] Generating MPD at time %d-%02d-%02dT%02d:%02d:%02dZ\n", syst.wYear, syst.wMonth, syst.wDay, syst.wHour, syst.wMinute, syst.wSecond) );
