@@ -3084,9 +3084,11 @@ static s32 hevc_parse_slice_segment(GF_BitStream *bs, HEVCState *hevc, HEVCSlice
 	HEVC_SPS *sps;
 	s32 pps_id;
 	Bool dependent_slice_segment_flag = 0;
-	Bool first_slice_segment_in_pic_flag = gf_bs_read_int(bs, 1);
 	Bool RapPicFlag = 0;
 	Bool IDRPicFlag = 0;
+	Bool first_slice_segment_in_pic_flag;
+
+	first_slice_segment_in_pic_flag = gf_bs_read_int(bs, 1);
 
 	switch (si->nal_unit_type) {
 	case GF_HEVC_NALU_SLICE_IDR_W_DLP:
@@ -3117,13 +3119,12 @@ static s32 hevc_parse_slice_segment(GF_BitStream *bs, HEVCState *hevc, HEVCSlice
 		dependent_slice_segment_flag = gf_bs_read_int(bs, 1);
 	}
 
-	{
-		if (!first_slice_segment_in_pic_flag) {
-			/*slice_segment_address = */gf_bs_read_int(bs, sps->bitsSliceSegmentAddress);
-		}
+	if (!first_slice_segment_in_pic_flag) {
+		/*slice_segment_address = */gf_bs_read_int(bs, sps->bitsSliceSegmentAddress);
 	}
 
 	if( !dependent_slice_segment_flag ) {
+		//"slice_reserved_undetermined_flag[]"
 		gf_bs_read_int(bs, pps->num_extra_slice_header_bits);
 
 		si->slice_type = bs_get_ue(bs);
@@ -3147,17 +3148,16 @@ static void hevc_compute_poc(HEVCSliceInfo *si)
 {
 	u32 max_poc_lsb = 1 << (si->sps->log2_max_pic_order_cnt_lsb);
 
-	/* frame_num_offset */
+	/*POC reset for IDR frames, NOT for CRA*/
 	switch (si->nal_unit_type) {
 	case GF_HEVC_NALU_SLICE_IDR_W_DLP:
 	case GF_HEVC_NALU_SLICE_IDR_N_LP:
-	case GF_HEVC_NALU_SLICE_CRA:
 		si->poc_lsb_prev = 0;
 		si->poc_msb_prev = 0;
 		break;
 	}
 
-	if ((si->poc_lsb < si->poc_lsb_prev) && (si->poc_lsb_prev - si->poc_lsb >= max_poc_lsb / 2) )
+	if ((si->poc_lsb < si->poc_lsb_prev) && (	si->poc_lsb_prev - si->poc_lsb >= max_poc_lsb / 2) )
 		si->poc_msb = si->poc_msb_prev + max_poc_lsb;
 	else if ((si->poc_lsb > si->poc_lsb_prev) && (si->poc_lsb - si->poc_lsb_prev > max_poc_lsb / 2))
 		si->poc_msb = si->poc_msb_prev - max_poc_lsb;
@@ -3184,15 +3184,17 @@ void profile_tier_level(GF_BitStream *bs, Bool ProfilePresentFlag, u8 MaxNumSubL
 
 		ptl->profile_compatibility_flag = gf_bs_read_int(bs, 32);
 
+		ptl->general_progressive_source_flag = gf_bs_read_int(bs, 1);
+		ptl->general_interlaced_source_flag = gf_bs_read_int(bs, 1);
+		ptl->general_non_packed_constraint_flag = gf_bs_read_int(bs, 1);
+		ptl->general_frame_only_constraint_flag = gf_bs_read_int(bs, 1);
 
-		/* general_progressive_source_flag = */ gf_bs_read_int(bs, 1);
-		/* general_interlaced_source_flag = */ gf_bs_read_int(bs, 1);
-		/* general_non_packed_constraint_flag = */ gf_bs_read_int(bs, 1);
-		/* general_frame_only_constraint_flag = */ gf_bs_read_int(bs, 1);
-
+		ptl->general_reserved_44bits = gf_bs_read_long_int(bs, 44);
+#if 0
 		/* XXX_reserved_zero_48bits[0..15] = */ gf_bs_read_int(bs, 16);
 		/* XXX_reserved_zero_48bits[16..31] = */ gf_bs_read_int(bs, 16);
 		/* XXX_reserved_zero_48bits[32..43] = */ gf_bs_read_int(bs, 12);
+#endif
 	}
 	ptl->level_idc = gf_bs_read_int(bs, 8);
 	for (i=0; i<MaxNumSubLayersMinus1; i++) {
@@ -3256,7 +3258,7 @@ s32 gf_media_hevc_read_vps(char *data, u32 size, HEVCState *hevc)
 	/* vps_reserved_three_2bits = */ gf_bs_read_int(bs, 2);
 	/* vps_reserved_zero_6bits = */ gf_bs_read_int(bs, 6);
 	vps->max_sub_layer = gf_bs_read_int(bs, 3) + 1;
-	/*vps_temporal_id_nesting_flag = */ gf_bs_read_int(bs, 1);
+	vps->temporal_id_nesting = gf_bs_read_int(bs, 1);
 	/* vps_reserved_ffff_16bits = */ gf_bs_read_int(bs, 16);
 	profile_tier_level(bs, 1, vps->max_sub_layer-1, &vps->ptl);
 	bit_rate_pic_rate_info(bs, 0, vps->max_sub_layer-1, vps);
@@ -3460,6 +3462,9 @@ s32 gf_media_hevc_read_sps(char *data, u32 size, HEVCState *hevc)
 	/*strong_intra_smoothing_enable_flag*/gf_bs_read_int(bs, 1);
 	if (/*vui_parameters_present_flag*/gf_bs_read_int(bs, 1)) {
 		//vui param
+		//Bool has_vui = 0; FIXME
+		//has_vui = 1;
+
 	}
 	if (/*sps_extension_flag*/gf_bs_read_int(bs, 1)) {
 		while (gf_bs_available(bs)) {
@@ -3646,7 +3651,6 @@ s32 gf_media_hevc_parse_nalu(GF_BitStream *bs, HEVCState *hevc, u8 *nal_unit_typ
 
 		n_state.poc_lsb_prev = hevc->s_info.poc_lsb;
 		n_state.poc_msb_prev = hevc->s_info.poc_msb;
-
 	}
 	if (slice) hevc_compute_poc(&n_state);
 	memcpy(&hevc->s_info, &n_state, sizeof(HEVCSliceInfo));

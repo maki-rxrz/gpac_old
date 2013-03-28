@@ -5,6 +5,10 @@ PLUGDIRS=aac_in ac3_in audio_filter bifs_dec dummy_in soft_raster mp3_in isom_in
 
 ifeq ($(DISABLE_DASH_CLIENT), no)
 PLUGDIRS+=mpd_in
+ifeq ($(CONFIG_JS),no)
+else
+PLUGDIRS+=mse_in
+endif
 endif
 
 ifeq ($(DISABLE_MEDIA_IMPORT), no)

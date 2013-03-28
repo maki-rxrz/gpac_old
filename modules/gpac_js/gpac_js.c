@@ -23,6 +23,11 @@
  *
  */
 
+
+#include "../../include/gpac/setup.h"
+
+#ifdef GPAC_HAS_SPIDERMONKEY
+
 /*base SVG type*/
 #include "../../include/gpac/nodes_svg.h"
 #include "../../include/gpac/nodes_mpeg4.h"
@@ -35,8 +40,6 @@
 #include "../../include/gpac/options.h"
 #include "../../include/gpac/xml.h"
 
-
-#ifdef GPAC_HAS_SPIDERMONKEY
 
 #if defined(GPAC_ANDROID) && !defined(XP_UNIX)
 #define XP_UNIX

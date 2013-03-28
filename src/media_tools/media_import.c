@@ -4790,7 +4790,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 
 	bs = gf_bs_from_file(mdia, GF_BITSTREAM_READ);
 	if (!gf_media_nalu_is_start_code(bs)) {
-		e = gf_import_message(import, GF_NON_COMPLIANT_BITSTREAM, "Cannot find H264 start code");
+		e = gf_import_message(import, GF_NON_COMPLIANT_BITSTREAM, "Cannot find HEVC start code");
 		goto exit;
 	}
 
@@ -4896,6 +4896,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 				hevccfg->avgFrameRate = hevc.vps[idx].rates[0].avg_pic_rate;
 				hevccfg->constantFrameRate = hevc.vps[idx].rates[0].constand_pic_rate_idc;
 				hevccfg->numTemporalLayers = hevc.vps[idx].max_sub_layer;
+				hevccfg->temporalIdNested = hevc.vps[idx].temporal_id_nesting;
 
 				if (!vpss) {
 					GF_SAFEALLOC(vpss, GF_HEVCParamArray);
@@ -4940,33 +4941,26 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 			if (add_sps) {
 				hevccfg->configurationVersion = 1;
 				hevccfg->profile_space = hevc.sps[idx].ptl.profile_space;
+				hevccfg->tier_flag = hevc.sps[idx].ptl.tier_flag;
 				hevccfg->profile_idc = hevc.sps[idx].ptl.profile_idc;
-				hevccfg->constraint_indicator_flags = 0;
-				hevccfg->level_idc = hevc.sps[idx].ptl.level_idc;
 				hevccfg->profile_compatibility_indications = hevc.sps[idx].ptl.profile_compatibility_flag;
+				hevccfg->progressive_source_flag = hevc.sps[idx].ptl.general_progressive_source_flag;
+				hevccfg->interlaced_source_flag = hevc.sps[idx].ptl.general_interlaced_source_flag;
+				hevccfg->non_packed_constraint_flag = hevc.sps[idx].ptl.general_non_packed_constraint_flag;
+				hevccfg->frame_only_constraint_flag = hevc.sps[idx].ptl.general_frame_only_constraint_flag;
+
+				hevccfg->constraint_indicator_flags = hevc.sps[idx].ptl.general_reserved_44bits;
+				hevccfg->level_idc = hevc.sps[idx].ptl.level_idc;
+
 				hevccfg->chromaFormat = hevc.sps[idx].chroma_format_idc;
 				hevccfg->luma_bit_depth = hevc.sps[idx].bit_depth_luma;
 				hevccfg->chroma_bit_depth = hevc.sps[idx].bit_depth_chroma;
 
-				/*
-				todo FPS detection
-
-					timescale = 2 * avc.sps[idx].vui.time_scale;
-					dts_inc =   2 * avc.sps[idx].vui.num_units_in_tick * DeltaTfiDivisorIdx;
-					FPS = (Double)timescale / dts_inc;
-					detect_fps = 0;
-					gf_isom_remove_track(import->dest, track);
-					if (sample_data) gf_bs_del(sample_data);
-					gf_odf_avc_cfg_del(avccfg);
-					avccfg = NULL;
-					gf_free(buffer);
-					buffer = NULL;
-					gf_bs_del(bs);
-					bs = NULL;
-					gf_f64_seek(mdia, 0, SEEK_SET);
-					goto restart_import;
-				}
-			*/
+				//need VUI for these ...
+				//u16 min_spatial_segmentation_idc;
+				//u8 parallelismType;
+				//u16 avgFrameRate;
+				//u8 constantFrameRate;
 
 				if (!spss) {
 					GF_SAFEALLOC(spss, GF_HEVCParamArray);
@@ -4985,7 +4979,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 
 				if (first_avc) {
 					first_avc = 0;
-					gf_import_message(import, GF_OK, "AVC-H264 import - frame size %d x %d at %02.3f FPS", hevc.sps[idx].width, hevc.sps[idx].height, FPS);
+					gf_import_message(import, GF_OK, "HEVC import - frame size %d x %d at %02.3f FPS", hevc.sps[idx].width, hevc.sps[idx].height, FPS);
 				}
 
 				if ((max_w <= hevc.sps[idx].width) && (max_h <= hevc.sps[idx].height)) {
@@ -5029,6 +5023,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 			}
 			break;
 		case GF_HEVC_NALU_SEI_PREFIX:
+		case GF_HEVC_NALU_SEI_SUFFIX:
 			if (hevc.sps_active_idx != -1) {
 				/*TODO*/
 				//copy_size = gf_media_avc_reformat_sei(buffer, nal_size, &hevc);
@@ -5103,7 +5098,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 					samp->IsRAP = 1;
 					if (!use_opengop_gdr) {
 						use_opengop_gdr = 1;
-						GF_LOG(GF_LOG_WARNING, GF_LOG_CODING, ("[AVC Import] Forcing non-IDR samples with I slices to be marked as sync points - resulting file will not be ISO conformant\n"));
+						GF_LOG(GF_LOG_WARNING, GF_LOG_CODING, ("[HEVC Import] Forcing non-IDR samples with I slices to be marked as sync points - resulting file will not be ISO conformant\n"));
 					}
 				}
 			}
@@ -5138,7 +5133,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 			}
 
 			gf_isom_sample_del(&samp);
-			gf_set_progress("Importing AVC-H264", (u32) (nal_start/1024), (u32) (total_size/1024) );
+			gf_set_progress("Importing HEVC", (u32) (nal_start/1024), (u32) (total_size/1024) );
 			first_nal = 1;
 
 			if (min_poc > last_poc)
@@ -5155,7 +5150,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 				/*only 8bits, 16bits and 32 bits*/
 				if (size_length+diff_size == 24) diff_size+=8;
 
-				gf_import_message(import, GF_OK, "Adjusting AVC SizeLength to %d bits", size_length+diff_size);
+				gf_import_message(import, GF_OK, "Adjusting HEVC SizeLength to %d bits", size_length+diff_size);
 				gf_media_avc_rewrite_samples(import->dest, track, size_length, size_length+diff_size);
 
 				/*rewrite current sample*/
@@ -5212,7 +5207,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 							sei_recovery_frame_count = 0;
 							if (use_opengop_gdr == 1) {
 								use_opengop_gdr = 2; /*avoid message flooding*/
-								GF_LOG(GF_LOG_WARNING, GF_LOG_CODING, ("[AVC Import] No valid SEI Recovery Point found although needed - forcing\n"));
+								GF_LOG(GF_LOG_WARNING, GF_LOG_CODING, ("[HEVC Import] No valid SEI Recovery Point found although needed - forcing\n"));
 							}
 						}
 						hevc.sei.recovery_point.valid = 0;
@@ -5304,12 +5299,12 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 		/*consume next start code*/
 		nal_start = gf_media_nalu_next_start_code_bs(bs);
 		if (nal_start) {
-			GF_LOG(GF_LOG_ERROR, GF_LOG_CODING, ("[avc-h264] invalid nal_size (%u)? Skipping "LLU" bytes to reach next start code\n", nal_size, nal_start));
+			GF_LOG(GF_LOG_ERROR, GF_LOG_CODING, ("[hevc] invalid nal_size (%u)? Skipping "LLU" bytes to reach next start code\n", nal_size, nal_start));
 			gf_bs_skip_bytes(bs, nal_start);
 		}
 		nal_start = gf_media_nalu_is_start_code(bs);
 		if (!nal_start) {
-			GF_LOG(GF_LOG_ERROR, GF_LOG_CODING, ("[avc-h264] error: no start code found ("LLU" bytes read out of "LLU") - leaving\n", gf_bs_get_position(bs), gf_bs_get_size(bs)));
+			GF_LOG(GF_LOG_ERROR, GF_LOG_CODING, ("[hevc] error: no start code found ("LLU" bytes read out of "LLU") - leaving\n", gf_bs_get_position(bs), gf_bs_get_size(bs)));
 			break;
 		}
 		nal_start = gf_bs_get_position(bs);
@@ -5331,7 +5326,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 		e = gf_isom_add_sample(import->dest, track, di, samp);
 		if (e) goto exit;
 		gf_isom_sample_del(&samp);
-		gf_set_progress("Importing AVC-H264", (u32) cur_samp, cur_samp+1);
+		gf_set_progress("Importing HEVC", (u32) cur_samp, cur_samp+1);
 		cur_samp++;
 	}
 
@@ -5412,7 +5407,7 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 		gf_isom_remove_cts_info(import->dest, track);
 	}
 
-	gf_set_progress("Importing AVC-H264", (u32) cur_samp, cur_samp);
+	gf_set_progress("Importing HEVC", (u32) cur_samp, cur_samp);
 
 	gf_isom_set_visual_info(import->dest, track, di, max_w, max_h);
 	hevccfg->nal_unit_size = size_length/8;
@@ -5430,10 +5425,10 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 		e = gf_import_message(import, GF_NON_COMPLIANT_BITSTREAM, "Import results: No SPS or PPS found in the bitstream ! Nothing imported\n");
 	} else {
 		if (nb_sp || nb_si) {
-			gf_import_message(import, GF_OK, "AVC Import results: %d samples - Slices: %d I %d P %d B %d SP %d SI - %d SEI - %d IDR",
+			gf_import_message(import, GF_OK, "HEVC Import results: %d samples - Slices: %d I %d P %d B %d SP %d SI - %d SEI - %d IDR",
 				cur_samp, nb_i, nb_p, nb_b, nb_sp, nb_si, nb_sei, nb_idr);
 		} else {
-			gf_import_message(import, GF_OK, "AVC Import results: %d samples - Slices: %d I %d P %d B - %d SEI - %d IDR",
+			gf_import_message(import, GF_OK, "HEVC Import results: %d samples - Slices: %d I %d P %d B - %d SEI - %d IDR",
 				cur_samp, nb_i, nb_p, nb_b, nb_sei, nb_idr);
 		}
 

@@ -517,6 +517,21 @@ void gf_term_refresh_cache(GF_Config *cfg)
 	}
 }
 
+Bool gf_term_is_type_supported(GF_Terminal *term, const char* mime)
+{
+	if (mime) {
+		/* TODO: handle codecs and params */
+		const char *sPlug;
+		sPlug = gf_cfg_get_key(term->user->config, "MimeTypes", mime);
+		if (sPlug) {
+			return 1;
+		} else {
+			return 0;
+		}
+	} else {
+		return 0;
+	}
+}
 
 GF_EXPORT
 GF_Terminal *gf_term_new(GF_User *user)
@@ -964,7 +979,7 @@ u32 gf_term_get_option(GF_Terminal * term, u32 type)
 				if (!ck) return GF_STATE_PAUSED;
 			}
 			if (ck->Buffering)
-				return GF_STATE_STEP_PAUSE;
+				return GF_STATE_PLAYING;
 		}
 		if (term->play_state != GF_STATE_PLAYING) return GF_STATE_PAUSED;
 		return GF_STATE_PLAYING;
@@ -1246,7 +1261,7 @@ void gf_term_lock_net(GF_Terminal *term, Bool LockIt)
 }
 
 #ifndef GPAC_DISABLE_SVG
-static void media_event_collect_info(GF_ClientService *net, GF_ObjectManager *odm, GF_DOMMediaEvent *media_event, u32 *min_time, u32 *min_buffer)
+void media_event_collect_info(GF_ClientService *net, GF_ObjectManager *odm, GF_DOMMediaEvent *media_event, u32 *min_time, u32 *min_buffer)
 {
 	u32 i=0;
 	GF_Channel *ch;
@@ -1496,6 +1511,18 @@ static void gf_term_connect_object(GF_Terminal *term, GF_ObjectManager *odm, cha
 	gf_term_cleanup_pending_session(term, ns);
 }
 
+GF_ClientService *gf_term_get_service_from_url(GF_Terminal *term, const char *url)
+{
+	u32 i = 0;
+	GF_ClientService *ns;
+	while ( (ns = (GF_ClientService*)gf_list_enum(term->net_services, &i)) ) {
+		if (!strcmp(ns->url, url)) {
+			return ns;
+		}
+	}
+	return NULL;
+}
+
 /*connects given channel to its URL if needed*/
 GF_Err gf_term_connect_remote_channel(GF_Terminal *term, GF_Channel *ch, char *URL)
 {
@@ -1594,10 +1621,15 @@ Double gf_term_get_framerate(GF_Terminal *term, Bool absoluteFPS)
 GF_EXPORT
 u32 gf_term_get_time_in_ms(GF_Terminal *term)
 {
+	GF_Clock *ck;
 	if (!term || !term->root_scene) return 0;
-	if (term->root_scene->scene_codec && term->root_scene->scene_codec->ck) return gf_clock_ellapse_time(term->root_scene->scene_codec->ck);
-	else if (term->root_scene->dyn_ck) return gf_clock_ellapse_time(term->root_scene->dyn_ck);
-	return 0;
+	ck = NULL;
+	if (term->root_scene->scene_codec && term->root_scene->scene_codec->ck) ck = term->root_scene->scene_codec->ck;
+	else if (term->root_scene->dyn_ck) ck = term->root_scene->dyn_ck;
+
+	if (!ck) return 0;
+	if (ck->last_TS_rendered) return ck->last_TS_rendered;
+	return gf_clock_elapse_time(ck);
 }
 
 GF_Node *gf_term_pick_node(GF_Terminal *term, s32 X, s32 Y)

@@ -168,12 +168,14 @@ typedef struct
  *\brief module manager construtcor
  *
  *Constructs a module manager object.
- *\param directory absolute path to the directory where the manager shall look for modules
+ *\param directory absolute path to the directory where the manager shall look for modules \deprecated {Module manager uses now
+ *  infomation from cfg file}
  *\param cfgFile GPAC configuration file handle. If this is NULL, the modules won't be able to share the configuration
  *file with the rest of the GPAC framework.
  *\return the module manager object
 */
 GF_ModuleManager *gf_modules_new(const char *directory, GF_Config *cfgFile);
+
 /*!
  *\brief module manager destructor
  *
@@ -198,6 +200,15 @@ u32 gf_modules_refresh(GF_ModuleManager *pm);
  *\return the number of loaded modules
  */
 u32 gf_modules_get_count(GF_ModuleManager *pm);
+
+/*!
+ *\brief get module directory
+ *
+ * Return the module directory path
+ *\param pm the module manager
+ *\return The modules directory
+ */
+const char *gf_modules_get_module_directory(GF_ModuleManager *pm);
 
 /*!
  *\brief get module file name
