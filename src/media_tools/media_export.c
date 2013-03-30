@@ -403,7 +403,7 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 	} else if (m_stype==GF_ISOM_SUBTYPE_3GP_DIMS) {
 		gf_export_message(dumper, GF_OK, "Extracting DIMS sample%s", szNum);
 		strcpy(szEXT, ".dims");
-	} else if (m_stype==(GF_ISOM_SUBTYPE_AC3) || (GF_ISOM_SUBTYPE_SAC3)) {
+	} else if ((m_stype==GF_ISOM_SUBTYPE_AC3) || (m_stype==GF_ISOM_SUBTYPE_SAC3)) {
 		gf_export_message(dumper, GF_OK, "Extracting AC3 sample%s", szNum);
 		strcpy(szEXT, ".ac3");
 	} else if (m_stype==GF_4CC('x','d','v','b') ) {
@@ -963,7 +963,7 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 			gf_export_message(dumper, GF_OK, "Extracting Macromedia Flash Movie");
 			if (add_ext)
 				strcat(szName, ".swf");
-		} else if (m_stype==(GF_ISOM_SUBTYPE_AC3) || (GF_ISOM_SUBTYPE_SAC3)) {
+		} else if ((m_stype==GF_ISOM_SUBTYPE_AC3) || (m_stype==GF_ISOM_SUBTYPE_SAC3)) {
 			gf_export_message(dumper, GF_OK, "Extracting AC3 Audio");
 			if (add_ext)
 				strcat(szName, ".ac3");
