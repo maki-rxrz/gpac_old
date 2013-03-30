@@ -1458,6 +1458,7 @@ int mp4boxMain(int argc, char **argv)
 #if !defined(GPAC_DISABLE_STREAMING)
 	const char *grab_m2ts = NULL;
 #endif
+	Bool add_ext = 0;
 
 	nb_tsel_acts = nb_add = nb_cat = nb_track_act = nb_sdp_ex = max_ptime = raw_sample_num = nb_meta_act = rtp_rate = major_brand = nb_alt_brand_add = nb_alt_brand_rem = car_dur = minor_version = 0;
 	e = GF_OK;
@@ -3112,6 +3113,7 @@ int mp4boxMain(int argc, char **argv)
 
 		while (outfile[strlen(outfile)-1] != '.') outfile[strlen(outfile)-1] = 0;
 		outfile[strlen(outfile)-1] = 0;
+		add_ext = outName ? 0 : 1;
 	}
 
 #ifndef GPAC_DISABLE_MEDIA_EXPORT
@@ -3158,6 +3160,8 @@ int mp4boxMain(int argc, char **argv)
 			} else {
 				mdump.out_name = outfile;
 			}
+			if (add_ext)
+				mdump.flags |= GF_EXPORT_ADD_EXTENSION;
 			e = gf_media_export(&mdump);
 			if (e) goto err_exit;
 		}
@@ -3268,6 +3272,8 @@ int mp4boxMain(int argc, char **argv)
 				sprintf(szFile, "%s_track%d", outfile, mdump.trackID);
 				mdump.out_name = szFile;
 			}
+			if (add_ext)
+				mdump.flags |= GF_EXPORT_ADD_EXTENSION;
 			e = gf_media_export(&mdump);
 			if (e) goto err_exit;
 		}
