@@ -362,6 +362,8 @@ enum
 	GF_EXPORT_SVC_LAYER = (1<<12),
 	/* Don't merge identical cues in consecutive samples */
 	GF_EXPORT_WEBVTT_NOMERGE = (1<<13),
+	/*add extension to output files*/
+	GF_EXPORT_ADD_EXTENSION = (1<<29),
 	/*ony probes extraction format*/
 	GF_EXPORT_PROBE_ONLY = (1<<30),
 	/*when set by user during export, will abort*/
