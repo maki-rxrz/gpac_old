@@ -456,7 +456,7 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 	}
 	if (dumper->flags & GF_EXPORT_PROBE_ONLY) return GF_OK;
 
-	if (dumper->out_name && strrchr(dumper->out_name, '.')) {
+	if (dumper->out_name && !(dumper->flags & GF_EXPORT_ADD_EXTENSION) && strrchr(dumper->out_name, '.')) {
 		char *out_name;
 #if defined(__MINGW32__) || defined(_MSC_VER)
 		if ((out_name = _mbsrchr(dumper->out_name, '\\'))
@@ -740,7 +740,9 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 		dcfg = gf_isom_get_decoder_config(dumper->file, track, 1);
 
 	if (dumper->out_name) {
-		if (strrchr(dumper->out_name, '.')) {
+		if (dumper->flags & GF_EXPORT_ADD_EXTENSION)
+			add_ext = 1;
+		else if (strrchr(dumper->out_name, '.')) {
 			char *out_name;
 #if defined(__MINGW32__) || defined(_MSC_VER)
 			if ((out_name = _mbsrchr(dumper->out_name, '\\'))
