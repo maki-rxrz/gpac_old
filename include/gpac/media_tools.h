@@ -358,6 +358,8 @@ enum
 	GF_EXPORT_NHML_FULL = (1<<11),
 	/**/
 	GF_EXPORT_SVC_LAYER = (1<<12),
+	/*add extension to output files*/
+	GF_EXPORT_ADD_EXTENSION = (1<<29),
 	/*ony probes extraction format*/
 	GF_EXPORT_PROBE_ONLY = (1<<30),
 	/*when set by user during export, will abort*/
