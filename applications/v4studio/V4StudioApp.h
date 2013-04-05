@@ -11,5 +11,5 @@ private:
 
 DECLARE_APP(V4StudioApp)
 
-#endif 
+#endif
 

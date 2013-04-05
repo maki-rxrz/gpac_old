@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -287,7 +287,7 @@ GF_Err gf_odf_set_field(GF_Descriptor *desc, char *fieldName, char *val)
 			GET_U8(dcd->streamType)
 			/*XMT may use string*/
 			if (!ret) {
-				if (!stricmp(val, "ObjectDescriptor")) { dcd->streamType = GF_STREAM_OD; ret = 1; } 
+				if (!stricmp(val, "ObjectDescriptor")) { dcd->streamType = GF_STREAM_OD; ret = 1; }
 				else if (!stricmp(val, "ClockReference")) { dcd->streamType = GF_STREAM_OCR; ret = 1; }
 				else if (!stricmp(val, "SceneDescription")) { dcd->streamType = GF_STREAM_SCENE; ret = 1; }
 				else if (!stricmp(val, "Visual")) { dcd->streamType = GF_STREAM_VISUAL; ret = 1; }
@@ -321,7 +321,7 @@ GF_Err gf_odf_set_field(GF_Descriptor *desc, char *fieldName, char *val)
 		else if (!stricmp(fieldName, "streamDependenceFlag")
 			|| !stricmp(fieldName, "URL_Flag")
 			|| !stricmp(fieldName, "OCRstreamFlag")
-			) 
+			)
 			ret = 1;
 	}
 		break;
@@ -358,7 +358,7 @@ GF_Err gf_odf_set_field(GF_Descriptor *desc, char *fieldName, char *val)
 			slc->startCTS = ts;
 		}
 		else if (!stricmp(fieldName, "durationFlag")) ret = 1;
-	}	
+	}
 		break;
 	case GF_ODF_ELEM_MASK_TAG:
 	{
@@ -409,8 +409,8 @@ GF_Err gf_odf_set_field(GF_Descriptor *desc, char *fieldName, char *val)
 		{ ret = 1; if (!stricmp(val, "true") || !stricmp(val, "1")) mi->import_flags |= GF_IMPORT_USE_DATAREF; }
 		else if (!stricmp(fieldName, "noFrameDrop"))
 		{ ret = 1; if (!stricmp(val, "true") || !stricmp(val, "1")) mi->import_flags |= GF_IMPORT_NO_FRAME_DROP; }
-		else if (!stricmp(fieldName, "SBR_Type")) { 
-			ret = 1; 
+		else if (!stricmp(fieldName, "SBR_Type")) {
+			ret = 1;
 			if (!stricmp(val, "implicit") || !stricmp(val, "1")) mi->import_flags |= GF_IMPORT_SBR_IMPLICIT;
 			else if (!stricmp(val, "explicit") || !stricmp(val, "2")) mi->import_flags |= GF_IMPORT_SBR_EXPLICIT;
 		}
@@ -655,7 +655,7 @@ Bool OD_ParseUIConfig(char *val, char **out_data, u32 *out_data_size)
 				continue;
 			}
 			if (pos>0) {
-		
+
 				nb_phonems ++;
 				/*would be nicer with a phone book & use indexes*/
 				if (!stricmp(szItem, "vcl")) {

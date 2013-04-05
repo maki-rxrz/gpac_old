@@ -3,19 +3,19 @@
  * License Version 1.1 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of
  * the License at http://www.mozilla.org/MPL/
- * 
+ *
  * Software distributed under the License is distributed on an "AS
  * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * rights and limitations under the License.
- * 
+ *
  * The Original Code is MPEG4IP.
- * 
+ *
  * The Initial Developer of the Original Code is Cisco Systems Inc.
  * Portions created by Cisco Systems Inc. are
  * Copyright (C) Cisco Systems Inc. 2004.  All Rights Reserved.
- * 
- * Contributor(s): 
+ *
+ * Contributor(s):
  *		Bill May wmay@cisco.com
  */
 
@@ -51,7 +51,7 @@
 typedef struct mpeg2ps_ mpeg2ps_t;
 
 typedef enum {
-  TS_MSEC, 
+  TS_MSEC,
   TS_90000,
 } mpeg2ps_ts_type_t;
 
@@ -68,7 +68,7 @@ typedef enum {
   MPEG_VIDEO_UNKNOWN = 2
 } mpeg2ps_video_type_t;
 
-#ifdef __cplusplus 
+#ifdef __cplusplus
 extern "C" {
 #endif
   /*
@@ -99,12 +99,12 @@ extern "C" {
   /*
    * mpeg2ps_get_video_stream_name - returns display name for stream
    */
-  const char *mpeg2ps_get_video_stream_name(mpeg2ps_t *ps, 
+  const char *mpeg2ps_get_video_stream_name(mpeg2ps_t *ps,
 					    u32 streamno);
   /*
    * mpeg2ps_get_video_stream_type - returns enum type for stream
    */
-  mpeg2ps_video_type_t mpeg2ps_get_video_stream_type(mpeg2ps_t *ps, 
+  mpeg2ps_video_type_t mpeg2ps_get_video_stream_type(mpeg2ps_t *ps,
 						     u32 streamno);
   /*
    * these functions should be fairly self explanatory
@@ -126,14 +126,14 @@ extern "C" {
    *  frame_type - if pointer given, frame type I-1, P-2, B-3 will be returned
    *  msec_timestamp - if pointer, time in msec since start will be given (dts)
    */
-  Bool mpeg2ps_get_video_frame(mpeg2ps_t *ps, 
+  Bool mpeg2ps_get_video_frame(mpeg2ps_t *ps,
 			       u32 streamno,
-			       u8 **buffer, 
+			       u8 **buffer,
 			       u32 *buflen,
 			       u8 *frame_type,
 			       mpeg2ps_ts_type_t ts_type,
 			       u64 *timestamp);
-  Bool mpeg2ps_seek_video_frame(mpeg2ps_t *ps, u32 streamno, 
+  Bool mpeg2ps_seek_video_frame(mpeg2ps_t *ps, u32 streamno,
 				u64 msec_timestamp);
 
   /*
@@ -166,18 +166,18 @@ extern "C" {
    *  streamno - stream to read
    *  buffer - returns pointer to data.  Do not free
    *  buflen - frame length will be stored
-   *  freq_timestamp - will return conversion of timestamp in units of 
+   *  freq_timestamp - will return conversion of timestamp in units of
    *                   sample_frequency.
    *  msec_timestamp - if pointer, time in msec since start will be given (dts)
    */
-  Bool mpeg2ps_get_audio_frame(mpeg2ps_t *ps, 
+  Bool mpeg2ps_get_audio_frame(mpeg2ps_t *ps,
 			       u32 streamno,
-			       u8 **buffer, 
+			       u8 **buffer,
 			       u32 *buflen,
 			       mpeg2ps_ts_type_t ts_type,
 			       u32 *freq_timestamp,
 			       u64 *msec_timestamp);
-  Bool mpeg2ps_seek_audio_frame(mpeg2ps_t *ps, u32 streamno, 
+  Bool mpeg2ps_seek_audio_frame(mpeg2ps_t *ps, u32 streamno,
 				u64 msec_timestamp);
 
 

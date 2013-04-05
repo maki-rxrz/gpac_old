@@ -39,26 +39,26 @@ static void load_all_modules(GF_ModuleManager *mgr)
 	} else {\
 		gf_list_add(mgr->plugin_registry, pr);	\
 	}	\
-	}	
+	}
 
 #ifdef GPAC_STATIC_MODULES
 	GF_InterfaceRegister *pr;
 
 	/*TODO check compil flags to inlude*/
 #if 0
-    LOAD_PLUGIN(raw_out);	
+    LOAD_PLUGIN(raw_out);
 
     LOAD_PLUGIN(ac3);
-    
+
 	LOAD_PLUGIN(openhevc);
-    
+
 	LOAD_PLUGIN(opensvc);
-    
+
 	LOAD_PLUGIN(xvid);
-    
+
     LOAD_PLUGIN(ffmpeg);
     LOAD_PLUGIN(redirect_av);
-    
+
 	LOAD_PLUGIN(ogg_in);
 #endif
 
@@ -68,7 +68,7 @@ static void load_all_modules(GF_ModuleManager *mgr)
 //    LOAD_PLUGIN(ios_mpegv);
 #endif
 
-#ifdef WIN32 
+#ifdef WIN32
 	LOAD_PLUGIN(dx_out);
     LOAD_PLUGIN(wave_out);
 #endif
@@ -100,7 +100,7 @@ static void load_all_modules(GF_ModuleManager *mgr)
 #endif //GPAC_STATIC_MODULES
 
 #undef LOAD_PLUGIN
-	
+
 }
 
 
@@ -197,7 +197,7 @@ const char **gf_modules_get_module_directories(GF_ModuleManager *pm, u32* num_di
 		return pm->dirs;
 	}
 	if (!pm->cfg) return NULL;
-	
+
 	/* Get directory from config file */
 	directories = (char*)gf_cfg_get_key(pm->cfg, "General", "ModulesDirectory");
 	if (! directories) {
@@ -218,7 +218,7 @@ const char **gf_modules_get_module_directories(GF_ModuleManager *pm, u32* num_di
 		pm->num_dirs++;
 		pch = strtok (NULL, ";");
 	}
-	
+
 	*num_dirs = pm->num_dirs;
 	return pm->dirs;
 }

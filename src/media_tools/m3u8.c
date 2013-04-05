@@ -693,7 +693,7 @@ GF_Err parse_sub_playlist(const char * file, VariantPlaylist ** playlist, const 
 							baseURL,
 							attribs.title,
 							attribs.codecs,
-							attribs.durationInSeconds, 
+							attribs.durationInSeconds,
 							attribs.byteRangeStart, attribs.byteRangeEnd);
 						if (currentPlayList == NULL) {
 							/* OUT of memory */
@@ -723,7 +723,7 @@ GF_Err parse_sub_playlist(const char * file, VariantPlaylist ** playlist, const 
 						}
 						gf_list_add(currentPlayList->element.playlist.elements, subElement);
 						gf_list_add(program->bitrates, currentPlayList);
-						currentPlayList->element.playlist.computed_duration += subElement->durationInfo; 
+						currentPlayList->element.playlist.computed_duration += subElement->durationInfo;
 						assert( program );
 						assert( program->bitrates);
 						assert( currentPlayList);
@@ -749,7 +749,7 @@ GF_Err parse_sub_playlist(const char * file, VariantPlaylist ** playlist, const 
 							return GF_OUT_OF_MEM;
 						}
 						gf_list_add(currentPlayList->element.playlist.elements, subElement);
-						currentPlayList->element.playlist.computed_duration += subElement->durationInfo; 
+						currentPlayList->element.playlist.computed_duration += subElement->durationInfo;
 					}
 				}
 
@@ -759,11 +759,11 @@ GF_Err parse_sub_playlist(const char * file, VariantPlaylist ** playlist, const 
 					currentPlayList->element.playlist.target_duration = attribs.targetDurationInSeconds;
 					currentPlayList->durationInfo = attribs.targetDurationInSeconds;
 				}
-				if (attribs.durationInSeconds) {					
+				if (attribs.durationInSeconds) {
 					if (currentPlayList->durationInfo == 0) {
 						/* we set the playlist duration info as the duration of a segment, only if it's not set
-						   There are cases of playlist with the last segment with a duration different from the others 
-						   (example: Apple bipbop test)*/				  
+						   There are cases of playlist with the last segment with a duration different from the others
+						   (example: Apple bipbop test)*/
 						currentPlayList->durationInfo = attribs.durationInSeconds;
 					}
 				}
@@ -800,7 +800,7 @@ GF_Err parse_sub_playlist(const char * file, VariantPlaylist ** playlist, const 
 		for (j=0; j<gf_list_count(prog->bitrates); j++) {
 			PlaylistElement *ple = gf_list_get(prog->bitrates, j);
 			if (ple->elementType==TYPE_PLAYLIST) {
-				if (ple->element.playlist.computed_duration > prog->computed_duration) 
+				if (ple->element.playlist.computed_duration > prog->computed_duration)
 					prog->computed_duration = ple->element.playlist.computed_duration;
 			}
 		}

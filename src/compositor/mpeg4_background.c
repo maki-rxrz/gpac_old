@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -90,7 +90,7 @@ static void DestroyBackground(GF_Node *node)
 
 	if (ptr->sky_mesh) mesh_free(ptr->sky_mesh);
 	if (ptr->ground_mesh) mesh_free(ptr->ground_mesh);
-	
+
 	gf_sg_vrml_mf_reset(&ptr->ground_ang, GF_SG_VRML_MFFLOAT);
 	gf_sg_vrml_mf_reset(&ptr->sky_ang, GF_SG_VRML_MFFLOAT);
 	gf_sg_vrml_mf_reset(&ptr->ground_col, GF_SG_VRML_MFCOLOR);
@@ -103,14 +103,14 @@ static void DestroyBackground(GF_Node *node)
 	mesh_free(ptr->left_mesh);
 	mesh_free(ptr->right_mesh);
 
-	
+
 	gf_sc_texture_destroy(&ptr->txh_front);
 	gf_sc_texture_destroy(&ptr->txh_back);
 	gf_sc_texture_destroy(&ptr->txh_top);
 	gf_sc_texture_destroy(&ptr->txh_bottom);
 	gf_sc_texture_destroy(&ptr->txh_left);
 	gf_sc_texture_destroy(&ptr->txh_right);
-	
+
 	gf_free(ptr);
 }
 
@@ -143,13 +143,13 @@ static void back_build_dome(GF_Mesh *mesh, MFFloat *angles, MFColor *color, Bool
 	vx.texcoords.x = vx.texcoords.y = 0;
 	vx.color = MESH_MAKE_COL(start_col);
 	vx.pos.x = vx.pos.z = 0; vx.pos.y = FIX_ONE;
-	vx.normal.x = vx.normal.z = 0; 
+	vx.normal.x = vx.normal.z = 0;
 	vx.normal.y = -MESH_NORMAL_UNIT;
 
 	mesh_set_vertex_vx(mesh, &vx);
 	last_idx = 0;
 	ang_idx = 0;
-	
+
 	pad = 1;
 	next_angle = first_angle = 0;
 	if (angles->count) {
@@ -163,8 +163,8 @@ static void back_build_dome(GF_Mesh *mesh, MFFloat *angles, MFColor *color, Bool
 	if (ground_dome) {
 		step_div_h *= 2;
 		i=1;
-	} 
-	
+	}
+
 	for (; i<DOME_STEP_V; i++) {
 		if (ground_dome) {
 	        angle = first_angle + (i * (GF_PI2-first_angle) / DOME_STEP_V);
@@ -204,7 +204,7 @@ static void back_build_dome(GF_Mesh *mesh, MFFloat *angles, MFColor *color, Bool
 
         vx.pos.y = gf_sin(GF_PI2 - angle);
         r = gf_sqrt(FIX_ONE - gf_mulfix(vx.pos.y, vx.pos.y));
-	
+
 		new_idx = mesh->v_count;
         for (j = 0; j < step_div_h; j++) {
 			SFVec3f n;
@@ -237,7 +237,7 @@ static void back_build_dome(GF_Mesh *mesh, MFFloat *angles, MFColor *color, Bool
 	if (!ground_dome) {
 		new_idx = mesh->v_count;
 		vx.pos.x = vx.pos.z = 0; vx.pos.y = -FIX_ONE;
-		vx.normal.x = vx.normal.z = 0; 
+		vx.normal.x = vx.normal.z = 0;
 		vx.normal.y = MESH_NORMAL_UNIT;
 		mesh_set_vertex_vx(mesh, &vx);
 
@@ -283,7 +283,7 @@ static void TraverseBackground(GF_Node *node, void *rs, Bool is_destroy)
 	st = (BackgroundStack *) gf_node_get_private(node);
 	compositor = (GF_Compositor*)st->compositor;
 
-	
+
 	/*may happen in get_bounds*/
 	if (!tr_state->backgrounds) return;
 
@@ -534,7 +534,7 @@ void compositor_background_modified(GF_Node *node)
 	back_check_gf_sc_texture_change(&st->txh_left, &bck->leftUrl);
 	back_check_gf_sc_texture_change(&st->txh_right, &bck->rightUrl);
 
-	
+
 	gf_sc_invalidate(st->compositor, NULL);
 }
 

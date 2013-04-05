@@ -9,8 +9,8 @@
  */
 /* Compiler settings for \CVS\gpac\applications\GPAX\GPAX.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32 (32b run), ms_ext, c_ext
-    error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
+    error checks: allocation ref bounds_check enum stub_data
+    VC __declspec() decoration level:
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
@@ -28,7 +28,7 @@
 #ifndef __GPAX_h__
 #define __GPAX_h__
 
-/* Forward Declarations */ 
+/* Forward Declarations */
 
 #ifndef __IGPAX_FWD_DEFINED__
 #define __IGPAX_FWD_DEFINED__
@@ -60,17 +60,17 @@ typedef struct GPAX GPAX;
 
 #ifdef __cplusplus
 extern "C"{
-#endif 
+#endif
 
 void __RPC_FAR * __RPC_USER MIDL_user_allocate(size_t);
-void __RPC_USER MIDL_user_free( void __RPC_FAR * ); 
+void __RPC_USER MIDL_user_free( void __RPC_FAR * );
 
 
 #ifndef __GPAXLib_LIBRARY_DEFINED__
 #define __GPAXLib_LIBRARY_DEFINED__
 
 /* library GPAXLib */
-/* [helpstring][version][uuid] */ 
+/* [helpstring][version][uuid] */
 
 
 
@@ -93,89 +93,89 @@ EXTERN_C const IID LIBID_GPAXLib;
 #define __IGPAX_INTERFACE_DEFINED__
 
 /* interface IGPAX */
-/* [object][oleautomation][hidden][dual][helpstring][uuid] */ 
+/* [object][oleautomation][hidden][dual][helpstring][uuid] */
 
 
 EXTERN_C const IID IID_IGPAX;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("E2A9A937-BB35-47E0-8942-964806299AB4")
     IGPAX : public IDispatch
     {
     public:
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Play( void) = 0;
-        
+
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Pause( void) = 0;
-        
+
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Stop( void) = 0;
-        
-        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Update( 
+
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Update(
             /* [in] */ BSTR mtype,
             /* [in] */ BSTR updates) = 0;
-        
-        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE QualitySwitch( 
+
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE QualitySwitch(
             /* [in] */ INT switchUp) = 0;
-        
-        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE SetURL( 
+
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE SetURL(
             /* [in] */ BSTR url) = 0;
-        
-        virtual /* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE get_src( 
+
+        virtual /* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE get_src(
             /* [retval][out] */ BSTR __RPC_FAR *url) = 0;
-        
-        virtual /* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE put_src( 
+
+        virtual /* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE put_src(
             /* [in] */ BSTR url) = 0;
-        
+
         virtual /* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE get_AutoStart( 
             /* [retval][out] */ VARIANT_BOOL __RPC_FAR *autoplay) = 0;
-        
-        virtual /* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE put_AutoStart( 
+
+        virtual /* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE put_AutoStart(
             /* [in] */ VARIANT_BOOL autoplay) = 0;
 
-		virtual /* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE get_DownloadProgress( 
+		virtual /* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE get_DownloadProgress(
 			/* [retval][out] */ INT __RPC_FAR *downloadProgress) = 0;
 
-		virtual /* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE put_DownloadProgress( 
+		virtual /* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE put_DownloadProgress(
 			/* [in] */ INT downloadProgress) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IGPAXVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QueryInterface )(
             IGPAX __RPC_FAR * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void __RPC_FAR *__RPC_FAR *ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE __RPC_FAR *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *AddRef )(
             IGPAX __RPC_FAR * This);
-        
-        ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )(
             IGPAX __RPC_FAR * This);
-        
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfoCount )( 
+
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfoCount )(
             IGPAX __RPC_FAR * This,
             /* [out] */ UINT __RPC_FAR *pctinfo);
-        
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfo )( 
+
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfo )(
             IGPAX __RPC_FAR * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo __RPC_FAR *__RPC_FAR *ppTInfo);
-        
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetIDsOfNames )( 
+
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetIDsOfNames )(
             IGPAX __RPC_FAR * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR __RPC_FAR *rgszNames,
             /* [in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID __RPC_FAR *rgDispId);
-        
-        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Invoke )( 
+
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Invoke )(
             IGPAX __RPC_FAR * This,
             /* [in] */ DISPID dispIdMember,
             /* [in] */ REFIID riid,
@@ -185,45 +185,45 @@ EXTERN_C const IID IID_IGPAX;
             /* [out] */ VARIANT __RPC_FAR *pVarResult,
             /* [out] */ EXCEPINFO __RPC_FAR *pExcepInfo,
             /* [out] */ UINT __RPC_FAR *puArgErr);
-        
-        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Play )( 
+
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Play )(
             IGPAX __RPC_FAR * This);
-        
-        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Pause )( 
+
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Pause )(
             IGPAX __RPC_FAR * This);
-        
-        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Stop )( 
+
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Stop )(
             IGPAX __RPC_FAR * This);
-        
-        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Update )( 
+
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Update )(
             IGPAX __RPC_FAR * This,
             /* [in] */ BSTR mtype,
             /* [in] */ BSTR updates);
 
-		/* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QualitySwitch )( 
+		/* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QualitySwitch )(
             IGPAX __RPC_FAR * This,
             /* [in] */ INT switchUp);
-        
-        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *SetURL )( 
+
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *SetURL )(
             IGPAX __RPC_FAR * This,
             /* [in] */ BSTR url);
 
-        /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *get_src )( 
+        /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *get_src )(
             IGPAX __RPC_FAR * This,
             /* [retval][out] */ BSTR __RPC_FAR *url);
-        
-        /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *put_src )( 
+
+        /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *put_src )(
             IGPAX __RPC_FAR * This,
             /* [in] */ BSTR url);
-        
-        /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *get_AutoStart )( 
+
+        /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *get_AutoStart )(
             IGPAX __RPC_FAR * This,
             /* [retval][out] */ VARIANT_BOOL __RPC_FAR *autoplay);
-        
-        /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *put_AutoStart )( 
+
+        /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *put_AutoStart )(
             IGPAX __RPC_FAR * This,
             /* [in] */ VARIANT_BOOL autoplay);
-        
+
         END_INTERFACE
     } IGPAXVtbl;
 
@@ -232,7 +232,7 @@ EXTERN_C const IID IID_IGPAX;
         CONST_VTBL struct IGPAXVtbl __RPC_FAR *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -297,7 +297,7 @@ EXTERN_C const IID IID_IGPAX;
 
 
 
-/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_Play_Proxy( 
+/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_Play_Proxy(
     IGPAX __RPC_FAR * This);
 
 
@@ -308,7 +308,7 @@ void __RPC_STUB IGPAX_Play_Stub(
     DWORD *_pdwStubPhase);
 
 
-/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_Pause_Proxy( 
+/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_Pause_Proxy(
     IGPAX __RPC_FAR * This);
 
 
@@ -319,7 +319,7 @@ void __RPC_STUB IGPAX_Pause_Stub(
     DWORD *_pdwStubPhase);
 
 
-/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_Stop_Proxy( 
+/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_Stop_Proxy(
     IGPAX __RPC_FAR * This);
 
 
@@ -330,7 +330,7 @@ void __RPC_STUB IGPAX_Stop_Stub(
     DWORD *_pdwStubPhase);
 
 
-/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_Update_Proxy( 
+/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_Update_Proxy(
     IGPAX __RPC_FAR * This,
     /* [in] */ BSTR mtype,
     /* [in] */ BSTR updates);
@@ -342,7 +342,7 @@ void __RPC_STUB IGPAX_Update_Stub(
     PRPC_MESSAGE _pRpcMessage,
     DWORD *_pdwStubPhase);
 
-/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_QualitySwitch_Proxy( 
+/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_QualitySwitch_Proxy(
     IGPAX __RPC_FAR * This,
     /* [in] */ INT switchUp);
 
@@ -353,7 +353,7 @@ void __RPC_STUB IGPAX_QualitySwitch_Stub(
     PRPC_MESSAGE _pRpcMessage,
     DWORD *_pdwStubPhase);
 
-/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_SetURL_Proxy( 
+/* [helpstring] */ HRESULT STDMETHODCALLTYPE IGPAX_SetURL_Proxy(
     IGPAX __RPC_FAR * This,
     /* [in] */ BSTR url);
 
@@ -365,7 +365,7 @@ void __RPC_STUB IGPAX_SetURL_Stub(
     DWORD *_pdwStubPhase);
 
 
-/* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE IGPAX_get_src_Proxy( 
+/* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE IGPAX_get_src_Proxy(
     IGPAX __RPC_FAR * This,
     /* [retval][out] */ BSTR __RPC_FAR *url);
 
@@ -377,7 +377,7 @@ void __RPC_STUB IGPAX_get_src_Stub(
     DWORD *_pdwStubPhase);
 
 
-/* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE IGPAX_put_src_Proxy( 
+/* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE IGPAX_put_src_Proxy(
     IGPAX __RPC_FAR * This,
     /* [in] */ BSTR url);
 
@@ -389,7 +389,7 @@ void __RPC_STUB IGPAX_put_src_Stub(
     DWORD *_pdwStubPhase);
 
 
-/* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE IGPAX_get_AutoStart_Proxy( 
+/* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE IGPAX_get_AutoStart_Proxy(
     IGPAX __RPC_FAR * This,
     /* [retval][out] */ VARIANT_BOOL __RPC_FAR *autoplay);
 
@@ -401,7 +401,7 @@ void __RPC_STUB IGPAX_get_AutoStart_Stub(
     DWORD *_pdwStubPhase);
 
 
-/* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE IGPAX_put_AutoStart_Proxy( 
+/* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE IGPAX_put_AutoStart_Proxy(
     IGPAX __RPC_FAR * This,
     /* [in] */ VARIANT_BOOL autoplay);
 
@@ -412,7 +412,7 @@ void __RPC_STUB IGPAX_put_AutoStart_Stub(
     PRPC_MESSAGE _pRpcMessage,
     DWORD *_pdwStubPhase);
 
-/* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE IGPAX_get_DownloadProgress_Proxy( 
+/* [helpstring][propget][id] */ HRESULT STDMETHODCALLTYPE IGPAX_get_DownloadProgress_Proxy(
 	IGPAX __RPC_FAR * This,
 	/* [retval][out] */ INT __RPC_FAR *autoplay);
 
@@ -424,7 +424,7 @@ void __RPC_STUB IGPAX_get_DownloadProgress_Stub(
 	DWORD *_pdwStubPhase);
 
 
-/* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE IGPAX_put_DownloadProgress_Proxy( 
+/* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE IGPAX_put_DownloadProgress_Proxy(
 	IGPAX __RPC_FAR * This,
 	/* [in] */ INT autoplay);
 
@@ -444,7 +444,7 @@ void __RPC_STUB IGPAX_put_DownloadProgress_Stub(
 #define __IGPAXEvents_DISPINTERFACE_DEFINED__
 
 /* dispinterface IGPAXEvents */
-/* [helpstring][uuid] */ 
+/* [helpstring][uuid] */
 
 
 EXTERN_C const IID DIID_IGPAXEvents;
@@ -455,43 +455,43 @@ EXTERN_C const IID DIID_IGPAXEvents;
     IGPAXEvents : public IDispatch
     {
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IGPAXEventsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QueryInterface )(
             IGPAXEvents __RPC_FAR * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void __RPC_FAR *__RPC_FAR *ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE __RPC_FAR *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *AddRef )(
             IGPAXEvents __RPC_FAR * This);
-        
-        ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )(
             IGPAXEvents __RPC_FAR * This);
-        
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfoCount )( 
+
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfoCount )(
             IGPAXEvents __RPC_FAR * This,
             /* [out] */ UINT __RPC_FAR *pctinfo);
-        
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfo )( 
+
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfo )(
             IGPAXEvents __RPC_FAR * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo __RPC_FAR *__RPC_FAR *ppTInfo);
-        
-        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetIDsOfNames )( 
+
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetIDsOfNames )(
             IGPAXEvents __RPC_FAR * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR __RPC_FAR *rgszNames,
             /* [in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID __RPC_FAR *rgDispId);
-        
-        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Invoke )( 
+
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Invoke )(
             IGPAXEvents __RPC_FAR * This,
             /* [in] */ DISPID dispIdMember,
             /* [in] */ REFIID riid,
@@ -501,7 +501,7 @@ EXTERN_C const IID DIID_IGPAXEvents;
             /* [out] */ VARIANT __RPC_FAR *pVarResult,
             /* [out] */ EXCEPINFO __RPC_FAR *pExcepInfo,
             /* [out] */ UINT __RPC_FAR *puArgErr);
-        
+
         END_INTERFACE
     } IGPAXEventsVtbl;
 
@@ -510,7 +510,7 @@ EXTERN_C const IID DIID_IGPAXEvents;
         CONST_VTBL struct IGPAXEventsVtbl __RPC_FAR *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 

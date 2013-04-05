@@ -1,4 +1,4 @@
-#include "safe_include.h" 
+#include "safe_include.h"
 
 #include "wx/wxprec.h"
 

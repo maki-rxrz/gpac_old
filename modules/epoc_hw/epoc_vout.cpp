@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 /*driver interface*/
@@ -65,8 +65,8 @@ static void EVID_ResetSurface(GF_VideoOutput *dr, Bool gl_only)
 		eglMakeCurrent(ctx->egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 		if (ctx->egl_context) eglDestroyContext(ctx->egl_display, ctx->egl_context);
 		ctx->egl_context = NULL;
-		if (ctx->egl_surface) eglDestroySurface(ctx->egl_display, ctx->egl_surface); 
-		ctx->egl_surface = NULL; 
+		if (ctx->egl_surface) eglDestroySurface(ctx->egl_display, ctx->egl_surface);
+		ctx->egl_surface = NULL;
 		eglTerminate(ctx->egl_display);
 		ctx->egl_display = NULL;
 	}
@@ -127,36 +127,36 @@ static GF_Err EVID_InitSurface(GF_VideoOutput *dr)
 
 	gl_buffer_size = 0;
 	switch (disp_mode) {
-	case EGray256: 
-		ctx->pixel_format = GF_PIXEL_GREYSCALE; 
+	case EGray256:
+		ctx->pixel_format = GF_PIXEL_GREYSCALE;
 		ctx->bpp = 1;
 		break;
-	case EColor64K: 
-		ctx->pixel_format = GF_PIXEL_RGB_565; 
+	case EColor64K:
+		ctx->pixel_format = GF_PIXEL_RGB_565;
 		ctx->bpp = 2;
 		gl_buffer_size = 16;
 		break;
-	case EColor16M: 
-		ctx->pixel_format = GF_PIXEL_RGB_24; 
+	case EColor16M:
+		ctx->pixel_format = GF_PIXEL_RGB_24;
 		ctx->bpp = 3;
 		gl_buffer_size = 24;
 		break;
 	/** 4096 colour display (12 bpp). */
-	case EColor4K: 
-		ctx->pixel_format = GF_PIXEL_RGB_444; 
+	case EColor4K:
+		ctx->pixel_format = GF_PIXEL_RGB_444;
 		ctx->bpp = 2;
 		gl_buffer_size = 12;
 		break;
 	/** True colour display mode (32 bpp, but top byte is unused and unspecified) */
-	case EColor16MU: 
-		ctx->pixel_format = GF_PIXEL_RGB_32; 
+	case EColor16MU:
+		ctx->pixel_format = GF_PIXEL_RGB_32;
 		ctx->bpp = 4;
 		gl_buffer_size = 32;
 		break;
 #if defined(__SERIES60_3X__)
 	/** Display mode with alpha (24bpp colour plus 8bpp alpha) */
-	case EColor16MA: 
-		ctx->pixel_format = GF_PIXEL_ARGB; 
+	case EColor16MA:
+		ctx->pixel_format = GF_PIXEL_ARGB;
 		ctx->bpp = 4;
 		gl_buffer_size = 32;
 		break;
@@ -185,7 +185,7 @@ static GF_Err EVID_InitSurface(GF_VideoOutput *dr)
 			return GF_IO_ERR;
 		}
 		EGLConfig *configList = NULL;
-		EGLint numOfConfigs = 0; 
+		EGLint numOfConfigs = 0;
 		EGLint configSize   = 0;
 		if (eglGetConfigs(ctx->egl_display, configList, configSize, &numOfConfigs) == EGL_FALSE) {
 			GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[EPOC Video] Cannot retrieve OpenGL configurations\n"));
@@ -194,11 +194,11 @@ static GF_Err EVID_InitSurface(GF_VideoOutput *dr)
 	    configSize = numOfConfigs;
 	    configList = (EGLConfig*) gf_malloc(sizeof(EGLConfig)*configSize);
 
-		// Define properties for the wanted EGLSurface 
+		// Define properties for the wanted EGLSurface
 		EGLint atts[7];
 		const char *opt = gf_modules_get_option((GF_BaseInterface *)dr, "Video", "GLNbBitsDepth");
 
-		atts[0] = EGL_BUFFER_SIZE; atts[1] = gl_buffer_size; 
+		atts[0] = EGL_BUFFER_SIZE; atts[1] = gl_buffer_size;
 		atts[2] = EGL_DEPTH_SIZE; atts[3] = opt ? atoi(opt) : 16;
 		atts[4] = EGL_SURFACE_TYPE; atts[5] = EGL_PIXMAP_BIT;
 		atts[6] = EGL_NONE;
@@ -273,7 +273,7 @@ static GF_Err EVID_SetupOGL_ES_Offscreen(GF_VideoOutput *dr, u32 width, u32 heig
 	}
 
 	EGLConfig *configList = NULL;
-	EGLint numOfConfigs = 0; 
+	EGLint numOfConfigs = 0;
 	EGLint configSize   = 0;
 	if (eglGetConfigs(ctx->egl_display, configList, configSize, &numOfConfigs) == EGL_FALSE) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[EPOC Video] Cannot retrieve OpenGL configurations\n"));
@@ -282,7 +282,7 @@ static GF_Err EVID_SetupOGL_ES_Offscreen(GF_VideoOutput *dr, u32 width, u32 heig
 	configSize = numOfConfigs;
 	configList = (EGLConfig*) gf_malloc(sizeof(EGLConfig)*configSize);
 
-	// Define properties for the wanted EGLSurface 
+	// Define properties for the wanted EGLSurface
 	EGLint atts[13];
 	const char *opt = gf_modules_get_option((GF_BaseInterface *)dr, "Video", "GLNbBitsDepth");
 	atts[0] = EGL_RED_SIZE;		atts[1] = 8;
@@ -483,10 +483,10 @@ void EPOC_aout_del(void *ifce);
 
 void EPOC_codec_del(void *ifcg);
 void *EPOC_codec_new();
-	
+
 /*interface query*/
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 		GF_VIDEO_OUTPUT_INTERFACE,

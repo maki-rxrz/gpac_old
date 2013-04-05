@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -53,7 +53,7 @@ GF_Err gdip_shutdown_font_engine(GF_FontReader *dr)
 
 	if (ctx->font) GdipDeleteFontFamily(ctx->font);
 	ctx->font = NULL;
-	
+
 	/*nothing to do*/
 	return GF_OK;
 }
@@ -134,7 +134,7 @@ static GF_Err gdip_get_text_size(GF_FontReader *dr, const unsigned short *string
 
 	GdipDeleteStringFormat(fmt);
 	GdipDeletePath(path_tmp);
-	
+
 	return GF_OK;
 }
 
@@ -153,7 +153,7 @@ static GF_Err gdip_set_font(GF_FontReader *dr, const char *fontName, u32 styles)
 	else if (!stricmp(fontName, "SERIF")) fontName = ctx->font_serif;
 	else if (!stricmp(fontName, "TYPEWRITER") || !stricmp(fontName, "monospace")) fontName = ctx->font_fixed;
 
-	MultiByteToWideChar(CP_ACP, 0, fontName, strlen(fontName)+1, 
+	MultiByteToWideChar(CP_ACP, 0, fontName, strlen(fontName)+1,
 						wcFontName, sizeof(wcFontName)/sizeof(wcFontName[0]) );
 
 
@@ -240,7 +240,7 @@ static GF_Glyph *gdip_load_glyph(GF_FontReader *dr, u32 glyph_name)
 		est_advance_h = ctx->whitespace_width;
 	} else {
 		/*to compute first glyph alignment (say 'x', we figure out its bounding full box by using the '_' char as wrapper (eg, "_x_")
-		then the bounding box starting from xMin of the glyph ('x_'). The difference between both will give us a good approx 
+		then the bounding box starting from xMin of the glyph ('x_'). The difference between both will give us a good approx
 		of the glyph alignment*/
 		str[0] = glyph_name;
 		str[1] = (unsigned short) '_';
@@ -249,7 +249,7 @@ static GF_Glyph *gdip_load_glyph(GF_FontReader *dr, u32 glyph_name)
 		GdipGetPathWorldBounds(path_tmp, &rc, NULL, NULL);
 		est_advance_h = rc.Width - ctx->underscore_width;
 	}
-	
+
 	GdipResetPath(path_tmp);
 
 	str[0] = glyph_name;
@@ -282,7 +282,7 @@ static GF_Glyph *gdip_load_glyph(GF_FontReader *dr, u32 glyph_name)
 	for (i=0; i<count; ) {
 		BOOL closed = 0;
 		s32 sub_type;
-		
+
 		sub_type = types[i] & PathPointTypePathTypeMask;
 
 		if (sub_type == PathPointTypeStart) {
@@ -291,7 +291,7 @@ static GF_Glyph *gdip_load_glyph(GF_FontReader *dr, u32 glyph_name)
 		}
 		else if (sub_type == PathPointTypeLine) {
 			gf_path_add_line_to(glyph->path, FLT2FIX(pts[i].X), FLT2FIX(pts[i].Y));
-		
+
 			if (types[i] & PathPointTypeCloseSubpath) gf_path_close(glyph->path);
 
 			i++;
@@ -308,7 +308,7 @@ static GF_Glyph *gdip_load_glyph(GF_FontReader *dr, u32 glyph_name)
 			break;
 		}
 	}
-	
+
 	delete [] pts;
 	delete [] types;
 	GdipDeleteStringFormat(fmt);
@@ -366,7 +366,7 @@ extern "C" {
 #endif
 
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 		GF_FONT_READER_INTERFACE,

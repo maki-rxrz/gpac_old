@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -94,7 +94,7 @@ enum
 	NC_RTSP_Only_Aggregate_Operation_Allowed	=	460,
 	NC_RTSP_Unsupported_Transport	=	461,
 	NC_RTSP_Destination_Unreachable	=	462,
-	
+
 	NC_RTSP_Internal_Server_Error	=	500,
 	NC_RTSP_Not_Implemented	=	501,
 	NC_RTSP_Bad_Gateway	=	502,
@@ -135,7 +135,7 @@ GF_RTSPRange *gf_rtsp_range_new();
 void gf_rtsp_range_del(GF_RTSPRange *range);
 
 /*
-			Transport structure 
+			Transport structure
 		contains all network info for RTSP sessions (ports, uni/multi-cast, ...)
 */
 
@@ -173,7 +173,7 @@ typedef struct
 	u16 client_port_first, client_port_last;
 	u32 SSRC;
 
-	/*Transport protocol. In this version we only support RTP/AVP, the following flag tells 
+	/*Transport protocol. In this version we only support RTP/AVP, the following flag tells
 	us if this is RTP/AVP/TCP or RTP/AVP (default)*/
 	char *Profile;
 } GF_RTSPTransport;
@@ -227,18 +227,18 @@ typedef struct
 	Double Scale;
 	char *Session;
 	Double Speed;
-	/*nota : RTSP allows several configurations for a single channel (multicast and 
+	/*nota : RTSP allows several configurations for a single channel (multicast and
 	unicast , ...). Usually only 1*/
 	GF_List *Transports;
 	char *User_Agent;
 
 	/*type of the command, one of the described above*/
 	char *method;
-	
+
 	/*Header extensions*/
 	GF_List *Xtensions;
 
-	/*body of the command, size is Content-Length (auto computed when sent). It is not 
+	/*body of the command, size is Content-Length (auto computed when sent). It is not
 	terminated by a NULL char*/
 	char *body;
 
@@ -246,7 +246,7 @@ typedef struct
 			Specify ControlString if your request targets
 		a specific media stream in the service. If null, the service name only will be used
 		for control (for ex, both A and V streams in a single file)
-		If the request is GF_RTSP_OPTIONS, you must provide a control string containing the options 
+		If the request is GF_RTSP_OPTIONS, you must provide a control string containing the options
 		you want to query
 	*/
 	char *ControlString;
@@ -261,7 +261,7 @@ typedef struct
 	*/
 
 	/*full URL of the command. Not used at client side, as the URL is ALWAYS relative
-	to the server / service of the RTSP session 
+	to the server / service of the RTSP session
 	On the server side however redirections are up to the server, so we cannot decide for it	*/
 	char *service_name;
 	/*RTSP status code of the command as parsed. One of the above RTSP StatusCode*/
@@ -311,7 +311,7 @@ typedef struct
 	u32 ResponseCode;
 	/* comment from the server */
 	char *ResponseInfo;
-	
+
 	/*	Header Fields	*/
 	char *Accept;
 	char *Accept_Encoding;
@@ -352,7 +352,7 @@ typedef struct
 	u32 SessionTimeOut;
 	Double Speed;
 	char *Timestamp;
-	/*nota : RTSP allows several configurations for a single channel (multicast and 
+	/*nota : RTSP allows several configurations for a single channel (multicast and
 	unicast , ...). Usually only 1*/
 	GF_List *Transports;
 	char *Unsupported;
@@ -364,8 +364,8 @@ typedef struct
 	/*Header extensions*/
 	GF_List *Xtensions;
 
-	/*body of the response, size is Content-Length (auto computed when sent). It is not 
-	terminated by a NULL char when response is parsed but must be null-terminated when 
+	/*body of the response, size is Content-Length (auto computed when sent). It is not
+	terminated by a NULL char when response is parsed but must be null-terminated when
 	response is being sent*/
 	char *body;
 } GF_RTSPResponse;
@@ -418,7 +418,7 @@ enum
 	/*Waiting*/
 	GF_RTSP_STATE_WAITING,
 	/*PLAY, PAUSE, RECORD. Aggregation is allowed for the same type, you can send several command
-	in a row. However the session will return GF_SERVICE_ERROR if you do not have 
+	in a row. However the session will return GF_SERVICE_ERROR if you do not have
 	a valid SessionID in the command
 	You cannot issue a SETUP / DESCRIBE while in this state*/
 	GF_RTSP_STATE_WAIT_FOR_CONTROL,
@@ -428,7 +428,7 @@ enum
 };
 
 u32 gf_rtsp_get_session_state(GF_RTSPSession *sess);
-/*aggregate command state-machine: the PLAY/PAUSE can be aggregated 
+/*aggregate command state-machine: the PLAY/PAUSE can be aggregated
 (sent before the reply is received). This function gets the last command sent*/
 char *gf_rtsp_get_last_request(GF_RTSPSession *sess);
 /*foce a reset in case of pbs*/
@@ -462,7 +462,7 @@ GF_RTSPSession *gf_rtsp_session_new_server(GF_Socket *rtsp_listener);
 /*fetch an RTSP request. The GF_RTSPCommand will be reseted before fetch*/
 GF_Err gf_rtsp_get_command(GF_RTSPSession *sess, GF_RTSPCommand *com);
 
-/*unpack the URL, check the service name / server. Typically used when a client sends a 
+/*unpack the URL, check the service name / server. Typically used when a client sends a
  DESCRIBE || SETUP url RTSP/1.0. Server / service name check must be performed by your app as redirection
 or services available are unknown here.*/
 GF_Err gf_rtsp_load_service_name(GF_RTSPSession *sess, char *URL);
@@ -477,7 +477,7 @@ GF_Err gf_rtsp_send_response(GF_RTSPSession *sess, GF_RTSPResponse *rsp);
 buffer shall be GF_MAX_IP_NAME_LEN long*/
 GF_Err gf_rtsp_get_session_ip(GF_RTSPSession *sess, char *buffer);
 
-/*returns the next available ID for interleaving. It is recommended that you use 2 
+/*returns the next available ID for interleaving. It is recommended that you use 2
 consecutive IDs for RTP/RTCP interleaving*/
 u8 gf_rtsp_get_next_interleave_id(GF_RTSPSession *sess);
 
@@ -538,12 +538,12 @@ typedef struct __tag_rtp_channel GF_RTPChannel;
 GF_RTPChannel *gf_rtp_new();
 void gf_rtp_del(GF_RTPChannel *ch);
 
-/*you configure a server channel through the transport structure, with the same info as a 
+/*you configure a server channel through the transport structure, with the same info as a
 client channel, the client_port_* info designing the REMOTE client and port_* designing
 your server channel*/
 GF_Err gf_rtp_setup_transport(GF_RTPChannel *ch, GF_RTSPTransport *trans_info, const char *remote_address);
 
-/*auto-setup of rtp/rtcp transport ports - only effective in unicast, non interleaved cases. 
+/*auto-setup of rtp/rtcp transport ports - only effective in unicast, non interleaved cases.
 for multicast port setup MUST be done through the above gf_rtp_setup_transport function
 this will take care of port reuse*/
 GF_Err gf_rtp_set_ports(GF_RTPChannel *ch, u16 first_port);
@@ -553,8 +553,8 @@ version of the library (a sender cannot switch payload types on a single media)*
 GF_Err gf_rtp_setup_payload(GF_RTPChannel *ch, GF_RTPMap *map);
 
 /*enables sending of NAT keep-alive packets for NAT traversal
-	@nat_timeout: specifies the inactivity period in ms after which NAT keepalive packets are sent. 
-	If 0, disables NAT keep-alive packets 
+	@nat_timeout: specifies the inactivity period in ms after which NAT keepalive packets are sent.
+	If 0, disables NAT keep-alive packets
 */
 void gf_rtp_enable_nat_keepalive(GF_RTPChannel *ch, u32 nat_timeout);
 
@@ -584,7 +584,7 @@ GF_Err gf_rtp_initialize(GF_RTPChannel *ch, u32 UDPBufferSize, Bool IsSource, u3
 GF_Err gf_rtp_stop(GF_RTPChannel *ch);
 
 /*init the RTP info after a PLAY or PAUSE, rtp_time is the rtp TimeStamp of the RTP packet
-with seq_num sequence number. This info is needed to compute the CurrentTime of the RTP channel 
+with seq_num sequence number. This info is needed to compute the CurrentTime of the RTP channel
 ssrc may not be known if sender hasn't indicated it (use 0 then)*/
 GF_Err gf_rtp_set_info_rtp(GF_RTPChannel *ch, u32 seq_num, u32 rtp_time, u32 ssrc);
 
@@ -611,7 +611,7 @@ GF_Err gf_rtp_decode_rtcp(GF_RTPChannel *ch, char *pck, u32 pck_size, Bool *has_
 the callback function. NOTE: many RTP implementation do NOT process RTCP info received on TCP...
 the lib will decide whether the report shall be sent or not, therefore you should call
 this function at regular times*/
-GF_Err gf_rtp_send_rtcp_report(GF_RTPChannel *ch, 
+GF_Err gf_rtp_send_rtcp_report(GF_RTPChannel *ch,
 						GF_Err (*RTP_TCPCallback)(void *cbk, char *pck, u32 pck_size),
 						void *rtsp_cbk);
 
@@ -621,7 +621,7 @@ GF_Err gf_rtp_send_bye(GF_RTPChannel *ch,
 						void *rtsp_cbk);
 
 
-/*send RTP packet. In fast_send mode, user passes a pck pointer with 12 bytes available BEFORE pck to 
+/*send RTP packet. In fast_send mode, user passes a pck pointer with 12 bytes available BEFORE pck to
 write the header in place*/
 GF_Err gf_rtp_send_packet(GF_RTPChannel *ch, GF_RTPHeader *rtp_hdr, char *pck, u32 pck_size, Bool fast_send);
 
@@ -655,31 +655,31 @@ void gf_rtp_get_ports(GF_RTPChannel *ch, u16 *rtp_port, u16 *rtcp_port);
 
 
 
-	
+
 /****************************************************************************
 
 					SDP LIBRARY EXPORTS
-		
-		  Note: SDP is mainly a text protocol with 
+
+		  Note: SDP is mainly a text protocol with
 	well defined containers. The following structures are used to write / read
 	SDP informations, and the library also provides consistency checking
 
   When reading SDP, all text items/structures are allocated by the lib, and you
   must call gf_sdp_info_reset(GF_SDPInfo *sdp) or gf_sdp_info_del(GF_SDPInfo *sdp) to release the memory
 
-  When writing the SDP from a GF_SDPInfo, the output buffer is allocated by the library, 
+  When writing the SDP from a GF_SDPInfo, the output buffer is allocated by the library,
   and you must release it yourself
 
   Some quick constructors are available for GF_SDPConnection and GF_SDPMedia in order to set up
   some specific parameters to their default value
 
-  An extra function gf_sdp_info_check(GF_SDPInfo *sdp) is provided for compliency check 
+  An extra function gf_sdp_info_check(GF_SDPInfo *sdp) is provided for compliency check
   with RFC2327: all requested fields are checked as well as conflicting information forbidden
   in RFC 2327
 ****************************************************************************/
 
 /*
-	All attributes x-ZZZZ are considered as extensions attributes. If no "x-" is found 
+	All attributes x-ZZZZ are considered as extensions attributes. If no "x-" is found
 	the attributes in the RTSP response is SKIPPED. The "x-" radical is removed in the structure
 	when parsing commands / responses
 */
@@ -736,13 +736,13 @@ typedef struct
 
 	/*timezone adjustments, to cope with #timezones, daylight saving countries and co ...
 	Ex: adjTime = [2882844526 2898848070] adjOffset=[-1h 0]
-	[0]: at 2882844526 the time base by which the session's repeat times are calculated 
+	[0]: at 2882844526 the time base by which the session's repeat times are calculated
 	is shifted back by 1 hour
 	[1]: at time 2898848070 the session's original time base is restored
 	*/
 
-	/*Adjustment time at which the corresponding time offset is to be applied to the 
-	session time line (time used to compute the "repeat session"). 
+	/*Adjustment time at which the corresponding time offset is to be applied to the
+	session time line (time used to compute the "repeat session").
 	All Expressed in NPT*/
 	u32 AdjustmentTime[GF_SDP_MAX_TIMEOFFSET];
 	/* Offset with the session time line, ALWAYS ABSOLUTE OFFSET TO the specified StartTime*/
@@ -787,12 +787,12 @@ typedef struct
 	/*m=
 	0: application - 1:video - 2: audio - 3: text - 4:data - 5: control*/
 	u32 Type;
-	/*Port Number - For transports based on UDP, the value should be in the range 1024 
+	/*Port Number - For transports based on UDP, the value should be in the range 1024
 	to 65535 inclusive. For RTP compliance it should be an even number*/
 	u32 PortNumber;
 	/*number of ports described. If >= 2, the next media(s) in the SDP will be configured
 	to use the next tuple (for RTP). If 0 or 1, ignored
-	Note: this is used for scalable media: PortNumber indicates the port of the base 
+	Note: this is used for scalable media: PortNumber indicates the port of the base
 	media and NumPorts the ports||total number of the upper layers*/
 	u32 NumPorts;
 	/*currently ony "RTP/AVP" and "udp" defined*/
@@ -806,7 +806,7 @@ typedef struct
 
 	/*FMTP contains a list of FMTP structures*/
 	GF_List *FMTP;
-	
+
 	/*for RTP this is PayloadType, but can be opaque (string) depending on the app.
 	Formated as XX WW QQ FF
 	When reading the SDP, the payloads defined in RTPMap are removed from this list
@@ -820,7 +820,7 @@ typedef struct
 	/*Other SDP attributes for media desc*/
 
 	/*k=
-	method is 'clear' (key follows), 'base64' (key in base64), 'uri' (key is the URI) 
+	method is 'clear' (key follows), 'base64' (key in base64), 'uri' (key is the URI)
 	or 'prompt' (key not included)*/
 	char *k_method, *k_key;
 
@@ -857,13 +857,13 @@ typedef struct
 	/*p=*/
 	char *p_phone;
 	/*c= either 1 or 0 GF_SDPConnection */
-	GF_SDPConnection *c_connection;	
+	GF_SDPConnection *c_connection;
 	/*b=*/
 	GF_List *b_bandwidth;
 	/*All time info (t, r, z)*/
 	GF_List *Timing;
 	/*k=
-	method is 'clear' (key follows), 'base64' (key in base64), 'uri' (key is the URI) 
+	method is 'clear' (key follows), 'base64' (key in base64), 'uri' (key is the URI)
 	or 'prompt' (key not included)*/
 	char *k_method, *k_key;
 	/*all possible attributes (a=), session level*/
@@ -877,15 +877,15 @@ typedef struct
 
 	/*all attributes not defined in RFC 2327 for the presentation*/
 	GF_List *Attributes;
-	
+
 	/*list of media in the SDP*/
 	GF_List *media_desc;
 } GF_SDPInfo;
 
 
 /*
-  Memory Consideration: the destructors free all non-NULL string. You should therefore 
-  be carefull while (de-)assigning the strings. The function gf_sdp_info_parse() performs a complete 
+  Memory Consideration: the destructors free all non-NULL string. You should therefore
+  be carefull while (de-)assigning the strings. The function gf_sdp_info_parse() performs a complete
   reset of the GF_SDPInfo
 */
 /*constructor*/
@@ -928,13 +928,13 @@ void gf_sdp_fmtp_del(GF_SDP_FMTP *fmtp);
 
 
 /*RTP<->SL mapping*/
-typedef struct 
+typedef struct
 {
 	/*1 - required options*/
 
 	/*mode, or "" if no mode ("generic" should be used instead)*/
 	char mode[30];
-	
+
 	/*config of the stream if carried in SDP*/
 	char *config;
 	u32 configSize;
@@ -949,7 +949,7 @@ typedef struct
 	u32 rvc_config_size;
 
 	/*2 - optional options*/
-	
+
 	/*size of AUs if constant*/
 	u32 ConstantSize;
 	/*duration of AUs if constant, in RTP timescale*/
@@ -961,7 +961,7 @@ typedef struct
 	u32 maxDisplacement;
 	/*de-interleaveBufferSize if not recomputable from maxDisplacement*/
 	u32 deinterleaveBufferSize;
-	
+
 	/*The number of bits on which the AU-size field is encoded in the AU-header*/
 	u32 SizeLength;
 	/*The number of bits on which the AU-Index is encoded in the first AU-header*/
@@ -975,10 +975,10 @@ typedef struct
 	u32 CTSDeltaLength;
 	/*random access point flag present*/
 	Bool RandomAccessIndication;
-	
+
 	/*The number of bits on which the Stream-state field is encoded in the AU-header (systems only)*/
 	u32 StreamStateIndication;
-	/*The number of bits that is used to encode the auxiliary-data-size field 
+	/*The number of bits that is used to encode the auxiliary-data-size field
 	(no normative usage of this section)*/
 	u32 AuxiliaryDataSizeLength;
 
@@ -991,7 +991,7 @@ typedef struct
 	u32 auh_first_min_len;
 	u32 auh_min_len;
 } GP_RTPSLMap;
-	
+
 
 /*packetizer config flags - some flags are dynamically re-assigned when detecting multiSL / B-Frames / ...*/
 enum
@@ -1023,7 +1023,7 @@ enum
 	GP_RTP_PCK_USE_LATM_AAC	=	(1<<9),
 
 	/*ISMACryp options*/
-	/*signals that input data is selectively encrypted (eg not all input frames are encrypted) 
+	/*signals that input data is selectively encrypted (eg not all input frames are encrypted)
 	- this is usually automatically set by hinter*/
 	GP_RTP_PCK_SELECTIVE_ENCRYPTION =	(1<<10),
 	/*signals that each sample will have its own key indicator - ignored in non-multi modes
@@ -1041,7 +1041,7 @@ enum
 */
 
 /*currently supported payload types*/
-enum 
+enum
 {
 	/*not defined*/
 	GF_RTP_PAYT_UNKNOWN,
@@ -1090,7 +1090,7 @@ enum
 	Also note that AU start/end is automatically updated, therefore you should only
 	set CTS-DTS-OCR-sequenceNumber (which is automatically incremented when spliting a payload)
 	-padding-idle infos
-	SL flags are computed on the fly, but you may wish to modify them in case of 
+	SL flags are computed on the fly, but you may wish to modify them in case of
 	packet drop/... at the encoder side
 
 */
@@ -1100,10 +1100,10 @@ struct __tag_rtp_packetizer
 	GF_SLHeader sl_header;
 
 	/*
-	
+
 		PRIVATE _ DO NOT TOUCH
 	*/
-	
+
 	/*RTP payload type (RFC type, NOT the RTP hdr payT)*/
 	u32 rtp_payt;
 	/*packetization flags*/
@@ -1125,9 +1125,9 @@ struct __tag_rtp_packetizer
 	void (*OnDataReference)(void *cbk_obj, u32 payload_size, u32 offset_from_orig);
 	void (*OnData)(void *cbk_obj, char *data, u32 data_size, Bool is_header);
 	void *cbk_obj;
-	
+
 		/*********************************
-			MPEG-4 Generic hinting 
+			MPEG-4 Generic hinting
 		*********************************/
 
 	/*SL to RTP map*/
@@ -1180,7 +1180,7 @@ typedef struct __tag_rtp_packetizer GP_RTPPacketizer;
 		@header: rtp header for new packet - note that RTP header flags are not used until PacketDone is called
 	@OnPacketDone: callback function closing current RTP packet
 		@header: final rtp header for packet
-	@OnDataReference: optional, to call each time data from input buffer is added to current RTP packet. 
+	@OnDataReference: optional, to call each time data from input buffer is added to current RTP packet.
 		If not set, data must be added through OnData
 		@payload_size: size of reference data
 		@offset_from_orig: start offset in input buffer
@@ -1189,10 +1189,10 @@ typedef struct __tag_rtp_packetizer GP_RTPPacketizer;
 		@is_head: signal the data added MUST be inserted at the begining of the payload. Otherwise data
 		is concatenated as received
 */
-GP_RTPPacketizer *gf_rtp_builder_new(u32 rtp_payt, 
-						GF_SLConfig *slc, 
+GP_RTPPacketizer *gf_rtp_builder_new(u32 rtp_payt,
+						GF_SLConfig *slc,
 						u32 flags,
-						void *cbk_obj, 
+						void *cbk_obj,
 						void (*OnNewPacket)(void *cbk, GF_RTPHeader *header),
 						void (*OnPacketDone)(void *cbk, GF_RTPHeader *header),
 						void (*OnDataReference)(void *cbk, u32 payload_size, u32 offset_from_orig),
@@ -1206,26 +1206,26 @@ void gf_rtp_builder_del(GP_RTPPacketizer *builder);
 		init the builder
 	@MaxPayloadSize: maximum payload size of RTP packets (eg MTU minus IP/UDP/RTP headers)
 	@max_ptime: maximum packet duration IN RTP TIMESCALE
-	@StreamType: MPEG-4 system stream type - MUST always be provided for payloads format specifying 
+	@StreamType: MPEG-4 system stream type - MUST always be provided for payloads format specifying
 		audio or video streams
 	@OTI : MPEG-4 system objectTypeIndication - may be 0 if stream is not mpeg4 systems
 
 			*** all other params are for MultiSL draft ***
-	
-	  @avgSize: average size of an AU. This is not always known (real-time encoding). 
-In this case you should specify a rough compute indicating how many packets could be 
+
+	  @avgSize: average size of an AU. This is not always known (real-time encoding).
+In this case you should specify a rough compute indicating how many packets could be
 stored per RTP packet. for ex AAC stereo at 44100 k / 64kbps , one AU ~= 380 bytes
 so 3 AUs for 1500 MTU is ok - BE CAREFULL: MultiSL adds some SL info on top of the 12
 byte RTP header so you should specify a smaller size
-The packetizer will ALWAYS make sure there's no pb storing the packets so specifying 
-more will result in a slight overhead in the SL mapping but the gain to singleSL 
+The packetizer will ALWAYS make sure there's no pb storing the packets so specifying
+more will result in a slight overhead in the SL mapping but the gain to singleSL
 will still be worth it.
-	-Nota: at init, the packetizer can decide to switch to SingleSL if the average size 
+	-Nota: at init, the packetizer can decide to switch to SingleSL if the average size
 specified is too close to the PathMTU
 
 	@maxSize: max size of an AU. If unknown (real-time) set to 0
 	@avgTS: average CTS progression (1000/FPS for video)
-	@maxDTS: maximum DTS offset in case of bidirectional coding. 
+	@maxDTS: maximum DTS offset in case of bidirectional coding.
 	@IV_length: size (in bytes) of IV when ISMACrypted
 	@KI_length: size (in bytes) of key indicator when ISMACrypted
 	@pref_mode: MPEG-4 generic only, specifies the payload mode - can be NULL (mode generic)
@@ -1233,7 +1233,7 @@ specified is too close to the PathMTU
 
 void gf_rtp_builder_init(GP_RTPPacketizer *builder, u8 PayloadType, u32 MaxPayloadSize, u32 max_ptime,
 					   u32 StreamType, u32 OTI, u32 PL_ID,
-					   u32 avgSize, u32 maxSize, 
+					   u32 avgSize, u32 maxSize,
 					   u32 avgTS, u32 maxDTS,
 					   u32 IV_length, u32 KI_length,
 					   char *pref_mode);
@@ -1276,7 +1276,7 @@ enum
 	GF_RTP_HAS_ISMACRYP = (1<<5),
 	GF_RTP_ISMA_SEL_ENC = (1<<6),
 	GF_RTP_ISMA_HAS_KEY_IDX = (1<<7),
-	
+
 	GF_RTP_AVC_USE_ANNEX_B = (1<<8)
 };
 
@@ -1310,7 +1310,7 @@ struct __tag_rtp_depacketizer
 
 	/*H264/AVC config*/
 	u32 h264_pck_mode;
-	
+
 	/*3GP text reassembler state*/
 	u8 nb_txt_frag, cur_txt_frag, sidx, txt_len, nb_mod_frag;
 
