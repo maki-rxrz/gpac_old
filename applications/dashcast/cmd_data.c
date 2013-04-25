@@ -27,8 +27,12 @@
 
 int dc_str_to_resolution(char * psz_str, int * p_width, int * p_height) {
 
+#ifndef _WIN32
 	char * p_save = NULL;
 	char * token = (char *) strtok_r(psz_str, "x", &p_save);
+#else
+	char * token = (char *) strtok(psz_str, "x");
+#endif
 
 	if (!token) {
 		fprintf(stderr, "Cannot parse resolution string.\n");
@@ -36,7 +40,11 @@ int dc_str_to_resolution(char * psz_str, int * p_width, int * p_height) {
 	}
 	*p_width = atoi(token);
 
+#ifndef _WIN32
 	token = (char *) strtok_r(NULL, " ", &p_save);
+#else
+	token = (char *) strtok(NULL, " ");
+#endif
 
 	if (!token) {
 		fprintf(stderr, "Cannot parse resolution string.\n");
@@ -404,7 +412,11 @@ int dc_parse_command(int i_argc, char ** p_argv, CmdData * p_cmdd) {
 		struct stat status;
 
 		if (stat(p_cmdd->psz_out, &status) != 0) {
+#ifndef _WIN32
 			mkdir(p_cmdd->psz_out, 0777);
+#else
+			mkdir(p_cmdd->psz_out);
+#endif
 		}
 	}
 

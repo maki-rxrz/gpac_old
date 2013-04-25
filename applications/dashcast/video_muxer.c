@@ -284,7 +284,7 @@ int dc_ffmpeg_video_muxer_open(VideoOutputFile * p_voutf, char * psz_name) {
 
 	/* Open the output file */
 	if (!(p_output_fmt->flags & AVFMT_NOFILE)) {
-		if (avio_open(&p_voutf->p_fmt->pb, psz_name, URL_WRONLY) < 0) {
+		if (avio_open(&p_voutf->p_fmt->pb, psz_name, AVIO_FLAG_WRITE) < 0) {
 			fprintf(stderr, "Cannot not open '%s'\n", psz_name);
 			return -1;
 		}

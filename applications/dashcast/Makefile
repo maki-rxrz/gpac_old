@@ -2,7 +2,7 @@ include ../../config.mak
 
 vpath %.c $(SRC_PATH)/applications/dashcast
 
-CFLAGS= $(OPTFLAGS) -I"$(SRC_PATH)/include" -I../../
+CFLAGS= $(OPTFLAGS) -I"$(SRC_PATH)/include" -I../../ $(ffmpeg_cflags)
 
 LINKLIBS=$(GPAC_SH_FLAGS)
 
@@ -36,7 +36,7 @@ SRCS := $(OBJS:.o=.c)
 all: $(PROG)
 
 DashCast$(EXE): $(OBJS)
-	$(CC) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) -L../../bin/gcc -lz -lpthread -lavcodec -lavformat -lswscale -lavutil -lavdevice -lgpac $(LINKLIBS)
+	$(CC) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) -L../../bin/gcc -lz -lpthread $(ffmpeg_lflags) -lgpac $(LINKLIBS)
 
 clean:
 	rm -f $(OBJS) ../../bin/gcc/$(PROG)

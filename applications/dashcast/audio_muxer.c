@@ -263,7 +263,7 @@ int dc_ffmpeg_audio_muxer_open(AudioOutputFile * p_aoutf, char * psz_name) {
 	/*  Open the output file  */
 	if (!(p_output_fmt->flags & AVFMT_NOFILE)) {
 		if (avio_open(&p_aoutf->p_fmt->pb, psz_name,
-				URL_WRONLY) < 0) {
+				AVIO_FLAG_WRITE) < 0) {
 			fprintf(stderr, "Cannot not open '%s'\n",
 					psz_name);
 			return -1;

@@ -168,6 +168,7 @@ avcap_cflags=""
 avcap_ldflags="-lavcap"
 has_opensvc="no"
 has_openhevc="no"
+disable_dashcast="no"
 
 win32="no"
 mingw32="no"
@@ -1298,11 +1299,11 @@ fi
 #look for FFMPEG support
 
 ffmpeg_cflags=""
-ffmpeg_lflags="-lz -lavcodec -lavformat -lavutil -lswscale -lavutil"
+ffmpeg_lflags="-lz -lavcodec -lavformat -lavutil -lswscale -lavutil -avdevice"
 if test "$pkg_config" != "no"; then
-  if $pkg_config --exists libavcodec libavformat libswscale 2> /dev/null  ; then
-    ffmpeg_cflags=`$pkg_config --cflags libavcodec libavformat libswscale libavutil`
-    ffmpeg_lflags=`$pkg_config --libs libavcodec libavformat libswscale libavutil`
+  if $pkg_config --exists libavcodec libavformat libswscale libavutil libavdevice 2> /dev/null  ; then
+    ffmpeg_cflags=`$pkg_config --cflags libavcodec libavformat libswscale libavutil libavdevice`
+    ffmpeg_lflags=`$pkg_config --libs libavcodec libavformat libswscale libavutil libavdevice`
     has_ffmpeg="system"
   fi
 fi
@@ -1904,7 +1905,7 @@ for opt do
         --use-openjpeg=*) has_openjpeg=${opt#--use-openjpeg=}
             ;;
 
-        --disable-all) has_pulseaudio="no"; has_alsa="no"; disable_core_tools="yes"; disable_3d="yes"; disable_svg="yes"; disable_vrml="yes"; disable_od="yes"; disable_bifs="yes"; disable_bifs_enc="yes"; disable_laser="yes"; disable_seng="yes"; disable_qtvr="yes";  disable_avi="yes"; disable_ogg="yes"; disable_m2ps="yes"; disable_m2ts="yes"; disable_m2ts_mux="yes"; disable_parsers="yes"; disable_import="yes"; disable_export="yes"; disable_swf="yes"; disable_scene_stats="yes"; disable_scene_dump="yes"; disable_scene_encode="yes"; disable_loader_isoff="yes"; disable_od_dump="yes"; disable_od_parse="yes"; disable_isom_dump="yes"; disable_mcrypt="yes"; disable_isoff="yes"; disable_isoff_write="yes"; disable_isoff_hint="yes"; disable_isoff_frag="yes"; disable_streaming="yes"; disable_x3d="yes"; disable_loader_bt="yes"; disable_loader_xmt="yes"; has_dvb4linux="no"; disable_player="yes"; disable_vobsub="yes"; disable_scenegraph="yes"; disable_dvbx="yes"; disable_ttxt="yes"; disable_saf="yes"; disable_smgr="yes"; disable_mpd="yes"; disable_dash="yes"; disable_isoff_hds="yes"; disable_hevc="yes"
+        --disable-all) has_pulseaudio="no"; has_alsa="no"; disable_core_tools="yes"; disable_3d="yes"; disable_svg="yes"; disable_vrml="yes"; disable_od="yes"; disable_bifs="yes"; disable_bifs_enc="yes"; disable_laser="yes"; disable_seng="yes"; disable_qtvr="yes";  disable_avi="yes"; disable_ogg="yes"; disable_m2ps="yes"; disable_m2ts="yes"; disable_m2ts_mux="yes"; disable_parsers="yes"; disable_import="yes"; disable_export="yes"; disable_swf="yes"; disable_scene_stats="yes"; disable_scene_dump="yes"; disable_scene_encode="yes"; disable_loader_isoff="yes"; disable_od_dump="yes"; disable_od_parse="yes"; disable_isom_dump="yes"; disable_mcrypt="yes"; disable_isoff="yes"; disable_isoff_write="yes"; disable_isoff_hint="yes"; disable_isoff_frag="yes"; disable_streaming="yes"; disable_x3d="yes"; disable_loader_bt="yes"; disable_loader_xmt="yes"; has_dvb4linux="no"; disable_player="yes"; disable_vobsub="yes"; disable_scenegraph="yes"; disable_dvbx="yes"; disable_ttxt="yes"; disable_saf="yes"; disable_smgr="yes"; disable_mpd="yes"; disable_dash="yes"; disable_isoff_hds="yes"; disable_hevc="yes"; disable_dashcast="yes"
 
             ;;
 
@@ -3049,6 +3050,11 @@ echo "MP4BOX_STATIC=$static_mp4box" >> config.mak
 
 echo "RENOIR_ENABLE=$enable_renoir" >> config.mak
 
+if test "$disable_isoff" = "yes" -o "$disable_isoff_write" = "yes" -o "$has_ffmpeg" = "no" ; then
+    disable_dashcast="yes"
+fi
+echo "DISABLE_DASHCAST=$disable_dashcast" >> config.mak
+
 GPAC_ENST_INC=no
 GPAC_ENST=no
 enst_dir="`ls \"$source_path/src/\" | grep enst`"
@@ -3081,7 +3087,7 @@ if test "$source_path_used" = "yes" ; then
     echo "Creating compilation tree image"
     SRC_DIRS="src src/utils src/isomedia src/ietf src/odf src/bifs src/scenegraph src/terminal src/mcrypt src/media_tools src/scene_manager src/compositor src/laser"
 
-    APP_DIRS="applications/mp4box applications/mp4client applications/osmozilla applications/osmo4_wx applications/mp42ts"
+    APP_DIRS="applications/dashcast applications/mp4box applications/mp4client applications/osmozilla applications/osmo4_wx applications/mp42ts"
 
     for dir in $SRC_DIRS ; do
         mkdir -p "$dir"
