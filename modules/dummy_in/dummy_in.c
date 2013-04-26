@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -126,7 +126,7 @@ Bool DC_CanHandleURL(GF_InputService *plug, const char *url)
 		if (ok) return 1;
 	}
 	/*views:// internal URI*/
-	if (!strnicmp(url, "views://", 8)) 
+	if (!strnicmp(url, "views://", 8))
 		return 1;
 
 	if (!strncmp(url, "\\\\", 2)) return 0;

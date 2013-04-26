@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -50,7 +50,7 @@ typedef struct
 	GLUtesselator *tess_obj;
 	GF_Mesh *mesh;
 
-	/*vertex indices: we cannot use a static array because reallocating the array will likely change memory 
+	/*vertex indices: we cannot use a static array because reallocating the array will likely change memory
 	address of indices, hence break triangulator*/
 	GF_List *vertex_index;
 } MeshTess;
@@ -151,7 +151,7 @@ void gf_mesh_tesselate_path(GF_Mesh *mesh, GF_Path *path, u32 outline_style)
 	mesh_reset(mesh);
 	mesh->flags |= MESH_IS_2D;
 	if (outline_style==1) mesh->flags |= MESH_NO_TEXTURE;
-	
+
 	tess->mesh = mesh;
     gluTessCallback(tess->tess_obj, GLU_TESS_VERTEX_DATA, (void (CALLBACK*)()) &mesh_tess_vertex);
     gluTessCallback(tess->tess_obj, GLU_TESS_BEGIN, (void (CALLBACK*)()) &mesh_tess_begin);
@@ -306,7 +306,7 @@ u32 polygon_check_convexity(GF_Vertex *pts, u32 len, u32 direction)
     dcur.x = pSaveSecond.x - pSecond.x;
     dcur.y = pSaveSecond.y - pSecond.y;
 	/* Don't care about 'pThird' now */
-    ConvCheckTriple;			
+    ConvCheckTriple;
 
     /* Decide on polygon type given accumulated status */
     if ( dirChanges > 2 ) return GF_POLYGON_COMPLEX;
@@ -367,7 +367,7 @@ void TesselateFaceMesh(GF_Mesh *dest, GF_Mesh *orig)
 	}
 
 #ifdef GPAC_HAS_GLU
-	
+
 	/*tesselate it*/
 	tess = gf_malloc(sizeof(MeshTess));
 	if (!tess) return;
@@ -427,7 +427,7 @@ void TesselateFaceMeshComplex(GF_Mesh *dest, GF_Mesh *orig, u32 nbFaces, u32 *pt
 	u32 *idx;
 	GLdouble vertex[3];
 	MeshTess *tess;
-	
+
 	/*tesselate it*/
 	tess = gf_malloc(sizeof(MeshTess));
 	if (!tess) return;
@@ -454,7 +454,7 @@ void TesselateFaceMeshComplex(GF_Mesh *dest, GF_Mesh *orig, u32 nbFaces, u32 *pt
 	cur_pt_faces = 0;
 	cur_face = 0;
 	for (i=0; i<orig->v_count; i++) {
-		
+
 		if (i>= cur_pt_faces + ptsPerFaces[cur_face]) {
 			cur_pt_faces += ptsPerFaces[cur_face];
 			cur_face++;

@@ -86,7 +86,7 @@ void V4TimeLineLine::SetLength(const unsigned int length_) {
       if (cells.back()->GetCommand(0)) cells.back()->DeleteCommands();
       delete cells.back();
       cells.pop_back();
-    } 
+    }
   }
 
 }

@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #include "ogg_in.h"
@@ -28,7 +28,7 @@
 
 #if !defined(GPAC_DISABLE_AV_PARSERS) && !defined(GPAC_DISABLE_OGG)
 
-typedef struct 
+typedef struct
 {
 	u32 streamType;	/*MPEG-4 streamType*/
 	u32 num_init_headers;
@@ -78,7 +78,7 @@ typedef struct
 
 	/*ogg ogfile state*/
     ogg_sync_state oy;
-	
+
 	OGGStream *resync_stream;
 
 	Bool has_video, has_audio, is_single_media;
@@ -134,7 +134,7 @@ static Bool OGG_ReadPage(OGGReader *read, ogg_page *oggpage)
     while (ogg_sync_pageout(&read->oy, oggpage ) != 1 ) {
         char *buffer;
 		u32 bytes;
-		
+
 		if (read->ogfile) {
 			if (feof(read->ogfile)) {
 				OGG_EndOfFile(read);
@@ -216,7 +216,7 @@ Double OGG_GranuleToMediaTime(OGGInfo *cfg, s64 granule)
 }
 
 
-static void OGG_GetStreamInfo(ogg_packet *oggpacket, OGGInfo *info) 
+static void OGG_GetStreamInfo(ogg_packet *oggpacket, OGGInfo *info)
 {
 	oggpack_buffer opb;
 
@@ -297,7 +297,7 @@ static void OGG_ResetupStream(OGGReader *read, OGGStream *st, ogg_page *oggpage)
 	ogg_stream_init(&st->os, st->serial_no);
 	ogg_stream_pagein(&st->os, oggpage);
 	st->parse_headers = st->info.num_init_headers;
-	
+
 	if (st->info.sample_rate) {
 		st->seek_granule = (s64) (read->start_range * st->info.sample_rate);
 	} else if (st->info.frame_rate) {
@@ -348,7 +348,7 @@ static void OGG_NewStream(OGGReader *read, ogg_page *oggpage)
     st->serial_no = serial_no;
     ogg_stream_init(&st->os, st->serial_no);
 	ogg_stream_pagein(&st->os, oggpage);
-	
+
 	ogg_stream_packetpeek(&st->os, &oggpacket);
 	OGG_GetStreamInfo(&oggpacket, &st->info);
 
@@ -365,7 +365,7 @@ static void OGG_NewStream(OGGReader *read, ogg_page *oggpage)
 	st->ESID = 2 + gf_list_count(read->streams);
 	st->parse_headers = st->info.num_init_headers;
 	if (st->parse_headers) read->init_remain++;
-	
+
 	if (st->info.sample_rate) {
 		st->seek_granule = (s64) (read->start_range * st->info.sample_rate);
 	} else if (st->info.frame_rate) {
@@ -453,7 +453,7 @@ void OGG_Process(OGGReader *read)
 		return;
 	}
 
-	if (ogg_page_eos(&oggpage)) 
+	if (ogg_page_eos(&oggpage))
 		st->eos_detected = 1;
 
 	if (st->parse_headers && !st->got_headers) {
@@ -476,7 +476,7 @@ void OGG_Process(OGGReader *read)
 			st->parse_headers--;
 			if (!st->parse_headers) {
 				st->got_headers = 1;
-				if (read->is_inline) 
+				if (read->is_inline)
 					gf_term_add_media(read->service, (GF_Descriptor*) OGG_GetOD(st), 0);
 				break;
 			}
@@ -549,7 +549,7 @@ static u32 OggDemux(void *par)
 		OGG_Process(read);
 
 		if (!read->bos_done) continue;
-		
+
 		/*wait for stream connection*/
 		while (!read->kill_demux && !read->nb_playing) {
 			gf_sleep(20);
@@ -612,7 +612,7 @@ Bool OGG_CheckFile(OGGReader *read)
 	gf_f64_seek(read->ogfile, 0, SEEK_SET);
 
 	ogg_sync_init(&read->oy);
-	memset(&the_info, 0, sizeof(OGGInfo));	
+	memset(&the_info, 0, sizeof(OGGInfo));
 	max_gran = 0;
 	while (1) {
 		if (!OGG_ReadPage(read, &oggpage)) break;
@@ -623,7 +623,7 @@ Bool OGG_CheckFile(OGGReader *read)
 				ogg_stream_packetpeek(&os, &oggpacket);
 				if (ogg_stream_pagein(&os, &oggpage) >= 0 ) {
 					ogg_stream_packetpeek(&os, &oggpacket);
-					OGG_GetStreamInfo(&oggpacket, &info); 
+					OGG_GetStreamInfo(&oggpacket, &info);
 				}
 				if (!has_stream) {
 					has_stream = 1;
@@ -709,7 +709,7 @@ void OGG_NetIO(void *cbk, GF_NETIO_Parameter *param)
 	OGGReader *read = (OGGReader *) cbk;
 
 	gf_term_download_update_stats(read->dnload);
-	
+
 	/*done*/
 	if ((param->msg_type==GF_NETIO_DATA_TRANSFERED) && read->ogfile) {
 		read->is_remote = 0;
@@ -822,7 +822,7 @@ static GF_Descriptor *OGG_GetServiceDesc(GF_InputService *plug, u32 expect_type,
 		while ((st = gf_list_enum(read->streams, &i))) {
 			if ((expect_type==GF_MEDIA_OBJECT_AUDIO) && (st->info.streamType!=GF_STREAM_AUDIO)) continue;
 			if ((expect_type==GF_MEDIA_OBJECT_VIDEO) && (st->info.streamType!=GF_STREAM_VISUAL)) continue;
-			
+
 			od = OGG_GetOD(st);
 			read->is_single_media = 1;
 			return (GF_Descriptor *) od;
@@ -920,7 +920,7 @@ static GF_Err OGG_ServiceCommand(GF_InputService *plug, GF_NetworkCommand *com)
 			}
 		}
 		/*recfg duration in case*/
-		if (!read->is_remote && read->dur) { 
+		if (!read->is_remote && read->dur) {
 			GF_NetworkCommand rcfg;
 			rcfg.base.on_channel = NULL;
 			rcfg.base.command_type = GF_NET_CHAN_DURATION;

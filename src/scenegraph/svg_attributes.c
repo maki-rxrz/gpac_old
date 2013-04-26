@@ -144,7 +144,7 @@ static const struct dom_event_def {u32 event;  const char *name; u32 category; }
 	{ GF_EVENT_ABORT, "abort", GF_DOM_EVENT_MEDIA },
 	{ GF_EVENT_ERROR, "error", GF_DOM_EVENT_MEDIA },
 	{ GF_EVENT_MEDIA_EMPTIED, "emptied", GF_DOM_EVENT_MEDIA },
-	{ GF_EVENT_MEDIA_STALLED, "stalled", GF_DOM_EVENT_MEDIA },	
+	{ GF_EVENT_MEDIA_STALLED, "stalled", GF_DOM_EVENT_MEDIA },
 	{ GF_EVENT_MEDIA_LOADED_METADATA, "loadedmetadata", GF_DOM_EVENT_MEDIA },
 	{ GF_EVENT_MEDIA_LODADED_DATA, "loadeddata", GF_DOM_EVENT_MEDIA },
 	{ GF_EVENT_MEDIA_CANPLAY, "canplay", GF_DOM_EVENT_MEDIA },

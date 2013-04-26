@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,17 +11,17 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *		
+ *
  */
 
 #include "rast_soft.h"
@@ -109,7 +109,7 @@ void evg_bgra_fill_const(s32 y, s32 count, EVG_Span *spans, EVGSurface *surf)
 	for (i=0; i<count; i++) {
 		x = spans[i].x * surf->pitch_x;
 		len = spans[i].len;
-	
+
 		if (spans[i].coverage != 0xFF) {
 			a = mul255(0xFF, spans[i].coverage);
 			fin = (a<<24) | col_no_a;
@@ -195,7 +195,7 @@ GF_Err evg_surface_clear_bgra(GF_SURFACE surf, GF_IRect rc, GF_Color col)
 	w = rc.width;
 	sx = rc.x;
 	sy = rc.y;
-	
+
 	use_memset = 0;
 	if (_this->pitch_x !=4) use_memset = 0;
 	else if (!col_a) use_memset = 1;
@@ -355,7 +355,7 @@ static void overmask_rgbx(u32 src, u8 *dst, u32 alpha)
 	s32 srcr = (src >> 16) & 0xff;
 	s32 srcg = (src >> 8) & 0xff;
 	s32 srcb = (src >> 0) & 0xff;
-	
+
 	s32 dstr = dst[0];
 	s32 dstg = dst[1];
 	s32 dstb = dst[2];
@@ -578,7 +578,7 @@ void evg_rgba_fill_const(s32 y, s32 count, EVG_Span *spans, EVGSurface *surf)
 	for (i=0; i<count; i++) {
 		p = dst + spans[i].x*surf->pitch_x;
 		len = spans[i].len;
-	
+
 		if (spans[i].coverage != 0xFF) {
 			new_a = spans[i].coverage;
 			fin = (new_a<<24) | col_no_a;

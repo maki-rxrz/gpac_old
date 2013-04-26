@@ -40,12 +40,12 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CChildView message handlers
 
-BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.dwExStyle = 0;
 	cs.style &= ~WS_BORDER;
 
-	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW|CS_DBLCLKS, 
+	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW|CS_DBLCLKS,
 		::LoadCursor(NULL, IDC_ARROW), HBRUSH(COLOR_WINDOW+1), NULL);
 
 	return TRUE;
@@ -69,7 +69,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_MESSAGE(WM_NAVIGATE,OnNavigate)
 	ON_MESSAGE(WM_OPENURL, Open)
 	ON_MESSAGE(WM_NEWINSTANCE, NewInstanceOpened)
-	
+
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONDBLCLK()
 	ON_WM_LBUTTONUP()
@@ -148,7 +148,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_FILE_COPY, OnUpdateFileCopy)
 	ON_COMMAND(ID_FILE_PASTE, OnFilePaste)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PASTE, OnUpdateFilePaste)
-	
+
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -160,7 +160,7 @@ CMainFrame::CMainFrame()
 {
 	m_icoerror = AfxGetApp()->LoadIcon(IDI_ERR);
 	m_icomessage = AfxGetApp()->LoadIcon(IDI_MESSAGE);
-	m_bFullScreen = GF_FALSE;	
+	m_bFullScreen = GF_FALSE;
 	m_RestoreFS = 0;
 	m_aspect_ratio = GF_ASPECT_RATIO_KEEP;
 	m_pProps = NULL;
@@ -204,7 +204,7 @@ void CALLBACK EXPORT RTInfoTimer(HWND , UINT , UINT_PTR nID , DWORD )
 		if (!rti.gpac_memory) rti.gpac_memory = rti.process_memory ? rti.process_memory : rti.physical_memory;
 
 		if (pFrame->m_show_rti && !pFrame->m_timer_on) {
-			sprintf(szMsg, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB", 
+			sprintf(szMsg, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB",
 						gf_term_get_framerate(app->m_term, GF_FALSE), rti.total_cpu_usage, rti.process_cpu_usage, rti.gpac_memory/1024);
 			pFrame->m_wndStatusBar.SetPaneText(1, szMsg);
 		}
@@ -215,7 +215,7 @@ void CALLBACK EXPORT RTInfoTimer(HWND , UINT , UINT_PTR nID , DWORD )
 		u32 h = ms / 1000 / 3600;
 		u32 m = ms / 1000 / 60 - h*60;
 		u32 s = ms / 1000 - h*3600 - m*60;
-		
+
 		sprintf(szMsg, "%02d:%02d.%02d", h, m, s);
 		pFrame->m_wndStatusBar.SetPaneText(0, szMsg);
 	}
@@ -379,7 +379,7 @@ BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO*
 }
 
 
-void CMainFrame::OnSize(UINT nType, int cx, int cy) 
+void CMainFrame::OnSize(UINT nType, int cx, int cy)
 {
 	RECT rc2;
 	u32 tool_h, slide_h, add_h, stat_h;
@@ -466,11 +466,11 @@ LRESULT CMainFrame::OnSetSize(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void CMainFrame::OnMove(int x, int y) 
+void CMainFrame::OnMove(int x, int y)
 {
 	CFrameWnd::OnMove(x, y);
 	RECT rc;
-	
+
 	m_wndToolBar.GetClientRect(&rc);
 	m_wndToolBar.SetWindowPos(this, x, y, 0, 0, SWP_NOSIZE | SWP_SHOWWINDOW);
 	y += rc.bottom - rc.top;
@@ -512,10 +512,10 @@ void CALLBACK EXPORT ProgressTimer(HWND , UINT , UINT_PTR nID , DWORD )
 	}
 }
 
-void CMainFrame::SetProgTimer(Bool bOn) 
+void CMainFrame::SetProgTimer(Bool bOn)
 {
-	if (bOn) 
-		SetTimer(PROGRESS_TIMER, PROGRESS_REFRESH_MS, ProgressTimer); 
+	if (bOn)
+		SetTimer(PROGRESS_TIMER, PROGRESS_REFRESH_MS, ProgressTimer);
 	else
 		KillTimer(PROGRESS_TIMER);
 }
@@ -541,7 +541,7 @@ LRESULT CMainFrame::Open(WPARAM wParam, LPARAM lParam)
 	app->start_mode = 0;
 	app->UpdatePlayButton();
 	nb_viewpoints = 0;
-	return 1;	
+	return 1;
 }
 
 LRESULT CMainFrame::NewInstanceOpened(WPARAM wParam, LPARAM lParam)
@@ -573,7 +573,7 @@ void CMainFrame::OnLButtonDown(UINT , CPoint ) { ForwardMessage(); }
 void CMainFrame::OnLButtonDblClk(UINT , CPoint ) { ForwardMessage(); }
 void CMainFrame::OnLButtonUp(UINT , CPoint ) { ForwardMessage(); }
 
-void CMainFrame::OnDropFiles(HDROP hDropInfo) 
+void CMainFrame::OnDropFiles(HDROP hDropInfo)
 {
 	u32 i, count;
 	Osmo4 *app = GetApp();
@@ -591,8 +591,8 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 			return;
 		}
 	}
-	
-/*	if (count==1) 
+
+/*	if (count==1)
 		m_pPlayList->Truncate();
 	else
 */		m_pPlayList->Clear();
@@ -608,7 +608,7 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 void CALLBACK EXPORT ConsoleTimer(HWND , UINT , UINT_PTR , DWORD )
 {
 	CMainFrame *pFrame = (CMainFrame *) GetApp()->m_pMainWnd;
-	
+
 	pFrame->m_wndStatusBar.GetStatusBarCtrl().SetIcon(2, NULL);
 	pFrame->KillTimer(pFrame->m_timer_on);
 	pFrame->m_timer_on = 0;
@@ -620,7 +620,7 @@ void CALLBACK EXPORT ConsoleTimer(HWND , UINT , UINT_PTR , DWORD )
 LRESULT CMainFrame::OnConsoleMessage(WPARAM wParam, LPARAM lParam)
 {
 	if (m_timer_on) KillTimer(m_timer_on);
-	
+
 	if (console_err>=0) {
 		m_wndStatusBar.GetStatusBarCtrl().SetIcon(2, m_icomessage);
 		m_wndStatusBar.SetPaneText(1, console_message);
@@ -634,7 +634,7 @@ LRESULT CMainFrame::OnConsoleMessage(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-BOOL CMainFrame::DestroyWindow() 
+BOOL CMainFrame::DestroyWindow()
 {
 	if (GetApp()->m_isopen) KillTimer(PROGRESS_TIMER);
 	/*signal close to prevent callbacks but don't close, this is done in ExitInstance (otherwise there's a
@@ -644,72 +644,72 @@ BOOL CMainFrame::DestroyWindow()
 }
 
 
-void CMainFrame::OnViewOriginal() 
+void CMainFrame::OnViewOriginal()
 {
 	Osmo4 *gpac = GetApp();
-	gf_term_set_option(gpac->m_term, GF_OPT_ORIGINAL_VIEW, 1);	
+	gf_term_set_option(gpac->m_term, GF_OPT_ORIGINAL_VIEW, 1);
 	OnSetSize(gpac->orig_width, gpac->orig_height);
 }
 
-void CMainFrame::SetFullscreen() 
+void CMainFrame::SetFullscreen()
 {
 	Osmo4 *gpac = GetApp();
 	if (!m_bFullScreen) {
 		GetWindowRect(&backup_wnd_rc);
-		if (gf_term_set_option(gpac->m_term, GF_OPT_FULLSCREEN, 1) == GF_OK) 
+		if (gf_term_set_option(gpac->m_term, GF_OPT_FULLSCREEN, 1) == GF_OK)
 			m_bFullScreen = GF_TRUE;
 	} else {
-		if (gf_term_set_option(gpac->m_term, GF_OPT_FULLSCREEN, 0) == GF_OK) 
+		if (gf_term_set_option(gpac->m_term, GF_OPT_FULLSCREEN, 0) == GF_OK)
 			m_bFullScreen = GF_FALSE;
 		SetWindowPos(NULL, backup_wnd_rc.left, backup_wnd_rc.top, backup_wnd_rc.right-backup_wnd_rc.left, backup_wnd_rc.bottom-backup_wnd_rc.top, SWP_NOZORDER);
 	}
 }
 
-void CMainFrame::OnViewFullscreen() 
+void CMainFrame::OnViewFullscreen()
 {
 	SetFullscreen();
 }
 
-void CMainFrame::OnArKeep() 
+void CMainFrame::OnArKeep()
 {
-	gf_term_set_option(GetApp()->m_term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_KEEP);	
+	gf_term_set_option(GetApp()->m_term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_KEEP);
 	m_aspect_ratio = GF_ASPECT_RATIO_KEEP;
 }
 
-void CMainFrame::OnArFill() 
+void CMainFrame::OnArFill()
 {
-	gf_term_set_option(GetApp()->m_term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_FILL_SCREEN);	
+	gf_term_set_option(GetApp()->m_term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_FILL_SCREEN);
 	m_aspect_ratio = GF_ASPECT_RATIO_FILL_SCREEN;
 }
 
-void CMainFrame::OnAr43() 
+void CMainFrame::OnAr43()
 {
-	gf_term_set_option(GetApp()->m_term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_4_3);	
+	gf_term_set_option(GetApp()->m_term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_4_3);
 	m_aspect_ratio = GF_ASPECT_RATIO_4_3;
 }
 
-void CMainFrame::OnAr169() 
+void CMainFrame::OnAr169()
 {
-	gf_term_set_option(GetApp()->m_term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_16_9);	
+	gf_term_set_option(GetApp()->m_term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_16_9);
 	m_aspect_ratio = GF_ASPECT_RATIO_16_9;
 }
 
-void CMainFrame::OnUpdateAr169(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateAr169(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_aspect_ratio == GF_ASPECT_RATIO_16_9);
 }
 
-void CMainFrame::OnUpdateAr43(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateAr43(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_aspect_ratio == GF_ASPECT_RATIO_4_3);
 }
 
-void CMainFrame::OnUpdateArFill(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateArFill(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_aspect_ratio == GF_ASPECT_RATIO_FILL_SCREEN);
 }
 
-void CMainFrame::OnUpdateArKeep(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateArKeep(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_aspect_ratio == GF_ASPECT_RATIO_KEEP);
 }
@@ -720,7 +720,7 @@ void CMainFrame::OnUpdateNavigate(CCmdUI* pCmdUI)
 	Osmo4 *app = GetApp();
 	pCmdUI->Enable(FALSE);
 	if (!app->m_isopen) return;
-	
+
 	u32 type = gf_term_get_option(app->m_term, GF_OPT_NAVIGATION_TYPE);
 	enable = type ? TRUE : FALSE;
 
@@ -736,7 +736,7 @@ void CMainFrame::OnUpdateNavigate(CCmdUI* pCmdUI)
 	else if (pCmdUI->m_nID==ID_NAVIGATE_SLIDE) { pCmdUI->Enable(enable); pCmdUI->SetCheck((mode==GF_NAVIGATE_SLIDE) ? 1 : 0); }
 
 	if (type==GF_NAVIGATE_TYPE_2D) return;
-	pCmdUI->Enable(enable); 	
+	pCmdUI->Enable(enable);
 	if (pCmdUI->m_nID==ID_NAVIGATE_WALK) pCmdUI->SetCheck((mode==GF_NAVIGATE_WALK) ? 1 : 0);
 	else if (pCmdUI->m_nID==ID_NAVIGATE_FLY) pCmdUI->SetCheck((mode==GF_NAVIGATE_FLY) ? 1 : 0);
 	else if (pCmdUI->m_nID==ID_NAVIGATE_PAN) pCmdUI->SetCheck((mode==GF_NAVIGATE_PAN) ? 1 : 0);
@@ -788,7 +788,7 @@ LRESULT CMainFrame::OnNavigate(WPARAM /*wParam*/, LPARAM /*lParam*/)
 			return 0;
 		}
 	}
-	
+
 	if (m_bFullScreen) {
 		SetFullscreen();
 		m_RestoreFS = 1;
@@ -802,7 +802,7 @@ LRESULT CMainFrame::OnNavigate(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	return 0;
 }
 
-void CMainFrame::OnFileProp() 
+void CMainFrame::OnFileProp()
 {
 	if (!m_pProps) {
 		m_pProps = new CFileProps(this);
@@ -811,12 +811,12 @@ void CMainFrame::OnFileProp()
 	m_pProps->ShowWindow(SW_SHOW);
 }
 
-void CMainFrame::OnUpdateFileProp(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateFileProp(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(GetApp()->m_isopen);	
+	pCmdUI->Enable(GetApp()->m_isopen);
 }
 
-void CMainFrame::OnConfigure() 
+void CMainFrame::OnConfigure()
 {
 	if (!m_pOpt) {
 		m_pOpt = new COptions(this);
@@ -825,7 +825,7 @@ void CMainFrame::OnConfigure()
 	m_pOpt->ShowWindow(SW_SHOW);
 }
 
-void CMainFrame::OnShortcuts() 
+void CMainFrame::OnShortcuts()
 {
 	MessageBox(
 		"Open File: Ctrl + O\n"
@@ -848,12 +848,12 @@ void CMainFrame::OnShortcuts()
 		"Aspect Ratio Fill: Ctrl + 2\n"
 		"Aspect Ratio 4/3: Ctrl + 3\n"
 		"Aspect Ratio 16/9: Ctrl + 4\n"
-		
-		
+
+
 		, "Shortcuts Available on Osmo4", MB_OK);
 }
 
-void CMainFrame::OnNavInfo() 
+void CMainFrame::OnNavInfo()
 {
 	MessageBox(
 		"* Walk & Fly modes:\n"
@@ -1066,7 +1066,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT ID, BOOL bSys)
 	if ((pPopupMenu->GetMenuItemID(0)==ID_NAV_PREV_0) || (pPopupMenu->GetMenuItemID(0)==ID_NAV_NEXT_0)) {
 		int count = pPopupMenu->GetMenuItemCount();
 		for (int i=0; i<count; i++) {
-			pPopupMenu->EnableMenuItem(i, MF_BYPOSITION);		
+			pPopupMenu->EnableMenuItem(i, MF_BYPOSITION);
 		}
 		return;
 	}
@@ -1131,50 +1131,50 @@ void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT ID, BOOL bSys)
 	CFrameWnd::OnInitMenuPopup(pPopupMenu, ID, bSys);
 }
 
-void CMainFrame::OnCollideDisp() 
+void CMainFrame::OnCollideDisp()
 {
 	gf_term_set_option(GetApp()->m_term, GF_OPT_COLLISION, GF_COLLISION_DISPLACEMENT);
 }
 
-void CMainFrame::OnUpdateCollideDisp(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateCollideDisp(CCmdUI* pCmdUI)
 {
-	Osmo4 *gpac = GetApp(); 
-	pCmdUI->Enable(gpac->m_isopen);	
+	Osmo4 *gpac = GetApp();
+	pCmdUI->Enable(gpac->m_isopen);
 	pCmdUI->SetCheck( (gf_term_get_option(gpac->m_term, GF_OPT_COLLISION) == GF_COLLISION_DISPLACEMENT) ? 1 : 0);
 }
 
-void CMainFrame::OnCollideNone() 
+void CMainFrame::OnCollideNone()
 {
 	gf_term_set_option(GetApp()->m_term, GF_OPT_COLLISION, GF_COLLISION_NONE);
 }
 
-void CMainFrame::OnUpdateCollideNone(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateCollideNone(CCmdUI* pCmdUI)
 {
-	Osmo4 *gpac = GetApp(); 
-	pCmdUI->Enable(gpac->m_isopen);	
+	Osmo4 *gpac = GetApp();
+	pCmdUI->Enable(gpac->m_isopen);
 	pCmdUI->SetCheck( (gf_term_get_option(gpac->m_term, GF_OPT_COLLISION) == GF_COLLISION_NONE) ? 1 : 0);
 }
 
-void CMainFrame::OnCollideReg() 
+void CMainFrame::OnCollideReg()
 {
 	gf_term_set_option(GetApp()->m_term, GF_OPT_COLLISION, GF_COLLISION_NORMAL);
 }
 
-void CMainFrame::OnUpdateCollideReg(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateCollideReg(CCmdUI* pCmdUI)
 {
-	Osmo4 *gpac = GetApp(); 
-	pCmdUI->Enable(gpac->m_isopen);	
+	Osmo4 *gpac = GetApp();
+	pCmdUI->Enable(gpac->m_isopen);
 	pCmdUI->SetCheck( (gf_term_get_option(gpac->m_term, GF_OPT_COLLISION) == GF_COLLISION_NORMAL) ? 1 : 0);
 }
 
-void CMainFrame::OnHeadlight() 
+void CMainFrame::OnHeadlight()
 {
 	Osmo4 *app = GetApp();
 	Bool val = gf_term_get_option(app->m_term, GF_OPT_HEADLIGHT) ? GF_FALSE : GF_TRUE;
 	gf_term_set_option(app->m_term, GF_OPT_HEADLIGHT, val);
 }
 
-void CMainFrame::OnUpdateHeadlight(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateHeadlight(CCmdUI* pCmdUI)
 {
 	Osmo4 *app = GetApp();
 	pCmdUI->Enable(FALSE);
@@ -1186,14 +1186,14 @@ void CMainFrame::OnUpdateHeadlight(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(gf_term_get_option(app->m_term, GF_OPT_HEADLIGHT) ? 1 : 0);
 }
 
-void CMainFrame::OnGravity() 
+void CMainFrame::OnGravity()
 {
 	Osmo4 *app = GetApp();
 	Bool val = gf_term_get_option(app->m_term, GF_OPT_GRAVITY) ? GF_FALSE : GF_TRUE;
 	gf_term_set_option(app->m_term, GF_OPT_GRAVITY, val);
 }
 
-void CMainFrame::OnUpdateGravity(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateGravity(CCmdUI* pCmdUI)
 {
 	Osmo4 *app = GetApp();
 	pCmdUI->Enable(FALSE);
@@ -1207,7 +1207,7 @@ void CMainFrame::OnUpdateGravity(CCmdUI* pCmdUI)
 }
 
 
-BOOL CMainFrame::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
+BOOL CMainFrame::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
 
 	if (((LPNMHDR)lParam)->code == TBN_DROPDOWN) {
@@ -1252,7 +1252,7 @@ BOOL CMainFrame::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 	return CFrameWnd::OnNotify(wParam, lParam, pResult);
 }
 
-void CMainFrame::OnNavNext() 
+void CMainFrame::OnNavNext()
 {
 	Osmo4 *app = GetApp();
 	/*don't play if last could trigger playlist loop*/
@@ -1260,53 +1260,53 @@ void CMainFrame::OnNavNext()
 	m_pPlayList->PlayNext();
 }
 
-void CMainFrame::OnUpdateNavNext(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateNavNext(CCmdUI* pCmdUI)
 {
 	if (m_pPlayList->m_cur_entry<0) pCmdUI->Enable(FALSE);
 	else if ((u32) m_pPlayList->m_cur_entry + 1 == gf_list_count(m_pPlayList->m_entries) ) pCmdUI->Enable(FALSE);
 	else pCmdUI->Enable(TRUE);
 }
 
-void CMainFrame::OnNavPrev() 
+void CMainFrame::OnNavPrev()
 {
 	Osmo4 *app = GetApp();
 	if (m_pPlayList->m_cur_entry<=0) return;
 	m_pPlayList->PlayPrev();
 }
 
-void CMainFrame::OnUpdateNavPrev(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateNavPrev(CCmdUI* pCmdUI)
 {
 	if (m_pPlayList->m_cur_entry<=0) pCmdUI->Enable(FALSE);
 	else pCmdUI->Enable(TRUE);
 }
 
 
-void CMainFrame::OnClearNav() 
+void CMainFrame::OnClearNav()
 {
 	m_pPlayList->ClearButPlaying();
 }
 
-void CMainFrame::OnViewPlaylist() 
+void CMainFrame::OnViewPlaylist()
 {
 	m_pPlayList->ShowWindow(m_pPlayList->IsWindowVisible() ? SW_HIDE : SW_SHOW);
 }
 
-void CMainFrame::OnUpdateViewPlaylist(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateViewPlaylist(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_pPlayList->IsWindowVisible() ? 1 : 0);
 }
-void CMainFrame::OnPlaylistLoop() 
+void CMainFrame::OnPlaylistLoop()
 {
 	GetApp()->m_Loop = GetApp()->m_Loop ? GF_FALSE : GF_TRUE;
 	gf_cfg_set_key(GetApp()->m_user.config, "General", "PlaylistLoop", GetApp()->m_Loop ? "yes" : "no");
 }
 
-void CMainFrame::OnUpdatePlaylistLoop(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdatePlaylistLoop(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(GetApp()->m_Loop ? GF_TRUE : GF_FALSE);
 }
 
-void CMainFrame::OnAddSubtitle() 
+void CMainFrame::OnAddSubtitle()
 {
 	CFileDialog fd(TRUE,NULL,NULL, OFN_HIDEREADONLY | OFN_FILEMUSTEXIST, "All Subtitles|*.srt;*.sub;*.ttxt;*.xml|SRT Subtitles|*.srt|SUB Subtitles|*.sub|3GPP TimedText|*.ttxt|QuckTime TeXML|*.xml|");
 	if (fd.DoModal() != IDOK) return;
@@ -1349,26 +1349,26 @@ void CMainFrame::OnCacheEnable()
 	}
 }
 
-void CMainFrame::OnUpdateCacheEnable(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateCacheEnable(CCmdUI* pCmdUI)
 {
 	Osmo4 *app = GetApp();
 	u32 state = gf_term_get_option(app->m_term, GF_OPT_MEDIA_CACHE);
 	switch (state) {
 	case GF_MEDIA_CACHE_ENABLED:
-		pCmdUI->SetText("Enabled"); 
-		pCmdUI->Enable(TRUE); 
+		pCmdUI->SetText("Enabled");
+		pCmdUI->Enable(TRUE);
 		break;
-	case GF_MEDIA_CACHE_RUNNING: 
+	case GF_MEDIA_CACHE_RUNNING:
 		pCmdUI->SetText("Running");
-		pCmdUI->Enable(FALSE); 
+		pCmdUI->Enable(FALSE);
 		break;
-	case GF_MEDIA_CACHE_DISABLED: 
+	case GF_MEDIA_CACHE_DISABLED:
 		pCmdUI->SetText("Disabled");
 		break;
 	}
 }
 
-void CMainFrame::OnUpdateCacheStop(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateCacheStop(CCmdUI* pCmdUI)
 {
 	Osmo4 *app = GetApp();
 	u32 state = gf_term_get_option(app->m_term, GF_OPT_MEDIA_CACHE);
@@ -1386,7 +1386,7 @@ void CMainFrame::OnCacheAbort()
 	gf_term_set_option(app->m_term, GF_OPT_MEDIA_CACHE, GF_MEDIA_CACHE_DISCARD);
 }
 
-void CMainFrame::OnFileExit() 
+void CMainFrame::OnFileExit()
 {
 	DestroyWindow();
 }
@@ -1438,7 +1438,7 @@ void CMainFrame::BuildChapterList(Bool reset_only)
 		if (com.artist) { title += com.artist; title += " "; }
 		if (com.name) { title += com.name; title += " "; }
 		if (com.album) { title += "("; title += com.album; title += ")"; }
-		
+
 		if (title.GetLength()) SetWindowText(title);
 	}
 }
@@ -1448,7 +1448,7 @@ void CMainFrame::OnViewCPU()
 	m_show_rti = m_show_rti ? GF_FALSE : GF_TRUE;
 }
 
-void CMainFrame::OnUpdateViewCPU(CCmdUI* pCmdUI) 
+void CMainFrame::OnUpdateViewCPU(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(TRUE);
 	pCmdUI->SetCheck(m_show_rti);
@@ -1464,24 +1464,24 @@ void CMainFrame::OnFileCopy()
 	if (!IsClipboardFormatAvailable(CF_TEXT)) return;
 	if (!OpenClipboard()) return;
 	EmptyClipboard();
-	
+
 	len = strlen(text);
 	if (!len) return;
 
-	HGLOBAL hglbCopy = GlobalAlloc(GMEM_MOVEABLE, (len + 1) * sizeof(char)); 
+	HGLOBAL hglbCopy = GlobalAlloc(GMEM_MOVEABLE, (len + 1) * sizeof(char));
 	LPTSTR lptstrCopy = (char *) GlobalLock(hglbCopy);
-	memcpy(lptstrCopy, text, len * sizeof(char)); 
+	memcpy(lptstrCopy, text, len * sizeof(char));
 	lptstrCopy[len] = 0;
-	GlobalUnlock(hglbCopy); 
+	GlobalUnlock(hglbCopy);
 	SetClipboardData(CF_TEXT, hglbCopy);
-	CloseClipboard(); 
+	CloseClipboard();
 }
 
 void CMainFrame::OnUpdateFileCopy(CCmdUI* pCmdUI)
 {
 	Osmo4 *app = GetApp();
 	if (IsClipboardFormatAvailable(CF_TEXT)
-		&& app->m_term 
+		&& app->m_term
 		&& (gf_term_get_text_selection(app->m_term, GF_TRUE)!=NULL)
 	) {
 		pCmdUI->Enable(TRUE);
@@ -1500,16 +1500,16 @@ void CMainFrame::OnFilePaste()
 	if (hglbCopy) {
 		LPTSTR lptstrCopy = (char *) GlobalLock(hglbCopy);
 		gf_term_paste_text(GetApp()->m_term, lptstrCopy, GF_FALSE);
-		GlobalUnlock(hglbCopy); 
+		GlobalUnlock(hglbCopy);
 	}
-	CloseClipboard(); 
+	CloseClipboard();
 }
 
 void CMainFrame::OnUpdateFilePaste(CCmdUI* pCmdUI)
 {
 	Osmo4 *app = GetApp();
 	if (IsClipboardFormatAvailable(CF_TEXT)
-		&& app->m_term 
+		&& app->m_term
 		&& (gf_term_paste_text(app->m_term, NULL, GF_TRUE)==GF_OK)
 	) {
 		pCmdUI->Enable(TRUE);

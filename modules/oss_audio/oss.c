@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 
@@ -51,7 +51,7 @@
 
 #define OSS_AUDIO_DEVICE	"/dev/dsp"
 
-typedef struct 
+typedef struct
 {
 	int audio_dev, sr, nb_ch;
 	u32 buf_size, delay, num_buffers, total_duration;
@@ -112,7 +112,7 @@ static GF_Err OSS_ConfigureOutput(GF_AudioOutput*dr, u32 *SampleRate, u32 *NbCha
 	ctx->audio_dev=open(OSS_AUDIO_DEVICE,O_WRONLY|O_NONBLOCK);
 	if (!ctx->audio_dev) return GF_IO_ERR;
 
-	/* Make the file descriptor use blocking writes with fcntl() so that 
+	/* Make the file descriptor use blocking writes with fcntl() so that
 	 we don't have to handle sleep() ourselves*/
 	flags = fcntl(ctx->audio_dev, F_GETFL);
 	flags &= ~O_NONBLOCK;
@@ -135,14 +135,14 @@ static GF_Err OSS_ConfigureOutput(GF_AudioOutput*dr, u32 *SampleRate, u32 *NbCha
 	nb_bufs = ctx->num_buffers ? ctx->num_buffers : 8;
 	ctx->buf_size = (*SampleRate * blockalign * ctx->total_duration) / (1000 * nb_bufs);
 	frag_spec = 4;
-	while (ctx->buf_size > (1<<(frag_spec+1))) 
+	while (ctx->buf_size > (1<<(frag_spec+1)))
 		frag_spec++;
 
 	ctx->buf_size = 1<<frag_spec;
 
 	ctx->delay = (1000*ctx->buf_size) / (*SampleRate * blockalign);
 	frag_spec = ((nb_bufs<<16) & 0xFFFF0000) | frag_spec;
-	
+
 	ctx->delay = (1000*ctx->buf_size*nb_bufs) / (*SampleRate * blockalign);
 	if ( ioctl(ctx->audio_dev, SNDCTL_DSP_SETFRAGMENT, &frag_spec) < 0 ) return GF_IO_ERR;
 
@@ -259,7 +259,7 @@ void DeleteOSSRender(void *ifce)
  * interface
  */
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 		GF_AUDIO_OUTPUT_INTERFACE,
@@ -271,7 +271,7 @@ const u32 *QueryInterfaces()
 GPAC_MODULE_EXPORT
 GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
-	if (InterfaceType == GF_AUDIO_OUTPUT_INTERFACE) 
+	if (InterfaceType == GF_AUDIO_OUTPUT_INTERFACE)
 		return NewOSSRender();
 	return NULL;
 }

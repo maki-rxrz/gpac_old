@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -350,12 +350,12 @@ static void AAC_OnLiveData(AACReader *read, const char *data, u32 data_size)
 			time_t now;
 			struct tm *now_tm;
 			const char *opt;
-	
+
 			opt = gf_modules_get_option((GF_BaseInterface *)read->input, "HybRadio", "AudioDelay");
 			if (opt) {
 				hybrid_delay = atof(opt);
 			}
-			time(&now); 
+			time(&now);
 			now += (s32)hybrid_delay;
 			now_tm = gmtime(&now);
 			{
@@ -364,11 +364,11 @@ static void AAC_OnLiveData(AACReader *read, const char *data, u32 data_size)
 				com.command_type = GF_NET_CHAN_MAP_TIME;
 				com.map_time.media_time = now_tm->tm_hour*3600+now_tm->tm_min*60+now_tm->tm_sec + hybrid_delay;
 				com.map_time.timestamp = read->sl_hdr.compositionTimeStamp;
-				com.map_time.reset_buffers = 0;	
+				com.map_time.reset_buffers = 0;
 				com.base.on_channel = read->ch;
 				gf_term_on_command(read->service, &com, GF_OK);
-				GF_LOG(GF_LOG_INFO, GF_LOG_MEDIA, ("[AAC  In] Mapping WC  Time %04d/%02d/%02d %02d:%02d:%02d and AAC time "LLD" (audio delay %f)\n", 
-					(now_tm->tm_year + 1900), (now_tm->tm_mon + 1), now_tm->tm_mday, now_tm->tm_hour, now_tm->tm_min, now_tm->tm_sec, 
+				GF_LOG(GF_LOG_INFO, GF_LOG_MEDIA, ("[AAC  In] Mapping WC  Time %04d/%02d/%02d %02d:%02d:%02d and AAC time "LLD" (audio delay %f)\n",
+					(now_tm->tm_year + 1900), (now_tm->tm_mon + 1), now_tm->tm_mday, now_tm->tm_hour, now_tm->tm_min, now_tm->tm_sec,
 					com.map_time.timestamp, hybrid_delay));
 
 			}
@@ -828,7 +828,7 @@ fetch_next:
 				if (read->input->query_proxy) {
 					GF_NetworkCommand param;
 					param.command_type = GF_NET_SERVICE_QUERY_NEXT;
-					if ((read->input->query_proxy(read->input, &param)==GF_OK) 
+					if ((read->input->query_proxy(read->input, &param)==GF_OK)
 						&& param.url_query.next_url
 					) {
 						fclose(read->stream);

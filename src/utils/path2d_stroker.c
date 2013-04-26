@@ -61,7 +61,7 @@ static Bool ft_conic_is_small_enough( GF_Point2D*  base, Fixed *angle_in, Fixed 
 	d2.y = base[0].y - base[1].y;
 	close1 = FT_IS_SMALL( d1.x ) && FT_IS_SMALL( d1.y );
 	close2 = FT_IS_SMALL( d2.x ) && FT_IS_SMALL( d2.y );
-	
+
 	if ( close1 ) {
 		if ( close2 )
 			*angle_in = *angle_out = 0;
@@ -126,8 +126,8 @@ static Bool ft_cubic_is_small_enough(GF_Point2D *base, Fixed *angle_in, Fixed *a
 		} else if ( close1 ) {
 			*angle_in  = *angle_mid = gf_atan2( d2.y, d2.x);
 			*angle_out = gf_atan2( d3.y, d3.x);
-		} 
-		/* close2 */ 
+		}
+		/* close2 */
 		else {
 			*angle_in  = gf_atan2(d1.y, d1.x);
 			*angle_mid = *angle_out = gf_atan2(d2.y, d2.x);
@@ -301,7 +301,7 @@ static s32 ft_stroke_border_arcto( FT_StrokeBorder  border,
 			step = FT_ARC_CUBIC_ANGLE;
 		else if ( step < -FT_ARC_CUBIC_ANGLE )
 			step = -FT_ARC_CUBIC_ANGLE;
-		
+
 		next  = angle + step;
 		theta = step;
 		if ( theta < 0 )
@@ -372,9 +372,9 @@ static s32 ft_stroke_border_get_counts(FT_StrokeBorder  border,
 			in_contour = 1;
 		} else if ( in_contour == 0 )
 			goto Fail;
-		
+
 		if ( tags[0] & FT_STROKE_TAG_END ) {
-			if ( in_contour == 0 ) 
+			if ( in_contour == 0 )
 				goto Fail;
 			in_contour = 0;
 			num_contours++;
@@ -405,7 +405,7 @@ static void ft_stroke_border_export( FT_StrokeBorder  border, GF_Path*      outl
 
 	/* copy point locations */
 	memcpy(outline->points + outline->n_points, border->points, sizeof(GF_Point2D)*border->num_points);
-	
+
 	/* copy tags */
 	{
 		u32 count = border->num_points;
@@ -613,7 +613,7 @@ static s32 ft_stroker_outside( FT_Stroker *stroker, s32 side )
 		join = GF_LINE_JOIN_MITER;
 		sin_theta = gf_sin(gf_angle_diff( stroker->angle_out - GF_PI, stroker->angle_in) / 2 );
 		if (sin_theta) {
-			inv_sin_theta = gf_invfix(sin_theta); 
+			inv_sin_theta = gf_invfix(sin_theta);
 			if (inv_sin_theta > stroker->miter_limit) join = GF_LINE_JOIN_BEVEL;
 		} else {
 			join = GF_LINE_JOIN_BEVEL;
@@ -655,7 +655,7 @@ static s32 ft_stroker_outside( FT_Stroker *stroker, s32 side )
 
 		if ( sigma >= FIX_ONE ) {
 			miter = 0;
-		} 
+		}
 
 		/* this is a miter (broken angle) */
 		if ( miter ) {
@@ -760,7 +760,7 @@ static s32 ft_stroker_subpath_start( FT_Stroker *stroker, Fixed start_angle )
 	GF_Point2D        point;
 	s32 error;
 	FT_StrokeBorder  border;
-	
+
 	delta = gf_v2d_from_polar(stroker->radius, start_angle + GF_PI2 );
 
     point.x = stroker->center.x + delta.x;
@@ -813,7 +813,7 @@ static s32 FT_Stroker_LineTo( FT_Stroker *stroker, GF_Point2D*  to, Bool is_last
 		/* process the current corner */
 		stroker->angle_out = angle;
 		error = ft_stroker_process_corner( stroker );
-		if ( error ) 
+		if ( error )
 			goto Exit;
     }
 
@@ -881,7 +881,7 @@ static s32 FT_Stroker_ConicTo(FT_Stroker *stroker, GF_Point2D*  control, GF_Poin
 
 		/* the arc's angle is small enough; we can add it directly to each */
 		/* border                                                          */
-		{        
+		{
 			GF_Point2D  ctrl, end;
 			Fixed theta, phi, rotate;
 			Fixed length;
@@ -945,7 +945,7 @@ static s32 FT_Stroker_CubicTo(FT_Stroker *stroker,
 		/* remove compiler warnings */
 		angle_in = angle_out = angle_mid = 0;
 
-		if (arc < limit && 
+		if (arc < limit &&
 			!ft_cubic_is_small_enough( arc, &angle_in, &angle_mid, &angle_out ) )
 		{
 			ft_cubic_split( arc );
@@ -1063,7 +1063,7 @@ static s32 ft_stroker_add_reverse_left( FT_Stroker *stroker, Bool     open )
 
 				if ( open )
 					dst_tag[0] &= ~( FT_STROKE_TAG_BEGIN | FT_STROKE_TAG_END );
-				else { 
+				else {
 					/* switch begin/end tags if necessary.. */
 					if ( dst_tag[0] & ( FT_STROKE_TAG_BEGIN | FT_STROKE_TAG_END ) )
 						dst_tag[0] ^= ( FT_STROKE_TAG_BEGIN | FT_STROKE_TAG_END );
@@ -1157,7 +1157,7 @@ static s32 FT_Stroker_GetCounts( FT_Stroker *stroker, u32 *anum_points, u32 *anu
     u32 count1, count2, num_points   = 0;
     u32 count3, count4, num_contours = 0;
     s32 error;
-    
+
 	error = ft_stroke_border_get_counts( stroker->borders + 0, &count1, &count2 );
 	if ( error ) goto Exit;
     error = ft_stroke_border_get_counts( stroker->borders + 1, &count3, &count4 );
@@ -1196,7 +1196,7 @@ static s32 FT_Stroker_ParseOutline(FT_Stroker *stroker, GF_Path*  outline)
 	for ( n = 0; n < outline->n_contours; n++ ) {
 	  s32 closed_subpath;
 	  s32 last;  /* index of last point in contour */
-	  
+
 	  last  = outline->contours[n];
 	  limit = outline->points + last;
 
@@ -1442,7 +1442,7 @@ static GF_Err gf_path_mergedashes(GF_Path *gp, u32 start_contour_index)
 	memmove(gp->tags + dash_first_pt, gp->tags + dash_first_pt + dash_nb_pts, sizeof(u8)*(gp->n_points - dash_first_pt));
 
 	for (i=start_contour_index; i<gp->n_contours-1; i++) {
-		gp->contours[i] = gp->contours[i+1] - dash_nb_pts; 
+		gp->contours[i] = gp->contours[i+1] - dash_nb_pts;
 	}
 	gp->n_contours--;
 	gp->contours = (u32 *)gf_realloc(gp->contours, sizeof(u32)*gp->n_contours);
@@ -1471,10 +1471,10 @@ static GF_Err evg_dash_subpath(GF_Path *dashed, GF_Point2D *pts, u32 nb_pts, GF_
 	u32 i, start_ind;
 	Fixed phase;
 	s32 offset, toggle;
-	
+
 	dists = (Fixed *)gf_malloc(sizeof (Fixed) * nb_pts);
 	if (dists == NULL) return GF_OUT_OF_MEM;
-	
+
 	/* initial values */
 	toggleinit = 1;
 	offsetinit = 0;
@@ -1533,7 +1533,7 @@ static GF_Err evg_dash_subpath(GF_Path *dashed, GF_Point2D *pts, u32 nb_pts, GF_
 		if (pen->dash_offset > dists[i]) {
 			pen->dash_offset -= dists[i];
 			dists[i] = 0;
-		} 
+		}
 		else if (pen->dash_offset) {
 			Fixed a, x, y, dx, dy;
 
@@ -1558,27 +1558,27 @@ static GF_Err evg_dash_subpath(GF_Path *dashed, GF_Point2D *pts, u32 nb_pts, GF_
 	/* subpath fits within first dash and no offset*/
 	if (!dist && totaldist <= dash) {
 		if (toggleinit) {
-			gf_path_add_move_to_vec(dashed, &pts[0]); 
+			gf_path_add_move_to_vec(dashed, &pts[0]);
 			for (i=1; i<nb_pts; i++) {
-				gf_path_add_line_to_vec(dashed, &pts[i]); 
+				gf_path_add_line_to_vec(dashed, &pts[i]);
 			}
 		}
 		gf_free(dists);
 		return GF_OK;
 	}
-	
+
 	/* subpath is composed of at least one dash */
 	phase = 0;
 	offset = offsetinit;
 	toggle = toggleinit;
 	i = start_ind;
-	
+
 	if (toggle && !dist) {
 		e = gf_path_add_move_to_vec(dashed, &pts[i]);
 		if (e) goto err_exit;
 		firstindex = dashed->n_contours - 1;
 	}
-	
+
 	while (i < nb_pts - 1) {
 		/* dash boundary is next */
 		if (dists[i] - dist > dash - phase) {
@@ -1589,7 +1589,7 @@ static GF_Err evg_dash_subpath(GF_Path *dashed, GF_Point2D *pts, u32 nb_pts, GF_
 			dy = pts[i + 1].y - pts[i].y;
 			x = pts[i].x + gf_mulfix(a, dx);
 			y = pts[i].y + gf_mulfix(a, dy);
-			
+
 			if (!toggle_check || ((x != pts[i].x) || (y != pts[i].y))) {
 				if (toggle) {
 					e = gf_path_add_line_to(dashed, x, y);
@@ -1600,7 +1600,7 @@ static GF_Err evg_dash_subpath(GF_Path *dashed, GF_Point2D *pts, u32 nb_pts, GF_
 					if (e) goto err_exit;
 				}
 			}
-			
+
 			/* advance to next dash */
 			toggle = !toggle;
 			phase = 0;
@@ -1618,7 +1618,7 @@ static GF_Err evg_dash_subpath(GF_Path *dashed, GF_Point2D *pts, u32 nb_pts, GF_
 				e = gf_path_add_line_to_vec(dashed, &pts[i]);
 				if (e) goto err_exit;
 				toggle_check = 1;
-				
+
 				if ( (firstindex>=0) && (i == (nb_pts - 1) && ((firstindex + 1) != (s32) start_ind ) ))  {
 					/*merge if closed path*/
 					if ((pts[0].x==pts[nb_pts-1].x) && (pts[0].y==pts[nb_pts-1].y)) {
@@ -1775,7 +1775,7 @@ GF_Path *gf_path_get_outline(GF_Path *path, GF_PenSettings pen)
 	if (stroker.borders[0].tags) gf_free(stroker.borders[0].tags);
 	if (stroker.borders[1].points) gf_free(stroker.borders[1].points);
 	if (stroker.borders[1].tags) gf_free(stroker.borders[1].tags);
-	
+
 	if (dashed) gf_path_del(dashed);
 	if (scaled) gf_path_del(scaled);
 

@@ -36,21 +36,21 @@ extern "C" {
 #include <gpac/html5_media.h>
 #include <gpac/internal/smjs_api.h>
 
-typedef enum 
+typedef enum
 {
     MEDIA_SOURCE_CLOSED = 0,
     MEDIA_SOURCE_OPEN   = 1,
     MEDIA_SOURCE_ENDED  = 2,
 } GF_HTML_MediaSource_ReadyState;
 
-typedef enum 
+typedef enum
 {
     MEDIA_SOURCE_ABORT_MODE_NONE            = 0,
     MEDIA_SOURCE_ABORT_MODE_CONTINUATION    = 1,
     MEDIA_SOURCE_ABORT_MODE_OFFSET          = 2,
 } GF_HTML_MediaSource_AbortMode;
 
-typedef enum 
+typedef enum
 {
     MEDIA_SOURCE_APPEND_STATE_WAITING_FOR_SEGMENT   = 0,
     MEDIA_SOURCE_APPEND_STATE_PARSING_INIT_SEGMENT  = 1,
@@ -133,9 +133,9 @@ typedef struct _html_mediasource
     /* URL created by the call to createObjectURL on this MediaSource*/
     char    *blobURI;
 
-    /* GPAC Terminal Service object 
+    /* GPAC Terminal Service object
        it is associated to this MediaSource when the Media element uses the blobURI of this MediaSource
-       should be NULL when the MediaSource is not open 
+       should be NULL when the MediaSource is not open
        we use only one service object for all sourceBuffers
        */
     GF_ClientService *service;
@@ -174,5 +174,5 @@ void gf_mse_packet_del(GF_MSE_Packet *packet);
 }
 #endif
 
-#endif	
+#endif
 

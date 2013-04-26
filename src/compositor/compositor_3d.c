@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -117,7 +117,7 @@ GF_Err compositor_3d_set_aspect_ratio(GF_Compositor *compositor)
 		return GF_OK;
 	}
 
-#if defined(GPAC_USE_TINYGL) 
+#if defined(GPAC_USE_TINYGL)
 	{
 		u32 bpp;
 		GF_VideoSurface bb;
@@ -149,12 +149,12 @@ GF_Err compositor_3d_set_aspect_ratio(GF_Compositor *compositor)
 		}
 	}
 #endif
-	
+
 	return GF_OK;
 }
 
 
-GF_Camera *compositor_3d_get_camera(GF_Compositor *compositor) 
+GF_Camera *compositor_3d_get_camera(GF_Compositor *compositor)
 {
 #ifndef GPAC_DISABLE_VRML
 	if (compositor->active_layer) {
@@ -189,12 +189,12 @@ void compositor_3d_draw_bitmap(Drawable *stack, DrawAspect2D *asp, GF_TraverseSt
 	GF_Compositor *compositor = tr_state->visual->compositor;
 	Bool use_texture = !compositor->bitmap_use_pixels;
 
-	if (!asp->fill_texture) 
+	if (!asp->fill_texture)
 		return;
 	txh = asp->fill_texture;
-	if (!txh || !txh->tx_io || !txh->width || !txh->height) 
+	if (!txh || !txh->tx_io || !txh->width || !txh->height)
 		return;
-	
+
 	if (((txh->pixelformat==GF_PIXEL_RGBD) || (txh->pixelformat==GF_PIXEL_YUVD))) {
 		if (compositor->depth_gl_type) {
 			if (txh->data && gf_sc_texture_convert(txh) )
@@ -203,14 +203,14 @@ void compositor_3d_draw_bitmap(Drawable *stack, DrawAspect2D *asp, GF_TraverseSt
 		} else {
 			use_texture = 1;
 		}
-	}	
+	}
 
 	alpha = GF_COL_A(asp->fill_color);
 	/*THIS IS A HACK, will not work when setting filled=0, transparency and XLineProps*/
 	if (!alpha) alpha = GF_COL_A(asp->line_color);
 
 	/*texture is available in hw, use it - if blending, force using texture*/
-	if (!gf_sc_texture_needs_reload(txh) || (alpha != 0xFF) || use_texture 
+	if (!gf_sc_texture_needs_reload(txh) || (alpha != 0xFF) || use_texture
 #ifdef GF_SR_USE_DEPTH
 		|| tr_state->depth_offset
 #endif
@@ -238,7 +238,7 @@ void compositor_3d_draw_bitmap(Drawable *stack, DrawAspect2D *asp, GF_TraverseSt
 					stack->mesh = new_mesh();
 					mesh_new_rectangle(stack->mesh, size, NULL, 0);
 				}
-			} 
+			}
 			if (stack->mesh) {
 #ifdef GF_SR_USE_DEPTH
 				if (tr_state->depth_offset) {
@@ -254,7 +254,7 @@ void compositor_3d_draw_bitmap(Drawable *stack, DrawAspect2D *asp, GF_TraverseSt
 							offset = gf_divfix(offset, tr_state->visual->depth_vp_range/2);
 						}
 						gf_mx_add_translation(&mx, 0, 0, gf_mulfix(offset, disp_depth/2) );
-						
+
 						visual_3d_matrix_push(tr_state->visual);
 						visual_3d_matrix_add(tr_state->visual, mx.m);
 						visual_3d_mesh_paint(tr_state, stack->mesh);
@@ -262,7 +262,7 @@ void compositor_3d_draw_bitmap(Drawable *stack, DrawAspect2D *asp, GF_TraverseSt
 					} else {
 						visual_3d_mesh_paint(tr_state, stack->mesh);
 					}
-				} else 
+				} else
 #endif
 					visual_3d_mesh_paint(tr_state, stack->mesh);
 			}

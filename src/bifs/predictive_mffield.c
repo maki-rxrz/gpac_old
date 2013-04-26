@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -42,7 +42,7 @@ typedef struct
 	SFVec3f BMin, BMax;
 
 	s32 direction, orientation, inverse;
-	
+
 	u32 cur_field;
 
 	GF_AAModel *models[3];
@@ -91,7 +91,7 @@ GF_Err PMF_UnquantizeNormal(PredMF *pmf, GF_FieldInfo *field)
     delta = gf_divfix(pmf->direction, gf_sqrt(delta) );
 
     comp[(pmf->orientation) % 3] = delta;
-    for (i=0; i<2; i++) 
+    for (i=0; i<2; i++)
 		comp[(pmf->orientation + i+1)%3] = gf_mulfix(tang[i], delta);
 
 	gf_sg_vrml_mf_get_item(field->far_ptr, field->fieldType, &slot, pmf->cur_field);
@@ -117,9 +117,9 @@ GF_Err PMF_UnquantizeRotation(PredMF *pmf, GF_FieldInfo *field)
     delta = gf_divfix(pmf->direction , gf_sqrt(delta) );
 
     comp[(pmf->orientation)%4] = delta;
-    for (i=0; i<3; i++) 
+    for (i=0; i<3; i++)
 		comp[(pmf->orientation + i+1)%4] = gf_mulfix(tang[i], delta);
-  
+
 	gf_sg_vrml_mf_get_item(field->far_ptr, field->fieldType, &slot, pmf->cur_field);
 	delta = 2 * gf_acos(comp[0]);
 	sine = gf_sin(delta / 2);
@@ -230,7 +230,7 @@ GF_Err PMF_ParsePValue(PredMF *pmf, GF_BitStream *bs, GF_FieldInfo *field)
 					temp_val[i] = inv * ( pmf->previous_val[i] + pmf->current_val[i]);
 				}
 				k = diff_ori - 1;
-				temp_val[pmf->num_comp - diff_ori] = inv * 2 * (shift - 1) - (pmf->previous_val[k] + pmf->current_val[k]) ; 
+				temp_val[pmf->num_comp - diff_ori] = inv * 2 * (shift - 1) - (pmf->previous_val[k] + pmf->current_val[k]) ;
 				for (i = pmf->num_comp - diff_ori + 1; i<pmf->num_comp; i++) {
 					k = (i+diff_ori-1) % pmf->num_comp;
 					temp_val[i] = inv * (pmf->previous_val[k] + pmf->current_val[k]);
@@ -238,7 +238,7 @@ GF_Err PMF_ParsePValue(PredMF *pmf, GF_BitStream *bs, GF_FieldInfo *field)
 			}
 			pmf->orientation = (pmf->orientation + diff_ori) % (pmf->num_comp + 1);
 			pmf->direction = diff_dir * inv;
-			for (i=0; i< pmf->num_comp; i++) 
+			for (i=0; i< pmf->num_comp; i++)
 				pmf->current_val[i]= temp_val[i] + shift;
 		}
 		break;
@@ -309,14 +309,14 @@ GF_Err gf_bifs_dec_pred_mf_field(GF_BifsDecoder *codec, GF_BitStream *bs, GF_Nod
 	Fixed b_min, b_max;
 	u32 i, flag;
 	PredMF pmf;
-	
+
 	memset(&pmf, 0, sizeof(PredMF));
-	
+
 	HasQ = gf_bifs_get_aq_info(node, field->fieldIndex, &pmf.QType, &AType, &b_min, &b_max, &pmf.QNbBits);
 	if (!HasQ || !pmf.QType) return GF_EOS;
 
 	/*get NbBits for QP14 (QC_COORD_INDEX)*/
-	if (pmf.QType == QC_COORD_INDEX) 
+	if (pmf.QType == QC_COORD_INDEX)
 		pmf.QNbBits = gf_bifs_dec_qp14_get_bits(codec);
 
 	pmf.BMin.x = pmf.BMin.y = pmf.BMin.z = b_min;
@@ -324,7 +324,7 @@ GF_Err gf_bifs_dec_pred_mf_field(GF_BifsDecoder *codec, GF_BitStream *bs, GF_Nod
 
 	/*check is the QP is on and retrieves the bounds*/
 	if (!Q_IsTypeOn(codec->ActiveQP, pmf.QType, &pmf.QNbBits, &pmf.BMin, &pmf.BMax)) return GF_EOS;
-	
+
 	switch (field->fieldType) {
 	case GF_SG_VRML_MFCOLOR:
 	case GF_SG_VRML_MFVEC3F:

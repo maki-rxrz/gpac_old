@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -347,7 +347,7 @@ static void composite_update(GF_TextureHandler *txh)
 			if (st->tgl_ctx) ostgl_delete_context(st->tgl_ctx);
 #endif
 			gf_sc_texture_release(txh);
-			if (txh->data) 
+			if (txh->data)
 				gf_free(txh->data);
 			txh->data = NULL;
 		}
@@ -435,7 +435,7 @@ static void composite_update(GF_TextureHandler *txh)
 		if (needs_stencil) {
 			txh->data = (char*)gf_malloc(sizeof(unsigned char) * txh->stride * txh->height);
 			memset(txh->data, 0, sizeof(unsigned char) * txh->stride * txh->height);
-			
+
 			/*set stencil texture - we don't check error as an image could not be supported by the rasterizer
 			but still supported by the blitter (case of RGBD/RGBDS)*/
 			raster->stencil_set_texture(stencil, txh->data, txh->width, txh->height, txh->stride, txh->pixelformat, txh->pixelformat, 0);
@@ -486,7 +486,7 @@ static void composite_update(GF_TextureHandler *txh)
 	txh->transparent = (st->visual->last_had_back==2) ? 0 : 1;
 
 
-	if (!compositor->edited_text && st->visual->has_text_edit) 
+	if (!compositor->edited_text && st->visual->has_text_edit)
 		st->visual->has_text_edit = 0;
 
 
@@ -726,7 +726,7 @@ Bool compositor_compositetexture_handle_event(GF_Compositor *compositor, GF_Node
 	world_pt = compositor->hit_world_point;
 	gf_mx_copy(l2w_mx, compositor->hit_local_to_world);
 	gf_mx_copy(w2l_mx, compositor->hit_world_to_local);
-	
+
 	if (compositor->text_selection) had_text_sel=1;
 
 	if (is_flush) {
@@ -820,7 +820,7 @@ Bool compositor_is_composite_texture(GF_Node *appear)
 	u32 tag;
 	if (!appear) return 0;
 	tag = gf_node_get_tag(appear);
-	if ((tag==TAG_MPEG4_Appearance) 
+	if ((tag==TAG_MPEG4_Appearance)
 #ifndef GPAC_DISABLE_X3D
 		|| (tag==TAG_X3D_Appearance)
 #endif

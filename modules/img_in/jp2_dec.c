@@ -1,7 +1,7 @@
 /*
 *			GPAC - Multimedia Framework C SDK
 *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
 *					All rights reserved
 *
@@ -11,15 +11,15 @@
 *  it under the terms of the GNU Lesser General Public License as published by
 *  the Free Software Foundation; either version 2, or (at your option)
 *  any later version.
-*   
+*
 *  GPAC is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 *  GNU Lesser General Public License for more details.
-*   
+*
 *  You should have received a copy of the GNU Lesser General Public
 *  License along with this library; see the file COPYING.  If not, write to
-*  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+*  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
 
@@ -98,7 +98,7 @@ static GF_Err JP2_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 
 		ctx->nb_comp = 3;
 		ctx->out_size = 3*ctx->width*ctx->height/2;
-		ctx->pixel_format = GF_PIXEL_YV12; 
+		ctx->pixel_format = GF_PIXEL_YV12;
 	}
 
 	return GF_OK;
@@ -165,21 +165,21 @@ static GF_Err JP2_SetCapabilities(GF_BaseDecoder *ifcg, GF_CodecCapability capab
 /**
 sample error callback expecting a FILE* client object
 */
-void error_callback(const char *msg, void *client_data) 
+void error_callback(const char *msg, void *client_data)
 {
 	GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[OpenJPEG] Error %s", msg));
 }
 /**
 sample warning callback expecting a FILE* client object
 */
-void warning_callback(const char *msg, void *client_data) 
+void warning_callback(const char *msg, void *client_data)
 {
 	GF_LOG(GF_LOG_WARNING, GF_LOG_CODEC, ("[OpenJPEG] Warning %s", msg));
 }
 /**
 sample debug callback expecting no client object
 */
-void info_callback(const char *msg, void *client_data) 
+void info_callback(const char *msg, void *client_data)
 {
 	GF_LOG(GF_LOG_INFO, GF_LOG_CODEC, ("[OpenJPEG] Info %s", msg));
 }
@@ -193,7 +193,7 @@ static int int_ceildivpow2(int a, int b) {
 	return (a + (1 << b) - 1) >> b;
 }
 
-static GF_Err JP2_ProcessData(GF_MediaDecoder *ifcg, 
+static GF_Err JP2_ProcessData(GF_MediaDecoder *ifcg,
 							  char *inBuffer, u32 inBufferLength,
 							  u16 ES_ID,
 							  char *outBuffer, u32 *outBufferLength,
@@ -402,7 +402,7 @@ static GF_Err JP2_ProcessData(GF_MediaDecoder *ifcg,
 					}
 				}
 		}
-	}	
+	}
 
 	/* gf_free( image data structure */
 	if (ctx->image) {
@@ -432,7 +432,7 @@ Bool NewJP2Dec(GF_BaseDecoder *ifcd)
 	wrap->opaque = dec;
 	wrap->type = DEC_JPEG;
 
-	/*setup our own interface*/	
+	/*setup our own interface*/
 	ifcd->AttachStream = JP2_AttachStream;
 	ifcd->DetachStream = JP2_DetachStream;
 	ifcd->GetCapabilities = JP2_GetCapabilities;

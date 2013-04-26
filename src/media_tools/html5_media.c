@@ -69,10 +69,10 @@ Bool html_media_tracklist_has_track(GF_HTML_TrackList *tracklist, const char *id
     GF_HTML_Track *track;
     u32 i, count;
     count = gf_list_count(tracklist->tracks);
-    for (i = 0; i < count; i++) 
+    for (i = 0; i < count; i++)
     {
         track = (GF_HTML_Track *)gf_list_get(tracklist->tracks, i);
-        if (!strcmp(id, track->id)) 
+        if (!strcmp(id, track->id))
         {
             return 1;
         }
@@ -85,10 +85,10 @@ GF_HTML_Track *html_media_tracklist_get_track(GF_HTML_TrackList *tracklist, cons
     GF_HTML_Track *track = NULL;
     u32 i, count;
     count = gf_list_count(tracklist->tracks);
-    for (i = 0; i < count; i++) 
+    for (i = 0; i < count; i++)
     {
         track = (GF_HTML_Track *)gf_list_get(tracklist->tracks, i);
-        if (!strcmp(id, track->id)) 
+        if (!strcmp(id, track->id))
         {
             return track;
         }
@@ -149,7 +149,7 @@ GF_HTML_MediaElement *gf_html_media_element_new(GF_Node *media_node, GF_HTML_Med
     GF_HTML_MediaElement *me;
     GF_SAFEALLOC(me, GF_HTML_MediaElement);
     me->node                    = media_node;
-    me->controller              = mc; 
+    me->controller              = mc;
     me->audioTracks.tracks      = gf_list_new();
     me->videoTracks.tracks      = gf_list_new();
     me->textTracks.tracks       = gf_list_new();

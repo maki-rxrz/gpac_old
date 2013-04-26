@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -36,7 +36,7 @@ GF_EXPORT
 GF_SceneManager *gf_sm_new(GF_SceneGraph *graph)
 {
 	GF_SceneManager *tmp;
-	
+
 	if (!graph) return NULL;
 	GF_SAFEALLOC(tmp, GF_SceneManager);
 	tmp->streams = gf_list_new();
@@ -62,7 +62,7 @@ GF_StreamContext *gf_sm_stream_new(GF_SceneManager *ctx, u16 ES_ID, u8 streamTyp
 			return tmp;
 		}
 	}
-	
+
 	GF_SAFEALLOC(tmp, GF_StreamContext);
 	tmp->AUs = gf_list_new();
 	tmp->ESID = ES_ID;
@@ -196,7 +196,7 @@ GF_AUContext *gf_sm_stream_au_new(GF_StreamContext *stream, u64 timing, Double t
 			    return tmp;
 		    }
 	    }
-    } 
+    }
 	GF_SAFEALLOC(tmp, GF_AUContext);
 	tmp->commands = gf_list_new();
 	if (isRap) tmp->flags = GF_SM_AU_RAP;
@@ -452,7 +452,7 @@ GF_Err gf_sm_aggregate(GF_SceneManager *ctx, u16 ESID)
 					/*if stream doesn't carry a carousel or carries the base carousel (scene replace), always apply the command*/
 					if (base_stream_found || !sc->aggregate_on_esid) {
 						store = 0;
-					} 
+					}
 					/*otherwise, check wether the command should be kept in this stream as is, or can be aggregated on this stream*/
 					else {
 						switch (com->tag) {
@@ -474,9 +474,9 @@ GF_Err gf_sm_aggregate(GF_SceneManager *ctx, u16 ESID)
 //						case GF_SG_LSR_DEACTIVATE:
 							store = 1;
 							break;
-						/*other commands: 
+						/*other commands:
 							!!! we need to know if the target node of the command has been inserted in this stream !!!
-						
+
 						This is a tedious task, for now we will consider the following cases:
 							- locate a similar command in the stored list: remove the similar one and aggregate on stream
 							- by default all AUs are stored if the stream is in aggregate mode - we should fix that by checking insertion points:
@@ -539,7 +539,7 @@ GF_Err gf_sm_aggregate(GF_SceneManager *ctx, u16 ESID)
 					gf_list_del(com->new_proto_list);
 					com->new_proto_list = ctx->scene_graph->protos;
 					ctx->scene_graph->protos = NULL;
-					/*indicate the command is the aggregated scene graph, so that PROTOs and ROUTEs 
+					/*indicate the command is the aggregated scene graph, so that PROTOs and ROUTEs
 					are taken from the scenegraph when encoding*/
 					com->aggregated = 1;
 					gf_list_add(au->commands, com);
@@ -564,7 +564,7 @@ GF_Err gf_sm_aggregate(GF_SceneManager *ctx, u16 ESID)
 
 #ifndef GPAC_DISABLE_LOADER_BT
 GF_Err gf_sm_load_init_bt(GF_SceneLoader *load);
-#endif 
+#endif
 
 #ifndef GPAC_DISABLE_LOADER_XMT
 GF_Err gf_sm_load_init_xmt(GF_SceneLoader *load);
@@ -614,7 +614,7 @@ GF_Err gf_sm_load_init(GF_SceneLoader *load)
 	GF_Err e = GF_NOT_SUPPORTED;
 	char *ext, szExt[50];
 	/*we need at least a scene graph*/
-	if (!load || (!load->ctx && !load->scene_graph) 
+	if (!load || (!load->ctx && !load->scene_graph)
 #ifndef GPAC_DISABLE_ISOM
 		|| (!load->fileName && !load->isom && !(load->flags & GF_SM_LOAD_FOR_PLAYBACK) )
 #endif
@@ -624,7 +624,7 @@ GF_Err gf_sm_load_init(GF_SceneLoader *load)
 #ifndef GPAC_DISABLE_ISOM
 		if (load->isom) {
 			load->type = GF_SM_LOAD_MP4;
-		} else 
+		} else
 #endif
 		{
 			ext = strrchr(load->fileName, '.');
@@ -669,7 +669,7 @@ GF_Err gf_sm_load_init(GF_SceneLoader *load)
 
 	switch (load->type) {
 #ifndef GPAC_DISABLE_LOADER_BT
-	case GF_SM_LOAD_BT: 
+	case GF_SM_LOAD_BT:
 	case GF_SM_LOAD_VRML:
 	case GF_SM_LOAD_X3DV:
 		return gf_sm_load_init_bt(load);
@@ -687,7 +687,7 @@ GF_Err gf_sm_load_init(GF_SceneLoader *load)
 	case GF_SM_LOAD_DIMS:
 		return gf_sm_load_init_svg(load);
 
-	case GF_SM_LOAD_XBL: 
+	case GF_SM_LOAD_XBL:
 		e = gf_sm_load_init_xbl(load);
 
 		load->process = gf_sm_load_run_xbl;;
@@ -696,7 +696,7 @@ GF_Err gf_sm_load_init(GF_SceneLoader *load)
 #endif
 
 #ifndef GPAC_DISABLE_SWF_IMPORT
-	case GF_SM_LOAD_SWF: 
+	case GF_SM_LOAD_SWF:
 		return gf_sm_load_init_swf(load);
 #endif
 
@@ -706,7 +706,7 @@ GF_Err gf_sm_load_init(GF_SceneLoader *load)
 #endif
 
 #ifndef GPAC_DISABLE_QTVR
-	case GF_SM_LOAD_QT: 
+	case GF_SM_LOAD_QT:
 		return gf_sm_load_init_qt(load);
 #endif
 
@@ -740,7 +740,7 @@ void gf_sm_update_bitwrapper_buffer(GF_Node *node, const char *fileName)
 {
 	u32 data_size = 0;
 	char *data = NULL;
-	char *buffer; 
+	char *buffer;
 	M_BitWrapper *bw = (M_BitWrapper *)node;
 
 	if (!bw->buffer.buffer) return;
@@ -769,11 +769,11 @@ void gf_sm_update_bitwrapper_buffer(GF_Node *node, const char *fileName)
 			base_64 = strstr(bw->buffer.buffer, ";base64") ? 1 : 0;
 			if (sep) buffer = sep+1;
 		}
-			
+
 		if (base_64) {
 			data_size = 2 * (u32) strlen(buffer);
 			data = (char*)gf_malloc(sizeof(char)*data_size);
-			if (data) 
+			if (data)
 				data_size = gf_base64_decode(buffer, (u32) strlen(buffer), data, data_size);
 		} else {
 			u32 i, c;

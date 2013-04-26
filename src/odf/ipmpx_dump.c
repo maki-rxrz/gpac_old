@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -410,7 +410,7 @@ GF_Err gf_ipmpx_dump_MutualAuthentication(GF_IPMPX_Data *_p, FILE *trace, u32 in
 	}
 	indent--;
 	EndList(trace, "candidateAlgorithms", indent, XMTDump);
-	
+
 	StartList(trace, "agreedAlgorithms", indent, XMTDump);
 	count = gf_list_count(p->agreedAlgorithms);
 	indent++;
@@ -774,7 +774,7 @@ GF_Err gf_ipmpx_dump_SelectiveDecryptionInit(GF_IPMPX_Data *_p, FILE *trace, u32
 				DumpInt(trace, "keySize", sb->keySize, indent, XMTDump);
 			}
 			EndAttributes(trace, XMTDump, 1);
-			if (sb->Stream_Cipher_Specific_Init_Info) 
+			if (sb->Stream_Cipher_Specific_Init_Info)
 				gf_ipmpx_dump_ByteArray(sb->Stream_Cipher_Specific_Init_Info, "StreamCipher", trace, indent, XMTDump);
 
 			indent--;
@@ -797,7 +797,7 @@ GF_Err gf_ipmpx_dump_SelectiveDecryptionInit(GF_IPMPX_Data *_p, FILE *trace, u32
 			DumpInt(trace, "buf", sf->buf, indent, XMTDump);
 			if (sf->mappingTable) DumpData_16(trace, "mappingTable", sf->mappingTable, sf->mappingTableSize, indent, XMTDump);
 			EndAttributes(trace, XMTDump, 1);
-			if (sf->shuffleSpecificInfo) 
+			if (sf->shuffleSpecificInfo)
 				gf_ipmpx_dump_ByteArray(sf->shuffleSpecificInfo, "shuffleSpecificInfo", trace, indent, XMTDump);
 
 			indent--;
@@ -852,11 +852,11 @@ GF_Err gf_ipmpx_dump_data(GF_IPMPX_Data *_p, FILE *trace, u32 indent, Bool XMTDu
 	case GF_IPMPX_CAN_PROCESS_TAG: return gf_ipmpx_dump_CanProcess(_p, trace, indent, XMTDump);
 	case GF_IPMPX_ISMACRYP_TAG: return gf_ipmpx_dump_ISMACryp(_p, trace, indent, XMTDump);
 	case GF_IPMPX_TOOL_API_CONFIG_TAG: return gf_ipmpx_dump_ToolAPI_Config(_p, trace, indent, XMTDump);
-	case GF_IPMPX_AUDIO_WM_INIT_TAG: 
-	case GF_IPMPX_VIDEO_WM_INIT_TAG: 
+	case GF_IPMPX_AUDIO_WM_INIT_TAG:
+	case GF_IPMPX_VIDEO_WM_INIT_TAG:
 		return gf_ipmpx_dump_WatermarkingInit(_p, trace, indent, XMTDump);
-	case GF_IPMPX_AUDIO_WM_SEND_TAG: 
-	case GF_IPMPX_VIDEO_WM_SEND_TAG: 
+	case GF_IPMPX_AUDIO_WM_SEND_TAG:
+	case GF_IPMPX_VIDEO_WM_SEND_TAG:
 		return gf_ipmpx_dump_SendWatermark(_p, trace, indent, XMTDump);
 	case GF_IPMPX_SEL_DEC_INIT_TAG: return gf_ipmpx_dump_SelectiveDecryptionInit(_p, trace, indent, XMTDump);
 

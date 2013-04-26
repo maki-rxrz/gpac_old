@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,17 +11,17 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *		
+ *
  */
 
 #include "fileprops.h"
@@ -44,7 +44,7 @@ wxFileProps::wxFileProps(wxWindow *parent)
 	assert(m_pApp->m_pPlayList);
 
 	m_pTreeView = new wxTreeCtrl(this, ID_TREE_VIEW, wxPoint(4, 2), wxSize(200, 180), wxTR_DEFAULT_STYLE | wxSUNKEN_BORDER);
-	
+
 	new wxStaticText(this, 0, _T("Information"), wxPoint(210, 2), wxSize(60, 20));
     m_pViewSel = new wxComboBox(this, ID_VIEW_SEL, _T(""), wxPoint(280, 2), wxSize(120, 24), 0, NULL, wxCB_READONLY);
 	m_pViewSel->Append(wxT("General"));
@@ -193,10 +193,10 @@ void wxFileProps::SetGeneralInfo()
 		info += wxT("Service Handler: ") + wxString(odi.service_handler, wxConvUTF8) + wxT("\n");
 		info += wxT("Service URL: ") + wxString(odi.service_url, wxConvUTF8) + wxT("\n");
 	}
-	
+
 	if (odi.od->URLString) {
 		info += wxT("Remote OD - URL: ") + wxString(odi.od->URLString, wxConvUTF8) + wxT("\n");
-	} 
+	}
 
 	if (odi.codec_name) {
 		switch (odi.od_type) {
@@ -227,8 +227,8 @@ void wxFileProps::SetGeneralInfo()
 			break;
 		}
 	}
-	if (odi.protection==2) info += wxT("Encrypted Media NOT UNLOCKED"); 
-	else if (odi.protection==1) info += wxT("Encrypted Media"); 
+	if (odi.protection==2) info += wxT("Encrypted Media NOT UNLOCKED");
+	else if (odi.protection==1) info += wxT("Encrypted Media");
 
 	if (!gf_list_count(odi.od->OCIDescriptors)) {
 		m_pViewInfo->Clear();
@@ -307,7 +307,7 @@ void wxFileProps::SetStreamsInfo()
 
 	for (i=0; i<count; i++) {
 		GF_ESD *esd = (GF_ESD *) gf_list_get(odi.od->ESDescriptors, i);
-		
+
 		info += wxString::Format(wxT("Stream ID %d - Clock ID %d\n"), esd->ESID, esd->OCRESID);
 		if (esd->dependsOnESID) {
 			info += wxString::Format(wxT("\tDepends on Stream ID %d for decoding\n"), esd->dependsOnESID);
@@ -344,8 +344,8 @@ void wxFileProps::SetStreamsInfo()
 				code[4] = 0;
 				info += wxT("GPAC Intern (") + wxString(code, wxConvUTF8) + wxT(")\n");
 				break;
-			default: 
-				info += wxString::Format(wxT("Private/Unknown Type (0x%x)\n"), esd->decoderConfig->objectTypeIndication); 
+			default:
+				info += wxString::Format(wxT("Private/Unknown Type (0x%x)\n"), esd->decoderConfig->objectTypeIndication);
 				break;
 			}
 			break;
@@ -367,8 +367,8 @@ void wxFileProps::SetStreamsInfo()
 				code[4] = 0;
 				info += wxT("GPAC Intern (") + wxString(code, wxConvUTF8) + wxT(")\n");
 				break;
-			default: 
-				info += wxString::Format(wxT("Private/Unknown Type (0x%x)\n"), esd->decoderConfig->objectTypeIndication); 
+			default:
+				info += wxString::Format(wxT("Private/Unknown Type (0x%x)\n"), esd->decoderConfig->objectTypeIndication);
 				break;
 			}
 			break;
@@ -398,7 +398,7 @@ void wxFileProps::SetStreamsInfo()
 		} else {
 			info += wxString::Format(wxT("\tStream Clock Resolution %d\n"), esd->slConfig->timestampResolution);
 		}
-		if (esd->URLString) 
+		if (esd->URLString)
 			info += wxT("\tStream Location: ") + wxString(esd->URLString, wxConvUTF8) + wxT("\n");
 
 		/*check language*/
@@ -476,13 +476,13 @@ void wxFileProps::SetDecoderInfo()
 	/*get DB occupation*/
 	if (odi.buffer>=0) info += wxString::Format(wxT("Decoding Buffer: %d Access Units\n"), odi.db_unit_count);
 	/*get CB occupation*/
-	if (odi.cb_max_count) 
+	if (odi.cb_max_count)
 		info += wxString::Format(wxT("Composition Memory: %d/%d Units\n"), odi.cb_unit_count, odi.cb_max_count);
 
 	Float avg_dec_time = 0;
 	if (odi.nb_dec_frames) {
-		avg_dec_time = (Float) odi.total_dec_time; 
-		avg_dec_time /= odi.nb_dec_frames; 
+		avg_dec_time = (Float) odi.total_dec_time;
+		avg_dec_time /= odi.nb_dec_frames;
 	}
 	info += wxString::Format(wxT("Average Bitrate %d kbps (%d max)\nAverage Decoding Time %.2f ms (%d max)\nTotal decoded frames %d - %d dropped\n"),
 								(u32) odi.avg_bitrate/1024, odi.max_bitrate/1024, avg_dec_time, odi.max_dec_time, odi.nb_dec_frames, odi.nb_droped);
@@ -553,7 +553,7 @@ void wxFileProps::SetNetworkInfo()
 }
 
 
-void wxFileProps::OnViewWorld(wxCommandEvent &WXUNUSED(event)) 
+void wxFileProps::OnViewWorld(wxCommandEvent &WXUNUSED(event))
 {
 	wxString wit;
 	const char *str;
@@ -576,7 +576,7 @@ void wxFileProps::OnViewWorld(wxCommandEvent &WXUNUSED(event))
 	gf_list_del(descs);
 }
 
-void wxFileProps::OnViewSG(wxCommandEvent &WXUNUSED(event)) 
+void wxFileProps::OnViewSG(wxCommandEvent &WXUNUSED(event))
 {
 	const char *sOpt;
 	Bool dump_xmt;

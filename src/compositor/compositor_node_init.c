@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -51,33 +51,33 @@ void gf_sc_on_node_init(GF_Compositor *compositor, GF_Node *node)
 	case TAG_MPEG4_AnimationStream: compositor_init_animationstream(compositor, node); break;
 	case TAG_MPEG4_AudioBuffer: compositor_init_audiobuffer(compositor, node); break;
 	case TAG_MPEG4_AudioSource: compositor_init_audiosource(compositor, node); break;
-	case TAG_MPEG4_AudioClip: 
+	case TAG_MPEG4_AudioClip:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_AudioClip: 
+	case TAG_X3D_AudioClip:
 #endif
 		compositor_init_audioclip(compositor, node); break;
-	case TAG_MPEG4_TimeSensor: 
+	case TAG_MPEG4_TimeSensor:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_TimeSensor: 
+	case TAG_X3D_TimeSensor:
 #endif
 		compositor_init_timesensor(compositor, node); break;
-	case TAG_MPEG4_ImageTexture: 
+	case TAG_MPEG4_ImageTexture:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_ImageTexture: 
+	case TAG_X3D_ImageTexture:
 #endif
-	case TAG_MPEG4_CacheTexture: 
+	case TAG_MPEG4_CacheTexture:
 		compositor_init_imagetexture(compositor, node); break;
 
-	case TAG_MPEG4_PixelTexture: 
+	case TAG_MPEG4_PixelTexture:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_PixelTexture: 
+	case TAG_X3D_PixelTexture:
 #endif
 		compositor_init_pixeltexture(compositor, node); break;
-	case TAG_MPEG4_MovieTexture: 
+	case TAG_MPEG4_MovieTexture:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_MovieTexture: 
+	case TAG_X3D_MovieTexture:
 #endif
-		compositor_init_movietexture(compositor, node); break;		
+		compositor_init_movietexture(compositor, node); break;
 
 	case TAG_MPEG4_Background2D: compositor_init_background2d(compositor, node); break;
 	case TAG_MPEG4_Bitmap: compositor_init_bitmap(compositor, node); break;
@@ -96,7 +96,7 @@ void gf_sc_on_node_init(GF_Compositor *compositor, GF_Node *node)
 
 	case TAG_MPEG4_IndexedLineSet2D: compositor_init_indexed_line_set2d(compositor, node); break;
 	case TAG_MPEG4_IndexedFaceSet2D: compositor_init_indexed_face_set2d(compositor, node); break;
-		
+
 	case TAG_MPEG4_Sound2D: compositor_init_sound2d(compositor, node); break;
 
 	case TAG_MPEG4_LinearGradient: compositor_init_linear_gradient(compositor, node); break;
@@ -109,47 +109,47 @@ void gf_sc_on_node_init(GF_Compositor *compositor, GF_Node *node)
 	case TAG_MPEG4_Layer2D: compositor_init_layer2d(compositor, node); break;
 	case TAG_MPEG4_Layout: compositor_init_layout(compositor, node); break;
 	case TAG_MPEG4_PathLayout: compositor_init_path_layout(compositor, node); break;
-		
-		
+
+
 	/*sensors*/
-	case TAG_MPEG4_Anchor: 
+	case TAG_MPEG4_Anchor:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Anchor: 
+	case TAG_X3D_Anchor:
 #endif
 		compositor_init_anchor(compositor, node); break;
 	case TAG_MPEG4_DiscSensor: compositor_init_disc_sensor(compositor, node); break;
 	case TAG_MPEG4_PlaneSensor2D: compositor_init_plane_sensor2d(compositor, node); break;
 	case TAG_MPEG4_ProximitySensor2D: compositor_init_proximity_sensor2d(compositor, node); break;
-	case TAG_MPEG4_TouchSensor: 
+	case TAG_MPEG4_TouchSensor:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_TouchSensor: 
+	case TAG_X3D_TouchSensor:
 #endif
 		compositor_init_touch_sensor(compositor, node); break;
 
-	case TAG_MPEG4_Group: 
+	case TAG_MPEG4_Group:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Group: 
+	case TAG_X3D_Group:
 #endif
 		compositor_init_group(compositor, node); break;
-	case TAG_MPEG4_Rectangle: 
+	case TAG_MPEG4_Rectangle:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Rectangle2D: 
+	case TAG_X3D_Rectangle2D:
 #endif
 		compositor_init_rectangle(compositor, node); break;
-	case TAG_MPEG4_Shape: 
+	case TAG_MPEG4_Shape:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Shape: 
+	case TAG_X3D_Shape:
 #endif
 		compositor_init_shape(compositor, node); break;
-	case TAG_MPEG4_Switch: 
+	case TAG_MPEG4_Switch:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Switch: 
+	case TAG_X3D_Switch:
 #endif
 		compositor_init_switch(compositor, node); break;
 
-	case TAG_MPEG4_Text: 
+	case TAG_MPEG4_Text:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Text: 
+	case TAG_X3D_Text:
 #endif
 		compositor_init_text(compositor, node); break;
 
@@ -316,7 +316,7 @@ void gf_sc_on_node_init(GF_Compositor *compositor, GF_Node *node)
 		break;
 
 	case TAG_MPEG4_Layer3D:
-		compositor_init_layer3d(compositor, node); 
+		compositor_init_layer3d(compositor, node);
 		break;
 	case TAG_MPEG4_CompositeTexture3D:
 		compositor_init_compositetexture3d(compositor, node);
@@ -376,7 +376,7 @@ void gf_sc_on_node_init(GF_Compositor *compositor, GF_Node *node)
 	case TAG_SVG_tspan:				compositor_init_svg_tspan(compositor, node); break;
 	case TAG_SVG_textArea:			compositor_init_svg_textarea(compositor, node); break;
 	case TAG_SVG_tbreak:			compositor_init_svg_tbreak(compositor, node); break;
-		
+
 	case TAG_SVG_image:				compositor_init_svg_image(compositor, node); break;
 	case TAG_SVG_video:				compositor_init_svg_video(compositor, node); break;
 	case TAG_SVG_audio:				compositor_init_svg_audio(compositor, node, 0); break;
@@ -385,7 +385,7 @@ void gf_sc_on_node_init(GF_Compositor *compositor, GF_Node *node)
 	case TAG_SVG_font_face:			compositor_init_svg_font(compositor, node); break;
 	case TAG_SVG_missing_glyph:
 	case TAG_SVG_glyph:
-		compositor_init_svg_glyph(compositor, node); 
+		compositor_init_svg_glyph(compositor, node);
 		break;
 	case TAG_SVG_font_face_uri:
 		compositor_init_svg_font_face_uri(compositor, node); break;
@@ -400,11 +400,11 @@ void gf_sc_on_node_init(GF_Compositor *compositor, GF_Node *node)
 #endif
 
 
-	case TAG_MPEG4_SBVCAnimation:			
-		compositor_init_afx_node(compositor, node, & ((M_SBVCAnimation *)node)->url); 
+	case TAG_MPEG4_SBVCAnimation:
+		compositor_init_afx_node(compositor, node, & ((M_SBVCAnimation *)node)->url);
 		break;
-	case TAG_MPEG4_BitWrapper:			
-		compositor_init_afx_node(compositor, node, & ((M_BitWrapper *)node)->url); 
+	case TAG_MPEG4_BitWrapper:
+		compositor_init_afx_node(compositor, node, & ((M_BitWrapper *)node)->url);
 		break;
 
 	default:
@@ -426,26 +426,26 @@ void gf_sc_invalidate(GF_Compositor *compositor, GF_Node *byObj)
 	case TAG_MPEG4_AnimationStream: compositor_animationstream_modified(byObj); break;
 	case TAG_MPEG4_AudioBuffer: compositor_audiobuffer_modified(byObj); break;
 	case TAG_MPEG4_AudioSource: compositor_audiosource_modified(byObj); break;
-	case TAG_MPEG4_AudioClip: 
+	case TAG_MPEG4_AudioClip:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_AudioClip: 
+	case TAG_X3D_AudioClip:
 #endif
 		compositor_audioclip_modified(byObj); break;
-	case TAG_MPEG4_TimeSensor: 
+	case TAG_MPEG4_TimeSensor:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_TimeSensor: 
+	case TAG_X3D_TimeSensor:
 #endif
 		compositor_timesensor_modified(byObj); break;
-	case TAG_MPEG4_ImageTexture: 
+	case TAG_MPEG4_ImageTexture:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_ImageTexture: 
+	case TAG_X3D_ImageTexture:
 #endif
-	case TAG_MPEG4_CacheTexture: 
+	case TAG_MPEG4_CacheTexture:
 		compositor_imagetexture_modified(byObj); break;
 
-	case TAG_MPEG4_MovieTexture: 
+	case TAG_MPEG4_MovieTexture:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_MovieTexture: 
+	case TAG_X3D_MovieTexture:
 #endif
 		compositor_movietexture_modified(byObj); break;
 

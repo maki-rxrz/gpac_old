@@ -25,7 +25,7 @@ class COsmo4Document : public CAknDocument
         static COsmo4Document* NewLC( CEikApplication& aApp );
         virtual ~COsmo4Document();
 
-    public: 
+    public:
         CEikAppUi* CreateAppUiL();
 
     private:
