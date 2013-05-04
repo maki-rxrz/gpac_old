@@ -7,7 +7,7 @@
 */
 
 #ifndef _V4TimeLineElt_
-#define _V4TimeLineElt_ 
+#define _V4TimeLineElt_
 
 #include "../safe_include.h"
 

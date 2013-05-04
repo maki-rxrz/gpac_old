@@ -10,7 +10,7 @@
  *	char kn[16][8];
  */
 
-/* modified in order to use the libmcrypt API by Nikos Mavroyanopoulos 
+/* modified in order to use the libmcrypt API by Nikos Mavroyanopoulos
  * All modifications are placed under the license of libmcrypt.
  */
 
@@ -570,7 +570,7 @@ void gf_crypt_register_des(GF_Crypt *td)
 	td->algo_name = "DES";
 	td->algo_version = 20010801;
 	td->num_key_sizes = 1;
-	td->key_sizes[0] = 8; 
+	td->key_sizes[0] = 8;
 	td->key_size = 8;
 	td->is_block_algo = 1;
 	td->algo_block_size = 8;

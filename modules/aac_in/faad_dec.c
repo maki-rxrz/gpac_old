@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -54,7 +54,7 @@ typedef struct
 	u16 ES_ID;
 	Bool signal_mc;
 	Bool is_sbr;
-	
+
 	char ch_reorder[16];
 } FAADDec;
 
@@ -68,7 +68,7 @@ static GF_Err FAAD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 	GF_M4ADecSpecInfo a_cfg;
 #endif
 	FAADCTX();
-	
+
 	if (ctx->ES_ID && ctx->ES_ID!=esd->ESID) return GF_NOT_SUPPORTED;
 	if (!esd->decoderConfig->decoderSpecificInfo || !esd->decoderConfig->decoderSpecificInfo->dataLength) return GF_NON_COMPLIANT_BITSTREAM;
 
@@ -85,7 +85,7 @@ static GF_Err FAAD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 	e = gf_m4a_get_config(esd->decoderConfig->decoderSpecificInfo->data, esd->decoderConfig->decoderSpecificInfo->dataLength, &a_cfg);
 	if (e) return e;
 #endif
-	if (faacDecInit2(ctx->codec, (unsigned char *)esd->decoderConfig->decoderSpecificInfo->data, esd->decoderConfig->decoderSpecificInfo->dataLength, (unsigned long*)&ctx->sample_rate, (u8*)&ctx->num_channels) < 0) 
+	if (faacDecInit2(ctx->codec, (unsigned char *)esd->decoderConfig->decoderSpecificInfo->data, esd->decoderConfig->decoderSpecificInfo->dataLength, (unsigned long*)&ctx->sample_rate, (u8*)&ctx->num_channels) < 0)
 	{
 #ifndef GPAC_DISABLE_AV_PARSERS
 		s8 res;
@@ -121,7 +121,7 @@ static GF_Err FAAD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 		gf_m4a_write_config(&a_cfg, &dsi, &dsi_len);
 		res = faacDecInit2(ctx->codec, (unsigned char *) dsi, dsi_len, (unsigned long *) &ctx->sample_rate, (u8 *) &ctx->num_channels);
 		gf_free(dsi);
-		if (res < 0) 
+		if (res < 0)
 #endif
 		{
 			GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[FAAD] Error when initializing AAC decoder for stream %d\n", esd->ESID));
@@ -233,7 +233,7 @@ static s8 FAAD_GetChannelPos(FAADDec *ffd, u32 ch_cfg)
 	return -1;
 }
 
-static GF_Err FAAD_ProcessData(GF_MediaDecoder *ifcg, 
+static GF_Err FAAD_ProcessData(GF_MediaDecoder *ifcg,
 		char *inBuffer, u32 inBufferLength,
 		u16 ES_ID,
 		char *outBuffer, u32 *outBufferLength,
@@ -306,14 +306,14 @@ static GF_Err FAAD_ProcessData(GF_MediaDecoder *ifcg,
 
 		*outBufferLength = ctx->out_size;
 		if (sizeof(short) * ctx->info.samples > *outBufferLength) {
-			*outBufferLength = ctx->out_size = sizeof(short)*ctx->info.samples; 
+			*outBufferLength = ctx->out_size = sizeof(short)*ctx->info.samples;
 		}
 		return GF_BUFFER_TOO_SMALL;
 	}
 	if (sizeof(short) * ctx->info.samples > *outBufferLength) {
-		*outBufferLength = sizeof(short)*ctx->info.samples; 
+		*outBufferLength = sizeof(short)*ctx->info.samples;
 		return GF_BUFFER_TOO_SMALL;
-	} 
+	}
 
 	/*we assume left/right order*/
 	if (ctx->num_channels<=2) {
@@ -345,7 +345,7 @@ static u32 FAAD_CanHandleStream(GF_BaseDecoder *dec, u32 StreamType, GF_ESD *esd
 	GF_M4ADecSpecInfo a_cfg;
 #endif
 
-	/*audio decs*/	
+	/*audio decs*/
 	if (StreamType != GF_STREAM_AUDIO) return GF_CODEC_NOT_SUPPORTED;
 	/*media type query*/
 	if (!esd) return GF_CODEC_STREAM_TYPE_SUPPORTED;
@@ -356,7 +356,7 @@ static u32 FAAD_CanHandleStream(GF_BaseDecoder *dec, u32 StreamType, GF_ESD *esd
 	case GPAC_OTI_AUDIO_AAC_MPEG2_LCP:
 	case GPAC_OTI_AUDIO_AAC_MPEG2_SSRP:
 	/*MPEG4 aac*/
-	case GPAC_OTI_AUDIO_AAC_MPEG4: 
+	case GPAC_OTI_AUDIO_AAC_MPEG4:
 		break;
 	default:
 		return GF_CODEC_NOT_SUPPORTED;
@@ -398,7 +398,7 @@ GF_BaseDecoder *NewFAADDec()
 
 	ifce->privateStack = dec;
 
-	/*setup our own interface*/	
+	/*setup our own interface*/
 	ifce->AttachStream = FAAD_AttachStream;
 	ifce->DetachStream = FAAD_DetachStream;
 	ifce->GetCapabilities = FAAD_GetCapabilities;

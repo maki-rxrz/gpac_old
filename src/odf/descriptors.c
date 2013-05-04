@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -101,7 +101,7 @@ GF_Err gf_odf_parse_descriptor(GF_BitStream *bs, GF_Descriptor **desc, u32 *desc
 	//tag
 	tag = (u8) gf_bs_read_int(bs, 8);
 	sizeHeader = 1;
-	
+
 	//size
 	size = 0;
 	do {
@@ -145,7 +145,7 @@ GF_Err gf_odf_parse_descriptor(GF_BitStream *bs, GF_Descriptor **desc, u32 *desc
 		}
 	}
 
-	//little trick to handle lazy bitstreams that encode 
+	//little trick to handle lazy bitstreams that encode
 	//SizeOfInstance on a fix number of bytes
 	//This nb of bytes is added in Read methods
 	*desc_size += sizeHeader - gf_odf_size_field_size(*desc_size);
@@ -182,16 +182,16 @@ GF_Err gf_odf_write_base_descriptor(GF_BitStream *bs, u8 tag, u32 size)
 	unsigned char vals[4];
 
 	if (!tag ) return GF_BAD_PARAM;
-	
+
 	length = size;
 	vals[3] = (unsigned char) (length & 0x7f);
 	length >>= 7;
-	vals[2] = (unsigned char) ((length & 0x7f) | 0x80); 
+	vals[2] = (unsigned char) ((length & 0x7f) | 0x80);
 	length >>= 7;
-	vals[1] = (unsigned char) ((length & 0x7f) | 0x80); 
+	vals[1] = (unsigned char) ((length & 0x7f) | 0x80);
 	length >>= 7;
 	vals[0] = (unsigned char) ((length & 0x7f) | 0x80);
-	
+
 	gf_bs_write_int(bs, tag, 8);
 	if (size < 0x00000080) {
 		gf_bs_write_int(bs, vals[3], 8);
@@ -246,7 +246,7 @@ GF_Err gf_odf_write_descriptor_list(GF_BitStream *bs, GF_List *descList)
 		if (tmp) {
 			e = gf_odf_write_descriptor(bs, tmp);
 			if (e) return e;
-		} 
+		}
 	}
 	return GF_OK;
 }
@@ -264,7 +264,7 @@ GF_Err gf_odf_write_descriptor_list_filter(GF_BitStream *bs, GF_List *descList, 
 		if (tmp && (tmp->tag==only_tag) ) {
 			e = gf_odf_write_descriptor(bs, tmp);
 			if (e) return e;
-		} 
+		}
 	}
 	return GF_OK;
 }
@@ -292,13 +292,13 @@ void gf_ipmpx_write_array(GF_BitStream *bs, char *data, u32 data_len)
 	unsigned char vals[4];
 
 	if (!data || !data_len) return;
-	
+
 	length = data_len;
 	vals[3] = (unsigned char) (length & 0x7f); length >>= 7;
 	vals[2] = (unsigned char) ((length & 0x7f) | 0x80); length >>= 7;
 	vals[1] = (unsigned char) ((length & 0x7f) | 0x80); length >>= 7;
 	vals[0] = (unsigned char) ((length & 0x7f) | 0x80);
-	
+
 	if (data_len < 0x00000080) {
 		gf_bs_write_int(bs, vals[3], 8);
 	} else if (data_len < 0x00004000) {
@@ -334,14 +334,14 @@ GF_BIFSConfig *gf_odf_get_bifs_config(GF_DefaultDescriptor *dsi, u8 oti)
 
 	if (!dsi || !dsi->data || !dsi->dataLength ) {
 		/* Hack for T-DMB non compliant streams (OnTimeTek ?) */
-		cfg = (GF_BIFSConfig *) gf_odf_desc_new(GF_ODF_BIFS_CFG_TAG);	
+		cfg = (GF_BIFSConfig *) gf_odf_desc_new(GF_ODF_BIFS_CFG_TAG);
 		cfg->pixelMetrics = 1;
 		cfg->version = 1;
 		return cfg;
 	}
 	bs = gf_bs_new(dsi->data, dsi->dataLength, GF_BITSTREAM_READ);
-	
-	cfg = (GF_BIFSConfig *) gf_odf_desc_new(GF_ODF_BIFS_CFG_TAG);	
+
+	cfg = (GF_BIFSConfig *) gf_odf_desc_new(GF_ODF_BIFS_CFG_TAG);
 	if (oti==2) {
 		/*3D Mesh Coding*/
 		gf_bs_read_int(bs, 1);
@@ -351,7 +351,7 @@ GF_BIFSConfig *gf_odf_get_bifs_config(GF_DefaultDescriptor *dsi, u8 oti)
 	cfg->nodeIDbits = gf_bs_read_int(bs, 5);
 	cfg->routeIDbits = gf_bs_read_int(bs, 5);
 	if (oti==2) cfg->protoIDbits = gf_bs_read_int(bs, 5);
-	
+
 	cmd_stream = gf_bs_read_int(bs, 1);
 	if (!cmd_stream) {
 		cfg->elementaryMasks = gf_list_new();
@@ -393,10 +393,10 @@ GF_Err gf_odf_get_laser_config(GF_DefaultDescriptor *dsi, GF_LASERConfig *cfg)
 	cfg->tag = GF_ODF_LASER_CFG_TAG;
 	cfg->profile = gf_bs_read_int(bs, 8);
 	cfg->level = gf_bs_read_int(bs, 8);
-	/*cfg->reserved = */gf_bs_read_int(bs, 3);	
-	cfg->pointsCodec = gf_bs_read_int(bs, 2);	
-	cfg->pathComponents = gf_bs_read_int(bs, 4);	
-	cfg->fullRequestHost = gf_bs_read_int(bs, 1);	
+	/*cfg->reserved = */gf_bs_read_int(bs, 3);
+	cfg->pointsCodec = gf_bs_read_int(bs, 2);
+	cfg->pathComponents = gf_bs_read_int(bs, 4);
+	cfg->fullRequestHost = gf_bs_read_int(bs, 1);
 	if (gf_bs_read_int(bs, 1)) cfg->time_resolution = gf_bs_read_int(bs, 16);
 	else cfg->time_resolution = 1000;
 	cfg->colorComponentBits = 1 + gf_bs_read_int(bs, 4);
@@ -434,7 +434,7 @@ GF_Err gf_odf_get_ui_config(GF_DefaultDescriptor *dsi, GF_UIConfig *cfg)
 	GF_BitStream *bs;
 	if (!dsi || !dsi->data || !dsi->dataLength || !cfg) return GF_BAD_PARAM;
 	memset(cfg, 0, sizeof(GF_UIConfig));
-	cfg->tag = GF_ODF_UI_CFG_TAG;	
+	cfg->tag = GF_ODF_UI_CFG_TAG;
 	bs = gf_bs_new(dsi->data, dsi->dataLength, GF_BITSTREAM_READ);
 	len = gf_bs_read_int(bs, 8);
 	cfg->deviceName = (char*)gf_malloc(sizeof(char) * (len+1));
@@ -649,7 +649,7 @@ GF_Descriptor *gf_odf_new_tx3g()
 GF_Err gf_odf_del_tx3g(GF_TextSampleDescriptor *sd)
 {
 	u32 i;
-	for (i=0; i<sd->font_count; i++) 
+	for (i=0; i<sd->font_count; i++)
 		if (sd->fonts[i].fontName) gf_free(sd->fonts[i].fontName);
 	gf_free(sd->fonts);
 	gf_free(sd);
@@ -681,7 +681,7 @@ void ResetTextConfig(GF_TextConfig *desc)
 	}
 	bck = desc->sample_descriptions;
 	memset(desc, 0, sizeof(GF_TextConfig));
-	desc->tag = GF_ODF_TEXT_CFG_TAG;	
+	desc->tag = GF_ODF_TEXT_CFG_TAG;
 	desc->sample_descriptions = bck;
 }
 
@@ -783,7 +783,7 @@ GF_Err gf_odf_get_text_config(GF_DefaultDescriptor *dsi, u8 oti, GF_TextConfig *
 		cfg->horiz_offset = gf_bs_read_int(bs, 16);
 		cfg->vert_offset = gf_bs_read_int(bs, 16);
 	}
-	
+
 #ifndef GPAC_DISABLE_ISOM
 exit:
 #endif
@@ -887,7 +887,7 @@ GF_Err gf_odf_hevc_cfg_write(GF_HEVCConfig *cfg, char **outData, u32 *outSize)
 	*outSize = 0;
 	*outData = NULL;
 	e = gf_odf_hevc_cfg_write_bs(cfg, bs);
-	if (e==GF_OK) 
+	if (e==GF_OK)
 		gf_bs_get_content(bs, outData, outSize);
 
 	gf_bs_del(bs);
@@ -940,7 +940,7 @@ GF_HEVCConfig *gf_odf_hevc_cfg_read_bs(GF_BitStream *bs)
 		GF_SAFEALLOC(ar, GF_HEVCParamArray);
 		ar->nalus = gf_list_new();
 		gf_list_add(cfg->param_array, ar);
-		
+
 		ar->array_completeness = gf_bs_read_int(bs, 1);
 		gf_bs_read_int(bs, 1);
 		ar->type = gf_bs_read_int(bs, 6);
@@ -1026,7 +1026,7 @@ const char *gf_esd_get_textual_description(GF_ESD *esd)
 		case GPAC_OTI_SCENE_BIFS_EXTENDED:
 			return "MPEG-4 Extended BIFS Scene Description";
 		case GPAC_OTI_SCENE_AFX:
-			if (!esd->decoderConfig->decoderSpecificInfo || !esd->decoderConfig->decoderSpecificInfo->data) 
+			if (!esd->decoderConfig->decoderSpecificInfo || !esd->decoderConfig->decoderSpecificInfo->data)
 				return "AFX Unknown";
 			return gf_afx_get_type_description(esd->decoderConfig->decoderSpecificInfo->data[0]);
 		case GPAC_OTI_SCENE_LASER:

@@ -56,13 +56,13 @@ END_MESSAGE_MAP()
 
 #define FP_TIMER_ID	20
 
-BOOL CFileProps::OnInitDialog() 
+BOOL CFileProps::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
 	char sText[5000];
 	sprintf(sText, "%s Properties", ((CMainFrame*)GetApp()->m_pMainWnd)->m_pPlayList->GetDisplayName());
-	
+
 	SetWindowText(sText);
 	current_odm = NULL;
 
@@ -114,7 +114,7 @@ void CFileProps::WriteInlineTree(GF_ObjectManager *root_od, HTREEITEM parent)
 void CFileProps::RewriteODTree()
 {
 	Osmo4 *gpac = GetApp();
-	
+
 	m_ODTree.DeleteAllItems();
 
 	GF_ObjectManager *root_odm = gf_term_get_root_object(gpac->m_term);
@@ -127,35 +127,35 @@ void CFileProps::RewriteODTree()
 	WriteInlineTree(root_odm, root);
 }
 
-void CFileProps::OnSelchangedOdtree(NMHDR* pNMHDR, LRESULT* pResult) 
+void CFileProps::OnSelchangedOdtree(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	*pResult = 0;
-	
+
 	HTREEITEM item = m_ODTree.GetSelectedItem();
 	GF_ObjectManager *odm = (GF_ObjectManager *) m_ODTree.GetItemData(item);
 	if (!odm) return;
-	
+
 	SetInfo(odm);
 }
 
 
-void CFileProps::OnClose() 
+void CFileProps::OnClose()
 {
 	KillTimer(FP_TIMER_ID);
 	DestroyWindow();
 }
 
-void CFileProps::OnDestroy() 
+void CFileProps::OnDestroy()
 {
 	CDialog::OnDestroy();
 	delete this;
 	((CMainFrame *)GetApp()->m_pMainWnd)->m_pProps = NULL;
 }
 
-void CFileProps::OnSelchangeViewsel(NMHDR* pNMHDR, LRESULT* pResult) 
+void CFileProps::OnSelchangeViewsel(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	SetInfo(current_odm);	
+	SetInfo(current_odm);
 	*pResult = 0;
 }
 
@@ -170,7 +170,7 @@ void CFileProps::SetInfo(GF_ObjectManager *odm)
 	}
 }
 
-void CFileProps::OnTimer(UINT_PTR nIDEvent) 
+void CFileProps::OnTimer(UINT_PTR nIDEvent)
 {
 	if (nIDEvent == FP_TIMER_ID) {
 		switch (m_ViewSel.GetCurSel()) {
@@ -178,7 +178,7 @@ void CFileProps::OnTimer(UINT_PTR nIDEvent)
 		case 2: SetDecoderInfo(); break;
 		}
 	}
-	
+
 	CDialog::OnTimer(nIDEvent);
 }
 
@@ -220,12 +220,12 @@ void CFileProps::SetGeneralInfo()
 		strcat(info, odi.service_url);
 		strcat(info, "\r\n");
 	}
-	
+
 	if (odi.od->URLString) {
 		strcat(info, "Remote OD - URL: ");
 		strcat(info, odi.od->URLString);
 		strcat(info, "\r\n");
-	} 
+	}
 	/*get OD content info*/
 	if (odi.codec_name) {
 		switch (odi.od_type) {
@@ -333,7 +333,7 @@ void CFileProps::SetGeneralInfo()
 	m_ODInfo.SetWindowText(info);
 }
 
-void CFileProps::OnWorld() 
+void CFileProps::OnWorld()
 {
 	CString wit;
 	const char *str;
@@ -357,7 +357,7 @@ void CFileProps::OnWorld()
 	gf_list_del(descs);
 }
 
-void CFileProps::OnViewsg() 
+void CFileProps::OnViewsg()
 {
 	char szOutRadname[GF_MAX_PATH], *pFilename=NULL;
 	Osmo4 *gpac = GetApp();
@@ -435,11 +435,11 @@ void CFileProps::SetDecoderInfo()
 	}
 
 	Float avg_dec_time = 0;
-	if (odi.nb_dec_frames) { 
-		avg_dec_time = (Float) odi.total_dec_time; 
-		avg_dec_time /= odi.nb_dec_frames; 
+	if (odi.nb_dec_frames) {
+		avg_dec_time = (Float) odi.total_dec_time;
+		avg_dec_time /= odi.nb_dec_frames;
 	}
-	sprintf(buf, "Bitrate over last second: %d kbps\r\nMax bitrate over one second: %d kbps\r\nAverage Decoding Time %.2f ms (%d max)\r\nTotal decoded frames %d - %d dropped\r\n", 
+	sprintf(buf, "Bitrate over last second: %d kbps\r\nMax bitrate over one second: %d kbps\r\nAverage Decoding Time %.2f ms (%d max)\r\nTotal decoded frames %d - %d dropped\r\n",
 		(u32) odi.avg_bitrate/1024, odi.max_bitrate/1024, avg_dec_time, odi.max_dec_time, odi.nb_dec_frames, odi.nb_droped);
 	strcat(info, buf);
 
@@ -535,7 +535,7 @@ void CFileProps::SetStreamsInfo()
 		}
 		strcat(info, "\r\n");
 	}
-	
+
 	m_ODInfo.SetWindowText(info);
 }
 

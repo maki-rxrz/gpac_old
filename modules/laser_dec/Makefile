@@ -17,11 +17,11 @@ endif
 #common obj
 OBJS=laser_dec.o
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_laser_dec.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
-#LDFLAGS+=-export-symbols laser_dec.def 
+#LDFLAGS+=-export-symbols laser_dec.def
 endif
 
 
@@ -35,13 +35,13 @@ ifeq ($(STATICBUILD),yes)
 endif
 
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

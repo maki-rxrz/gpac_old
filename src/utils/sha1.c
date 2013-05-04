@@ -327,17 +327,17 @@ void gf_sha1_finish(GF_SHA1Context *ctx, u8 output[20] )
  *  All Rights Reserved
  *
  *  Freeware Public License (FPL)
- *  
+ *
  *  This software is licensed as "freeware."  Permission to distribute
- *  this software in source and binary forms, including incorporation 
- *  into other products, is hereby granted without a fee.  THIS SOFTWARE 
- *  IS PROVIDED 'AS IS' AND WITHOUT ANY EXPRESSED OR IMPLIED WARRANTIES, 
- *  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
- *  AND FITNESS FOR A PARTICULAR PURPOSE.  THE AUTHOR SHALL NOT BE HELD 
- *  LIABLE FOR ANY DAMAGES RESULTING FROM THE USE OF THIS SOFTWARE, EITHER 
- *  DIRECTLY OR INDIRECTLY, INCLUDING, BUT NOT LIMITED TO, LOSS OF DATA 
+ *  this software in source and binary forms, including incorporation
+ *  into other products, is hereby granted without a fee.  THIS SOFTWARE
+ *  IS PROVIDED 'AS IS' AND WITHOUT ANY EXPRESSED OR IMPLIED WARRANTIES,
+ *  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ *  AND FITNESS FOR A PARTICULAR PURPOSE.  THE AUTHOR SHALL NOT BE HELD
+ *  LIABLE FOR ANY DAMAGES RESULTING FROM THE USE OF THIS SOFTWARE, EITHER
+ *  DIRECTLY OR INDIRECTLY, INCLUDING, BUT NOT LIMITED TO, LOSS OF DATA
  *  OR DATA BEING RENDERED INACCURATE.
- *  
+ *
  *****************************************************************************
  *  $Id: sha1.c 12 2009-06-22 19:34:25Z paulej $
  *****************************************************************************
@@ -371,7 +371,7 @@ void gf_sha1_finish(GF_SHA1Context *ctx, u8 output[20] )
  *
  */
 
-/* 
+/*
  *  This structure will hold context information for the hashing
  *  operation
  */
@@ -397,7 +397,7 @@ struct __sha1_context
                 ((word) >> (32-(bits))))
 
 
-/*  
+/*
  *  SHA1ProcessMessageBlock
  *
  *  Description:
@@ -414,12 +414,12 @@ struct __sha1_context
  *      Many of the variable names in the SHAContext, especially the
  *      single character names, were used because those were the names
  *      used in the publication.
- *         
+ *
  *
  */
 void SHA1ProcessMessageBlock(GF_SHA1Context *context)
 {
-    const unsigned K[] =            /* Constants defined in SHA-1   */      
+    const unsigned K[] =            /* Constants defined in SHA-1   */
     {
         0x5A827999,
         0x6ED9EBA1,
@@ -513,7 +513,7 @@ void SHA1ProcessMessageBlock(GF_SHA1Context *context)
     context->Message_Block_Index = 0;
 }
 
-/*  
+/*
  *  SHA1PadMessage
  *
  *  Description:
@@ -582,7 +582,7 @@ static void SHA1PadMessage(GF_SHA1Context *context)
 
     SHA1ProcessMessageBlock(context);
 }
-/*  
+/*
  *  SHA1Reset
  *
  *  Description:
@@ -698,7 +698,7 @@ s32 gf_sha1_file( const char *path, u8 output[20] )
 		u8 *mem_address;
 		if (sscanf(path, "gmem://%d@%p", &size, &mem_address) != 2) {
 			return GF_IO_ERR;
-		} 
+		}
 		gf_sha1_csum(mem_address, size, output);
 		return 0;
 	}

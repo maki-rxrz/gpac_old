@@ -18,11 +18,11 @@ endif
 #common obj
 OBJS=saf_in.o
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_saf_in.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
-#LDFLAGS+=-export-symbols saf_in.def 
+#LDFLAGS+=-export-symbols saf_in.def
 endif
 
 
@@ -36,13 +36,13 @@ ifeq ($(STATICBUILD),yes)
 endif
 
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

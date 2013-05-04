@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -69,7 +69,7 @@ void gf_scene_sample_time(GF_Scene *scene)
 	u32 ret;
 	GF_Clock *ck;
 	ck = scene->scene_codec ? scene->scene_codec->ck : scene->dyn_ck;
-	if (!ck) 
+	if (!ck)
 		scene->simulation_time = 0;
 	else {
 		ret = gf_clock_time(ck);
@@ -80,7 +80,7 @@ void gf_scene_sample_time(GF_Scene *scene)
 
 static void inline_on_media_event(GF_Scene *scene, u32 type)
 {
-	gf_term_service_media_event(scene->scene_codec->odm, type); 
+	gf_term_service_media_event(scene->scene_codec->odm, type);
 }
 
 GF_EXPORT
@@ -107,10 +107,10 @@ GF_Scene *gf_scene_new(GF_Scene *parentScene)
 #ifndef GPAC_DISABLE_VRML
 	tmp->extern_protos = gf_list_new();
 	gf_sg_set_proto_loader(tmp->graph, gf_inline_get_proto_lib);
-	
+
 	tmp->storages = gf_list_new();
 	tmp->keynavigators = gf_list_new();
-	
+
 #endif
 	tmp->on_media_event = inline_on_media_event;
 	return tmp;
@@ -203,7 +203,7 @@ void gf_scene_disconnect(GF_Scene *scene, Bool for_shutdown)
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_MEDIA, ("[Scene] disconnecting\n"));
 
 	gf_term_lock_compositor(scene->root_od->term, GF_TRUE);
-		
+
 	/*force unregistering of inline nodes (for safety)*/
 	if (for_shutdown && scene->root_od->mo) {
 		/*reset private stack of all inline nodes still registered*/
@@ -242,7 +242,7 @@ void gf_scene_disconnect(GF_Scene *scene, Bool for_shutdown)
 							}
 					}
 					gf_mo_event_target_remove_by_index(obj, 0);
-				}	
+				}
 			}
 		}
 	}
@@ -260,7 +260,7 @@ void gf_scene_disconnect(GF_Scene *scene, Bool for_shutdown)
 		gf_list_rem(scene->storages, 0);
 		if (storage->_auto) gf_storage_save(storage);
 	}
-#endif	
+#endif
 
 	if (scene->root_od->term->root_scene == scene) {
 		gf_sc_set_scene(scene->root_od->term->compositor, NULL);
@@ -271,7 +271,7 @@ void gf_scene_disconnect(GF_Scene *scene, Bool for_shutdown)
 	gf_sg_reset(scene->graph);
 	scene->graph_attached = 0;
 	scene->simulation_time = 0;
-	
+
 
 	/*reset statc ressource flag since we destroyed scene objects*/
 	scene->static_media_ressources = GF_FALSE;
@@ -292,7 +292,7 @@ void gf_scene_disconnect(GF_Scene *scene, Bool for_shutdown)
 		}
 	} else {
 		while (gf_list_count(scene->resources)) {
-			odm = (GF_ObjectManager *)gf_list_get(scene->resources, 0);	
+			odm = (GF_ObjectManager *)gf_list_get(scene->resources, 0);
 			gf_odm_disconnect(odm, (for_shutdown || !scene->static_media_ressources) ? 2 : 0);
 		}
 #ifndef GPAC_DISABLE_VRML
@@ -420,11 +420,11 @@ void gf_scene_remove_object(GF_Scene *scene, GF_ObjectManager *odm, Bool for_shu
 	while ((obj = (GF_MediaObject*)gf_list_enum(scene->scene_objects, &i))) {
 		if (
 			/*assigned object*/
-			(obj->odm==odm) || 
+			(obj->odm==odm) ||
 			/*remote OD*/
 			((obj->OD_ID!=GF_MEDIA_EXTERNAL_ID) && odm->OD && (obj->OD_ID == odm->OD->objectDescriptorID) ) ||
 			/*dynamic OD*/
-			(obj->URLs.count && odm->OD && odm->OD->URLString && !stricmp(obj->URLs.vals[0].url, odm->OD->URLString)) 
+			(obj->URLs.count && odm->OD && odm->OD->URLString && !stricmp(obj->URLs.vals[0].url, odm->OD->URLString))
 		) {
 			u32 discard_obj = 0;
 			gf_odm_lock(odm, 1);
@@ -463,7 +463,7 @@ void gf_scene_remove_object(GF_Scene *scene, GF_ObjectManager *odm, Bool for_shu
 			/*discard media object*/
 			else if (for_shutdown==2)
 				discard_obj = 1;
-			
+
 			/*reset private stack of all inline nodes still registered*/
 			if (discard_obj) {
 				while (gf_mo_event_target_count(obj)) {
@@ -585,7 +585,7 @@ void gf_scene_notify_event(GF_Scene *scene, u32 event_type, GF_Node *n, void *_e
 		gf_dom_event_fire(n, event);
 	} else {
 		if (root) gf_dom_event_fire(root, event);
-	
+
 		count=scene->root_od->mo ? gf_mo_event_target_count(scene->root_od->mo) : 0;
 		for (i=0;i<count; i++) {
 			gf_dom_event_fire(gf_event_target_get_node(gf_mo_event_target_get(scene->root_od->mo, i)), event);
@@ -674,10 +674,10 @@ GF_MediaObject *gf_scene_get_media_object_ex(GF_Scene *scene, MFURL *url, u32 ob
 	gf_term_lock_net(scene->root_od->term, GF_TRUE);
 
 	/*we may have overriden the time lines in parent scene, thus all objects in this scene have the same clock*/
-	if (scene->root_od->parentscene && scene->root_od->parentscene->force_single_timeline) 
+	if (scene->root_od->parentscene && scene->root_od->parentscene->force_single_timeline)
 		lock_timelines = GF_TRUE;
 
-	/*the first pass is needed to detect objects already inserted and registered with the given nodes, regardless of 
+	/*the first pass is needed to detect objects already inserted and registered with the given nodes, regardless of
 	the force_new_if_not_attached flag. This ty^pically occurs when a resource is first created then linked to an animation/inline*/
 restart:
 	obj = NULL;
@@ -687,18 +687,18 @@ restart:
 
 		if (
 			/*regular OD scheme*/
-			(OD_ID != GF_MEDIA_EXTERNAL_ID && (obj->OD_ID==OD_ID)) 
+			(OD_ID != GF_MEDIA_EXTERNAL_ID && (obj->OD_ID==OD_ID))
 		||
-			/*dynamic OD scheme - !! obj->OD_ID may different from GF_MEDIA_EXTERNAL_ID when ODs are 
+			/*dynamic OD scheme - !! obj->OD_ID may different from GF_MEDIA_EXTERNAL_ID when ODs are
 			directly added to the terminal by the service*/
-			((OD_ID == GF_MEDIA_EXTERNAL_ID) 
+			((OD_ID == GF_MEDIA_EXTERNAL_ID)
 				/*if object type unknown (media control, media sensor), return first obj matching URL
 				otherwise check types*/
 				&& is_match_obj_type(obj->type, obj_type_hint)
 				/*locate sub-url in given one and handle fragments (viewpoint/segments/...)*/
-				&& gf_mo_is_same_url(obj, url, &keep_fragment, obj_type_hint) 
+				&& gf_mo_is_same_url(obj, url, &keep_fragment, obj_type_hint)
 			)
-		) {	
+		) {
 			odm_matches = GF_TRUE;
 		}
 
@@ -707,16 +707,16 @@ restart:
 		if (obj->odm) {
 			Bool can_reuse = GF_TRUE;
 			Bool timeline_locked = (obj->odm->flags & GF_ODM_INHERIT_TIMELINE) ? GF_TRUE : GF_FALSE;
-			if (timeline_locked != lock_timelines) 
+			if (timeline_locked != lock_timelines)
 				continue;
 
 			gf_term_lock_media_queue(scene->root_od->term, GF_TRUE);
 			if (obj->odm->flags & GF_ODM_DESTROYED) can_reuse = GF_FALSE;
 			else if (obj->odm->action_type == GF_ODM_ACTION_DELETE) {
 				/*check if object is being destroyed (no longer in the queue)*/
-				if (gf_list_del_item(scene->root_od->term->media_queue, obj->odm)<0) { 
+				if (gf_list_del_item(scene->root_od->term->media_queue, obj->odm)<0) {
 					can_reuse = GF_FALSE;
-				} 
+				}
 				/*otherwise reuse object, discard current destroy command*/
 				else {
 					obj->odm->action_type = GF_ODM_ACTION_PLAY;
@@ -761,9 +761,9 @@ restart:
 
 		original_parent_scene = (GF_Scene*) gf_sg_get_private(gf_node_get_graph(node));
 	}
-	
+
 	/*if animation stream object, remember originating node
-		!! FIXME - this should be cleaned up !! 
+		!! FIXME - this should be cleaned up !!
 	*/
 	if (obj->type == GF_MEDIA_OBJECT_UPDATES)
 		obj->node_ptr = node;
@@ -779,7 +779,7 @@ restart:
 		}
 
 		if (obj->odm==NULL) {
-			gf_list_del_item(scene->scene_objects, obj); 
+			gf_list_del_item(scene->scene_objects, obj);
 			gf_mo_del(obj);
 			gf_term_lock_net(scene->root_od->term, GF_FALSE);
 			return NULL;
@@ -840,7 +840,7 @@ existing:
 	else if (odm->codec->type == GF_STREAM_AUDIO) odm->mo->type = GF_MEDIA_OBJECT_AUDIO;
 	else if (odm->codec->type == GF_STREAM_TEXT) odm->mo->type = GF_MEDIA_OBJECT_TEXT;
 	else if (odm->codec->type == GF_STREAM_SCENE) odm->mo->type = GF_MEDIA_OBJECT_UPDATES;
-	
+
 	/*update info*/
 	gf_mo_update_caps(odm->mo);
 	/*media object playback has already been requested by the scene, trigger media start*/
@@ -885,7 +885,7 @@ void gf_scene_set_duration(GF_Scene *scene)
 
 	dur = (Double) (s64) scene->duration;
 	dur /= 1000;
-	
+
 #ifndef GPAC_DISABLE_VRML
 	i=0;
 	while ((media_sens = (MediaSensorStack*)gf_list_enum(scene->root_od->ms_stack, &i))) {
@@ -1099,7 +1099,7 @@ void gf_scene_regenerate(GF_Scene *scene)
 	gf_sc_lock(scene->root_od->term->compositor, 1);
 
 	ac = (M_AudioClip *) gf_sg_find_node_by_name(scene->graph, "DYN_AUDIO");
-	
+
 	/*this is the first time, generate a scene graph*/
 	if (!ac) {
 		/*create an OrderedGroup*/
@@ -1129,7 +1129,7 @@ void gf_scene_regenerate(GF_Scene *scene)
 		gf_node_list_add_child( &((GF_ParentNode *)n1)->children, n2);
 		gf_node_register(n2, n1);
 		n1 = n2;
-		
+
 		/*create a shape and bitmap node*/
 		n2 = is_create_node(scene->graph, TAG_MPEG4_Shape, NULL);
 		gf_node_list_add_child( &((GF_ParentNode *)n1)->children, n2);
@@ -1178,7 +1178,7 @@ void gf_scene_regenerate(GF_Scene *scene)
 	set_media_url(scene, &scene->dims_url, (GF_Node*)dims, &dims->url, GF_STREAM_SCENE);
 
 	gf_sc_lock(scene->root_od->term->compositor, 0);
-	
+
 	/*disconnect to force resize*/
 	if (scene->root_od->term->root_scene == scene) {
 		gf_sc_set_scene(scene->root_od->term->compositor, scene->graph);
@@ -1222,7 +1222,7 @@ void gf_scene_select_object(GF_Scene *scene, GF_ObjectManager *odm)
 {
 	char *url;
 	if (!scene->is_dynamic_scene || !scene->graph_attached || !odm) return;
-	
+
 	if (!odm->codec) return;
 
 	if (odm->state) {
@@ -1241,7 +1241,7 @@ void gf_scene_select_object(GF_Scene *scene, GF_ObjectManager *odm)
 		ac->url.vals[0].OD_ID = odm->OD->objectDescriptorID;
 		if (ac->url.vals[0].url) {
 			gf_free(ac->url.vals[0].url);
-			ac->url.vals[0].url = NULL; 
+			ac->url.vals[0].url = NULL;
 		}
 		url = odm->mo->URLs.count ? odm->mo->URLs.vals[0].url : NULL;
 		if (url) {
@@ -1364,11 +1364,11 @@ void gf_scene_force_size(GF_Scene *scene, u32 width, u32 height)
 {
 	/*for now only allowed when no scene info*/
 	if (!scene->is_dynamic_scene) return;
-	
+
 	gf_sc_lock(scene->root_od->term->compositor, 1);
 
 	GF_LOG(GF_LOG_INFO, GF_LOG_COMPOSE, ("[Compositor] Changing scene size to %d x %d\n", width, height));
-	
+
 	if (scene->root_od->term->root_scene == scene) {
 		GF_NetworkCommand com;
 
@@ -1434,7 +1434,7 @@ Bool gf_scene_process_anchor(GF_Node *caller, GF_Event *evt)
 	}
 
 	if (!scene->root_od->mo) return 1;
-	
+
 	/*FIXME this is too restrictive, we assume the navigate URL is really a presentation one...*/
 #ifndef GPAC_DISABLE_VRML
 	i=0;
@@ -1447,7 +1447,7 @@ Bool gf_scene_process_anchor(GF_Node *caller, GF_Event *evt)
 			gf_sg_vrml_mf_reset(&inl->url, GF_SG_VRML_MFURL);
 			gf_sg_vrml_mf_alloc(&inl->url, GF_SG_VRML_MFURL, 1);
 			inl->url.vals[0].url = gf_strdup(evt->navigate.to_url ? evt->navigate.to_url : "");
-			/*signal URL change but don't destroy inline scene now since we got this event from inside the scene, 
+			/*signal URL change but don't destroy inline scene now since we got this event from inside the scene,
 			this could crash compositors*/
 			scene->needs_restart = 2;
 			break;
@@ -1495,9 +1495,9 @@ GF_Node *gf_scene_get_subscene_root(GF_Node *node)
 	if (!node) return NULL;
 	switch (gf_node_get_tag(node)) {
 #ifndef GPAC_DISABLE_VRML
-	case TAG_MPEG4_Inline: 
+	case TAG_MPEG4_Inline:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Inline: 
+	case TAG_X3D_Inline:
 #endif
 		break;
 #endif
@@ -1580,7 +1580,7 @@ void gf_scene_generate_views(GF_Scene *scene, char *url, char *parent_path)
 #endif
 	GF_Event evt;
 	gf_sg_reset(scene->graph);
-	
+
 	scene->force_single_timeline = 1;
 	n1 = is_create_node(scene->graph, TAG_MPEG4_OrderedGroup, NULL);
 	gf_sg_set_root_node(scene->graph, n1);
@@ -1596,7 +1596,7 @@ void gf_scene_generate_views(GF_Scene *scene, char *url, char *parent_path)
 	url_search = url;
 	while (1) {
 		char *sep;
-		
+
 		if (use_old_syntax) {
 			sep = strchr(url_search, ':');
 			/*if :// or :\ is found, skip it*/

@@ -178,20 +178,20 @@ help:
 	@echo "modules: builds modules only"
 	@echo "instmoz: build and local install of osmozilla"
 	@echo "sggen: builds scene graph generators"
-	@echo 
+	@echo
 	@echo "clean: clean src repository"
 	@echo "distclean: clean src repository and host config file"
 	@echo "tar: create GPAC tarball"
-	@echo 
+	@echo
 	@echo "install: install applications and modules on system"
 	@echo "uninstall: uninstall applications and modules"
 ifeq ($(CONFIG_DARWIN),yes)
 	@echo "dmg: creates DMG package file for OSX"
 endif
 ifeq ($(CONFIG_LINUX),yes)
-        @echo "deb: creates DEB package file for debian based systems"
+	@echo "deb: creates DEB package file for debian based systems"
 endif
-	@echo 
+	@echo
 	@echo "install-lib: install gpac library (dyn and static) and headers <gpac/*.h>, <gpac/modules/*.h> and <gpac/internal/*.h>"
 	@echo "uninstall-lib: uninstall gpac library (dyn and static) and headers"
 	@echo

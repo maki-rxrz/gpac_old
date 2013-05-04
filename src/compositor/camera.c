@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -290,7 +290,7 @@ void camera_update_stereo(GF_Camera *cam, GF_Matrix2D *user_transform, Bool cent
 			if (! (cam->flags & CAM_NO_LOOKAT)) {
 				GF_Matrix mx;
 				gf_mx_from_mx2d(&mx, user_transform);
-				mx.m[10] = mx.m[0]; 
+				mx.m[10] = mx.m[0];
 				gf_mx_add_matrix(&post_model_view, &mx);
 			} else
 #endif
@@ -345,7 +345,7 @@ void camera_update_stereo(GF_Camera *cam, GF_Matrix2D *user_transform, Bool cent
 		gf_vec_diff(center, cam->world_bbox.center, cam->position);
 		vlen = gf_vec_len(center);
 		vlen += gf_mulfix(view_distance_offset, gf_divfix(vlen, nominal_view_distance));
-	
+
 		gf_vec_diff(eye, cam->target, cam->position);
 		gf_vec_norm(&eye);
 		tar = gf_vec_scale(eye, vlen);
@@ -409,7 +409,7 @@ void camera_reset_viewpoint(GF_Camera *cam, Bool animate)
 		return;
 	}
 #ifndef FORCE_CAMERA_3D
-	if (cam->is_3D) 
+	if (cam->is_3D)
 #endif
 	{
 		cam->start_pos = cam->position;
@@ -507,12 +507,12 @@ Bool camera_animate(GF_Camera *cam)
 		if (now > cam->anim_len) {
 			cam->anim_len = 0;
 #ifndef FORCE_CAMERA_3D
-			if (cam->is_3D) 
+			if (cam->is_3D)
 #endif
 			{
 				camera_set_vectors(cam, cam->end_pos, cam->end_ori, cam->end_fov);
 				cam->end_zoom = FIX_ONE;
-			} 
+			}
 #ifndef FORCE_CAMERA_3D
 			else {
 				cam->flags |= CAM_IS_DIRTY;
@@ -543,7 +543,7 @@ Bool camera_animate(GF_Camera *cam)
 		dif = gf_vec_scale(dif, frac);
 		gf_vec_add(pos, cam->start_pos, dif);
 		fov = gf_mulfix(cam->end_fov - cam->start_fov, frac) + cam->start_fov;
-		cam->end_zoom = frac + gf_mulfix((FIX_ONE-frac), cam->start_zoom); 
+		cam->end_zoom = frac + gf_mulfix((FIX_ONE-frac), cam->start_zoom);
 		camera_set_vectors(cam, pos, rot, fov);
 	}
 	return 1;

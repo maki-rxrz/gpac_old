@@ -1328,7 +1328,7 @@ int gf_unzip_archive(const char *zipfilename, const char *dirname)
         return 1;
     }
 #ifndef _WIN32_WCE
-	if (chdir(dirname)) 
+	if (chdir(dirname))
     {
       fprintf(stderr, "Error changing into %s, aborting\n", dirname);
       exit(-1);

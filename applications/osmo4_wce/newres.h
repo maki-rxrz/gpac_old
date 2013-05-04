@@ -3,9 +3,9 @@
 
 #define  SHMENUBAR RCDATA
 #if !(defined(_WIN32_WCE_PSPC) && (_WIN32_WCE >= 300))
-	#undef HDS_HORZ  
-	#undef HDS_BUTTONS 
-	#undef HDS_HIDDEN 
+	#undef HDS_HORZ
+	#undef HDS_BUTTONS
+	#undef HDS_HIDDEN
 
 	#include <commctrl.h>
 	// for MenuBar
@@ -21,7 +21,7 @@
 	#define TCS_RIGHT               0x0002
 	#define TCS_VERTICAL            0x0080
 	#define TCS_MULTISELECT         0x0004  // allow multi-select in button mode
-	#define TCS_FLATBUTTONS         0x0008	
+	#define TCS_FLATBUTTONS         0x0008
 #endif //_WIN32_WCE_PSPC
 
 

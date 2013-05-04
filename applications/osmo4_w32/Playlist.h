@@ -8,7 +8,7 @@
 //
 
 
-class PLEntry 
+class PLEntry
 {
 public:
 	PLEntry(CString url, char *path = NULL);
@@ -33,7 +33,7 @@ class Playlist : public CDialog
 public:
 	Playlist();
 	virtual ~Playlist();
-	
+
 	virtual BOOL Create() {
 		/*use desktop window to enable playlist behind player*/
 		return CDialog::Create(IDD_PLAYLIST, GetDesktopWindow());
@@ -49,7 +49,7 @@ public:
 	void Truncate();
 	void SetDead();
 	void SetDuration(u32 duration);
-	
+
 	void Play();
 	void PlayNext();
 	void PlayPrev();

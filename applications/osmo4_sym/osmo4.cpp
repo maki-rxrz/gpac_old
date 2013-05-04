@@ -12,7 +12,7 @@ EXPORT_C CApaApplication* NewApplication()
 
 #include <eikstart.h>
 
-GLDEF_C TInt E32Main() 
+GLDEF_C TInt E32Main()
 {
     return EikStart::RunApplication( NewApplication );
 }

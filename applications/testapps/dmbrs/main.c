@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 #include <gpac/mpegts.h>
@@ -81,9 +81,9 @@ void RS_Interleaver(GF_BitStream *bs, char *out_name)
 			k--;
 		}
 		bs_data = gf_bs_available(bs);
-				
+
 		for (i=0; i<(17*12); i+=12){  // 1 paquet RS
-		
+
 			rs[i]    = ts[11][i];
 			if (rs[0] != 0x47){
 				printf ("error ts sync byte");
@@ -100,7 +100,7 @@ void RS_Interleaver(GF_BitStream *bs, char *out_name)
 			rs[i+10] = ts[1][i+10];
 			rs[i+11] = ts[0][i+11];
 		}
-		
+
 		if (rs[0] != 0x47) {
 			printf("error in output TS\n");
 		}else{
@@ -151,13 +151,13 @@ void RS_Deinterleaver(GF_BitStream *bs, char *out_name)
 		u64 pos;
 		k++;
 //		printf("TS Packet Number: %d\r", k);
-			
+
 		pos = gf_bs_get_position(bs);
 		gf_bs_read_data(bs, buf, 204);
 		bs_data = gf_bs_available(bs);
 
-		while ((buf[0] != 0x47) && (bs_data > 0)) { 
-			printf("error in input TS %d\n", k); 
+		while ((buf[0] != 0x47) && (bs_data > 0)) {
+			printf("error in input TS %d\n", k);
 			//return;
 			pos++;
 			gf_bs_seek(bs, pos);
@@ -165,8 +165,8 @@ void RS_Deinterleaver(GF_BitStream *bs, char *out_name)
 			bs_data = gf_bs_available(bs);
 		}
 
-		for (i=0; i<(17*12); i+=12){  // 1 paquet 
-			rs[0][i]     = buf[i]; 
+		for (i=0; i<(17*12); i+=12){  // 1 paquet
+			rs[0][i]     = buf[i];
 			rs[1][i+1]   = buf[i+1];
 			rs[2][i+2]	 = buf[i+2];
 			rs[3][i+3]   = buf[i+3];
@@ -218,16 +218,16 @@ void main(int argc, char **argv)
 		for (i = 0; i < nb_packets; i++) {
 			buffer[0] = 0x47;
 			for (j = 1; j <188; j++) {
-				buffer[j] = rand();//j; 
+				buffer[j] = rand();//j;
 			}
 			gf_fwrite(buffer, 1, 188, in);
-		}	
+		}
 	}
-	fclose(in);	
+	fclose(in);
 	if ((in=fopen(argv[1], "rb")) == NULL) {
 		printf( "Impossible d'ouvrir %s en lecture.\n", argv[1]);
 	}
-			
+
 	bs = gf_bs_from_file(in, GF_BITSTREAM_READ);
 	if (bs == NULL) return;
 
@@ -240,7 +240,7 @@ void main(int argc, char **argv)
 	if ((in=fopen(argv[1], "rb")) == NULL) {
 		printf( "Impossible d'ouvrir %s en lecture.\n", argv[1]);
 	}
-			
+
 	bs = gf_bs_from_file(in, GF_BITSTREAM_READ);
 	if (bs == NULL) return;
 

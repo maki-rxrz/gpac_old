@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -85,7 +85,7 @@ typedef struct __tag_mod_man GF_ModuleManager;
  *\brief Base Interface
  *
  *This structure represent a base interface, e.g. the minimal interface declaration without functionalities. Each interface is
- *type-casted to this structure and shall always be checked against its interface type. API Versioning is taken care of in the 
+ *type-casted to this structure and shall always be checked against its interface type. API Versioning is taken care of in the
  *interface type itsel, changing at each modification of the interface API
  */
 typedef struct
@@ -118,7 +118,7 @@ GF_BaseInterface *MyDecoderInterfaceLoad() {
 	_ifce->InterfaceType = _ifce_type;	\
 	_ifce->module_name = _ifce_name ? _ifce_name : "unknown";	\
 	_ifce->author_name = _ifce_author ? _ifce_author : "gpac distribution";	\
-	
+
 /*!
  *\brief module interface function export. Modules that can be compiled in libgpac rather than in sharde libraries shall use this macro to declare the 3 exported functions
  *\hideinitializer
@@ -168,7 +168,7 @@ typedef struct
  *\brief module manager construtcor
  *
  *Constructs a module manager object.
- *\param directory absolute path to the directory where the manager shall look for modules \deprecated {Module manager uses now 
+ *\param directory absolute path to the directory where the manager shall look for modules \deprecated {Module manager uses now
  *  infomation from cfg file}
  *\param cfgFile GPAC configuration file handle. If this is NULL, the modules won't be able to share the configuration
  *file with the rest of the GPAC framework.
@@ -263,7 +263,7 @@ GF_Err gf_modules_close_interface(GF_BaseInterface *interface_obj);
 /*!
  *\brief interface option query
  *
- *Gets an option from the config file associated with the module manager 
+ *Gets an option from the config file associated with the module manager
  *\param interface_obj the interface object used
  *\param secName the desired key parent section name
  *\param keyName the desired key name
@@ -273,7 +273,7 @@ const char *gf_modules_get_option(GF_BaseInterface *interface_obj, const char *s
 /*!
  *\brief interface option update
  *
- *Sets an option in the config file associated with the module manager 
+ *Sets an option in the config file associated with the module manager
  *\param interface_obj the interface object used
  *\param secName the desired key parent section name
  *\param keyName the desired key name

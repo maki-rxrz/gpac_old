@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -66,7 +66,7 @@ typedef struct __validation_module
     /* test sequence */
     char *test_base;
     char *test_filename;
-    
+
     Bool snapshot_next_frame;
     u32 snapshot_number;
 
@@ -112,15 +112,15 @@ static char *validator_get_snapshot_name(char *test_filename, Bool is_reference,
     return gf_strdup(dumpname);
 }
 
-static char *validator_create_snapshot(GF_Validator *validator) 
+static char *validator_create_snapshot(GF_Validator *validator)
 {
     GF_Err e;
 	GF_VideoSurface fb;
     GF_Terminal *term = validator->term;
     char *dumpname;
-    
+
     dumpname = validator_get_snapshot_name(validator->test_filename, validator->is_recording, validator->snapshot_number);
-    
+
     e = gf_term_get_screen_buffer(term, &fb);
     if (e) {
 	    GF_LOG(GF_LOG_ERROR, GF_LOG_MODULE, ("[Validator] Error dumping screen buffer %s\n", gf_error_to_string(e)));
@@ -222,15 +222,15 @@ Bool validator_on_event_play(void *udta, GF_Event *event, Bool consumed_by_compo
 	case GF_EVENT_CONNECT:
 		if (event->connect.is_connected) {
             gf_sc_add_video_listener(validator->term->compositor, &validator->video_listener);
-			validator->ck = validator->term->root_scene->scene_codec ? 
-                            validator->term->root_scene->scene_codec->ck : 
+			validator->ck = validator->term->root_scene->scene_codec ?
+                            validator->term->root_scene->scene_codec->ck :
                             validator->term->root_scene->dyn_ck;
 		}
 		break;
-	case GF_EVENT_CLICK: 
+	case GF_EVENT_CLICK:
 	case GF_EVENT_MOUSEUP:
-	case GF_EVENT_MOUSEDOWN: 
-	case GF_EVENT_MOUSEOVER: 
+	case GF_EVENT_MOUSEDOWN:
+	case GF_EVENT_MOUSEOVER:
 	case GF_EVENT_MOUSEOUT:
 	case GF_EVENT_MOUSEMOVE:
 	case GF_EVENT_MOUSEWHEEL:
@@ -238,28 +238,28 @@ Bool validator_on_event_play(void *udta, GF_Event *event, Bool consumed_by_compo
 	case GF_EVENT_TEXTINPUT:
         return 1;
 	case GF_EVENT_KEYUP:
-        if ((event->key.key_code == GF_KEY_END)&&(event->key.flags & GF_KEY_MOD_CTRL)) { 
+        if ((event->key.key_code == GF_KEY_END)&&(event->key.flags & GF_KEY_MOD_CTRL)) {
             GF_Event evt;
             evt.type = GF_EVENT_QUIT;
-            validator->term->compositor->video_out->on_event(validator->term->compositor->video_out->evt_cbk_hdl, &evt);                
+            validator->term->compositor->video_out->on_event(validator->term->compositor->video_out->evt_cbk_hdl, &evt);
         }
         return 1;
 	}
 	return 0;
 }
 
-static void validator_xvs_add_event_dom(GF_Validator *validator, GF_Event *event) 
+static void validator_xvs_add_event_dom(GF_Validator *validator, GF_Event *event)
 {
     GF_XMLNode *evt_node;
     GF_XMLAttribute *att;
-    
+
     GF_SAFEALLOC(evt_node, GF_XMLNode);
 
     switch (event->type) {
-	case GF_EVENT_CLICK: 
+	case GF_EVENT_CLICK:
 	case GF_EVENT_MOUSEUP:
-	case GF_EVENT_MOUSEDOWN: 
-	case GF_EVENT_MOUSEOVER: 
+	case GF_EVENT_MOUSEDOWN:
+	case GF_EVENT_MOUSEOVER:
 	case GF_EVENT_MOUSEOUT:
 	case GF_EVENT_MOUSEMOVE:
 	case GF_EVENT_MOUSEWHEEL:
@@ -269,7 +269,7 @@ static void validator_xvs_add_event_dom(GF_Validator *validator, GF_Event *event
         evt_node->name = gf_strdup(gf_dom_event_get_name(event->type));
         break;
     }
-    
+
     if (!evt_node->name) {
         gf_free(evt_node);
         return;
@@ -284,10 +284,10 @@ static void validator_xvs_add_event_dom(GF_Validator *validator, GF_Event *event
     gf_list_add(evt_node->attributes, att);
 
     switch (event->type) {
-	case GF_EVENT_CLICK: 
+	case GF_EVENT_CLICK:
 	case GF_EVENT_MOUSEUP:
-	case GF_EVENT_MOUSEDOWN: 
-	case GF_EVENT_MOUSEOVER: 
+	case GF_EVENT_MOUSEDOWN:
+	case GF_EVENT_MOUSEOVER:
 	case GF_EVENT_MOUSEOUT:
 	case GF_EVENT_MOUSEMOVE:
 	case GF_EVENT_MOUSEWHEEL:
@@ -350,7 +350,7 @@ static void validator_xvs_add_event_dom(GF_Validator *validator, GF_Event *event
         GF_SAFEALLOC(att, GF_XMLAttribute);
         att->name = gf_strdup("key_identifier");
         att->value = gf_strdup(gf_dom_get_key_name(event->key.key_code));
-        gf_list_add(evt_node->attributes, att);        
+        gf_list_add(evt_node->attributes, att);
         if (event->key.flags & GF_KEY_MOD_SHIFT) {
             GF_SAFEALLOC(att, GF_XMLAttribute);
             att->name = gf_strdup("shift");
@@ -384,7 +384,7 @@ static void validator_xvs_add_event_dom(GF_Validator *validator, GF_Event *event
     evt_node->type = GF_XML_TEXT_TYPE;
     evt_node->name = gf_strdup("\n");
     gf_list_add(validator->xvs_node->content, evt_node);
-} 
+}
 
 Bool validator_on_event_record(void *udta, GF_Event *event, Bool consumed_by_compositor)
 {
@@ -398,15 +398,15 @@ Bool validator_on_event_record(void *udta, GF_Event *event, Bool consumed_by_com
 		}
 		break;
 	case GF_EVENT_KEYDOWN:
-        if (event->key.key_code == GF_KEY_INSERT) { 
+        if (event->key.key_code == GF_KEY_INSERT) {
             rec_event = 0;
-        } else if (event->key.key_code == GF_KEY_PAGEDOWN) { 
+        } else if (event->key.key_code == GF_KEY_PAGEDOWN) {
             rec_event = 0;
-        } else if (event->key.key_code == GF_KEY_PAGEUP) { 
+        } else if (event->key.key_code == GF_KEY_PAGEUP) {
             rec_event = 0;
-        } else if (event->key.key_code == GF_KEY_END) { 
+        } else if (event->key.key_code == GF_KEY_END) {
             rec_event = 0;
-        } else if (event->key.key_code == GF_KEY_CONTROL) { 
+        } else if (event->key.key_code == GF_KEY_CONTROL) {
             rec_event = 0;
         } else if (event->key.flags & GF_KEY_MOD_CTRL) {
             rec_event = 0;
@@ -415,30 +415,30 @@ Bool validator_on_event_record(void *udta, GF_Event *event, Bool consumed_by_com
 	case GF_EVENT_KEYUP:
         if (event->key.flags & GF_KEY_MOD_CTRL) {
             rec_event = 0;
-            if (event->key.key_code == GF_KEY_INSERT) { 
+            if (event->key.key_code == GF_KEY_INSERT) {
                 char *snap_name = validator_create_snapshot(validator);
                 validator_xvs_add_snapshot_node(validator, snap_name, gf_clock_time(validator->ck));
                 gf_free(snap_name);
             } else if (event->key.key_code == GF_KEY_END) {
                 GF_Event evt;
                 evt.type = GF_EVENT_QUIT;
-                validator->term->compositor->video_out->on_event(validator->term->compositor->video_out->evt_cbk_hdl, &evt);                
+                validator->term->compositor->video_out->on_event(validator->term->compositor->video_out->evt_cbk_hdl, &evt);
             } else if (event->key.key_code == GF_KEY_F1) {
                 validator->snapshot_next_frame = 1;
             }
-        } else if (event->key.key_code == GF_KEY_PAGEDOWN) { 
+        } else if (event->key.key_code == GF_KEY_PAGEDOWN) {
             rec_event = 0;
             validator_xvs_close(validator);
             gf_term_disconnect(validator->term);
             gf_sc_remove_video_listener(validator->term->compositor, &validator->video_listener);
             validator_xvs_next(validator, 0);
-        } else if (event->key.key_code == GF_KEY_PAGEUP) { 
+        } else if (event->key.key_code == GF_KEY_PAGEUP) {
             rec_event = 0;
             validator_xvs_close(validator);
             gf_term_disconnect(validator->term);
             gf_sc_remove_video_listener(validator->term->compositor, &validator->video_listener);
             validator_xvs_next(validator, 1);
-        } else if (event->key.key_code == GF_KEY_CONTROL) { 
+        } else if (event->key.key_code == GF_KEY_CONTROL) {
             rec_event = 0;
         }
         break;
@@ -449,7 +449,7 @@ Bool validator_on_event_record(void *udta, GF_Event *event, Bool consumed_by_com
 	return 0;
 }
 
-static void validator_xvl_open(GF_Validator *validator) 
+static void validator_xvl_open(GF_Validator *validator)
 {
     GF_Err e;
     u32 att_index;
@@ -478,7 +478,7 @@ static void validator_xvl_open(GF_Validator *validator)
     }
 }
 
-static void validator_xvl_close(GF_Validator *validator) 
+static void validator_xvl_close(GF_Validator *validator)
 {
     if (validator->xvl_parser) {
         /* writing the validation results */
@@ -496,7 +496,7 @@ static void validator_xvl_close(GF_Validator *validator)
             gf_fwrite(xvl_content, strlen(xvl_content), 1, xvl_fp);
             fclose(xvl_fp);
             gf_free(xvl_content);
-        } 
+        }
         gf_xml_dom_del(validator->xvl_parser);
         validator->xvl_parser = NULL;
         validator->xvl_filename = NULL;
@@ -504,7 +504,7 @@ static void validator_xvl_close(GF_Validator *validator)
 }
 
 static void validator_xvl_get_next_xvs(GF_Validator *validator, Bool reverse)
-{    
+{
     u32 xvl_att_index;
     validator->xvs_node = NULL;
     validator->xvs_filename = NULL;
@@ -513,7 +513,7 @@ static void validator_xvl_get_next_xvs(GF_Validator *validator, Bool reverse)
         validator->xvs_node_in_xvl = gf_list_get(validator->xvl_node->content, validator->xvl_node_index);
         if (!validator->xvs_node_in_xvl) {
             return;
-        } 
+        }
         if (validator->xvs_node_in_xvl->type != GF_XML_NODE_TYPE) {
             if (!reverse) validator->xvl_node_index++;
             else validator->xvl_node_index--;
@@ -536,7 +536,7 @@ static void validator_xvl_get_next_xvs(GF_Validator *validator, Bool reverse)
     }
 }
 
-static Bool validator_xvs_open(GF_Validator *validator) 
+static Bool validator_xvs_open(GF_Validator *validator)
 {
     GF_Err e;
     GF_LOG(GF_LOG_DEBUG, GF_LOG_MODULE, ("[Validator] Opening Validation Script: %s\n", validator->xvs_filename));
@@ -588,7 +588,7 @@ static Bool validator_xvs_open(GF_Validator *validator)
                 sep[0] = GF_PATH_SEPARATOR;
                 validator->test_filename = sep+1;
             }
-        }        
+        }
     }
     if (validator->is_recording) {
         GF_XMLNode *node;
@@ -663,14 +663,14 @@ static void validator_xvs_close(GF_Validator *validator)
                     GF_SAFEALLOC(att_result, GF_XMLAttribute);
                     att_result->name = gf_strdup("result");
                     gf_list_add(validator->xvs_node_in_xvl->attributes, att_result);
-                } 
+                }
                 if (att_result->value) gf_free(att_result->value);
                 att_result->value = gf_strdup(validator->xvs_result ? "pass" : "fail");
             }
         }
         gf_xml_dom_del(validator->xvs_parser);
         validator->xvs_parser = NULL;
-    } 
+    }
     validator->xvs_node = NULL;
     validator->xvs_node_in_xvl = NULL;
     validator->xvs_filename = NULL;
@@ -683,23 +683,23 @@ static void validator_xvs_close(GF_Validator *validator)
 static void validator_test_open(GF_Validator *validator)
 {
     char filename[100];
-    if (validator->test_base) 
+    if (validator->test_base)
         sprintf(filename, "%s%c%s", validator->test_base, GF_PATH_SEPARATOR, validator->test_filename);
-    else 
+    else
         sprintf(filename, "%s", validator->test_filename);
     gf_sc_add_video_listener(validator->term->compositor, &validator->video_listener);
-    if (validator->is_recording) 
+    if (validator->is_recording)
         validator->snapshot_next_frame = 1;
     gf_term_connect(validator->term, filename);
-	validator->ck = validator->term->root_scene->scene_codec ? 
-                    validator->term->root_scene->scene_codec->ck : 
+	validator->ck = validator->term->root_scene->scene_codec ?
+                    validator->term->root_scene->scene_codec->ck :
                     validator->term->root_scene->dyn_ck;
 }
 
 static Bool validator_xvs_next(GF_Validator *validator, Bool reverse)
 {
     if (validator->xvl_node) {
-        validator_xvl_get_next_xvs(validator, reverse);            
+        validator_xvl_get_next_xvs(validator, reverse);
         if (validator->xvs_filename) {
             validator_xvs_open(validator);
             if (!validator->xvs_node) {
@@ -720,7 +720,7 @@ static Bool validator_xvs_next(GF_Validator *validator, Bool reverse)
     }
 }
 
-static Bool validator_load_event(GF_Validator *validator) 
+static Bool validator_load_event(GF_Validator *validator)
 {
     GF_XMLNode *event_node;
     GF_XMLAttribute *att;
@@ -780,10 +780,10 @@ static Bool validator_load_event(GF_Validator *validator)
         } else if (!strcmp(att->name, "ctrl") && !strcmp(att->value, "true")) {
             validator->next_event.mouse.key_states |= GF_KEY_MOD_CTRL;
         } else if (!strcmp(att->name, "key_identifier")) {
-            validator->next_event.key.key_code = gf_dom_get_key_type(att->value); 
+            validator->next_event.key.key_code = gf_dom_get_key_type(att->value);
         } else if (!strcmp(att->name, "unicode-char")) {
             validator->next_event.character.unicode_char = atoi(att->value);
-        } 
+        }
         att_index++;
     }
 	validator->evt_loaded = 1;
@@ -801,7 +801,7 @@ static Bool validator_process(GF_TermExt *termext, u32 action, void *param)
     case GF_TERM_EXT_START:
 		validator->term = (GF_Terminal *) param;
 
-		/* if the validator is loaded, we switch off anti-aliasing for image comparison and we put a low framerate, 
+		/* if the validator is loaded, we switch off anti-aliasing for image comparison and we put a low framerate,
 		but we store the previous value to restore it upon termination of the validator */
         opt = (char *)gf_modules_get_option((GF_BaseInterface*)termext, "Compositor", "FrameRate");
         if (opt) validator->prev_fps = gf_strdup(opt);
@@ -853,7 +853,7 @@ static Bool validator_process(GF_TermExt *termext, u32 action, void *param)
         	termext->caps |= GF_TERM_EXTENSION_NOT_THREADED;
         } else {
 		validator->evt_filter.on_event = validator_on_event_record;
-        } 
+        }
 	gf_term_add_event_filter(validator->term, &validator->evt_filter);
 	validator->video_listener.udta = validator;
 	validator->video_listener.on_video_frame = validator_on_video_frame;
@@ -889,7 +889,7 @@ static Bool validator_process(GF_TermExt *termext, u32 action, void *param)
         }
 		return 1;
 
-    /* when the terminal stops, we close the XVS parser and XVL parser if any, restore the config, 
+    /* when the terminal stops, we close the XVS parser and XVL parser if any, restore the config,
     and free all validator data (the validator will be destroyed when the module is unloaded)
     Note: we don't need to disconnect the terminal since it's already stopping */
 	case GF_TERM_EXT_STOP:
@@ -934,7 +934,7 @@ static Bool validator_process(GF_TermExt *termext, u32 action, void *param)
                 char *snap_name = validator_create_snapshot(validator);
                 gf_free(snap_name);
                 res = validator_compare_snapshots(validator);
-                validator->xvs_result &= res; 
+                validator->xvs_result &= res;
                 validator->next_event_snapshot = 0;
             } else {
                 validator->term->compositor->video_out->on_event(validator->term->compositor->video_out->evt_cbk_hdl, &validator->next_event);
@@ -948,7 +948,7 @@ static Bool validator_process(GF_TermExt *termext, u32 action, void *param)
                 if (!validator->xvs_node) {
                     GF_Event evt;
                     evt.type = GF_EVENT_QUIT;
-                    validator->term->compositor->video_out->on_event(validator->term->compositor->video_out->evt_cbk_hdl, &evt);                
+                    validator->term->compositor->video_out->on_event(validator->term->compositor->video_out->evt_cbk_hdl, &evt);
                 } else {
                     if (!validator->is_recording) {
                         validator_load_event(validator);
@@ -988,17 +988,17 @@ void validator_delete(GF_BaseInterface *ifce)
 }
 
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 		GF_TERM_EXT_INTERFACE,
 		0
 	};
-	return si; 
+	return si;
 }
 
 GPAC_MODULE_EXPORT
-GF_BaseInterface *LoadInterface(u32 InterfaceType) 
+GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
 	if (InterfaceType == GF_TERM_EXT_INTERFACE) return (GF_BaseInterface *)validator_new();
 	return NULL;

@@ -6,7 +6,7 @@
  */
 /* Compiler settings for D:\CVS\gpac\applications\GPAX\GPAX.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
-    error checks: allocation ref bounds_check enum stub_data 
+    error checks: allocation ref bounds_check enum stub_data
 */
 //@@MIDL_FILE_HEADING(  )
 
@@ -27,8 +27,8 @@
 
 #include "GPAX.h"
 
-#define TYPE_FORMAT_STRING_SIZE   59                                
-#define PROC_FORMAT_STRING_SIZE   213                               
+#define TYPE_FORMAT_STRING_SIZE   59
+#define PROC_FORMAT_STRING_SIZE   213
 
 typedef struct _MIDL_TYPE_FORMAT_STRING
     {
@@ -71,7 +71,7 @@ extern const MIDL_SERVER_INFO IGPAX_ServerInfo;
 #pragma code_seg(".orpc")
 extern const USER_MARSHAL_ROUTINE_QUADRUPLE UserMarshalRoutines[1];
 
-static const MIDL_STUB_DESC Object_StubDesc = 
+static const MIDL_STUB_DESC Object_StubDesc =
     {
     0,
     NdrOleAllocate,
@@ -95,7 +95,7 @@ static const MIDL_STUB_DESC Object_StubDesc =
     0   /* Reserved5 */
     };
 
-static const unsigned short IGPAX_FormatStringOffsetTable[] = 
+static const unsigned short IGPAX_FormatStringOffsetTable[] =
     {
     (unsigned short) -1,
     (unsigned short) -1,
@@ -111,7 +111,7 @@ static const unsigned short IGPAX_FormatStringOffsetTable[] =
     184
     };
 
-static const MIDL_SERVER_INFO IGPAX_ServerInfo = 
+static const MIDL_SERVER_INFO IGPAX_ServerInfo =
     {
     &Object_StubDesc,
     0,
@@ -133,7 +133,7 @@ static const MIDL_STUBLESS_PROXY_INFO IGPAX_ProxyInfo =
     0
     };
 
-CINTERFACE_PROXY_VTABLE(15) _IGPAXProxyVtbl = 
+CINTERFACE_PROXY_VTABLE(15) _IGPAXProxyVtbl =
 {
     &IGPAX_ProxyInfo,
     &IID_IGPAX,
@@ -183,9 +183,9 @@ CInterfaceStubVtbl _IGPAXStubVtbl =
 
 #pragma data_seg(".rdata")
 
-static const USER_MARSHAL_ROUTINE_QUADRUPLE UserMarshalRoutines[1] = 
+static const USER_MARSHAL_ROUTINE_QUADRUPLE UserMarshalRoutines[1] =
         {
-            
+
             {
             BSTR_UserSize
             ,BSTR_UserMarshal
@@ -500,10 +500,10 @@ static const MIDL_TYPE_FORMAT_STRING __MIDL_TypeFormatString =
         0,
         {
 			NdrFcShort( 0x0 ),	/* 0 */
-/*  2 */	
+/*  2 */
 			0x12, 0x0,	/* FC_UP */
 /*  4 */	NdrFcShort( 0xc ),	/* Offset= 12 (16) */
-/*  6 */	
+/*  6 */
 			0x1b,		/* FC_CARRAY */
 			0x1,		/* 1 */
 /*  8 */	NdrFcShort( 0x2 ),	/* 2 */
@@ -512,7 +512,7 @@ static const MIDL_TYPE_FORMAT_STRING __MIDL_TypeFormatString =
 /* 12 */	NdrFcShort( 0xfffc ),	/* -4 */
 /* 14 */	0x6,		/* FC_SHORT */
 			0x5b,		/* FC_END */
-/* 16 */	
+/* 16 */
 			0x17,		/* FC_CSTRUCT */
 			0x3,		/* 3 */
 /* 18 */	NdrFcShort( 0x8 ),	/* 8 */
@@ -527,10 +527,10 @@ static const MIDL_TYPE_FORMAT_STRING __MIDL_TypeFormatString =
 /* 30 */	NdrFcShort( 0x4 ),	/* 4 */
 /* 32 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 34 */	NdrFcShort( 0xffffffe0 ),	/* Offset= -32 (2) */
-/* 36 */	
+/* 36 */
 			0x11, 0x4,	/* FC_RP [alloced_on_stack] */
 /* 38 */	NdrFcShort( 0x6 ),	/* Offset= 6 (44) */
-/* 40 */	
+/* 40 */
 			0x13, 0x0,	/* FC_OP */
 /* 42 */	NdrFcShort( 0xffffffe6 ),	/* Offset= -26 (16) */
 /* 44 */	0xb4,		/* FC_USER_MARSHAL */
@@ -539,7 +539,7 @@ static const MIDL_TYPE_FORMAT_STRING __MIDL_TypeFormatString =
 /* 48 */	NdrFcShort( 0x4 ),	/* 4 */
 /* 50 */	NdrFcShort( 0x0 ),	/* 0 */
 /* 52 */	NdrFcShort( 0xfffffff4 ),	/* Offset= -12 (40) */
-/* 54 */	
+/* 54 */
 			0x11, 0xc,	/* FC_RP [alloced_on_stack] [simple_pointer] */
 /* 56 */	0x6,		/* FC_SHORT */
 			0x5c,		/* FC_PAD */
@@ -548,25 +548,25 @@ static const MIDL_TYPE_FORMAT_STRING __MIDL_TypeFormatString =
         }
     };
 
-const CInterfaceProxyVtbl * _GPAX_ProxyVtblList[] = 
+const CInterfaceProxyVtbl * _GPAX_ProxyVtblList[] =
 {
     ( CInterfaceProxyVtbl *) &_IGPAXProxyVtbl,
     0
 };
 
-const CInterfaceStubVtbl * _GPAX_StubVtblList[] = 
+const CInterfaceStubVtbl * _GPAX_StubVtblList[] =
 {
     ( CInterfaceStubVtbl *) &_IGPAXStubVtbl,
     0
 };
 
-PCInterfaceName const _GPAX_InterfaceNamesList[] = 
+PCInterfaceName const _GPAX_InterfaceNamesList[] =
 {
     "IGPAX",
     0
 };
 
-const IID *  _GPAX_BaseIIDList[] = 
+const IID *  _GPAX_BaseIIDList[] =
 {
     &IID_IDispatch,
     0
@@ -577,7 +577,7 @@ const IID *  _GPAX_BaseIIDList[] =
 
 int __stdcall _GPAX_IID_Lookup( const IID * pIID, int * pIndex )
 {
-    
+
     if(!_GPAX_CHECK_IID(0))
         {
         *pIndex = 0;
@@ -587,13 +587,13 @@ int __stdcall _GPAX_IID_Lookup( const IID * pIID, int * pIndex )
     return 0;
 }
 
-const ExtendedProxyFileInfo GPAX_ProxyFileInfo = 
+const ExtendedProxyFileInfo GPAX_ProxyFileInfo =
 {
     (PCInterfaceProxyVtblList *) & _GPAX_ProxyVtblList,
     (PCInterfaceStubVtblList *) & _GPAX_StubVtblList,
     (const PCInterfaceName * ) & _GPAX_InterfaceNamesList,
     (const IID ** ) & _GPAX_BaseIIDList,
-    & _GPAX_IID_Lookup, 
+    & _GPAX_IID_Lookup,
     1,
     2,
     0, /* table of [async_uuid] interfaces */

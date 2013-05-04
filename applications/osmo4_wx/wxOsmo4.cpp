@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -346,16 +346,16 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 	case GF_EVENT_AUTHORIZATION:
 	{
 	  wxGPACEvent wxevt(app);
-	  wxTextEntryDialog user_d (0, 
-                  wxT("Please set the user name for connection"), 
-		  wxString(evt->auth.site_url, wxConvUTF8), 
+	  wxTextEntryDialog user_d (0,
+                  wxT("Please set the user name for connection"),
+		  wxString(evt->auth.site_url, wxConvUTF8),
                   wxString(evt->auth.user, wxConvUTF8));
 	  if (user_d.ShowModal() != wxID_OK)
 	    return 0;
 	  strncpy(evt->auth.user, user_d.GetValue().mb_str(wxConvUTF8), 50);
-	  wxPasswordEntryDialog passwd_d(0, 
-                      wxT("Please enter password"), 
-                      wxString(evt->auth.site_url, wxConvUTF8), 
+	  wxPasswordEntryDialog passwd_d(0,
+                      wxT("Please enter password"),
+                      wxString(evt->auth.site_url, wxConvUTF8),
                       wxString(evt->auth.password, wxConvUTF8));
 	  if (passwd_d.ShowModal() != wxID_OK)
 	    return 0;

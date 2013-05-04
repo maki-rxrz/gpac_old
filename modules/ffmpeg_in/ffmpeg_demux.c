@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -960,7 +960,7 @@ void *New_FFMPEG_Demux()
     GF_LOG(GF_LOG_DEBUG, GF_LOG_CONTAINER, ("[FFMPEG Demuxer] Registering all ffmpeg plugins DONE.\n") );
 
 	ffd->RegisterMimeTypes = FFD_RegisterMimeTypes;
-	ffd->CanHandleURL = FFD_CanHandleURL;	
+	ffd->CanHandleURL = FFD_CanHandleURL;
 	ffd->CloseService = FFD_CloseService;
 	ffd->ConnectChannel = FFD_ConnectChannel;
 	ffd->ConnectService = FFD_ConnectService;

@@ -17,8 +17,8 @@ class CInitDialogBar : public CDialogBar
 
 // Construction
 public:
-	CInitDialogBar(); 
-	virtual ~CInitDialogBar(); 
+	CInitDialogBar();
+	virtual ~CInitDialogBar();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -49,7 +49,7 @@ class AddressBar : public CInitDialogBar
 
 	// Construction
 public:
-	AddressBar(); 
+	AddressBar();
 
 // Dialog Data
 	//{{AFX_DATA(AddressBar)

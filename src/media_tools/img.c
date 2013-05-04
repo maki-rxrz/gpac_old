@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -425,7 +425,7 @@ GF_Err gf_img_png_dec(char *png, u32 png_size, u32 *width, u32 *height, u32 *pix
 	png_bytep trans_alpha;
 	int num_trans;
 	png_color_16p trans_color;
- 
+
 	if ((png_size<8) || png_sig_cmp((png_bytep)png, 0, 8) ) return GF_NON_COMPLIANT_BITSTREAM;
 
 	udta.buffer = png;
@@ -696,18 +696,18 @@ GF_Err gf_img_file_dec(char *png_filename, u32 *hint_oti, u32 *width, u32 *heigh
 	*dst_size = 0;
 	if (oti == GPAC_OTI_IMAGE_JPEG) {
 #ifdef GPAC_HAS_JPEG
-		e = gf_img_jpeg_dec(data, fsize, width, height, pixel_format, NULL, dst_size, 0);    
+		e = gf_img_jpeg_dec(data, fsize, width, height, pixel_format, NULL, dst_size, 0);
 		if (*dst_size) {
 			*dst = gf_malloc(*dst_size);
-			return gf_img_jpeg_dec(data, fsize, width, height, pixel_format, NULL, dst_size, 0);    
+			return gf_img_jpeg_dec(data, fsize, width, height, pixel_format, NULL, dst_size, 0);
 		}
 #endif
 	} else if (oti == GPAC_OTI_IMAGE_PNG) {
 #ifdef GPAC_HAS_PNG
-		e = gf_img_png_dec(data, fsize, width, height, pixel_format, NULL, dst_size);    
+		e = gf_img_png_dec(data, fsize, width, height, pixel_format, NULL, dst_size);
 		if (*dst_size) {
 			*dst = gf_malloc(*dst_size);
-			return gf_img_png_dec(data, fsize, width, height, pixel_format, *dst, dst_size);    
+			return gf_img_png_dec(data, fsize, width, height, pixel_format, *dst, dst_size);
 		}
 #endif
 	}

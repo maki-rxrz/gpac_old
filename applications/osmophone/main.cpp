@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -213,11 +213,11 @@ static void on_gpac_rti_log(void *cbk, u32 ll, u32 lm, const char *fmt, va_list 
 
 	if (lm & GF_LOG_RTI) {
 		GF_SystemRTInfo rti;
-		if (fmt) vfprintf(log_file, fmt, list);	
-	
+		if (fmt) vfprintf(log_file, fmt, list);
+
 		gf_sys_get_rti(rti_update_time_ms, &rti, 0);
-	
-		fprintf(log_file, "% 8d\t% 8d\t% 8d\t% 4d\t% 8d\t\t", 
+
+		fprintf(log_file, "% 8d\t% 8d\t% 8d\t% 4d\t% 8d\t\t",
 			gf_sys_clock(),
 			gf_term_get_time_in_ms(term),
 			rti.total_cpu_usage,
@@ -225,12 +225,12 @@ static void on_gpac_rti_log(void *cbk, u32 ll, u32 lm, const char *fmt, va_list 
 			(u32) ( rti.gpac_memory / 1024)
 		);
 	} else if (fmt && (ll>=GF_LOG_INFO)) {
-		vfprintf(log_file, fmt, list);	
+		vfprintf(log_file, fmt, list);
 	}
 }
 static void on_gpac_log(void *cbk, u32 ll, u32 lm, const char *fmt, va_list list)
 {
-	if (fmt && log_file) vfprintf(log_file, fmt, list);	
+	if (fmt && log_file) vfprintf(log_file, fmt, list);
 }
 
 
@@ -272,7 +272,7 @@ static void setup_logs()
 					gf_log_set_callback(log_file, on_gpac_log);
 				}
 			}
-		} 
+		}
 	}
 }
 
@@ -295,7 +295,7 @@ void switch_playlist(Bool play_prev)
 	u32 count;
 	const char *ple = gf_cfg_get_key(user.config, "General", "PLEntry");
 	if (ple) idx = atoi(ple);
-	
+
 	count = gf_cfg_get_key_count(user.config, "Playlist");
 	if (!count) return;
 	/*not the first launch*/
@@ -342,7 +342,7 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 		cbk_on_progress(szTitle, evt->progress.done, evt->progress.total);
 	}
 		break;
-	
+
 	case GF_EVENT_SIZE:
 		break;
 	case GF_EVENT_RESOLUTION:
@@ -515,7 +515,7 @@ void do_layout(Bool notif_size)
 }
 
 
-void set_backlight_state(Bool disable) 
+void set_backlight_state(Bool disable)
 {
 #ifdef _WIN32_WCE
 	HKEY hKey = 0;
@@ -569,7 +569,7 @@ void gf_freeze_display(Bool do_gf_freeze)
 		}
 		/*gf_freeze display*/
 		gf_term_set_option(term, GF_OPT_FREEZE_DISPLAY, 1);
-		
+
 		set_backlight_state(GF_FALSE);
 		gf_sleep(100);
 	} else {
@@ -579,7 +579,7 @@ void gf_freeze_display(Bool do_gf_freeze)
 		if (do_resume) {
 			gf_term_set_option(term, GF_OPT_PLAY_STATE, GF_STATE_PLAYING);
 			set_backlight_state(GF_TRUE);
-		}	
+		}
 	}
 }
 
@@ -668,7 +668,7 @@ void load_recent_file(u32 idx)
 	}
 }
 
-BOOL CALLBACK AboutDialogProc(const HWND hWnd, const UINT Msg, const WPARAM wParam, const LPARAM lParam) 
+BOOL CALLBACK AboutDialogProc(const HWND hWnd, const UINT Msg, const WPARAM wParam, const LPARAM lParam)
 {
 	BOOL ret = TRUE;
     switch (Msg) {
@@ -694,7 +694,7 @@ BOOL CALLBACK AboutDialogProc(const HWND hWnd, const UINT Msg, const WPARAM wPar
 		mbi.nToolBarId = IDR_ABOUT_MENU;
 		mbi.hInstRes = g_hinst;
 		mbi.nBmpId = 0;
-		mbi.cBmpImages = 0;	
+		mbi.cBmpImages = 0;
 		SHCreateMenuBar(&mbi);
 
 		u16 swText[4096];
@@ -731,24 +731,24 @@ void pause_file()
 {
 	if (!is_connected) return;
 #ifdef _WIN32_WCE
-	TBBUTTONINFO tbbi; 
-	tbbi.cbSize = sizeof(tbbi); 
-	tbbi.dwMask = TBIF_TEXT; 
+	TBBUTTONINFO tbbi;
+	tbbi.cbSize = sizeof(tbbi);
+	tbbi.dwMask = TBIF_TEXT;
 #endif
 
 	if (gf_term_get_option(term, GF_OPT_PLAY_STATE)==GF_STATE_PLAYING) {
 		gf_term_set_option(term, GF_OPT_PLAY_STATE, GF_STATE_PAUSED);
 #ifdef _WIN32_WCE
-		tbbi.pszText = _T("Resume"); 
+		tbbi.pszText = _T("Resume");
 #endif
 	} else {
 		gf_term_set_option(term, GF_OPT_PLAY_STATE, GF_STATE_PLAYING);
 #ifdef _WIN32_WCE
-		tbbi.pszText = _T("Pause"); 
+		tbbi.pszText = _T("Pause");
 #endif
 	}
 #ifdef _WIN32_WCE
-	SendMessage(g_hwnd_menu, TB_SETBUTTONINFO, IDM_FILE_PAUSE, (LPARAM)&tbbi); 
+	SendMessage(g_hwnd_menu, TB_SETBUTTONINFO, IDM_FILE_PAUSE, (LPARAM)&tbbi);
 #endif
 }
 
@@ -804,7 +804,7 @@ void do_copy_paste()
 			char *szString = (char *)GlobalLock(hglbCopy);
 			gf_term_paste_text(term, szString, GF_FALSE);
 #endif
-			GlobalUnlock(hglbCopy); 
+			GlobalUnlock(hglbCopy);
 		}
 	}
 	/*we have something to copy*/
@@ -816,22 +816,22 @@ void do_copy_paste()
 			len = strlen(text);
 
 #ifdef _WIN32_WCE
-			HGLOBAL hglbCopy = GlobalAlloc(GMEM_MOVEABLE, (len + 1) * sizeof(u16)); 
+			HGLOBAL hglbCopy = GlobalAlloc(GMEM_MOVEABLE, (len + 1) * sizeof(u16));
 			LPCTSTR new_string = (LPCTSTR) GlobalLock(hglbCopy);
-			CE_CharToWide((char*)text, (u16*)new_string); 
+			CE_CharToWide((char*)text, (u16*)new_string);
 #else
-			HGLOBAL hglbCopy = GlobalAlloc(GMEM_MOVEABLE, (len + 1) * sizeof(u8)); 
+			HGLOBAL hglbCopy = GlobalAlloc(GMEM_MOVEABLE, (len + 1) * sizeof(u8));
 			char *new_string = (char*) GlobalLock(hglbCopy);
-			strcpy(new_string, text); 
+			strcpy(new_string, text);
 #endif
-			GlobalUnlock(hglbCopy); 
+			GlobalUnlock(hglbCopy);
 			SetClipboardData(CF_TEXT, hglbCopy);
 		}
 	}
-	CloseClipboard(); 
+	CloseClipboard();
 }
 
-static void rewrite_log_tools(u32 tool) 
+static void rewrite_log_tools(u32 tool)
 {
 	char *logs;
 	if (tool == GF_LOG_ALL) {
@@ -946,17 +946,17 @@ BOOL HandleCommand(HWND hwnd, WPARAM wParam, LPARAM lParam)
 		do_copy_paste();
 		break;
 
-	case IDM_OPEN_FILE1: 
-	case IDM_OPEN_FILE2: 
-	case IDM_OPEN_FILE3: 
-	case IDM_OPEN_FILE4: 
-	case IDM_OPEN_FILE5: 
-	case IDM_OPEN_FILE6: 
-	case IDM_OPEN_FILE7: 
-	case IDM_OPEN_FILE8: 
-	case IDM_OPEN_FILE9: 
-	case IDM_OPEN_FILE10: 
-		load_recent_file(LOWORD(wParam) - IDM_OPEN_FILE1); 
+	case IDM_OPEN_FILE1:
+	case IDM_OPEN_FILE2:
+	case IDM_OPEN_FILE3:
+	case IDM_OPEN_FILE4:
+	case IDM_OPEN_FILE5:
+	case IDM_OPEN_FILE6:
+	case IDM_OPEN_FILE7:
+	case IDM_OPEN_FILE8:
+	case IDM_OPEN_FILE9:
+	case IDM_OPEN_FILE10:
+		load_recent_file(LOWORD(wParam) - IDM_OPEN_FILE1);
 		break;
 
 	case IDS_CAP_DISABLE_PLAYLIST:
@@ -1010,11 +1010,11 @@ BOOL HandleCommand(HWND hwnd, WPARAM wParam, LPARAM lParam)
 	case ID_TOOLS_MMIO: rewrite_log_tools(GF_LOG_MMIO); break;
 	case ID_TOOLS_RTI: rewrite_log_tools(GF_LOG_RTI); break;
 	case ID_TOOLS_ALL: rewrite_log_tools(GF_LOG_ALL); break;
-	case ID_TOOLS_NONE: 
+	case ID_TOOLS_NONE:
 		log_level = GF_LOG_QUIET;
 		rewrite_log_tools(GF_LOG_ALL);
 		break;
-	case ID_LOGS_RESET: 
+	case ID_LOGS_RESET:
 		if (log_file) {
 			fclose(log_file);
 			log_file = NULL;
@@ -1048,14 +1048,14 @@ static BOOL OnMenuPopup(const HWND hWnd, const WPARAM wParam)
 
 	CheckMenuItem((HMENU)wParam, IDM_VIEW_SVG_LOAD, MF_BYCOMMAND| (use_svg_prog ? MF_CHECKED : MF_UNCHECKED) );
 
-	opt = (char *)gf_cfg_get_key(user.config, "GAPI", "FBAccess"); 
+	opt = (char *)gf_cfg_get_key(user.config, "GAPI", "FBAccess");
 	if (!opt) opt = "raw";
 	CheckMenuItem((HMENU)wParam, ID_VIDEO_DIRECTFB, MF_BYCOMMAND| ( (!strcmp(opt,"raw")) ? MF_CHECKED : MF_UNCHECKED) );
 	CheckMenuItem((HMENU)wParam, ID_VIDEO_GAPI, MF_BYCOMMAND| ( (!strcmp(opt,"gx")) ? MF_CHECKED : MF_UNCHECKED) );
 	CheckMenuItem((HMENU)wParam, ID_VIDEO_GDI, MF_BYCOMMAND| ( (!strcmp(opt,"gdi")) ? MF_CHECKED : MF_UNCHECKED) );
 
 
-	type = gf_term_get_option(term, GF_OPT_ASPECT_RATIO);	
+	type = gf_term_get_option(term, GF_OPT_ASPECT_RATIO);
 	CheckMenuItem((HMENU)wParam, IDS_CAP_DISABLE_PLAYLIST, MF_BYCOMMAND| (!playlist_navigation_on ? MF_CHECKED : MF_UNCHECKED) );
 	CheckMenuItem((HMENU)wParam, IDM_VIEW_AR_NONE, MF_BYCOMMAND| (type==GF_ASPECT_RATIO_KEEP) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem((HMENU)wParam, IDM_VIEW_AR_FILL, MF_BYCOMMAND| (type==GF_ASPECT_RATIO_FILL_SCREEN) ? MF_CHECKED : MF_UNCHECKED);
@@ -1065,7 +1065,7 @@ static BOOL OnMenuPopup(const HWND hWnd, const WPARAM wParam)
 	EnableMenuItem((HMENU)wParam, IDM_FILE_PAUSE, MF_BYCOMMAND| (is_connected ? MF_ENABLED : MF_GRAYED) );
 
 	if (/*we have something to copy*/
-		(gf_term_get_text_selection(term, GF_TRUE)!=NULL) 
+		(gf_term_get_text_selection(term, GF_TRUE)!=NULL)
 		/*or we are editing text and clipboard is not empty*/
 		|| (IsClipboardFormatAvailable(CF_TEXT) && (gf_term_paste_text(term, NULL, GF_TRUE)==GF_OK))
 	) {
@@ -1073,9 +1073,9 @@ static BOOL OnMenuPopup(const HWND hWnd, const WPARAM wParam)
 	} else {
 		EnableMenuItem((HMENU)wParam, ID_FILE_CUT_PASTE, MF_BYCOMMAND| MF_GRAYED);
 	}
-	
+
 	CheckMenuItem((HMENU)wParam, IDM_FILE_LOG_RTI, MF_BYCOMMAND| (log_rti) ? MF_CHECKED : MF_UNCHECKED);
-	
+
 	if (!is_connected) type = 0;
 	else type = gf_term_get_option(term, GF_OPT_NAVIGATION_TYPE);
 	navigation_on = type ? GF_TRUE : GF_FALSE;
@@ -1153,8 +1153,8 @@ BOOL CALLBACK MainWndProc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		mbi.hwndParent = hwnd;
 		mbi.hInstRes = g_hinst;
 		mbi.nBmpId = 0;
-		mbi.cBmpImages = 0;	
-		
+		mbi.cBmpImages = 0;
+
 		mbi.nToolBarId = IDM_MAIN_MENU;
 		SHCreateMenuBar(&mbi);
 		g_hwnd_menu = mbi.hwndMB;
@@ -1167,7 +1167,7 @@ BOOL CALLBACK MainWndProc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		do_layout(GF_TRUE);
 	}
 		break;
-		
+
 	case WM_COMMAND:
 		if (HandleCommand(hwnd, wParam, lParam))
 			return DefWindowProc(hwnd, msg, wParam, lParam);
@@ -1234,7 +1234,7 @@ BOOL CALLBACK MainWndProc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	default:
 		return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
-	
+
 	return 0;
 }
 
@@ -1260,11 +1260,11 @@ BOOL InitInstance (int CmdShow)
 	int style = WS_POPUP;
 #endif
 
-	g_hwnd = CreateWindow(_T("Osmophone"), _T("Osmophone"), 
+	g_hwnd = CreateWindow(_T("Osmophone"), _T("Osmophone"),
 						  style,
-						  0, caption_h, disp_w, disp_h, 
+						  0, caption_h, disp_w, disp_h,
 						  NULL, NULL, g_hinst, NULL);
-	
+
 	if (!g_hwnd) return FALSE;
 
 	ShowWindow(g_hwnd, CmdShow);
@@ -1298,32 +1298,32 @@ BOOL InitInstance (int CmdShow)
     #define FORMAT_OTHER 3
 #endif
 
-int WINAPI WinMain(HINSTANCE hInstance, 
-				   HINSTANCE hPrevInstance, 
+int WINAPI WinMain(HINSTANCE hInstance,
+				   HINSTANCE hPrevInstance,
 #ifdef _WIN32_WCE
-				   LPWSTR lpCmdLine, 
+				   LPWSTR lpCmdLine,
 #else
-				   LPSTR lpCmdLine, 
+				   LPSTR lpCmdLine,
 #endif
-				   int nShowCmd 
+				   int nShowCmd
 ) {
 	MSG 	msg;
 
-	HWND 	hwndOld = NULL;	
+	HWND 	hwndOld = NULL;
 	const char *str;
 	Bool initial_launch = GF_FALSE;
 
 	if (hwndOld = FindWindow(_T("Osmophone"), NULL))
 	{
-		SetForegroundWindow(hwndOld);    
+		SetForegroundWindow(hwndOld);
 		return 0;
 	}
-	
+
 	memset(&user, 0, sizeof(GF_User));
 	term = NULL;
 
 	g_hinst = hInstance;
-	
+
 	screen_w = GetSystemMetrics(SM_CXSCREEN);
 	screen_h = GetSystemMetrics(SM_CYSCREEN);
 

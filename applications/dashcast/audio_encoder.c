@@ -187,7 +187,7 @@ int dc_audio_encoder_encode(AudioOutputFile * p_aout, AudioInputData * p_aind) {
 
 		av_init_packet(&p_aout->packet);
 
-		/* 
+		/*
 		 * Set PTS (method 1)
 		 */
 

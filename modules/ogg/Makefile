@@ -17,7 +17,7 @@ endif
 #common obj
 OBJS= ogg_in.o ogg_load.o
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 NEED_LOCAL_LIB="no"
 LOCAL_LIB=../../bin/gcc
@@ -58,7 +58,7 @@ endif
 
 LIB=gm_ogg_xiph.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
-#LDFLAGS+=-export-symbols ogg.def 
+#LDFLAGS+=-export-symbols ogg.def
 endif
 
 
@@ -68,13 +68,13 @@ all: $(LIB)
 $(LIB): $(OBJS)
 	$(CC) $(SHFLAGS) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) $(EXTRALIBS) -L$(LOCAL_LIB) $(LINKLIBS)
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

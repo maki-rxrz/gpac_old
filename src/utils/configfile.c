@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -142,7 +142,7 @@ GF_Err gf_cfg_parse_config_file(GF_Config * tmp, const char * filePath, const ch
 		if (!strlen(line)) continue;
 		if (line[0] == '#') continue;
 
-		
+
 		/* new section */
 		if (line[0] == '[') {
 			p = (IniSection *) gf_malloc(sizeof(IniSection));
@@ -214,7 +214,7 @@ GF_Config *gf_cfg_new(const char *filePath, const char* file_name)
 	return tmp;
 }
 
-GF_EXPORT 
+GF_EXPORT
 char * gf_cfg_get_filename(GF_Config *iniFile)
 {
     if (!iniFile)
@@ -222,7 +222,7 @@ char * gf_cfg_get_filename(GF_Config *iniFile)
     return iniFile->fileName ? gf_strdup(iniFile->fileName) : NULL;
 }
 
-GF_EXPORT 
+GF_EXPORT
 GF_Err gf_cfg_save(GF_Config *iniFile)
 {
 	u32 i, j;
@@ -459,15 +459,15 @@ const char *gf_cfg_get_sub_key(GF_Config *iniFile, const char *secName, const ch
 	char *subKeyValue, *returnKey;
 	char *keyValue;
 
-	
+
 	keyValue = gf_strdup(gf_cfg_get_key(iniFile, secName, keyName));
 	if (!keyValue){
 		return NULL;
 	}
 
 	j = 0;
-	subKeyValue = strtok((char*)keyValue,";"); 
-	while (subKeyValue!=NULL) { 
+	subKeyValue = strtok((char*)keyValue,";");
+	while (subKeyValue!=NULL) {
 		if (j==sub_index) {
 			returnKey = gf_strdup(subKeyValue);
 			gf_free(keyValue);

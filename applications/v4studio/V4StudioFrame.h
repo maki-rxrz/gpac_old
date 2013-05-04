@@ -14,7 +14,7 @@
 #include "V4CommandPanel.h"
 
 // Scene data
-#include "V4SceneManager.h" 
+#include "V4SceneManager.h"
 
 enum {
 	// File Menu commands
@@ -207,5 +207,5 @@ protected:
 };
 
 
-#endif 
+#endif
 
