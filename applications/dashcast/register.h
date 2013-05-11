@@ -27,13 +27,13 @@
 #define REGISTER_H_
 
 //#include <pthread.h>
-#include <libavcodec/avcodec.h>
-#include <libavdevice/avdevice.h>
-#include <libavformat/avformat.h>
+#include "libav/include/libavcodec/avcodec.h"
+#include "libav/include/libavdevice/avdevice.h"
+#include "libav/include/libavformat/avformat.h"
 
 #include "../../include/gpac/thread.h"
 
-/* 
+/*
  * Register all codecs and define
  * the lock manager on top of avlib
  */

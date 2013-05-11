@@ -56,10 +56,10 @@ static GF_Err HEVC_ConfigureStream(HEVCDec *ctx, GF_ESD *esd)
 {
 	ctx->ES_ID = esd->ESID;
 	ctx->width = ctx->height = ctx->out_size = 0;
-	ctx->state_found = 0;
+	ctx->state_found = GF_FALSE;
 
 	libOpenHevcInit(3);
-	ctx->is_init = 1;
+	ctx->is_init = GF_TRUE;
 
 	if (esd->decoderConfig->decoderSpecificInfo && esd->decoderConfig->decoderSpecificInfo->data) {
 		u32 i, j;
@@ -81,7 +81,7 @@ static GF_Err HEVC_ConfigureStream(HEVCDec *ctx, GF_ESD *esd)
 				}
 			}
 		}
-		ctx->state_found = 1;
+		ctx->state_found = GF_TRUE;
 		gf_odf_hevc_cfg_del(cfg);
 	} else {
 		ctx->nalu_size_length = 0;
@@ -103,9 +103,9 @@ static GF_Err HEVC_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 	sOpt = gf_modules_get_option((GF_BaseInterface *)ifcg, "OpenHEVC", "DestroyDecoderUponSeek");
 	if (!sOpt) {
 		gf_modules_set_option((GF_BaseInterface *)ifcg, "OpenHEVC", "DestroyDecoderUponSeek", "yes");
-		ctx->reset_dec_on_seek = 1;
+		ctx->reset_dec_on_seek = GF_TRUE;
 	} else if (!strcmp(sOpt, "yes")) {
-		ctx->reset_dec_on_seek = 1;
+		ctx->reset_dec_on_seek = GF_TRUE;
 	}
 
 	/*not supported in this version*/
@@ -122,7 +122,7 @@ static GF_Err HEVC_DetachStream(GF_BaseDecoder *ifcg, u16 ES_ID)
 
 	if (ctx->is_init) {
 		libOpenHevcClose();
-		ctx->is_init = 0;
+		ctx->is_init = GF_FALSE;
 	}
 	ctx->width = ctx->height = ctx->out_size = 0;
 	return GF_OK;
@@ -270,7 +270,7 @@ static GF_Err HEVC_ProcessData(GF_MediaDecoder *ifcg,
 				case GF_HEVC_NALU_VID_PARAM:
 				case GF_HEVC_NALU_SEQ_PARAM:
 				case GF_HEVC_NALU_PIC_PARAM:
-					ctx->state_found = 1;
+					ctx->state_found = GF_TRUE;
 					break;
 				}
 			}
