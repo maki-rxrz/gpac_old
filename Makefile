@@ -63,7 +63,7 @@ install:
 	$(INSTALL) -d "$(DESTDIR)$(prefix)"
 	$(INSTALL) -d "$(DESTDIR)$(prefix)/$(libdir)"
 	$(INSTALL) -d "$(DESTDIR)$(prefix)/bin"
-ifneq ($(CONFIG_DARWIN), yes)
+ifeq ($(CONFIG_LINUX), yes)
 	$(INSTALL) $(INSTFLAGS) -m 755 bin/gcc/DashCast$(EXE) "$(DESTDIR)$(prefix)/bin"
 ifeq ($(STRIPINSTALL),yes)
 	$(STRIP) $(DESTDIR)$(prefix)/bin/DashCast$(EXE)
