@@ -3413,10 +3413,12 @@ Bool gf_isom_is_same_sample_description(GF_ISOFile *f1, u32 tk1, u32 sdesc_index
 			return 0;
 		}
 			break;
+#ifndef GPAC_DISABLE_VTT
 		case GF_ISOM_BOX_TYPE_WVTT:
             /* TODO */
             assert(0);
             break;
+#endif /*GPAC_DISABLE_VTT*/
 		}
 
 		if (sdesc_index1 && sdesc_index2) break;

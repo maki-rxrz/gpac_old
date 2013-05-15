@@ -420,10 +420,12 @@ GF_Err gf_isom_set_ismacryp_protection(GF_ISOFile *the_file, u32 trackNumber, u3
 		original_format = sea->type;
 		sea->type = GF_ISOM_BOX_TYPE_ENCS;
 		break;
+#ifndef GPAC_DISABLE_VTT
 	case GF_ISOM_BOX_TYPE_WVTT:
 		original_format = sea->type;
 		sea->type = GF_ISOM_BOX_TYPE_ENCT;
 		break;
+#endif /*GPAC_DISABLE_VTT*/
 	default:
 		return GF_BAD_PARAM;
 	}
@@ -493,10 +495,12 @@ GF_Err gf_isom_set_oma_protection(GF_ISOFile *the_file, u32 trackNumber, u32 des
 		original_format = sea->type;
 		sea->type = GF_ISOM_BOX_TYPE_ENCS;
 		break;
+#ifndef GPAC_DISABLE_VTT
 	case GF_ISOM_BOX_TYPE_WVTT:
 		original_format = sea->type;
 		sea->type = GF_ISOM_BOX_TYPE_ENCT;
 		break;
+#endif /*GPAC_DISABLE_VTT*/
 	default:
 		return GF_BAD_PARAM;
 	}
