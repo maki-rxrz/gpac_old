@@ -263,7 +263,9 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 	Bool is_stdout = GF_FALSE;
 	GF_BitStream *bs;
 	u32 track, i, di, count, m_type, m_stype, dsi_size, is_mj2k;
+#ifndef GPAC_DISABLE_VTT
     Bool is_wvtt = GF_FALSE;
+#endif /*GPAC_DISABLE_VTT*/
 
 	if (!(track = gf_isom_get_track_by_id(dumper->file, dumper->trackID))) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_AUTHOR, ("Wrong track ID %d for file %s \n", dumper->trackID, gf_isom_get_filename(dumper->file)));
@@ -426,10 +428,12 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 	} else if (m_type==GF_ISOM_MEDIA_FLASH) {
 		gf_export_message(dumper, GF_OK, "Extracting Macromedia Flash Movie sample%s", szNum);
 		strcpy(szEXT, ".swf");
+#ifndef GPAC_DISABLE_VTT
 	} else if (m_stype==GF_ISOM_SUBTYPE_WVTT) {
 		gf_export_message(dumper, GF_OK, "Extracting WebVTT sample%s", szNum);
 		strcpy(szEXT, ".vtt");
         is_wvtt = GF_TRUE;
+#endif /*GPAC_DISABLE_VTT*/
 	} else if (m_type==GF_ISOM_MEDIA_HINT) {
 		return gf_export_hint(dumper);
 	} else if (m_stype==GF_4CC('m','j','p','2')) {
@@ -488,6 +492,7 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 		if (is_mj2k)
 			write_jp2_file(bs, samp->data, samp->dataLength, dsi, dsi_size);
 		else {
+#ifndef GPAC_DISABLE_VTT
             if (is_wvtt) {
                 GF_Err e;
                 e = gf_webvtt_dump_header(out, dumper->file, track, 1);
@@ -497,8 +502,11 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
                     gf_webvtt_dump_iso_sample(out, timescale, samp);
                 }
             } else {
+#endif /*GPAC_DISABLE_VTT*/
                 gf_bs_write_data(bs, samp->data, samp->dataLength);
+#ifndef GPAC_DISABLE_VTT
             }
+#endif /*GPAC_DISABLE_VTT*/
         }
 		gf_isom_sample_del(&samp);
 		gf_bs_del(bs);
@@ -537,6 +545,7 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
 		if (is_mj2k)
 			write_jp2_file(bs, samp->data, samp->dataLength, dsi, dsi_size);
 		else {
+#ifndef GPAC_DISABLE_VTT
             if (is_wvtt) {
                 GF_Err e;
                 e = gf_webvtt_dump_header(out, dumper->file, track, 1);
@@ -546,8 +555,11 @@ GF_Err gf_media_export_samples(GF_MediaExporter *dumper)
                     gf_webvtt_dump_iso_sample(out, timescale, samp);
                 }
             } else {
+#endif /*GPAC_DISABLE_VTT*/
                 gf_bs_write_data(bs, samp->data, samp->dataLength);
+#ifndef GPAC_DISABLE_VTT
             }
+#endif /*GPAC_DISABLE_VTT*/
         }
 		gf_isom_sample_del(&samp);
 		gf_set_progress("Media Export", i+1, count);
@@ -1033,10 +1045,12 @@ GF_Err gf_media_export_native(GF_MediaExporter *dumper)
 
 	if (is_vobsub) return gf_dump_to_vobsub(dumper, szName, track, dsi, dsi_size);
 
+#ifndef GPAC_DISABLE_VTT
 	if (is_webvtt) {
         GF_Err gf_webvtt_dump_iso_track(GF_MediaExporter *dumper, char *szName, u32 track, Bool merge);
         return gf_webvtt_dump_iso_track(dumper, szName, track, (dumper->flags & GF_EXPORT_WEBVTT_NOMERGE? GF_FALSE : GF_TRUE));
     }
+#endif /*GPAC_DISABLE_VTT*/
 
     if (qcp_type>1) {
 		if (dumper->flags & GF_EXPORT_USE_QCP) {
