@@ -62,6 +62,7 @@ tar:
 install:
 	$(INSTALL) -d "$(DESTDIR)$(prefix)"
 	$(INSTALL) -d "$(DESTDIR)$(prefix)/$(libdir)"
+	$(INSTALL) -d "$(DESTDIR)$(prefix)/$(libdir)/pkgconfig"
 	$(INSTALL) -d "$(DESTDIR)$(prefix)/bin"
 ifeq ($(CONFIG_LINUX), yes)
 	$(INSTALL) $(INSTFLAGS) -m 755 bin/gcc/DashCast$(EXE) "$(DESTDIR)$(prefix)/bin"
@@ -81,9 +82,7 @@ ifeq ($(STRIPINSTALL),yes)
 	$(STRIP) $(DESTDIR)$(prefix)/bin/MP4Client$(EXE)
 endif
 endif
-	if [ -d  $(DESTDIR)$(prefix)/$(libdir)/pkgconfig ] ; then \
-	$(INSTALL) $(INSTFLAGS) -m 644 gpac.pc "$(DESTDIR)$(prefix)/$(libdir)/pkgconfig" ; \
-	fi
+	$(INSTALL) -m 644 gpac.pc "$(DESTDIR)$(prefix)/$(libdir)/pkgconfig"
 	$(INSTALL) -d "$(DESTDIR)$(moddir)"
 	$(INSTALL) bin/gcc/*.$(DYN_LIB_SUFFIX) "$(DESTDIR)$(moddir)"
 	rm -f $(DESTDIR)$(moddir)/libgpac.$(DYN_LIB_SUFFIX)
@@ -189,6 +188,8 @@ ifeq ($(GPAC_ENST), yes)
 endif
 	mkdir -p "$(DESTDIR)$(prefix)/$(libdir)"
 	$(INSTALL) $(INSTFLAGS) -m 644 "./bin/gcc/libgpac_static.a" "$(DESTDIR)$(prefix)/$(libdir)"
+	mkdir -p "$(DESTDIR)$(prefix)/$(libdir)/pkgconfig"
+	$(INSTALL) -m 644 gpac.pc "$(DESTDIR)$(prefix)/$(libdir)/pkgconfig"
 	$(MAKE) installdylib
 
 uninstall-lib:
