@@ -133,7 +133,7 @@ endif
 ifeq ($(DISABLE_TTXT), no)
 LIBGPAC_MEDIATOOLS+=media_tools/text_import.o
 endif
-ifeq ($(DISABLE_TTXT), no)
+ifeq ($(DISABLE_VTT), no)
 LIBGPAC_MEDIATOOLS+=media_tools/webvtt.o
 endif
 
