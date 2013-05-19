@@ -364,6 +364,11 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_new) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_del) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_parse) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_create_root) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_get_attribute) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_set_attribute) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_append_child) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_node_new) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_get_root) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_get_error) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_xml_dom_get_line) )
@@ -1196,6 +1201,7 @@
 #pragma comment (linker, EXPORT_SYMBOL(gf_crypt_set_state) )
 #endif /*GPAC_DISABLE_MCRYPT*/
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_csum) )
+#pragma comment (linker, EXPORT_SYMBOL(gf_sha1_csum_hexa) )
 #pragma comment (linker, EXPORT_SYMBOL(gf_sha1_file) )
 
 #ifndef GPAC_DISABLE_AV_PARSERS

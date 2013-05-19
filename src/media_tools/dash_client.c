@@ -202,7 +202,8 @@ struct __dash_group
 	Bool buffering;
 	Bool maybe_end_of_stream;
 	u32 cache_duration;
-
+	u32 time_at_first_reload_required;
+	
 	u32 force_representation_idx_plus_one;
 
 	Bool force_segment_switch;
@@ -377,7 +378,10 @@ static void gf_dash_group_timeline_setup(GF_MPD *mpd, GF_DASH_Group *group, u64 
 		group->broken_timing = 1;
 		return;
 	}
-
+	
+	//temp hack 
+	mpd->media_presentation_duration = 0;
+	
 	ast_diff = (u32) (mpd->availabilityStartTime - group->dash->mpd->availabilityStartTime);
 	if (!fetch_time) fetch_time = group->dash->mpd_fetch_time;
 	current_time = fetch_time;
@@ -1194,6 +1198,7 @@ static GF_Err gf_dash_update_manifest(GF_DashClient *dash)
 
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_DASH, ("[DASH] Updating Playlist %s...\n", purl ? purl : local_url));
 	if (purl) {
+		const char *mime_type;
 		/*use non-persistent connection for MPD*/
 		e = gf_dash_download_resource(dash->dash_io, &(dash->mpd_dnload), purl, 0, 0, 0, NULL);
 		if (e!=GF_OK) {
@@ -1203,7 +1208,8 @@ static GF_Err gf_dash_update_manifest(GF_DashClient *dash)
 		} else {
 			GF_LOG(GF_LOG_DEBUG, GF_LOG_DASH, ("[DASH] Playlist %s updated with success\n", purl));
 		}
-		strcpy(mime, dash->dash_io->get_mime(dash->dash_io, dash->mpd_dnload) );
+		mime_type = dash->dash_io->get_mime(dash->dash_io, dash->mpd_dnload) ;
+		strcpy(mime, mime_type ? mime_type : "");
 		strlwr(mime);
 
 		/*in case the session has been restarted, local_url may have been destroyed - get it back*/
@@ -3000,8 +3006,21 @@ restart_period:
 					/* if there is a specified update period, we redo the whole process */
 					if (dash->mpd->minimum_update_period || dash->mpd->type==GF_MPD_TYPE_DYNAMIC) {
 						if (! group->maybe_end_of_stream) {
+							u32 now = gf_sys_clock();
 							GF_LOG(GF_LOG_INFO, GF_LOG_DASH, ("[DASH] End of segment list reached (%d segments but idx is %d), waiting for next MPD update\n", group->nb_segments_in_rep, group->download_segment_index));
-							continue;
+							if (group->nb_cached_segments)
+								continue;
+							
+							if (!group->time_at_first_reload_required) {
+								group->time_at_first_reload_required = now;
+								continue;
+							}
+							if (now - group->time_at_first_reload_required < group->cache_duration)
+								continue;
+						
+							GF_LOG(GF_LOG_WARNING, GF_LOG_DASH, ("[DASH] Segment list has not been updated for more than %d ms - assuming end of stream\n", now - group->time_at_first_reload_required));
+							group->done = 1;
+							break;
 						}
 					} else {
 						/* if not, we are really at the end of the playlist, we can quit */
@@ -3011,6 +3030,7 @@ restart_period:
 					}
 				}
 			}
+			group->time_at_first_reload_required = 0;
 			gf_mx_p(dash->dl_mutex);
 
 			if (group->force_switch_bandwidth && !dash->auto_switch_count) {

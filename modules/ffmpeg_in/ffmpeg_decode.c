@@ -393,6 +393,7 @@ static GF_Err FFDEC_AttachStream(GF_BaseDecoder *plug, GF_ESD *esd)
 	}
 	return GF_OK;
 }
+
 static GF_Err FFDEC_DetachStream(GF_BaseDecoder *plug, u16 ES_ID)
 {
 	AVCodecContext **ctx;
@@ -750,7 +751,7 @@ redecode:
 			}
 			/*if we had ISMA E&A and lost it this is likely due to a pck loss - do NOT switch back to regular*/
 			else if (ffd->check_h264_isma == 1) {
-				ffd->check_h264_isma = 0;
+				ffd->check_h264_isma = GF_FALSE;
 			}
 		}
 
@@ -766,7 +767,7 @@ redecode:
 			/*switch to H263 (ffmpeg MPEG-4 codec doesn't understand short headers)*/
 			{
 				u32 old_codec = (*codec)->id;
-				ffd->check_short_header = 0;
+				ffd->check_short_header = GF_FALSE;
 				/*OK we loose the DSI stored in the codec context, but H263 doesn't need any, and if we're
 				here this means the DSI was broken, so no big deal*/
 				avcodec_close(ctx);

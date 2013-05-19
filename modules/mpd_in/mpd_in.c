@@ -125,6 +125,7 @@ static GF_Err MPD_ClientQuery(GF_InputService *ifce, GF_NetworkCommand *param)
 		Bool group_done;
 		u32 nb_segments_cached;
 		u32 group_idx=0;
+		u32 retry_count = 300;
 		GF_MPDGroup *group=NULL;
 		const char *src_url;
 		Bool discard_first_cache_entry = 1;
@@ -178,7 +179,11 @@ static GF_Err MPD_ClientQuery(GF_InputService *ifce, GF_NetworkCommand *param)
 				}
 				return GF_EOS;
 			}
-            gf_sleep(30);
+            gf_sleep(10);
+			retry_count --;
+			if (!retry_count) {
+	            return GF_SERVICE_ERROR;
+			}
         }
 
 		nb_segments_cached = gf_dash_group_get_num_segments_ready(mpdin->dash, group_idx, &group_done);
@@ -541,7 +546,7 @@ GF_Err MPD_ConnectService(GF_InputService *plug, GF_ClientService *serv, const c
     else first_select_mode = GF_DASH_SELECT_BANDWIDTH_LOWEST;
 
 	opt = gf_modules_get_option((GF_BaseInterface *)plug, "DASH", "MemoryStorage");
-	if (!opt) gf_modules_set_option((GF_BaseInterface *)plug, "DASH", "MemoryStorage", "no");
+	if (!opt) gf_modules_set_option((GF_BaseInterface *)plug, "DASH", "MemoryStorage", "yes");
 	mpdin->memory_storage = (opt && !strcmp(opt, "yes")) ? 1 : 0;
 
 	opt = gf_modules_get_option((GF_BaseInterface *)plug, "DASH", "UseMaxResolution");
