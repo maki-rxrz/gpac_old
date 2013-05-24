@@ -86,6 +86,8 @@ GF_ISOFile *package_file(char *file_name, char *fcc, const char *tmpdir, Bool ma
 
 #endif
 
+u32 grab_live_m2ts(const char *grab_m2ts, const char *outName);
+
 GF_Err dump_cover_art(GF_ISOFile *file, char *inName);
 GF_Err dump_chapters(GF_ISOFile *file, char *inName);
 u32 id3_get_genre_tag(const char *name);
@@ -604,6 +606,9 @@ void PrintExtractUsage()
 			"                       * Note: can be used when encoding scene descriptions\n"
 			" -raw-layer ID        same as -raw but skips SVC/MVC extractors when extracting\n"
 			" -diod                extracts file IOD in raw format when supported\n"
+			"\n"
+			" -grab ts IP:port     grabs TS over UDP or RTP at IP:port location to output TS file\n"
+
 			"\n");
 }
 void PrintDumpUsage()
@@ -1438,6 +1443,7 @@ int mp4boxMain(int argc, char **argv)
 	const char *dash_title = NULL;
 	const char *dash_source = NULL;
 	const char *dash_more_info = NULL;
+	const char *grab_m2ts = NULL;
 	Bool add_ext = 0;
 
 	nb_tsel_acts = nb_add = nb_cat = nb_track_act = nb_sdp_ex = max_ptime = raw_sample_num = nb_meta_act = rtp_rate = major_brand = nb_alt_brand_add = nb_alt_brand_rem = car_dur = minor_version = 0;
@@ -1551,6 +1557,11 @@ int mp4boxMain(int argc, char **argv)
 			} else {
 				info_track_id=0;
 			}
+		}
+		else if (!stricmp(arg, "-grab-ts")) {
+			CHECK_NEXT_ARG
+			grab_m2ts = argv[i+1];
+			i++;
 		}
 		/*******************************************************************************/
 		else if (!stricmp(arg, "-dvbhdemux")) {
@@ -2575,7 +2586,9 @@ int mp4boxMain(int argc, char **argv)
 		fclose(fout);
 		MP4BOX_EXIT_WITH_CODE(0);
 	}
-
+	if (grab_m2ts) {
+		return grab_live_m2ts(grab_m2ts, inName);
+	}
 	/*init libgpac*/
 	if (enable_mem_tracker) {
 		gf_sys_close();

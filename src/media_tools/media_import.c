@@ -4859,7 +4859,6 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 	s32 last_poc, max_last_poc, max_last_b_poc, poc_diff, prev_last_poc, min_poc, poc_shift;
 	Bool first_avc;
 	Bool use_opengop_gdr = 0;
-	Bool sample_start_with_ps = 0;
 
 	Double FPS;
 	char *buffer;
@@ -5007,8 +5006,6 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 					copy_size = nal_size;
 					assert(vpss);
 					vpss->array_completeness = 0;
-					if (!sample_data)
-						sample_start_with_ps = 1;
 				}
 			}
 
@@ -5057,8 +5054,6 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 					copy_size = nal_size;
 					assert(spss);
 					spss->array_completeness = 0;
-					if (!sample_data)
-						sample_start_with_ps = 1;
 				}
 			}
 
@@ -5125,8 +5120,6 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 					copy_size = nal_size;
 					assert(ppss);
 					ppss->array_completeness = 0;
-					if (!sample_data)
-						sample_start_with_ps = 1;
 				}
 			}
 
@@ -5234,8 +5227,6 @@ static GF_Err gf_import_hevc(GF_MediaImporter *import)
 			gf_bs_get_content(sample_data, &samp->data, &samp->dataLength);
 			gf_bs_del(sample_data);
 			sample_data = NULL;
-
-			sample_start_with_ps = 0;
 
 			/*CTS recomuting is much trickier than with MPEG-4 ASP due to b-slice used as references - we therefore
 			store the POC as the CTS offset and update the whole table at the end*/

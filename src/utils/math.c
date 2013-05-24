@@ -875,7 +875,7 @@ Bool gf_mx2d_decompose(GF_Matrix2D *mx, GF_Point2D *scale, Fixed *rotate, GF_Poi
 {
 	Fixed det, angle;
 	Fixed tmp[6];
-	if(!mx) return 0;
+	if(!mx) return GF_FALSE;
 
 	memcpy(tmp, mx->m, sizeof(Fixed)*6);
 	translate->x = tmp[2];
@@ -898,7 +898,7 @@ Bool gf_mx2d_decompose(GF_Matrix2D *mx, GF_Point2D *scale, Fixed *rotate, GF_Poi
 		scale->y = gf_divfix(tmp[4], det);
 	}
 	*rotate = angle;
-	return 1;
+	return GF_TRUE;
 }
 
 GF_EXPORT
@@ -993,8 +993,8 @@ GF_EXPORT
 Bool gf_rect_equal(GF_Rect rc1, GF_Rect rc2)
 {
 	if ( (rc1.x == rc2.x)  && (rc1.y == rc2.y) && (rc1.width == rc2.width) && (rc1.height == rc2.height) )
-		return 1;
-	return 0;
+		return GF_TRUE;
+	return GF_FALSE;
 }
 
 #ifdef GPAC_FIXED_POINT

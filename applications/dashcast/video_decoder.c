@@ -28,7 +28,7 @@
 
 //#define DASHCAST_DEBUG_TIME_
 
-int dc_video_decoder_open(VideoInputFile * p_vin, VideoData * p_vdata) {
+int dc_video_decoder_open(VideoInputFile * p_vin, VideoData * p_vdata, int i_mode, int i_no_loop) {
 
 	int i;
 	AVInputFormat * p_in_fmt = NULL;
@@ -120,6 +120,8 @@ int dc_video_decoder_open(VideoInputFile * p_vin, VideoData * p_vdata) {
 
 	p_vdata->i_framerate = p_codec_ctx->time_base.den;
 
+	p_vin->i_mode = i_mode;
+	p_vin->i_no_loop = i_no_loop;
 
 	return 0;
 }
@@ -137,6 +139,7 @@ int dc_video_decoder_read(VideoInputFile * p_in_ctx, VideoInputData * p_vd) {
 	int already_locked = 0;
 	AVCodecContext * p_codec_ctx;
 	VideoDataNode * p_vdn;
+
 
 	/*  Get a pointer to the codec context for the video stream */
 	p_codec_ctx = p_in_ctx->p_fmt_ctx->streams[p_in_ctx->i_vstream_idx]->codec;
@@ -158,6 +161,12 @@ int dc_video_decoder_read(VideoInputFile * p_in_ctx, VideoInputData * p_vd) {
 
 
 		if (ret == AVERROR_EOF) {
+
+			if(p_in_ctx->i_mode == LIVE_MEDIA && p_in_ctx->i_no_loop == 0) {
+				av_seek_frame(p_in_ctx->p_fmt_ctx, p_in_ctx->i_vstream_idx, 0, 0);
+				av_free_packet(&packet);
+				continue;
+			}
 
 			dc_producer_lock(&p_vd->pro, &p_vd->p_cb);
 			dc_producer_unlock_previous(&p_vd->pro, &p_vd->p_cb);

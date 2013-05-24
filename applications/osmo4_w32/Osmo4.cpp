@@ -362,7 +362,7 @@ BOOL Osmo4::InitInstance()
 {
 	CCommandLineInfo cmdInfo;
 
-	afxAmbientActCtx = FALSE; 
+	afxAmbientActCtx = FALSE;
 
 	m_logs = NULL;
 

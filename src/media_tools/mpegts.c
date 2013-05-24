@@ -32,6 +32,12 @@
 #include "../../include/gpac/internal/media_dev.h"
 #include "../../include/gpac/download.h"
 
+
+#ifndef GPAC_DISABLE_STREAMING
+#include "../../include/gpac/internal/ietf_dev.h"
+#endif
+
+
 #ifdef GPAC_CONFIG_LINUX
 #include <unistd.h>
 #endif
@@ -193,9 +199,6 @@ static u32 gf_m2ts_reframe_nalu_video(GF_M2TS_Demuxer *ts, GF_M2TS_PES *pes, Boo
 #ifndef GPAC_DISABLE_HEVC
 				nal_type = (pck.data[4] & 0x7E) >> 1;
 
-//				if ( nal_type <= 1)
-//					nal_type = nal_type;
-
 				/*check for SPS and update stream info*/
 #ifndef GPAC_DISABLE_AV_PARSERS
 				if (!pes->vid_w && (nal_type==GF_HEVC_NALU_SEQ_PARAM)) {
@@ -230,10 +233,6 @@ static u32 gf_m2ts_reframe_nalu_video(GF_M2TS_Demuxer *ts, GF_M2TS_PES *pes, Boo
 					|| (nal_type==GF_HEVC_NALU_SLICE_IDR_N_LP)
 				) {
 					pck.flags = GF_M2TS_PES_PCK_RAP;
-					if (force_new_au) {
-						pck.flags |= GF_M2TS_PES_PCK_AU_START;
-						force_new_au = 0;
-					}
 					ts->on_event(ts, GF_M2TS_EVT_PES_PCK, &pck);
 					prev_is_au_delim=0;
 				}
@@ -2742,8 +2741,16 @@ static u32 TSDemux_DemuxRun(void *_p)
 		}
 	} else
 #endif
-	 if (ts->sock) {
+	if (ts->sock) {
+#ifndef GPAC_DISABLE_STREAMING
+		u16 seq_num;
+		GF_RTPReorder *ch = NULL;
+#endif
 		Bool first_run, is_rtp;
+		FILE *record_to = NULL;
+		if (ts->record_to)
+			record_to = gf_f64_open(ts->record_to, "wb");
+
 		first_run = 1;
 		is_rtp = 0;
 		while (ts->run_state) {
@@ -2759,16 +2766,46 @@ static u32 TSDemux_DemuxRun(void *_p)
 				/*FIXME: we assume only simple RTP packaging (no CSRC nor extensions)*/
 				if ((data[0] != 0x47) && ((data[1] & 0x7F) == 33) ) {
 					is_rtp = 1;
+#ifndef GPAC_DISABLE_STREAMING
+					ch = gf_rtp_reorderer_new(100, 500);
+#endif
 				}
 			}
 			/*process chunk*/
 			if (is_rtp) {
+#ifndef GPAC_DISABLE_STREAMING
+				char *pck;
+				seq_num = ((data[2] << 8) & 0xFF00) | (data[3] & 0xFF);
+				gf_rtp_reorderer_add(ch, (void *) data, size, seq_num);
+
+				pck = (char *) gf_rtp_reorderer_get(ch, &size);
+				if (pck) {
+					gf_m2ts_process_data(ts, pck+12, size-12);
+					if (record_to)
+						fwrite(data+12, size-12, 1, record_to);
+					gf_free(pck);
+				}
+#else
 				gf_m2ts_process_data(ts, data+12, size-12);
+				if (record_to)
+					fwrite(data+12, size-12, 1, record_to);
+#endif
+
 			} else {
 				gf_m2ts_process_data(ts, data, size);
+				if (record_to)
+					fwrite(data, size, 1, record_to);
 			}
 		}
-	 } else if (ts->dnload) {
+		if (record_to)
+			fclose(record_to);
+
+#ifndef GPAC_DISABLE_STREAMING
+		if (ch)
+			gf_rtp_reorderer_del(ch);
+#endif
+
+	} else if (ts->dnload) {
 		 while (ts->run_state) {
 			 gf_dm_sess_process(ts->dnload);
 			 gf_sleep(1);
@@ -2878,29 +2915,30 @@ next_segment_setup:
 	return 0;
 }
 
-
-static GF_Err TSDemux_SetupLive(GF_M2TS_Demuxer *ts, char *url)
+GF_EXPORT
+GF_Err gf_m2ts_get_socket(const char *url, const char *mcast_ifce_or_mobileip, u32 buf_size, GF_Socket **out_socket)
 {
-	GF_Err e = GF_OK;
 	char *str;
 	u16 port;
+	GF_Err e;
 	u32 sock_type = 0;
+
+	*out_socket=NULL;
 
 	if (!strnicmp(url, "udp://", 6) || !strnicmp(url, "mpegts-udp://", 13)) {
 		sock_type = GF_SOCK_TYPE_UDP;
 	} else if (!strnicmp(url, "mpegts-tcp://", 13) ) {
 		sock_type = GF_SOCK_TYPE_TCP;
 	} else {
-		e = GF_NOT_SUPPORTED;
-		return e;
+		return GF_NOT_SUPPORTED;
 	}
 
 	url = strchr(url, ':');
 	url += 3;
 
-	ts->sock = gf_sk_new(sock_type);
-	if (!ts->sock) {
-		return e = GF_IO_ERR;
+	*out_socket = gf_sk_new(sock_type);
+	if (! (*out_socket) ) {
+		return GF_IO_ERR;
 	}
 
 	/*setup port and src*/
@@ -2915,22 +2953,29 @@ static GF_Err TSDemux_SetupLive(GF_M2TS_Demuxer *ts, char *url)
 
 	/*do we have a source ?*/
 	if (strlen(url) && strcmp(url, "localhost") ) {
-		const char *mob_ip = NULL;
-		if (ts->MobileIPEnabled){
-			mob_ip = ts->network_type;
-		}
-
 		if (gf_sk_is_multicast_address(url)) {
-			mob_ip = ts->network_type;
-			gf_sk_setup_multicast(ts->sock, url, port, 0, 0, (char*)mob_ip);
+			e = gf_sk_setup_multicast(*out_socket, url, port, 0, 0, (char*)mcast_ifce_or_mobileip);
 		} else {
-			gf_sk_bind(ts->sock, (char*)mob_ip, port, url, 0, GF_SOCK_REUSE_PORT);
+			e = gf_sk_bind(*out_socket, (char*)mcast_ifce_or_mobileip, port, url, 0, GF_SOCK_REUSE_PORT);
+		}
+		if (e) {
+			gf_sk_del(*out_socket);
+			*out_socket = NULL;
+			return e;
 		}
 	}
 	if (str) str[0] = ':';
 
-	gf_sk_set_buffer_size(ts->sock, 0, UDP_BUFFER_SIZE);
-	gf_sk_set_block_mode(ts->sock, 0);
+	gf_sk_set_buffer_size(*out_socket, 0, buf_size);
+	gf_sk_set_block_mode(*out_socket, 0);
+	return GF_OK;
+}
+
+static GF_Err TSDemux_SetupLive(GF_M2TS_Demuxer *ts, char *url)
+{
+	GF_Err e;
+	e = gf_m2ts_get_socket(url, ts->network_type, UDP_BUFFER_SIZE, &ts->sock);
+	if (e) return e;
 
 	//gf_th_set_priority(ts->th, GF_THREAD_PRIORITY_HIGHEST);
 	return  TSDemux_DemuxPlay(ts);
@@ -3267,7 +3312,7 @@ GF_Err TSDemux_DemuxPlay(GF_M2TS_Demuxer *ts){
 
 }
 
-
+GF_EXPORT
 Bool gf_m2ts_probe_file(const char *fileName)
 {
 	char buf[188];

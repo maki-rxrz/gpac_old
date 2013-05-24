@@ -328,7 +328,7 @@ static void UpdateRTInfo(const char *legend)
 
 		if (rti.total_cpu_usage) {
 			sprintf(szMsg, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB",
-					gf_term_get_framerate(term, 0), rti.total_cpu_usage, rti.process_cpu_usage, (u32) (rti.gpac_memory / 1024) );
+					gf_term_get_framerate(term, 1), rti.total_cpu_usage, rti.process_cpu_usage, (u32) (rti.gpac_memory / 1024) );
 		} else {
 			sprintf(szMsg, "FPS %02.2f - CPU %02d - Mem %d kB",
 				gf_term_get_framerate(term, 0), rti.process_cpu_usage, (u32) (rti.gpac_memory / 1024) );
@@ -1062,7 +1062,7 @@ int main (int argc, char **argv)
 			if (gf_log_set_tools_levels(argv[i+1]) != GF_OK) {
 				return 1;
 			}
-			logs_set = 1;
+			logs_set = GF_TRUE;
 			i++;
 		} else if (!strcmp(arg, "-log-clock") || !strcmp(arg, "-lc")) {
 			log_time_start = 1;
