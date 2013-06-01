@@ -171,7 +171,7 @@ u32 gf_bs_read_u8(GF_BitStream *bs);
  *	Reads an integer coded on 8 bits starting at a byte boundary in the bitstream until
  *  the given appears on the bitstream.
  *	\note the bytes read in the bitstream will only be update if the delimiter is found
- *	\param bs the target bitstream 
+ *	\param bs the target bitstream
  *	\param delimiter the stop condition
  *  \param out the resulting value
  *  \param max_lengh the maximum length of the output

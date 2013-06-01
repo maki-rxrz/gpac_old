@@ -823,8 +823,12 @@ struct tag_m2ts_demux
 
 	const char *dvb_channels_conf_path;
 
-	/*for DASH*/
-	GF_Err (*query_next)(void *udta, Bool query_init_range, const char **next_url, u64 *next_start_range, u64 *next_end_range);
+	/*for DASH - query_type is:
+		0: query init range
+		1: drop current segment and query next segment
+		2: query next segment
+	*/
+	GF_Err (*query_next)(void *udta, u32 query_type, const char **next_url, u64 *next_start_range, u64 *next_end_range);
 	void *query_udta;
 	Bool segment_switch;
 
@@ -1043,7 +1047,6 @@ typedef struct __m2ts_base_descriptor
 	char *data;
 } GF_M2TSDescriptor;
 
-
 struct __m2ts_mux_program {
 	struct __m2ts_mux_program *next;
 
@@ -1072,13 +1075,17 @@ struct __m2ts_mux_program {
 	u32 mpeg4_signaling;
 	Bool mpeg4_signaling_for_scene_only;
 
-	/*
-		1: signals to force pat/pmt after current PES
-		2: forces pat to be sent
-		3: forces pmt to be sent after PAT
-	*/
-	u32 force_pat_pmt_state;
 };
+
+enum
+{
+	GF_SEG_BOUNDARY_NONE=0,
+	GF_SEG_BOUNDARY_START,
+	GF_SEG_BOUNDARY_FORCE_PAT,
+	GF_SEG_BOUNDARY_FORCE_PMT,
+	GF_SEG_BOUNDARY_FORCE_PCR,
+};
+
 
 struct __m2ts_mux {
 	GF_M2TS_Mux_Program *programs;
@@ -1124,6 +1131,10 @@ struct __m2ts_mux {
 
 
 	u32 average_birate_kbps;
+
+	Bool flush_pes_at_rap;
+	/*cf enum above*/
+	u32 force_pat_pmt_state;
 };
 
 
