@@ -78,6 +78,9 @@ typedef enum
 	/*signal channel is ISMACryp'ted (net->term only)*/
 	GF_NET_CHAN_DRM_CFG,
 
+	/*reset channel - this is need when we turn off this channel in rtp/mpeg2ts*/
+	GF_NET_CHAN_RESET,
+
 	/*retrieves ESD for channel - net->term only, for cache configuration*/
 	GF_NET_CHAN_GET_ESD,
 	/*retrieves visual PAR as indicated in container if any*/
