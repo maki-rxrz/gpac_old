@@ -11,8 +11,8 @@
  */
 /* Compiler settings for \CVS\gpac\applications\GPAX\GPAX.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32 (32b run), ms_ext, c_ext
-    error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
+    error checks: allocation ref bounds_check enum stub_data
+    VC __declspec() decoration level:
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
@@ -22,7 +22,7 @@
 
 #ifdef __cplusplus
 extern "C"{
-#endif 
+#endif
 
 
 #include <rpc.h>
@@ -100,8 +100,8 @@ MIDL_DEFINE_GUID(CLSID, CLSID_GPAX,0x181D18E6,0x4DC1,0x4B55,0xB7,0x2E,0xBE,0x2A,
  */
 /* Compiler settings for \CVS\gpac\applications\GPAX\GPAX.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win64 (32b run,appending), ms_ext, c_ext, robust
-    error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
+    error checks: allocation ref bounds_check enum stub_data
+    VC __declspec() decoration level:
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
@@ -111,7 +111,7 @@ MIDL_DEFINE_GUID(CLSID, CLSID_GPAX,0x181D18E6,0x4DC1,0x4B55,0xB7,0x2E,0xBE,0x2A,
 
 #ifdef __cplusplus
 extern "C"{
-#endif 
+#endif
 
 
 #include <rpc.h>

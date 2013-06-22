@@ -4,18 +4,18 @@
    Copyright (c) 1999 Mike Scott
    See rijndael documentation
 
-   Permission for free direct or derivative use is granted subject 
-   to compliance with any conditions that the originators of the 
-   algorithm place on its exploitation.  
+   Permission for free direct or derivative use is granted subject
+   to compliance with any conditions that the originators of the
+   algorithm place on its exploitation.
 
    Inspiration from Brian Gladman's implementation is acknowledged.
 
    Written for clarity, rather than speed.
-   Full implementation. 
+   Full implementation.
    Endian indifferent.
 */
 
-/* modified in order to use the libmcrypt API by Nikos Mavroyanopoulos 
+/* modified in order to use the libmcrypt API by Nikos Mavroyanopoulos
  * All modifications are placed under the license of libmcrypt.
  */
 
@@ -320,7 +320,7 @@ static void _mcrypt_encrypt(RI * rinst, u8 * buff)
 /* State alternates between a and b */
 	for (i = 1; i < rinst->Nr; i++) {	/* rinst->Nr is number of rounds. May be odd. */
 
-/* if rinst->Nb is fixed - unroll this next 
+/* if rinst->Nb is fixed - unroll this next
    loop and hard-code in the values of fi[]  */
 
 		for (m = j = 0; j < rinst->Nb; j++, m += 3) {	/* deal with each 32-bit element of the State */
@@ -367,7 +367,7 @@ static void _mcrypt_decrypt(RI * rinst, u8 * buff)
 /* State alternates between a and b */
 	for (i = 1; i < rinst->Nr; i++) {	/* rinst->Nr is number of rounds. May be odd. */
 
-/* if rinst->Nb is fixed - unroll this next 
+/* if rinst->Nb is fixed - unroll this next
    loop and hard-code in the values of ri[]  */
 
 		for (m = j = 0; j < rinst->Nb; j++, m += 3) {	/* This is the time-critical bit */
@@ -405,9 +405,9 @@ void gf_crypt_register_rijndael_192(GF_Crypt *td)
 	td->algo_name = "Rijndael-192";
 	td->algo_version = 20010801;
 	td->num_key_sizes = 3;
-	td->key_sizes[0] = 16; 
-	td->key_sizes[1] = 24; 
-	td->key_sizes[2] = 32; 
+	td->key_sizes[0] = 16;
+	td->key_sizes[1] = 24;
+	td->key_sizes[2] = 32;
 	td->key_size = 32;
 	td->is_block_algo = 1;
 	td->algo_block_size = 24;

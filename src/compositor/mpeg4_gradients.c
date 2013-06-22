@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -173,7 +173,7 @@ static void BuildLinearGradientTexture(GF_TextureHandler *txh)
 
 	if (!(txh->flags & GF_SR_TEXTURE_GRAD_REGISTERED)) {
 		txh->flags |= GF_SR_TEXTURE_GRAD_REGISTERED;
-		if (gf_list_find(txh->compositor->textures, txh)<0) 
+		if (gf_list_find(txh->compositor->textures, txh)<0)
 			gf_list_insert(txh->compositor->textures, txh, 0);
 	}
 
@@ -189,7 +189,7 @@ static void BuildLinearGradientTexture(GF_TextureHandler *txh)
 	end = lg->endPoint;
 
 	transparent = (lg->opacity.count==1) ? (lg->opacity.vals[0]!=FIX_ONE) : 1;
-	
+
 	/*init our 2D graphics stuff*/
 	texture2D = raster->stencil_new(raster, GF_STENCIL_TEXTURE);
 	if (!texture2D) return;
@@ -204,7 +204,7 @@ static void BuildLinearGradientTexture(GF_TextureHandler *txh)
 		gf_free(st->tx_data);
 		st->tx_data = NULL;
 	}
-	
+
 	if (transparent) {
 		if (!st->tx_data) {
 			st->tx_data = (char *) gf_malloc(sizeof(char)*GRAD_TEXTURE_SIZE*GRAD_TEXTURE_SIZE*4);
@@ -327,13 +327,13 @@ void compositor_init_linear_gradient(GF_Compositor *compositor, GF_Node *node)
 	GF_SAFEALLOC(st, GradientStack);
 
 	/*!!! Gradients are textures but are not registered as textures with the compositor in order to avoid updating
-	too many textures each frame - gradients are only registered with the compositor when they are used in OpenGL, in order 
+	too many textures each frame - gradients are only registered with the compositor when they are used in OpenGL, in order
 	to release associated HW resource when no longer used*/
 	st->txh.owner = node;
 	st->txh.compositor = compositor;
 	st->txh.update_texture_fcnt = UpdateLinearGradient;
 	st->txh.compute_gradient_matrix = LG_ComputeMatrix;
-	
+
 	gf_node_set_private(node, st);
 	gf_node_set_callback_function(node, DestroyGradient);
 }
@@ -362,7 +362,7 @@ static void BuildRadialGradientTexture(GF_TextureHandler *txh)
 
 	if (!(txh->flags & GF_SR_TEXTURE_GRAD_REGISTERED)) {
 		txh->flags |= GF_SR_TEXTURE_GRAD_REGISTERED;
-		if (gf_list_find(txh->compositor->textures, txh)<0) 
+		if (gf_list_find(txh->compositor->textures, txh)<0)
 			gf_list_insert(txh->compositor->textures, txh, 0);
 	}
 
@@ -375,7 +375,7 @@ static void BuildRadialGradientTexture(GF_TextureHandler *txh)
 	if (rg->key.count != rg->keyValue.count) return;
 
 	transparent = (rg->opacity.count==1) ? ((rg->opacity.vals[0]!=FIX_ONE) ? 1 : 0) : 1;
-	
+
 	/*init our 2D graphics stuff*/
 	texture2D = raster->stencil_new(raster, GF_STENCIL_TEXTURE);
 	if (!texture2D) return;
@@ -390,7 +390,7 @@ static void BuildRadialGradientTexture(GF_TextureHandler *txh)
 		gf_free(st->tx_data);
 		st->tx_data = NULL;
 	}
-	
+
 	if (transparent) {
 		if (!st->tx_data) {
 			st->tx_data = (char *) gf_malloc(sizeof(char)*GRAD_TEXTURE_SIZE*GRAD_TEXTURE_SIZE*4);
@@ -591,7 +591,7 @@ void compositor_init_radial_gradient(GF_Compositor *compositor, GF_Node *node)
 	GF_SAFEALLOC(st, GradientStack);
 
 	/*!!! Gradients are textures but are not registered as textures with the compositor in order to avoid updating
-	too many textures each frame - gradients are only registered with the compositor when they are used in OpenGL, in order 
+	too many textures each frame - gradients are only registered with the compositor when they are used in OpenGL, in order
 	to release associated HW resource when no longer used*/
 	st->txh.owner = node;
 	st->txh.compositor = compositor;

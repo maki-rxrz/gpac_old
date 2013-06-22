@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 
@@ -123,7 +123,7 @@ static void w32_translate_key(u32 wParam, u32 lParam, GF_EventKey *evt)
 	case VK_RIGHT: evt->key_code = GF_KEY_RIGHT; break;
 	case VK_DOWN: evt->key_code = GF_KEY_DOWN; break;
 	case VK_SELECT: evt->key_code = GF_KEY_SELECT; break;
-	case VK_PRINT: 
+	case VK_PRINT:
 	case VK_SNAPSHOT:
 		evt->key_code = GF_KEY_PRINTSCREEN; break;
 	case VK_EXECUTE: evt->key_code = GF_KEY_EXECUTE; break;
@@ -135,7 +135,7 @@ static void w32_translate_key(u32 wParam, u32 lParam, GF_EventKey *evt)
 	case VK_RWIN: return ;
 	case VK_APPS: return ;
 */
-	case VK_NUMPAD0: 
+	case VK_NUMPAD0:
 		evt->key_code = GF_KEY_0;
 		evt->flags = GF_KEY_EXT_NUMPAD;
 		break;
@@ -175,11 +175,11 @@ static void w32_translate_key(u32 wParam, u32 lParam, GF_EventKey *evt)
 		evt->key_code = GF_KEY_9;
 		evt->flags = GF_KEY_EXT_NUMPAD;
 		break;
-	case VK_MULTIPLY: 
+	case VK_MULTIPLY:
 		evt->key_code = GF_KEY_STAR;
 		evt->flags = GF_KEY_EXT_NUMPAD;
 		break;
-	case VK_ADD: 
+	case VK_ADD:
 		evt->key_code = GF_KEY_PLUS;
 		evt->flags = GF_KEY_EXT_NUMPAD;
 		break;
@@ -209,7 +209,7 @@ static void w32_translate_key(u32 wParam, u32 lParam, GF_EventKey *evt)
 	case VK_F6: evt->key_code = GF_KEY_VOLUMEUP; break;
 	case VK_F7: evt->key_code = GF_KEY_VOLUMEDOWN; break;
 	case VK_F8: evt->key_code = GF_KEY_F8; break;
-		
+
 	case VK_F9: evt->key_code = GF_KEY_F9; break;
 	case VK_F10: evt->key_code = GF_KEY_F10; break;
 	case VK_F11: evt->key_code = GF_KEY_F11; break;
@@ -235,7 +235,7 @@ static void w32_translate_key(u32 wParam, u32 lParam, GF_EventKey *evt)
  * Used only as parameters to GetAsyncKeyState() and GetKeyState().
  * No other API or message will distinguish left and right keys in this way.
  */
-	case VK_LSHIFT: 
+	case VK_LSHIFT:
 		evt->key_code = GF_KEY_SHIFT;
 		evt->flags = GF_KEY_EXT_LEFT;
 		break;
@@ -276,7 +276,7 @@ static void w32_translate_key(u32 wParam, u32 lParam, GF_EventKey *evt)
 
 	/*thru VK_9 are the same as ASCII '0' thru '9' (0x30 - 0x39) */
 	/* VK_A thru VK_Z are the same as ASCII 'A' thru 'Z' (0x41 - 0x5A) */
-	default: 
+	default:
 		if ((wParam>=0x30) && (wParam<=0x39))  evt->key_code = GF_KEY_0 + wParam-0x30;
 		else if ((wParam>=0x41) && (wParam<=0x5A))  evt->key_code = GF_KEY_A + wParam-0x41;
 		else {
@@ -288,17 +288,17 @@ static void w32_translate_key(u32 wParam, u32 lParam, GF_EventKey *evt)
 			else if (res==ctx->keys.vkDown) evt->key_code = landscape ? GF_KEY_LEFT : GF_KEY_DOWN;
 			else if (res==ctx->keys.vkUp) evt->key_code = landscape ? GF_KEY_RIGHT : GF_KEY_UP;
 			else if (res==ctx->keys.vkStart) evt->key_code = GF_KEY_ENTER;
-			else if (res==ctx->keys.vkA) 
+			else if (res==ctx->keys.vkA)
 				evt->key_code = GF_KEY_MEDIAPREVIOUSTRACK;
-			else if (res==ctx->keys.vkB) 
+			else if (res==ctx->keys.vkB)
 				evt->key_code = GF_KEY_MEDIANEXTTRACK;
-			else if (res==ctx->keys.vkC) 
+			else if (res==ctx->keys.vkC)
 				evt->key_code = GF_KEY_SHIFT;
-			else if (res==0xc1) 
+			else if (res==0xc1)
 				evt->key_code = GF_KEY_ALT;
-			else if (res==0xc2) 
+			else if (res==0xc2)
 				evt->key_code = GF_KEY_CONTROL;
-			else if (res==0xc5) 
+			else if (res==0xc5)
 				evt->key_code = GF_KEY_VOLUMEDOWN;
 			else {
 				evt->key_code = GF_KEY_UNIDENTIFIED;
@@ -405,7 +405,7 @@ void GAPI_WindowThread(void *par)
 	wc.hbrBackground = (HBRUSH)GetStockObject (BLACK_BRUSH);
 	wc.lpszClassName = _T("GPAC GAPI Output");
 	RegisterClass (&wc);
-	
+
 	ctx->hWnd = CreateWindow(_T("GPAC GAPI Output"), NULL, WS_POPUP, 0, 0, 120, 100, NULL, NULL, wc.hInstance, NULL);
 	if (ctx->hWnd == NULL) {
 		ctx->ThreadID = 0;
@@ -562,7 +562,7 @@ static void createPixmap(GAPIPriv *ctx, u32 pix_type)
 		break;
 	}
 	ctx->hdc = GetDC(NULL/*ctx->hWnd*/);
-	
+
 	if (pix_type==2) {
 #ifdef GPAC_USE_OGL_ES
 		ctx->gl_bitmap = CreateDIBSection(ctx->hdc, bmi, DIB_RGB_COLORS, (void **) &ctx->gl_bits, NULL, 0);
@@ -575,7 +575,7 @@ static void createPixmap(GAPIPriv *ctx, u32 pix_type)
 		ctx->hdcBitmap = CreateCompatibleDC(ctx->hdc);
 		ctx->bitmap = CreateDIBSection(ctx->hdc, bmi, DIB_RGB_COLORS, (void **) &ctx->backbuffer, NULL, 0);
 		ctx->old_bitmap = (HBITMAP) SelectObject(ctx->hdcBitmap, ctx->bitmap);
-		
+
 		/*watchout - win32 always create DWORD align memory, so align our pitch*/
 		while ((ctx->bb_pitch % 4) != 0) ctx->bb_pitch ++;
 	}
@@ -609,7 +609,7 @@ void GAPI_ReleaseOGL_ES(GAPIPriv *ctx, Bool offscreen_only)
 	ctx->bitmap = NULL;
 }
 
-GF_Err GAPI_SetupOGL_ES(GF_VideoOutput *dr) 
+GF_Err GAPI_SetupOGL_ES(GF_VideoOutput *dr)
 {
 	EGLint n, maj, min;
 	u32 i;
@@ -624,7 +624,7 @@ GF_Err GAPI_SetupOGL_ES(GF_VideoOutput *dr)
 	atts[i++] = EGL_BLUE_SIZE; atts[i++] = (gctx->pixel_format==GF_PIXEL_RGB_24) ? 8 : 5;
 	opt = gf_modules_get_option((GF_BaseInterface *)dr, "Video", "GLNbBitsDepth");
 	atts[i++] = EGL_DEPTH_SIZE; atts[i++] = opt ? atoi(opt) : 16;
-	atts[i++] = EGL_SURFACE_TYPE; 
+	atts[i++] = EGL_SURFACE_TYPE;
 
 #ifdef GLES_NO_PIXMAP
 	atts[i++] = EGL_WINDOW_BIT;
@@ -678,14 +678,14 @@ GF_Err GAPI_SetupOGL_ES(GF_VideoOutput *dr)
 
 	if (!gctx->surface) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[GAPI] Cannot create OpenGL surface - error %d\n", eglGetError()));
-		return GF_IO_ERR; 
+		return GF_IO_ERR;
 	}
 	gctx->eglctx = eglCreateContext(gctx->egldpy, gctx->eglconfig, NULL, NULL);
 	if (!gctx->eglctx) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[GAPI] Cannot create OpenGL context\n"));
 		eglDestroySurface(gctx->egldpy, gctx->surface);
 		gctx->surface = 0L;
-		return GF_IO_ERR; 
+		return GF_IO_ERR;
 	}
     if (!eglMakeCurrent(gctx->egldpy, gctx->surface, gctx->surface, gctx->eglctx)) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[GAPI] Cannot bind OpenGL context\n"));
@@ -698,13 +698,13 @@ GF_Err GAPI_SetupOGL_ES(GF_VideoOutput *dr)
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_MMIO, ("[GAPI] OpenGL initialize - %d x %d \n", gctx->bb_width, gctx->bb_height));
 	memset(&evt, 0, sizeof(GF_Event));
 	evt.type = GF_EVENT_VIDEO_SETUP;
-	dr->on_event(dr->evt_cbk_hdl, &evt);	
+	dr->on_event(dr->evt_cbk_hdl, &evt);
 	return GF_OK;
 }
 
 
 
-GF_Err GAPI_SetupOGL_ES_Offscreen(GF_VideoOutput *dr, u32 width, u32 height) 
+GF_Err GAPI_SetupOGL_ES_Offscreen(GF_VideoOutput *dr, u32 width, u32 height)
 {
 	int atts[15];
 	const char *opt;
@@ -751,13 +751,13 @@ GF_Err GAPI_SetupOGL_ES_Offscreen(GF_VideoOutput *dr, u32 width, u32 height)
 	}
 
 	if (!gctx->surface) {
-		return GF_IO_ERR; 
+		return GF_IO_ERR;
 	}
 	gctx->eglctx = eglCreateContext(gctx->egldpy, gctx->eglconfig, NULL, NULL);
 	if (!gctx->eglctx) {
 		eglDestroySurface(gctx->egldpy, gctx->surface);
 		gctx->surface = 0L;
-		return GF_IO_ERR; 
+		return GF_IO_ERR;
 	}
     if (!eglMakeCurrent(gctx->egldpy, gctx->surface, gctx->surface, gctx->eglctx)) {
 		eglDestroyContext(gctx->egldpy, gctx->eglctx);
@@ -801,7 +801,7 @@ GF_Err GAPI_Setup(GF_VideoOutput *dr, void *os_handle, void *os_display, u32 noo
 	RECT rc;
 	GAPICTX(dr);
 	gctx->hWnd = (HWND) os_handle;
-	
+
 	/*get keys in both 2D and 3D modes*/
 	gctx->keys = GXGetDefaultKeys(GX_NORMALKEYS);
 
@@ -811,14 +811,14 @@ GF_Err GAPI_Setup(GF_VideoOutput *dr, void *os_handle, void *os_display, u32 noo
 		gctx->pixel_format = GF_PIXEL_RGB_444;
 		gctx->BPP = 2;
 		gctx->bitsPP = 12;
-	} 
-	else 
+	}
+	else
 #endif
 	if (gx.ffFormat & kfDirect555) {
 		gctx->pixel_format = GF_PIXEL_RGB_555;
 		gctx->BPP = 2;
 		gctx->bits_per_pixel = 15;
-	} 
+	}
 	else if (gx.ffFormat & kfDirect565) {
 		gctx->pixel_format = GF_PIXEL_RGB_565;
 		gctx->BPP = 2;
@@ -946,7 +946,7 @@ static GF_Err GAPI_FlipBackBuffer(GF_VideoOutput *dr)
 		ptr = (unsigned char *) gctx->raw_ptr;
 	}
 	if (!ptr) return GF_IO_ERR;
-	
+
 	src.video_buffer = gctx->backbuffer;
 	src.width = gctx->bb_width;
 	src.height = gctx->bb_height;
@@ -975,7 +975,7 @@ static GF_Err GAPI_FlipBackBuffer(GF_VideoOutput *dr)
 	}
 
 	/*apply x/y offset*/
-	if (!gctx->fullscreen) 
+	if (!gctx->fullscreen)
 		dst.video_buffer += gctx->dst_blt.x * gctx->x_pitch + gctx->y_pitch * gctx->dst_blt.y;
 
 	if (gctx->contiguous_mem) {
@@ -1010,7 +1010,7 @@ static GF_Err GAPI_Flush(GF_VideoOutput *dr, GF_Window *dest)
 	if (!gctx) return GF_BAD_PARAM;
 
 	gf_mx_p(gctx->mx);
-	
+
 #ifdef GPAC_USE_OGL_ES
 	if (gctx->output_3d_type==1) {
 #ifndef GLES_NO_PIXMAP
@@ -1144,7 +1144,7 @@ static GF_Err GAPI_ProcessEvent(GF_VideoOutput *dr, GF_Event *evt)
 #define ESC_QUERYESCSUPPORT 8
 #define GETGXINFO			0x00020000
 
-typedef struct GXDeviceInfo 
+typedef struct GXDeviceInfo
 {
 	long Version;           //00
 	void * pvFrameBuffer;   //04
@@ -1285,12 +1285,12 @@ static GF_Err gapi_get_raw_fb(GF_VideoOutput *dr)
 
 	gctx->raw_ptr = (unsigned char *)Info.pFramePointer;
 
-	if (Info.cxStride<0) 
+	if (Info.cxStride<0)
 		gctx->raw_ptr += (Info.cxStride * (Info.cxPixels-1));
-	if (Info.cyStride<0) 
+	if (Info.cyStride<0)
 		gctx->raw_ptr += (Info.cyStride * (Info.cyPixels-1));
 
-	if (check_resolution_switch(dr, Info.cxPixels, Info.cyPixels)) 
+	if (check_resolution_switch(dr, Info.cxPixels, Info.cyPixels))
 		return GF_EOS;
 
 	return GF_OK;
@@ -1383,7 +1383,7 @@ static void GAPI_AdjustLandscape(GAPIPriv *gctx, GF_VideoSurface *dst, s32 x_pit
 		if (x_pitch>0) {
 			dst->video_buffer += dst->height * y_pitch;
 			dst->pitch_y = x_pitch;
-		} 
+		}
 		/*start of frame-buffer is top-right corner*/
 		else {
 			dst->video_buffer += dst->height * y_pitch + dst->width * x_pitch;
@@ -1395,7 +1395,7 @@ static void GAPI_AdjustLandscape(GAPIPriv *gctx, GF_VideoSurface *dst, s32 x_pit
 		if (x_pitch>0) {
 			dst->video_buffer += y_pitch - x_pitch;
 			dst->pitch_y = -x_pitch;
-		} 
+		}
 		/*start of frame-buffer is top-right corner*/
 		else {
 			dst->video_buffer += dst->height * y_pitch + dst->width * x_pitch;
@@ -1407,7 +1407,7 @@ static void GAPI_AdjustLandscape(GAPIPriv *gctx, GF_VideoSurface *dst, s32 x_pit
 		/*start of frame-buffer is bottom-left corner*/
 		if (x_pitch>0) {
 			dst->pitch_y = x_pitch;
-		} 
+		}
 		/*start of frame-buffer is bottom-right corner*/
 		else {
 			dst->video_buffer += dst->width * x_pitch;
@@ -1433,7 +1433,7 @@ static GF_Err GAPI_LockBackBuffer(GF_VideoOutput *dr, GF_VideoSurface *vi, Bool 
 		vi->pitch_x = gctx->x_pitch;
 		vi->pitch_y = gctx->y_pitch;
 
-		if (landscape) 
+		if (landscape)
 			GAPI_AdjustLandscape(gctx, vi, gctx->x_pitch, gctx->y_pitch);
 	}
 	return GF_OK;
@@ -1484,7 +1484,7 @@ extern "C" {
 
 /*interface query*/
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 		GF_VIDEO_OUTPUT_INTERFACE,

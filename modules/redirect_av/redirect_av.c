@@ -76,7 +76,7 @@
 
 #if (defined(WIN32) || defined(_WIN32_WCE)) && !defined(__GNUC__)
 
-#if defined(_WIN32_WCE) 
+#if defined(_WIN32_WCE)
 #pragma comment(lib, "toolhelp")
 #pragma comment(lib, "winsock")
 #endif

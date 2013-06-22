@@ -17,7 +17,7 @@ endif
 #common obj
 OBJS= aac_in.o
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 #faad config
 ifeq ($(CONFIG_FAAD), no)
@@ -34,7 +34,7 @@ endif
 
 LIB=gm_aac_in.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
-#LDFLAGS+=-export-symbols aac_in.def 
+#LDFLAGS+=-export-symbols aac_in.def
 endif
 
 
@@ -47,13 +47,13 @@ ifeq ($(STATICBUILD),yes)
 	$(CC) $(SHFLAGS) $(LDFLAGS) -o ../../bin/gcc/gm_aac_in-static.$(DYN_LIB_SUFFIX) $(OBJS) -L../../bin/gcc -lgpac_static $(EXTRALIBS)
 endif
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

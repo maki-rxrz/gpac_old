@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2007-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -90,7 +90,7 @@ static GF_Err svg_font_get_glyphs(void *udta, const char *utf_string, u32 *glyph
 			} else if (tag ==TAG_SVG_glyph) {
 				Bool glyph_ok = 0;
 				SVGAllAttributes atts;
-				
+
 				st = gf_node_get_private(child->node);
 				if (!st) {
 					child = child->next;
@@ -150,15 +150,15 @@ static GF_Err svg_font_get_glyphs(void *udta, const char *utf_string, u32 *glyph
 		}
 		prev_c = glyph_buffer[i];
 
-		if (!st) 
+		if (!st)
 			st = missing_glyph;
 		glyph_buffer[gl_idx] = st ? st->glyph.ID : 0;
 		if (st && st->uni_len>1) i++;
-		
+
 		gl_idx++;
 	}
 	*io_glyph_buffer_size = /* len = */ gl_idx;
-	
+
 	return GF_OK;
 }
 
@@ -176,7 +176,7 @@ static GF_Glyph *svg_font_load_glyph(void *udta, u32 glyph_name)
 		}
 		child = child->next;
 	}
-	
+
 	return NULL;
 }
 
@@ -282,7 +282,7 @@ void compositor_init_svg_font(GF_Compositor *compositor, GF_Node *node)
 
 	gf_svg_flatten_attributes((SVG_Element*)node_font, &atts);
 	font->max_advance_h = atts.horiz_adv_x ? FIX2INT( gf_ceil(atts.horiz_adv_x->value) ) : 0;
-	
+
 	font->not_loaded = 1;
 
 	/*wait for onLoad event before activating the font, otherwise we may not have all the glyphs*/
@@ -293,7 +293,7 @@ void compositor_init_svg_font(GF_Compositor *compositor, GF_Node *node)
 
 
 static void svg_traverse_glyph(GF_Node *node, void *rs, Bool is_destroy)
-{	
+{
 	if (is_destroy) {
 		GF_Font *font;
 		GF_Glyph *prev_glyph, *a_glyph;
@@ -370,7 +370,7 @@ reg_common:
 		st->glyph.height = FIX2INT( gf_ceil(rc.height) );
 	}
 	st->glyph.vert_advance = st->glyph.height;
-	if (!st->glyph.vert_advance) 
+	if (!st->glyph.vert_advance)
 		st->glyph.vert_advance = font->max_advance_v;
 
 	/*register glyph*/
@@ -419,7 +419,7 @@ static Bool svg_font_uri_check(GF_Node *node, FontURIStack *st)
 		if (!atts.xlink_href->target) return 0;
 	}
 	font_elt = atts.xlink_href->target;
-	if (gf_node_get_tag(font_elt) != TAG_SVG_font) return 0; 
+	if (gf_node_get_tag(font_elt) != TAG_SVG_font) return 0;
 	font = gf_node_get_private(font_elt);
 	if (!font) return 0;
 	st->alias = font;

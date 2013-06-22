@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -200,7 +200,7 @@ static s16 swf_get_s16(SWFReader *read)
 	u8 v1;
 	v1 = swf_read_int(read, 8);
 	val = swf_read_sint(read, 8);
-	val = (val<<8)&0xFF00; 
+	val = (val<<8)&0xFF00;
 	val |= (v1&0xFF);
 	return val;
 }
@@ -234,7 +234,7 @@ static u32 swf_get_matrix(SWFReader *read, GF_Matrix2D *mat)
 	mat->m[0] = mat->m[4] = FIX_ONE;
 
 	bits_read = swf_align(read);
-	
+
 	flag = swf_read_int(read, 1);
 	bits_read += 1;
 	if (flag) {
@@ -300,7 +300,7 @@ static void swf_get_colormatrix(SWFReader *read, GF_ColorMatrix *cmat)
 		cmat->m[19] = FLT2FIX( swf_read_sint(read, nbbits) * SWF_COLOR_SCALE );
 	}
 	cmat->identity = 0;
-	if ((cmat->m[0] == cmat->m[6]) 
+	if ((cmat->m[0] == cmat->m[6])
 		&& (cmat->m[0] == cmat->m[12])
 		&& (cmat->m[0] == cmat->m[18])
 		&& (cmat->m[0] == FIX_ONE)
@@ -363,7 +363,7 @@ static void swf_parse_styles(SWFReader *read, u32 revision, SWFShape *shape, u32
 {
 	u32 i, j, count;
 	SWFShapeRec *style;
-	
+
 	swf_align(read);
 
 	/*get fill styles*/
@@ -427,7 +427,7 @@ static void swf_parse_styles(SWFReader *read, u32 revision, SWFShape *shape, u32
 				} else {
 					style->solid_col = 0xFF;
 				}
-			} 
+			}
 			/*bitmap fill*/
 			else if (style->type & 0x40) {
 				style->img_id = swf_get_16(read);
@@ -437,7 +437,7 @@ static void swf_parse_styles(SWFReader *read, u32 revision, SWFShape *shape, u32
 					style->solid_col = 0xFF00FFFF;
 				}
 				swf_get_matrix(read, &style->mat);
-			} 
+			}
 			/*solid fill*/
 			else {
 				if (revision==2) style->solid_col = swf_get_argb(read);
@@ -643,7 +643,7 @@ restart:
 		j=i+1;
 		for (j=i+1; j < gf_list_count(paths); j++) {
 			np = (SWFPath*)gf_list_get(paths, j);
-	
+
 			/*check if any next subpath ends at the same place we're starting*/
 			if ((np->pts[np->nbPts-1].x == p->pts[0].x) && (np->pts[np->nbPts-1].y == p->pts[0].y)) {
 				u32 k;
@@ -794,15 +794,15 @@ restart:
 }
 
 /*
-	Notes on SWF->BIFS conversion - some ideas taken from libswfdec 
+	Notes on SWF->BIFS conversion - some ideas taken from libswfdec
 	A single fillStyle has 2 associated path, one used for left fill, one for right fill
 	This is then a 4 step process:
 	1- blindly parse swf shape, and add point/lines to the proper left/right path
 	2- for each fillStyles, revert the right path so that it becomes a left path
 	3- concatenate left and right paths
 	4- resort all subelements of the final path, making sure moveTo introduced by the SWF coding (due to style changes)
-	are removed. 
-		Ex: if path is 
+	are removed.
+		Ex: if path is
 			A->C, B->A, C->B = moveTo(A), lineTo(C), moveTo(B), lineTo (A), moveTo(C), lineTo(B)
 		we restort and remove unneeded moves to get
 			A->C->B = moveTo(A), lineTo(C), lineTo(B), lineTo(A)
@@ -922,7 +922,7 @@ static GF_Err swf_parse_shape_def(SWFReader *read, SWFFont *font, u32 revision)
 			if (set_fill0) fill0 = swf_read_int(read, bits_fill);
 			if (set_fill1) fill1 = swf_read_int(read, bits_fill);
 			if (set_strike) strike = swf_read_int(read, bits_line);
-			/*looks like newStyle does not append styles but define a new set - old styles can no 
+			/*looks like newStyle does not append styles but define a new set - old styles can no
 			longer be referenced*/
 			if (new_style) {
 				/*flush current shape record into BIFS*/
@@ -967,7 +967,7 @@ static GF_Err swf_parse_shape_def(SWFReader *read, SWFFont *font, u32 revision)
 				end.y = FLT2FIX( y * SWF_TWIP_SCALE );
 				/*curveTo*/
 				comType = 2;
-			} 
+			}
 			/*straight line*/
 			else {
 				nbBits = 2 + swf_read_int(read, 4);
@@ -1043,7 +1043,7 @@ static DispShape *swf_get_depth_entry(SWFReader *read, u32 Depth, Bool create)
 
 	memset(&tmp->mat, 0, sizeof(GF_Matrix2D));
 	tmp->mat.m[0] = tmp->mat.m[4] = FIX_ONE;
-	
+
 	memset(&tmp->cmat, 0, sizeof(GF_ColorMatrix));
 	tmp->cmat.m[0] = tmp->cmat.m[6] = tmp->cmat.m[12] = tmp->cmat.m[18] = FIX_ONE;
 	tmp->cmat.identity = 1;
@@ -1088,13 +1088,13 @@ static GF_Err swf_actions(SWFReader *read, u32 mask, u32 key)
 
 			switch (action_code) {
 			/* SWF 3 Action Model */
-			case 0x81: /* goto frame */ 
+			case 0x81: /* goto frame */
 				assert (length == 2);
 				act.type = GF_SWF_AS3_GOTO_FRAME;
 				act.frame_number = swf_get_16(read);
 				read->action(read, &act);
 				break;
-			case 0x83: /* get URL */ 
+			case 0x83: /* get URL */
 				act.type = GF_SWF_AS3_GET_URL;
 				act.url = swf_get_string(read);
 				act.target = swf_get_string(read);
@@ -1102,34 +1102,34 @@ static GF_Err swf_actions(SWFReader *read, u32 mask, u32 key)
 				gf_free(act.url);
 				gf_free(act.target);
 				break;
-			 /* next frame */ 
+			 /* next frame */
 			case 0x04: DO_ACT(GF_SWF_AS3_NEXT_FRAME)
-			/* previous frame */ 
+			/* previous frame */
 			case 0x05: DO_ACT(GF_SWF_AS3_PREV_FRAME)
-			/* play */ 
+			/* play */
 			case 0x06: DO_ACT(GF_SWF_AS3_PLAY)
-			/* stop */ 
+			/* stop */
 			case 0x07: DO_ACT(GF_SWF_AS3_STOP)
-			/* toggle quality */ 
+			/* toggle quality */
 			case 0x08: DO_ACT(GF_SWF_AS3_TOGGLE_QUALITY)
-			/* stop sounds*/ 
+			/* stop sounds*/
 			case 0x09: DO_ACT(GF_SWF_AS3_STOP_SOUNDS)
-			/* wait for frame */ 
-			case 0x8A: 
+			/* wait for frame */
+			case 0x8A:
 				assert (length == 3);
 				act.type = GF_SWF_AS3_WAIT_FOR_FRAME;
 				act.frame_number = swf_get_16(read);
 				skip_actions = swf_read_int(read, 8);
 				if (read->action(read, &act)) skip_actions = 0;
 				break;
-			/* set target */ 
+			/* set target */
 			case 0x8B:
 				act.type = GF_SWF_AS3_SET_TARGET;
 				act.target = swf_get_string(read);
 				read->action(read, &act);
 				gf_free(act.target);
 				break;
-			/* goto label */ 
+			/* goto label */
 			case 0x8C:
 				act.type = GF_SWF_AS3_GOTO_LABEL;
 				act.target = swf_get_string(read);
@@ -1146,7 +1146,7 @@ static GF_Err swf_actions(SWFReader *read, u32 mask, u32 key)
 	}
 #undef DO_ACT
 
-	return GF_OK; 
+	return GF_OK;
 }
 
 static GF_Err swf_def_button(SWFReader *read, u32 revision)
@@ -1191,7 +1191,7 @@ static GF_Err swf_def_button(SWFReader *read, u32 revision)
 			has_actions = swf_get_16(read);
 			mask = 0;
 			for (i=0; i<8; i++) {
-				if (swf_read_int(read, 1)) 
+				if (swf_read_int(read, 1))
 					mask |= 1<<i;
 			}
 			key = swf_read_int(read, 7);
@@ -1230,7 +1230,7 @@ static GF_Err swf_place_obj(SWFReader *read, u32 revision)
 	Bool had_depth;
 	/*SWF flags*/
 	Bool has_clip_actions, has_clip, has_name, has_ratio, has_cmat, has_mat, has_id, has_move;
-	
+
 	name = NULL;
 	clip_depth = 0;
 	ID = 0;
@@ -1350,8 +1350,8 @@ static GF_Err swf_place_obj(SWFReader *read, u32 revision)
 
 	/*store in display list*/
 	ds = swf_get_depth_entry(read, depth, 1);
-	e = read->place_obj(read, depth, shape_id, ds->char_id, type, 
-						has_mat ? &mat : NULL, 
+	e = read->place_obj(read, depth, shape_id, ds->char_id, type,
+						has_mat ? &mat : NULL,
 						has_cmat ? &cmat : NULL,
 						swf_mat_is_identity(&ds->mat) ? NULL : &ds->mat,
 						ds->cmat.identity ? NULL : &ds->cmat);
@@ -1449,7 +1449,7 @@ static GF_Err swf_def_font(SWFReader *read, u32 revision)
 				else offset_table[i] = swf_get_16(read);
 			}
 		}
-			
+
 		if (wide_offset) {
 			code_offset = swf_get_32(read);
 		} else {
@@ -1512,7 +1512,7 @@ static GF_Err swf_def_font_info(SWFReader *read)
 	SWFFont *ft;
 	Bool wide_chars;
 	u32 i, count;
-	
+
 	i = swf_get_16(read);
 	ft = swf_find_font(read, i);
 	if (!ft) {
@@ -1606,7 +1606,7 @@ static GF_Err swf_def_text(SWFReader *read, u32 revision)
 			has_col = swf_read_int(read, 1);
 			has_y_off = swf_read_int(read, 1);
 			has_x_off = swf_read_int(read, 1);
-			
+
 			/*end of rec*/
 			if (!has_font && !has_col && !has_y_off && !has_x_off) break;
 			if (has_font) fontID = swf_get_16(read);
@@ -1671,7 +1671,7 @@ static GF_Err swf_def_edit_text(SWFReader *read)
 	/*reserved*/swf_read_int(read, 1);
 	txt.html = swf_read_int(read, 1);
 	txt.outlines = swf_read_int(read, 1);
-	
+
 	if (has_font) {
 		txt.fontID = swf_get_16(read);
 		txt.font_height = FLT2FIX( swf_get_16(read) * SWF_TWIP_SCALE );
@@ -1829,7 +1829,7 @@ typedef struct
 	u32 sync_flags;
 	u32 in_point, out_point;
 	u32 nb_loops;
-} SoundInfo; 
+} SoundInfo;
 
 static SoundInfo swf_skip_soundinfo(SWFReader *read)
 {
@@ -1898,7 +1898,7 @@ static GF_Err swf_soundstream_hdr(SWFReader *read)
 		swf_report(read, GF_BAD_PARAM, "More than one sound stream for current timeline!!");
 		return swf_func_skip(read);
 	}
-	
+
 	GF_SAFEALLOC(snd, SWFSound);
 
 	/*rec_mix = */swf_read_int(read, 8);
@@ -1963,7 +1963,7 @@ static GF_Err swf_soundstream_block(SWFReader *read)
 		/*error at setup*/
 		if (!read->sound_stream->output) {
 			read->sound_stream->output = gf_f64_open(read->sound_stream->szFileName, "wb");
-			if (!read->sound_stream->output) 
+			if (!read->sound_stream->output)
 				return swf_func_skip(read);
 		}
 		/*store TS of first AU*/
@@ -2029,7 +2029,7 @@ static GF_Err swf_def_bits_jpeg(SWFReader *read, u32 version)
 	u32 skip = 0;
 	u32 AlphaPlaneSize = 0;
 	u32 size = read->size;
-	
+
 	ID = swf_get_16(read);
 	size -= 2;
 	if (version==3) {
@@ -2045,7 +2045,7 @@ static GF_Err swf_def_bits_jpeg(SWFReader *read, u32 version)
 	} else {
 		sprintf(szName, "swf_jpeg_%d.jpg", ID);
 	}
-	
+
 	if (version!=3)
 		file = gf_f64_open(szName, "wb");
 
@@ -2063,7 +2063,7 @@ static GF_Err swf_def_bits_jpeg(SWFReader *read, u32 version)
 	} else {
 		u32 i;
 		for (i=0; i<size; i++) {
-			if ((i+4<size) 
+			if ((i+4<size)
 				&& (buf[i]==0xFF) && (buf[i+1]==0xD9)
 				&& (buf[i+2]==0xFF) && (buf[i+3]==0xD8)
 			) {
@@ -2122,11 +2122,11 @@ static GF_Err swf_def_bits_jpeg(SWFReader *read, u32 version)
 		osize = w*h*4;
 		buf = gf_realloc(buf, sizeof(char)*osize);
 		gf_img_png_enc(raw, w, h, h*4, GF_PIXEL_RGBA, (char *)buf, &osize);
-		
+
 		file = gf_f64_open(szName, "wb");
 		gf_fwrite(buf, 1, osize, file);
 		fclose(file);
-		
+
 		gf_free(raw);
 #endif //GPAC_DISABLE_AV_PARSERS
 	}
@@ -2204,7 +2204,7 @@ static GF_Err swf_unknown_tag(SWFReader *read)
 static GF_Err swf_process_tag(SWFReader *read)
 {
 	switch (read->tag) {
-	case SWF_END: return GF_OK; 
+	case SWF_END: return GF_OK;
 	case SWF_PROTECT: return GF_OK;
 	case SWF_SETBACKGROUNDCOLOR: return swf_set_backcol(read);
 	case SWF_DEFINESHAPE: return swf_parse_shape_def(read, NULL, 0);
@@ -2223,7 +2223,7 @@ static GF_Err swf_process_tag(SWFReader *read)
 	case SWF_DEFINEEDITTEXT: return swf_def_edit_text(read);
 	case SWF_DEFINESPRITE: return swf_def_sprite(read);
 	/*no revision needed*/
-	case SWF_SOUNDSTREAMHEAD: 
+	case SWF_SOUNDSTREAMHEAD:
 	case SWF_SOUNDSTREAMHEAD2:
 		return swf_soundstream_hdr(read);
 	case SWF_DEFINESOUND: return swf_def_sound(read);
@@ -2235,7 +2235,7 @@ static GF_Err swf_process_tag(SWFReader *read)
 //	case SWF_DEFINEBUTTONSOUND:
 	case SWF_DOACTION:
 		return swf_actions(read, 0, 0);
-	case SWF_FRAMELABEL: 
+	case SWF_FRAMELABEL:
 		{
 			char *framelabel = swf_get_string(read);
 			gf_free(framelabel);
@@ -2345,7 +2345,7 @@ GF_Err gf_sm_load_run_swf(GF_SceneLoader *load)
 
 	if (e==GF_EOS) e = GF_OK;
 	if (!e) {
-		if (read->flat_limit != 0) 
+		if (read->flat_limit != 0)
 			swf_report(read, GF_OK, "%d points removed while parsing shapes (Flattening limit %.4f)", read->flatten_points, read->flat_limit);
 
 		if (read->no_as && read->has_interact) swf_report(read, GF_OK, "ActionScripts and interactions have been removed");
@@ -2415,7 +2415,7 @@ GF_Err gf_sm_load_init_swf(GF_SceneLoader *load)
 
 	GF_SAFEALLOC(read, SWFReader);
 	read->load = load;
-	
+
 	e = GF_OK;
 
 	read->input = input;
@@ -2455,20 +2455,20 @@ GF_Err gf_sm_load_init_swf(GF_SceneLoader *load)
 	read->length = swf_get_32(read);
 
 	/*if compressed decompress the whole file*/
-	if (sig[0] == 'C') 
+	if (sig[0] == 'C')
 		swf_init_decompress(read);
-	
+
 	swf_get_rec(read, &rc);
 	read->width = rc.w;
 	read->height = rc.h;
 	load->ctx->scene_width = FIX2INT(read->width);
 	load->ctx->scene_height = FIX2INT(read->height);
 	load->ctx->is_pixel_metrics = 1;
-	
+
 	swf_align(read);
 	read->frame_rate = swf_get_16(read)>>8;
 	read->frame_count = swf_get_16(read);
-	
+
 	GF_LOG(GF_LOG_INFO, GF_LOG_PARSER, ("SWF Import - Scene Size %dx%d - %d frames @ %d FPS", load->ctx->scene_width, load->ctx->scene_height, read->frame_count, read->frame_rate));
 
 	if (!(load->swf_import_flags & GF_SM_SWF_SPLIT_TIMELINE) ) {

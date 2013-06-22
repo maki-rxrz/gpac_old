@@ -860,7 +860,7 @@ static JSBool wm_widget_set_scene_input_value(JSContext *c, JSObject *obj, uintN
 #ifndef GPAC_DISABLE_X3D
 				|| (n->sgprivate->tag==TAG_X3D_Script)
 #endif
-				) 
+				)
 			gf_sg_script_event_in(n, &info);
 
 		gf_node_changed(n, &info);
@@ -952,7 +952,7 @@ static SVG_handlerElement *wm_create_scene_listener(GF_WidgetInstance *wid, GF_W
 
 	evt_type = GF_EVENT_ATTR_MODIFIED;
 	n = gf_sg_find_node_by_name(wid->scene, param->node);
-	if (!n) 
+	if (!n)
 		return NULL;
 
 	att_name = 0;
@@ -2231,7 +2231,7 @@ static JSBool SMJS_FUNCTION(wm_load)
 		GF_WidgetInstance *parent_widget;
 		if (!GF_JS_InstanceOf(c, JSVAL_TO_OBJECT(argv[1]), &wm->wmWidgetClass, NULL) ) return JS_FALSE;
 		parent_widget = (GF_WidgetInstance *)SMJS_GET_PRIVATE(c, JSVAL_TO_OBJECT(argv[1]) );
-		
+
 		if (parent_widget->widget->url) url = gf_url_concatenate(parent_widget->widget->url, manifest);
 	}
 

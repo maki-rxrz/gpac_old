@@ -13,7 +13,7 @@
 wxMenuButton is a button that drops down an assigned wxMenu
 
 Create the button with either a text or bitmap label.
-    Create a new wxMenu and call AssignMenu and thats it. When you press the 
+    Create a new wxMenu and call AssignMenu and thats it. When you press the
     dropdown button the menu appears. When you press the label button the next
     wxITEM_RADIO (ie wxMenuItem::GetKind) in the menu is selected round robin.
     If there are no radio items then it really just acts like a menubar, though
@@ -49,7 +49,7 @@ enum wxCustomButton_Style
     wxCUSTBUT_BUTTON         = 0x0200,
     wxCUSTBUT_TOGGLE         = 0x0400,
     wxCUSTBUT_BUT_DCLICK_TOG = 0x0800,
-    wxCUSTBUT_TOG_DCLICK_BUT = 0x1000, 
+    wxCUSTBUT_TOG_DCLICK_BUT = 0x1000,
     // drawing styles
     wxCUSTBUT_FLAT           = 0x2000 // flat, mouseover raises if not depressed
 };
@@ -63,7 +63,7 @@ class WXDLLEXPORT wxCustomButton : public wxControl
 public:
 
     wxCustomButton() : wxControl() { Init(); }
-    
+
     // wxToggleButton or wxButton compatible constructor (also wxTextCtrl)
     wxCustomButton(wxWindow* parent, wxWindowID id,
                    const wxString& label,
@@ -107,7 +107,7 @@ public:
     }
 
     virtual ~wxCustomButton();
-        
+
     bool Create(wxWindow* parent,
                 wxWindowID id,
                 const wxString& label,
@@ -124,7 +124,7 @@ public:
     // Use combinations of wxCustomButton_Style(s)
     long GetButtonStyle() const { return m_button_style; }
     bool SetButtonStyle( long style );
-    
+
     // Set the text label, wxEmptyString for none
     void SetLabel( const wxString &label );
 
@@ -146,11 +146,11 @@ public:
 
     // Creates a "disabled" bitmap by dithering it with the background colour
     wxBitmap CreateBitmapDisabled(const wxBitmap &bitmap) const;
-    
+
     // set/get the margins (in pixels) around the label and bitmap
     //    if fit = TRUE then resize the button to fit
-    void SetMargins(const wxSize &margin, bool fit = FALSE); 
-    
+    void SetMargins(const wxSize &margin, bool fit = FALSE);
+
     // set/get the margins around the text label
     //    the inter bitmap/label margin is the max of either margin, not the sum
     void SetLabelMargin(const wxSize &margin, bool fit = FALSE);
@@ -159,11 +159,11 @@ public:
     //    the inter bitmap/label margin is the max of either margin, not the sum
     void SetBitmapMargin(const wxSize &margin, bool fit = FALSE);
     wxSize GetBitmapMargin() const { return m_bitmapMargin; }
-    
+
     // can be used to activate the focused behavior (see MenuButton)
     void SetFocused(bool focused) { m_focused = focused; Refresh(FALSE); }
     bool GetFocused() const { return m_focused; }
-    
+
 protected:
     void OnPaint(wxPaintEvent &event);
     void Redraw();
@@ -172,7 +172,7 @@ protected:
     virtual wxSize DoGetBestSize() const;
 
     virtual void SendEvent();
-    
+
     void OnMouseEvents(wxMouseEvent &event);
 
     void OnSize( wxSizeEvent &event );
@@ -197,7 +197,7 @@ protected:
             m_labelPos;
 
     wxTimer *m_timer;
-    
+
     wxEventType m_eventType;     // store the mouse event type
 
 private:
@@ -231,10 +231,10 @@ public:
     // Use this constructor if you need one compatible with a wxBitmapButton
     //   setup the button later with AssignMenu
     wxMenuButton( wxWindow* parent, wxWindowID id,
-                  const wxBitmap &bitmap, 
+                  const wxBitmap &bitmap,
                   const wxPoint& pos = wxDefaultPosition,
                   const wxSize& size = wxDefaultSize,
-                  long style = 0, 
+                  long style = 0,
 				  const wxValidator& val = wxDefaultValidator,
                   const wxString& name = wxT("wxMenuButton"))
                   : wxControl()
@@ -244,7 +244,7 @@ public:
     }
 
     virtual ~wxMenuButton();
-        
+
     bool Create( wxWindow* parent,
                  wxWindowID id,
                  const wxString &label,
@@ -257,22 +257,22 @@ public:
 
     // Gets the id of the first selected radio item or wxNOT_FOUND (-1) if none
     int GetSelection() const;
-    
+
     // This menu will be displayed when the dropdown button is pressed.
     //   if static_menu is FALSE it will be deleted when the buttton is destroyed.
-    void AssignMenu(wxMenu *menu, bool static_menu = FALSE); 
-    
+    void AssignMenu(wxMenu *menu, bool static_menu = FALSE);
+
     wxMenu *GetMenu() const { return m_menu; }
-    
+
     // get a pointer to the label button, for turning it into a toggle perhaps
     wxCustomButton *GetLabelButton() const { return m_labelButton; }
     wxCustomButton *GetDropDownButton() const { return m_dropdownButton; }
-    
+
     void SetToolTip(const wxString &tip);
     void SetToolTip(wxToolTip *tip);
-    
+
 protected:
-    void OnButton(wxCommandEvent &event);    
+    void OnButton(wxCommandEvent &event);
 
     virtual void DoSetSize(int x, int y, int width, int height,
                            int sizeFlags = wxSIZE_AUTO);
@@ -299,7 +299,7 @@ private:
 
 //-----------------------------------------------------------------------------
 // wxMenuButtonEvents
-// 
+//
 // EVT_MENUBUTTON_OPEN(id, fn) - menu is about to be opened, (dis)(en)able items
 //                               or call Veto() to stop menu from popping up
 //                               this is a wxNotifyEvent

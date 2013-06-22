@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -45,7 +45,7 @@ static const char * GF_DASH_MPD_MIME_TYPES[] = { "application/dash+xml", "video/
  */
 static const char * GF_DASH_M3U8_MIME_TYPES[] = { "video/x-mpegurl", "audio/x-mpegurl", "application/x-mpegurl", "application/vnd.apple.mpegurl", NULL};
 
-typedef enum 
+typedef enum
 {
 	/*event sent if an error occurs when setting up manifest*/
 	GF_DASH_EVENT_MANIFEST_INIT_ERROR,
@@ -70,7 +70,7 @@ struct _gf_dash_io
 {
 	/*user private data*/
 	void *udta;
-	
+
 	/*signals errors or specific actions to perform*/
 	GF_Err (*on_dash_event)(GF_DASHFileIO *dashio, GF_DASHEventType evt, GF_Err setup_error);
 
@@ -94,7 +94,7 @@ struct _gf_dash_io
 
 	/*get URL of the file - i tmay be different from the original one if resource relocation happened*/
 	const char *(*get_url)(GF_DASHFileIO *dashio, GF_DASHFileIOSession session);
-	/*get the name of the cache file. If NULL is returned, the file cannot be cached and its associated UTL will be used when 
+	/*get the name of the cache file. If NULL is returned, the file cannot be cached and its associated UTL will be used when
 	the client request file to play*/
 	const char *(*get_cache_name)(GF_DASHFileIO *dashio, GF_DASHFileIOSession session);
 	/*get the MIME type of the file*/
@@ -123,11 +123,11 @@ typedef enum
 	@disable_switching: turn off bandwidth switching algorithm
 	@first_select_mode: indicates which representation to select upon startup
 */
-GF_DashClient *gf_dash_new(GF_DASHFileIO *dash_io, 
-						   u32 max_cache_duration, 
-						   u32 auto_switch_count, 
-						   Bool keep_files, 
-						   Bool disable_switching, 
+GF_DashClient *gf_dash_new(GF_DASHFileIO *dash_io,
+						   u32 max_cache_duration,
+						   u32 auto_switch_count,
+						   Bool keep_files,
+						   Bool disable_switching,
 						   GF_DASHInitialSelectionMode first_select_mode,
 						   Bool enable_buffering, u32 initial_time_shift_percent);
 
@@ -177,14 +177,14 @@ const char *gf_dash_group_get_segment_mime(GF_DashClient *dash, u32 idx);
 /*returns the URL of tyhe first media resource to play (init segment or first media segment depending on format). start_range and end_range are optional*/
 const char *gf_dash_group_get_segment_init_url(GF_DashClient *dash, u32 idx, u64 *start_range, u64 *end_range);
 
-/*returns the URL and byte range of the next media resource to play in this group. 
+/*returns the URL and byte range of the next media resource to play in this group.
 If switching occured, sets switching_index to the new representation index.
-If no bitstream switching is possible, also set the url and byte range of the media file required to intialize 
+If no bitstream switching is possible, also set the url and byte range of the media file required to intialize
 the playback of the next segment
 original_url is optional and may be used to het the URI of the segment
 */
-GF_Err gf_dash_group_get_next_segment_location(GF_DashClient *dash, u32 idx, const char **url, u64 *start_range, u64 *end_range, 
-											s32 *switching_index, const char **switching_url, u64 *switching_start_range, u64 *switching_end_range, 
+GF_Err gf_dash_group_get_next_segment_location(GF_DashClient *dash, u32 idx, const char **url, u64 *start_range, u64 *end_range,
+											s32 *switching_index, const char **switching_url, u64 *switching_start_range, u64 *switching_end_range,
 											const char **original_url);
 
 /*same as gf_dash_group_get_next_segment_location but query the current downloaded segment*/
@@ -204,8 +204,8 @@ GF_Err gf_dash_group_get_presentation_time_offset(GF_DashClient *dash, u32 idx, 
 
 /*returns 1 if the playback position is in the last period of the presentation*/
 Bool gf_dash_in_last_period(GF_DashClient *dash);
-/*return value: 
-	1 if the period switching has been requested (due to seeking), 
+/*return value:
+	1 if the period switching has been requested (due to seeking),
 	2 if the switching is in progress (all groups will soon be destroyed and plyback will be stoped and restarted)
 	0 if no switching is requested
 */

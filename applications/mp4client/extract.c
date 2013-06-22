@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2005-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -31,7 +31,7 @@
 #ifdef WIN32
 #include <windows.h>
 #else
-typedef struct tagBITMAPFILEHEADER 
+typedef struct tagBITMAPFILEHEADER
 {
     u16	bfType;
     u32	bfSize;
@@ -123,12 +123,12 @@ static u32 put_pixel(FILE *fout, u32 type, u32 pf, char *ptr)
 		fputc(colmask(col >> (5 - 3), 3), fout);
 		fputc(colmask(col >> (10 - 3), 3), fout);
 		return 2;
-	/* this is used to write the byte depthbuffer in greyscale when dumping depth*/ 
+	/* this is used to write the byte depthbuffer in greyscale when dumping depth*/
 	case GF_PIXEL_GREYSCALE:
 		/* bmp always needs 3 pixels */
 		fputc(ptr[0], fout);
 		fputc(ptr[0], fout);
-		fputc(ptr[0], fout); 
+		fputc(ptr[0], fout);
 		/* if printing the characters corresponding to the float depth buffer: */
 		/*
 		{
@@ -221,9 +221,9 @@ void write_png(GF_VideoSurface *fb, char *rad_name, u32 img_num)
 	u32 dst_size;
 	char *dst;
 	char *prev = strrchr(rad_name, '.');
-	if (prev) prev[0] = '\0'; 
+	if (prev) prev[0] = '\0';
 	sprintf(str, "%s_%d.png", rad_name, img_num);
-	if (prev) prev[0] = '.'; 
+	if (prev) prev[0] = '.';
 
 	switch (fb->pixel_format) {
 	case GF_PIXEL_ARGB:
@@ -261,7 +261,7 @@ void write_depthfile(GF_VideoSurface *fb, char *rad_name, u32 img_num)
 	unsigned char *depth;
 
 	depth = (unsigned char *) fb->video_buffer;
-	
+
 	fout = gf_f64_open("dump_depth", "wb");
 	if (!fout) return;
 	for (j=0; j<fb->height;  j++) {
@@ -286,11 +286,11 @@ void write_texture_file(GF_VideoSurface *fb, char *rad_name, u32 img_num, u32 du
 	unsigned char *buf;
 
 	buf = (unsigned char *) fb->video_buffer;
-	
+
 	if (dump_mode==6) fout = gf_f64_open("dump_rgbds", "wb");
 	else if (dump_mode==9) fout = gf_f64_open("dump_rgbd", "wb");
 	else return;
-	
+
 	if (!fout) return;
 	for (j=0; j<fb->height;  j++) {
 		for (i=0;i<fb->width*4; i++) {
@@ -308,7 +308,7 @@ void write_raw(GF_VideoSurface *fb, char *rad_name, u32 img_num)
 	char str[GF_MAX_PATH];
 	FILE *fout;
 	prev = strrchr(rad_name, '.');
-	if (prev) prev[0] = '\0'; 
+	if (prev) prev[0] = '\0';
 	if (img_num<10) {
 		sprintf(str, "%s_00%d.raw", rad_name, img_num);
 	} else if (img_num<100) {
@@ -320,7 +320,7 @@ void write_raw(GF_VideoSurface *fb, char *rad_name, u32 img_num)
 	fout = gf_f64_open(str, "wb");
 	if (!fout) return;
 
-	
+
 	for (j=0;j<fb->height; j++) {
 		ptr = fb->video_buffer + j*fb->pitch_y;
 		for (i=0;i<fb->width; i++) {
@@ -354,7 +354,7 @@ void dump_depth (GF_Terminal *term, char *rad_name, u32 dump_type, u32 frameNum,
 			u16 src_16;
 			dst = conv_buf + k*fb.width*3;
 			src = fb.video_buffer + (fb.height-k-1) * fb.pitch_y;
-			
+
 			for (i=0;i<fb.width; i++) {
 				switch (fb.pixel_format) {
 				case GF_PIXEL_RGB_32:
@@ -364,7 +364,7 @@ void dump_depth (GF_Terminal *term, char *rad_name, u32 dump_type, u32 frameNum,
 					dst[2] = src[2];
 					src+=4;
 					break;
-			
+
 				case GF_PIXEL_BGR_32:
 				case GF_PIXEL_RGBA:
 					dst[0] = src[3];
@@ -428,8 +428,8 @@ void dump_depth (GF_Terminal *term, char *rad_name, u32 dump_type, u32 frameNum,
 		break;
 	case 7:
 		write_bmp(&fb, rad_name, frameNum);
-		break;	
-		
+		break;
+
 	}
 	/*unlock it*/
 	/*in -depth -avi mode, do not release it yet*/
@@ -482,7 +482,7 @@ void dump_frame(GF_Terminal *term, char *rad_name, u32 dump_type, u32 frameNum, 
 					dst +=4;
 					src+=4;
 				}
-				break;		
+				break;
 			case GF_PIXEL_RGBD:
 				for (i=0;i<fb.width; i++) {
 					dst[0] = src[2];
@@ -492,7 +492,7 @@ void dump_frame(GF_Terminal *term, char *rad_name, u32 dump_type, u32 frameNum, 
 					dst += 4;
 					src+=4;
 				}
-				break;				
+				break;
 			case GF_PIXEL_BGR_32:
 			case GF_PIXEL_RGBA:
 				for (i=0;i<fb.width; i++) {
@@ -543,18 +543,18 @@ void dump_frame(GF_Terminal *term, char *rad_name, u32 dump_type, u32 frameNum, 
 				break;
 			}
 		}
-		if (dump_type!=5 && dump_type!= 10 && dump_type!= 11) { 
+		if (dump_type!=5 && dump_type!= 10 && dump_type!= 11) {
 			out_size = fb.height*fb.width*3;
 		} else {
 			out_size = fb.height*fb.width*4;
 		}
 #ifndef GPAC_DISABLE_AVILIB
-		if (dump_type!=5 && dump_type!= 10) { 
+		if (dump_type!=5 && dump_type!= 10) {
 			if (AVI_write_frame(avi_out, conv_buf, out_size, 1) <0)
 			fprintf(stderr, "Error writing frame\n");
 		} else {
 			if (AVI_write_frame(avi_out, conv_buf, out_size, 1) <0)
-			fprintf(stderr, "Error writing frame\n");				
+			fprintf(stderr, "Error writing frame\n");
 		}
 #endif
 		break;
@@ -568,7 +568,7 @@ void dump_frame(GF_Terminal *term, char *rad_name, u32 dump_type, u32 frameNum, 
 	case 9:
 		write_texture_file(&fb, rad_name, frameNum, dump_type);
 		break;
-	
+
 	case 3:
 		write_raw(&fb, rad_name, frameNum);
 		break;
@@ -583,7 +583,7 @@ Bool dump_file(char *url, u32 dump_mode, Double fps, u32 width, u32 height, Floa
 	u32 i = 0;
 	GF_VideoSurface fb;
 	char szPath[GF_MAX_PATH];
-	char *prev=NULL;  
+	char *prev=NULL;
 
 	prev = strstr(url, "://");
 	if (prev) {
@@ -591,7 +591,7 @@ Bool dump_file(char *url, u32 dump_mode, Double fps, u32 width, u32 height, Floa
 		if (prev) prev++;
 	}
 
-	if (!prev) prev = url; 
+	if (!prev) prev = url;
 	strcpy(szPath, prev);
 	prev = strrchr(szPath, '.');
 	if (prev) prev[0] = 0;
@@ -600,7 +600,7 @@ Bool dump_file(char *url, u32 dump_mode, Double fps, u32 width, u32 height, Floa
 	/*connect in pause mode*/
 	gf_term_connect_from_time(term, url, 0, 1);
 
-	while (!term->compositor->scene 
+	while (!term->compositor->scene
 		|| term->compositor->msg_type
 		|| (gf_term_get_option(term, GF_OPT_PLAY_STATE) == GF_STATE_STEP_PAUSE)
 	) {
@@ -608,11 +608,11 @@ Bool dump_file(char *url, u32 dump_mode, Double fps, u32 width, u32 height, Floa
 		gf_term_process_flush(term);
 		gf_sleep(10);
 	}
-	
+
 	if (width && height) {
 		gf_term_set_size(term, width, height);
 		gf_term_process_flush(term);
-	} 
+	}
 #ifndef GPAC_USE_TINYGL
         fprintf(stderr, "not tinygl\n");
 	e = gf_sc_get_screen_buffer(term->compositor, &fb, 0);
@@ -657,8 +657,8 @@ Bool dump_file(char *url, u32 dump_mode, Double fps, u32 width, u32 height, Floa
 		u32 time, prev_time, nb_frames;
 		u64 dump_dur;
 		char *conv_buf;
-		avi_t *avi_out = NULL; 
-		avi_t *depth_avi_out = NULL; 
+		avi_t *avi_out = NULL;
+		avi_t *depth_avi_out = NULL;
 		char szPath_depth[GF_MAX_PATH];
 		char comp[5];
 		strcpy(szPath_depth, szPath);
@@ -674,9 +674,9 @@ Bool dump_file(char *url, u32 dump_mode, Double fps, u32 width, u32 height, Floa
 			if (!depth_avi_out) {
 				fprintf(stderr, "Error creating AVI file %s\n", szPath);
 				return 1;
-			}	
+			}
 		}
-		
+
 		if (!fps) fps = GF_IMPORT_DEFAULT_FPS;
 		time = prev_time = 0;
 		nb_frames = 0;
@@ -715,7 +715,7 @@ Bool dump_file(char *url, u32 dump_mode, Double fps, u32 width, u32 height, Floa
 
 			}
 			else dump_frame(term, szPath, dump_mode, i+1, conv_buf, avi_out);
-			
+
 			nb_frames++;
 			time = (u32) (nb_frames*1000/fps);
 			gf_term_step_clocks(term, time - prev_time);
@@ -744,7 +744,7 @@ Bool dump_file(char *url, u32 dump_mode, Double fps, u32 width, u32 height, Floa
 			} else {
 				dump_frame(term, url, dump_mode, i+1, NULL, NULL);
 			}
-			
+
 			if (i+1<nb_times) gf_term_step_clocks(term, times[i+1] - times[i]);
 		}
 	}

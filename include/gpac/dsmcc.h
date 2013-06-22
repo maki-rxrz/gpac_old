@@ -135,7 +135,7 @@ typedef struct
 	/* section number of the data block if carried by the section */
 	u8 section_number;
 	/* last section number of the data block if carried by the section */
-	u8 last_section_number; 
+	u8 last_section_number;
 	void* DSMCC_Extension;
 	u32 checksum;
 	u32 CRC_32;
@@ -181,9 +181,9 @@ typedef struct
 }GF_M2TS_DSMCC_DOWNLOAD_DATA_HEADER;
 
 typedef struct
-{	
+{
 	u8 subDescriptorType;
-	u8 subDescriptorLength;	
+	u8 subDescriptorLength;
 	char *additionalInformation;
 
 }GF_M2TS_DSMCC_SUBDESCRIPTOR;
@@ -209,7 +209,7 @@ typedef struct
 }GF_M2TS_DSMCC_COMPATIBILITY_DESCRIPTOR;
 
 typedef struct
-{	
+{
 	u32 bufferSize;
 	u16 maximumBlockSize;
 	GF_M2TS_DSMCC_COMPATIBILITY_DESCRIPTOR CompatibilityDescr;
@@ -227,7 +227,7 @@ typedef struct
 }GF_M2TS_DSMCC_INFO_MODULES;
 
 typedef struct
-{  
+{
 	u32 downloadId;
 	u16 blockSize;
 	u8 windowSize;
@@ -237,12 +237,12 @@ typedef struct
 	GF_M2TS_DSMCC_COMPATIBILITY_DESCRIPTOR CompatibilityDescr;
 	u16 numberOfModules;
 	GF_M2TS_DSMCC_INFO_MODULES Modules;
-	u16 privateDataLength;     
+	u16 privateDataLength;
 	char* privateDataByte;
 }GF_M2TS_DSMCC_DOWNLOAD_INFO_RESP_INDIC;
 
 typedef struct
-{  
+{
 	u8 moduleId;
 	u8 moduleVersion;
 	u8 reserved;
@@ -253,14 +253,14 @@ typedef struct
 }GF_M2TS_DSMCC_DOWNLOAD_DATA_BLOCK;
 
 typedef struct
-{ 
+{
 	u16 moduleId;
 	u16 blockNumber;
 	u8 downloadReason;
 }GF_M2TS_DSMCC_DOWNLOAD_DATA_REQUEST_MESSAGE;
 
 typedef struct
-{  
+{
 	u32 downloadId;
 	u16 moduleId;
 	u16 blockNumber;
@@ -271,7 +271,7 @@ typedef struct
 }GF_M2TS_DSMCC_DOWNLOAD_CANCEL;
 
 typedef struct
-{	
+{
 	u32 GroupId;
 	u32 GroupSize;
 	GF_M2TS_DSMCC_COMPATIBILITY_DESCRIPTOR CompatibilityDescr;
@@ -282,14 +282,14 @@ typedef struct
 typedef struct
 {
 	u16 NumberOfGroups;
-	GF_M2TS_DSMCC_INFO_GROUP* InfoGroup; 
+	GF_M2TS_DSMCC_INFO_GROUP* InfoGroup;
 	u16 PrivateDataLength;
 	char* privateDataByte;
 
 }GF_M2TS_DSMCC_GROUP_INFO_INDICATION;
 
 typedef struct
-{ 
+{
 	u8 serverId[20];
 	GF_M2TS_DSMCC_COMPATIBILITY_DESCRIPTOR CompatibilityDescr;
 	u16 privateDataLength;
@@ -343,7 +343,7 @@ typedef struct{
 	u32 carouselId;
 	u8 specifierType;
 	u32 specifierData;
-	u16 transport_stream_id; 
+	u16 transport_stream_id;
 	u16 original_network_id;
 	u16 service_id;
 	u32 reserved;
@@ -426,8 +426,8 @@ typedef struct{
 	u8* userInfo_data;
 	GF_List* descriptor;
 
-	u8 compression_method;	
-	u8 transparency_level; 
+	u8 compression_method;
+	u8 transparency_level;
 }GF_M2TS_DSMCC_BIOP_MODULE_INFO;
 
 typedef struct{
@@ -464,7 +464,7 @@ typedef struct{
 
 typedef struct{
 	u8 descriptor_tag;
-	u8 descriptor_length;							
+	u8 descriptor_length;
 	char* content_type_data_byte;
 }GF_M2TS_DSMCC_BIOP_CONTENT_TYPE_DESRIPTOR;
 
@@ -539,47 +539,47 @@ typedef struct{
 	/* Number of the item */
 	u16 bindings_count;
 	/* List of the item in the directory */
-	GF_M2TS_DSMCC_BIOP_NAME* Name;		
+	GF_M2TS_DSMCC_BIOP_NAME* Name;
 }GF_M2TS_DSMCC_BIOP_DIRECTORY;
 
 typedef struct{
-	u8 aDescription_length; 				
+	u8 aDescription_length;
 	char* aDescription_bytes;
 	u32 duration_aSeconds;
 	u32 duration_aMicroseconds;
-	u8 audio;	 
-	u8 video;	 
+	u8 audio;
+	u8 video;
 	u8 data;
 }GF_M2TS_DSMCC_STREAM_INFO;
 
 typedef struct{
-	GF_M2TS_DSMCC_BIOP_HEADER* Header;			
+	GF_M2TS_DSMCC_BIOP_HEADER* Header;
 	GF_M2TS_DSMCC_STREAM_INFO Info;
 	char* objectInfo_byte;
-	u8 serviceContextList_count; 				
+	u8 serviceContextList_count;
 	GF_M2TS_DSMCC_SERVICE_CONTEXT* ServiceContext;
-	u32 messageBody_length; 
+	u32 messageBody_length;
 	u8 taps_count;
-	GF_M2TS_DSMCC_BIOP_TAPS* Taps; 				
+	GF_M2TS_DSMCC_BIOP_TAPS* Taps;
 }GF_M2TS_DSMCC_BIOP_STREAM_MESSAGE;
 
-typedef struct{					
-	u8 eventName_length; 				
+typedef struct{
+	u8 eventName_length;
 	char* eventName_data_byte;
 }GF_M2TS_DSMCC_BIOP_EVENT_LIST;
 
 typedef struct{
-	GF_M2TS_DSMCC_BIOP_HEADER* Header; 
-	GF_M2TS_DSMCC_STREAM_INFO Info;				
+	GF_M2TS_DSMCC_BIOP_HEADER* Header;
+	GF_M2TS_DSMCC_STREAM_INFO Info;
 	u16 eventNames_count;
 	GF_M2TS_DSMCC_BIOP_EVENT_LIST* EventList;
 	char* objectInfo_byte;
-	u8 serviceContextList_count;				
+	u8 serviceContextList_count;
 	GF_M2TS_DSMCC_SERVICE_CONTEXT* ServiceContext;
-	u32 messageBody_length; 	 
+	u32 messageBody_length;
 	u8 taps_count;
-	GF_M2TS_DSMCC_BIOP_TAPS* Taps;		
-	u8 eventIds_count;  				
+	GF_M2TS_DSMCC_BIOP_TAPS* Taps;
+	u8 eventIds_count;
 	u16* eventId;
 }GF_M2TS_DSMCC_BIOP_STREAM_EVENT;
 
@@ -593,7 +593,7 @@ typedef struct{
 			void* parent;
 
 typedef struct
-{	
+{
 	GF_M2TS_DSMCC_ELEMENT
 	/*Path to the file */
 	char* Path;
@@ -622,11 +622,11 @@ typedef struct
 }GF_M2TS_DSMCC_SERVICE_GATEWAY;
 
 typedef struct
-{	
+{
 	/* List that carries the modules to process */
 	GF_List* dsmcc_modules;
 	/* List of processed module */
-	GF_M2TS_DSMCC_PROCESSED processed[512];	
+	GF_M2TS_DSMCC_PROCESSED processed[512];
 	/*Check if the ServiceGateway has been recovered*/
 	/* 1 ServiceGateway received */
 	/* 0 otherwise */

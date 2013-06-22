@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #include <jni.h>
@@ -114,10 +114,10 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
 void JNI_OnUnload(JavaVM *vm, void *reserved)
 {
 	JNIEnv* env = 0;
-  	
+
 	if ( (*vm)->GetEnv(vm, (void**)&env, JNI_VERSION_1_2) != JNI_OK )
 		return;
-	
+
 	(*env)->DeleteGlobalRef(env, sensCtrlClass);
 }
 //----------------------------------------------------------------------
@@ -177,18 +177,18 @@ void loadSensorControler(MPEGVSensorContext *rc)
 		rc->isAttached = 1;
 		(*env)->PushLocalFrame(env, 2);
 	}
-	else 
+	else
 		if ( res == JNI_EVERSION )
 		{
 			GF_LOG(GF_LOG_ERROR, GF_LOG_CORE, ("[MPEG-V_IN] The specified version is not supported\n"));
 			return;
 		}
-	
+
 	rc->env = env;
 	rc->sensCtrlClass = sensCtrlClass;
 	rc->cid = cid;
 	rc->startSensor = startSensor;
-	rc->stopSensor = stopSensor;	
+	rc->stopSensor = stopSensor;
 
 	// Create the sensor object in the thread
 	rc->sensCtrlObj = (*rc->env)->NewObject(rc->env, rc->sensCtrlClass, rc->cid);
@@ -202,7 +202,7 @@ void loadSensorControler(MPEGVSensorContext *rc)
 Bool MPEGVS_RegisterDevice(struct __input_device *dr, const char *urn, GF_BitStream *dsi, void (*AddField)(struct __input_device *_this, u32 fieldType, const char *name))
 {
 	MPEGVSCTX;
-	
+
 	//"MPEG-V:siv:OrientationSensorType"
 
 	if ( strnicmp(urn, "MPEG-V", 6) )
@@ -213,7 +213,7 @@ Bool MPEGVS_RegisterDevice(struct __input_device *dr, const char *urn, GF_BitStr
 		GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[MPEG-V] No sensor type specified\n"));
 		return 0;
 	}
-	
+
 	if ( strnicmp(urn+6, ":siv:", 5) )
 	{
 		GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[MPEG-V] Not valid sensor type specified\n"));
@@ -302,10 +302,10 @@ u32 MPEGVS_OnData(struct __input_device * dr, const char* data)
 	u32 buf_size;
 	float x, y, z, q, a, b;
 	MPEGVSCTX;
-	
+
 	bs = gf_bs_new(NULL, 0, GF_BITSTREAM_WRITE);
 
-	if ( rc->sensorAndroidType == 1 
+	if ( rc->sensorAndroidType == 1
 			|| rc->sensorAndroidType == 2
 			|| rc->sensorAndroidType == 3
 			|| rc->sensorAndroidType == 4 )
@@ -321,11 +321,11 @@ u32 MPEGVS_OnData(struct __input_device * dr, const char* data)
 			|| rc->sensorAndroidType == 6 )
 	{
 		sscanf(data, "%f;", &x);
-		
+
 		gf_bs_write_int(bs, 1, 1);
 		gf_bs_write_float(bs, x);
 	}
-	else 
+	else
 	if ( rc->sensorAndroidType == 11 )
 	{
 		sscanf(data, "%f;%f;%f;", &x, &y, &z);
@@ -336,7 +336,7 @@ u32 MPEGVS_OnData(struct __input_device * dr, const char* data)
 		gf_bs_write_float(bs, z);
 		/*gf_bs_write_float(bs, q);*/
 	}
-	else 
+	else
 	if ( rc->sensorAndroidType == 100 )
 	{
 		sscanf(data, "%f;%f;%f;%f;%f;", &x, &y, &z, &a, &b);
@@ -388,7 +388,7 @@ u32 ThreadRun(void* param)
 
 	while (!rc->stop)
 		gf_sleep(10);
-	
+
 	GF_LOG(GF_LOG_ERROR, GF_LOG_CORE, ("[MPEG-V_IN] Stop: %d\n", gf_th_id()));
 
 	if (!rc->env)
@@ -407,7 +407,7 @@ u32 ThreadRun(void* param)
 void MPEGVS_Start(struct __input_device * dr)
 {
 	MPEGVSCTX;
-	
+
 	rc->trd = gf_th_new("MPEG-V_IN");
 	gf_th_run(rc->trd, ThreadRun, dr);
 }
@@ -432,7 +432,7 @@ GF_InputSensorDevice* NewMPEGVSInputSesor()
 {
 	MPEGVSensorContext* ctx = NULL;
 	GF_InputSensorDevice* driv = NULL;
-	
+
 	driv = (GF_InputSensorDevice *) gf_malloc(sizeof(GF_InputSensorDevice));
 	memset(driv, 0, sizeof(GF_InputSensorDevice));
 	GF_REGISTER_MODULE_INTERFACE(driv, GF_INPUT_DEVICE_INTERFACE, "MPEG-V Sensors Input Module", "gpac distribution");
@@ -443,7 +443,7 @@ GF_InputSensorDevice* NewMPEGVSInputSesor()
 
 	ctx = (MPEGVSensorContext*) gf_malloc (sizeof(MPEGVSensorContext));
 	memset(ctx, 0, sizeof(MPEGVSensorContext));
-	
+
 	driv->udta = (void*)ctx;
 
 	return driv;
@@ -458,13 +458,13 @@ void DeleteMPEGVSInputSensor(GF_InputSensorDevice* dev)
 
 /*interface query*/
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 		GF_INPUT_DEVICE_INTERFACE,
 		0
 	};
-	return si; 
+	return si;
 }
 
 /*interface create*/

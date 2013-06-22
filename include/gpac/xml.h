@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -94,7 +94,7 @@ typedef	void (*gf_xml_sax_text_content)(void *sax_cbck, const char *content, Boo
 typedef	void (*gf_xml_sax_progress)(void *cbck, u64 done, u64 tot);
 
 /*creates new sax parser - all callbacks are optionals*/
-GF_SAXParser *gf_xml_sax_new(gf_xml_sax_node_start on_node_start, 
+GF_SAXParser *gf_xml_sax_new(gf_xml_sax_node_start on_node_start,
 							 gf_xml_sax_node_end on_node_end,
 							 gf_xml_sax_text_content on_text_content,
 							 void *cbck);
@@ -106,7 +106,7 @@ assume UTF-8 compatible coding*/
 GF_Err gf_xml_sax_init(GF_SAXParser *parser, unsigned char *BOM);
 /*parses input string data. string data MUST be terminated by the 0 character (eg 2 0s for UTF-16)*/
 GF_Err gf_xml_sax_parse(GF_SAXParser *parser, const void *string_bytes);
-/*suspends/resume sax parsing. 
+/*suspends/resume sax parsing.
 	When resuming on file, the function will run until suspended/end of file/error
 	When resuming on steram, the function will simply return
 */

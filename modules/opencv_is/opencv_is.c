@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2009-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -84,7 +84,7 @@ void detect_and_draw_objects(GF_InputSensorDevice *ifce, IplImage* image,
 
     for( i = 0; i < faces->total; i++ )
     {
-        
+
         CvRect face_rect = *(CvRect*)cvGetSeqElem( faces, i );
        /* cvRectangle( image, cvPoint(face_rect.x*scale,face_rect.y*scale),
                      cvPoint((face_rect.x+face_rect.width)*scale,
@@ -111,7 +111,7 @@ void detect_and_draw_objects(GF_InputSensorDevice *ifce, IplImage* image,
 		char *buf;
 		u32 buf_size;
 		GF_BitStream *bs = gf_bs_new(NULL, 0, GF_BITSTREAM_WRITE);
-		gf_bs_write_int(bs, 1, 1); 
+		gf_bs_write_int(bs, 1, 1);
 		gf_bs_write_float(bs, (Float) (theRealX - 640/2) );
 		gf_bs_write_float(bs, (Float) (480/2 - theRealY) );
 
@@ -125,10 +125,10 @@ void detect_and_draw_objects(GF_InputSensorDevice *ifce, IplImage* image,
 
 	prev_x0=theRealX;
 	prev_y0=theRealY;
-	
+
 	if( small_image != image )
         cvReleaseImage( &small_image );
-    
+
 	cvReleaseMemStorage( &storage );
 }
 
@@ -146,16 +146,16 @@ static u32 OCV_Run(void *par)
     cvNamedWindow( "test", 0 );
 
     image = NULL;
-	while (ocv->running) { 
+	while (ocv->running) {
 		if (cvGrabFrame(capture)) {
             CvHaarClassifierCascade* cascade;
-			
+
 			image = cvRetrieveFrame(capture);
-			
+
 			cascade = load_object_detector("haarcascade_frontalface_default.xml");
 			detect_and_draw_objects(ifce, image, cascade, 1 );
 
-			
+
 			cvShowImage( "test", image );
 			cvWaitKey(40);
 		}
@@ -179,7 +179,7 @@ static void OCV_Stop(struct __input_device *ifce)
 
 
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 		GF_INPUT_DEVICE_INTERFACE,

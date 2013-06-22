@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -69,12 +69,12 @@ void gf_odm_del(GF_ObjectManager *odm)
 	gf_term_check_connections_for_delete(odm->term, odm);
 	gf_term_lock_media_queue(odm->term, GF_FALSE);
 
-	/*detach media object as referenced by the scene - this should ensures that any attempt to lock the ODM from the 
+	/*detach media object as referenced by the scene - this should ensures that any attempt to lock the ODM from the
 	compositor will fail as the media object is no longer linked to object manager*/
 	gf_mx_p(odm->mx);
 	if (odm->mo) odm->mo->odm = NULL;
 	gf_mx_v(odm->mx);
-	
+
 	/*relock the mutex for final object destruction*/
 	gf_mx_p(odm->mx);
 
@@ -86,7 +86,7 @@ void gf_odm_del(GF_ObjectManager *odm)
 		media_sens->stream = NULL;
 	}
 	gf_list_del(odm->ms_stack);
-	
+
 	i=0;
 	while ((media_ctrl = (MediaControlStack *)gf_list_enum(odm->mc_stack, &i))) {
 		media_ctrl->stream = NULL;
@@ -111,7 +111,7 @@ void gf_odm_del(GF_ObjectManager *odm)
 void gf_odm_lock(GF_ObjectManager *odm, u32 LockIt)
 {
 	assert(odm);
-	if (LockIt) 
+	if (LockIt)
 		gf_mx_p(odm->mx);
 	else
 		gf_mx_v(odm->mx);
@@ -258,7 +258,7 @@ void gf_odm_disconnect(GF_ObjectManager *odm, Bool do_remove)
 		gf_term_lock_net(term, GF_FALSE);
 		return;
 	}
-	
+
 	/*this is the scene root OD (may be a remote OD ..) */
 	if (odm->term->root_scene) {
 		GF_Event evt;
@@ -313,7 +313,7 @@ void gf_odm_setup_entry_point(GF_ObjectManager *odm, const char *service_sub_url
 		if (ext) sub_url = ext;
 	}
 
-	desc = odm->net_service->ifce->GetServiceDescriptor(odm->net_service->ifce, od_type, sub_url); 
+	desc = odm->net_service->ifce->GetServiceDescriptor(odm->net_service->ifce, od_type, sub_url);
 
 	/*entry point is already setup (bad design in GPAC, happens with BIFS TS and DASH*/
 	if (odm->OD) {
@@ -328,7 +328,7 @@ void gf_odm_setup_entry_point(GF_ObjectManager *odm, const char *service_sub_url
 	}
 
 	if (!desc) {
-		if (odm->OD && !gf_list_count(odm->OD->ESDescriptors)) 
+		if (odm->OD && !gf_list_count(odm->OD->ESDescriptors))
 			return;
 
 		/*if desc is NULL for a media, the media will be declared later by the service (gf_term_media_add)*/
@@ -381,14 +381,14 @@ void gf_odm_setup_entry_point(GF_ObjectManager *odm, const char *service_sub_url
 		gf_term_message(odm->term, odm->net_service->url, "MPEG4 Service Setup Failure", GF_ODF_INVALID_DESCRIPTOR);
 		goto err_exit;
 	}
-	
+
 	gf_odm_setup_object(odm, odm->net_service);
 
 	if (redirect_url && !strnicmp(redirect_url, "views://", 8)) {
-		
+
 		gf_scene_generate_views(odm->subscene ? odm->subscene : odm->parentscene , (char *) redirect_url + 8, (char*)odm->parentscene ? odm->parentscene->root_od->net_service->url : NULL);
 	}
-	/*it may happen that this object was inserted in a dynamic scene from a service through a URL redirect. In which case, 
+	/*it may happen that this object was inserted in a dynamic scene from a service through a URL redirect. In which case,
 	the scene regeneration might not have been completed since the redirection was not done yet - force a scene regenerate*/
 	else if (odm->parentscene && odm->parentscene->is_dynamic_scene)
 		gf_scene_regenerate(odm->parentscene);
@@ -495,13 +495,13 @@ GF_Err ODM_ValidateOD(GF_ObjectManager *odm, Bool *hasInline)
 		switch (esd->decoderConfig->streamType) {
 		case GF_STREAM_OD: nb_od++; break;
 		case GF_STREAM_OCR: nb_ocr++; break;
-		case GF_STREAM_SCENE: 
+		case GF_STREAM_SCENE:
 			switch (esd->decoderConfig->objectTypeIndication) {
 			case GPAC_OTI_SCENE_AFX:
 			case GPAC_OTI_SCENE_SYNTHESIZED_TEXTURE:
 				break;
 			default:
-				nb_scene++; 
+				nb_scene++;
 				break;
 			}
 			break;
@@ -511,7 +511,7 @@ GF_Err ODM_ValidateOD(GF_ObjectManager *odm, Bool *hasInline)
 		case GF_STREAM_MPEGJ: nb_mpj++; break;
 		case GF_STREAM_PRIVATE_SCENE: nb_scene++; break;
 		/*all other streams shall not be mixed: text, video, audio, interaction, font*/
-		default: 
+		default:
 			if (esd->decoderConfig->streamType!=prev_st) nb_other++;
 			prev_st = esd->decoderConfig->streamType;
 			break;
@@ -558,7 +558,7 @@ GF_Err ODM_ValidateOD(GF_ObjectManager *odm, Bool *hasInline)
 	while ( (esd = (GF_ESD *)gf_list_enum(odm->OD->ESDescriptors, &i)) ) {
 		switch (esd->decoderConfig->streamType) {
 		case GF_STREAM_PRIVATE_SCENE:
-		case GF_STREAM_SCENE: 
+		case GF_STREAM_SCENE:
 			base_scene = esd;
 			break;
 		default:
@@ -566,7 +566,7 @@ GF_Err ODM_ValidateOD(GF_ObjectManager *odm, Bool *hasInline)
 		}
 		if (base_scene) break;
 	}
-	
+
 	/*we have a scene stream without dependancies, this is an inline*/
 	if (!base_scene || !base_scene->dependsOnESID) return GF_OK;
 
@@ -612,9 +612,9 @@ void gf_odm_setup_object(GF_ObjectManager *odm, GF_ClientService *serv)
 		}
 		odm->net_service = serv;
 		assert(odm->OD);
-		if (!odm->OD->URLString) 
+		if (!odm->OD->URLString)
 			odm->net_service->nb_odm_users++;
-	}	
+	}
 	/*if this is a remote OD, we need a new manager and a new service...*/
 	assert(odm->OD);
 	if (odm->OD->URLString) {
@@ -629,7 +629,7 @@ void gf_odm_setup_object(GF_ObjectManager *odm, GF_ClientService *serv)
 		odm->OD = NULL;
 		odm->net_service = NULL;
 		GF_LOG(GF_LOG_DEBUG, GF_LOG_MEDIA, ("[Terminal] Object redirection to %s (MO %08x)\n", url, odm->mo));
-		
+
 		/*if object is a scene, create the inline before connecting the object.
 			This is needed in irder to register the nodes using the resource for event
 			propagation (stored at the inline level)
@@ -675,7 +675,7 @@ void gf_odm_setup_object(GF_ObjectManager *odm, GF_ClientService *serv)
 		odm->flags |= GF_ODM_INHERIT_TIMELINE;
 	}
 
-	/*if there is a BIFS stream in the OD, we need an GF_Scene (except if we already 
+	/*if there is a BIFS stream in the OD, we need an GF_Scene (except if we already
 	have one, which means this is the first IOD)*/
 	if (hasInline && !odm->subscene) {
 		odm->subscene = gf_scene_new(odm->parentscene);
@@ -710,7 +710,7 @@ void gf_odm_setup_object(GF_ObjectManager *odm, GF_ClientService *serv)
 		}
 		odm->state = GF_ODM_STATE_STOP;
 		gf_odm_lock(odm, 0);
-	}	
+	}
 	/*setup mediaobject info except for top-level OD*/
 	if (odm->parentscene) {
 		GF_Event evt;
@@ -739,7 +739,7 @@ void gf_odm_setup_object(GF_ObjectManager *odm, GF_ClientService *serv)
 		GF_Event evt;
 
 		GF_LOG(GF_LOG_DEBUG, GF_LOG_MEDIA, ("[ODM] Root object connected !\n", odm->net_service->url));
-		
+
 		gf_term_lock_net(odm->term, GF_FALSE);
 
 		evt.type = GF_EVENT_CONNECT;
@@ -761,8 +761,8 @@ void gf_odm_setup_object(GF_ObjectManager *odm, GF_ClientService *serv)
 	else if (odm->ocr_codec) {
 		gf_odm_start(odm, 0);
 	}
-	/*case 3: if the object is inserted from a broadcast, start it if not already done. This covers cases where the scene (BIFS, LASeR) and 
-	the media (images) are both carrouseled and the carrousels are interleaved. If we wait for the scene to trigger a PLAY, we will likely 
+	/*case 3: if the object is inserted from a broadcast, start it if not already done. This covers cases where the scene (BIFS, LASeR) and
+	the media (images) are both carrouseled and the carrousels are interleaved. If we wait for the scene to trigger a PLAY, we will likely
 	have to wait for an entire image carousel period to start filling the buffers, which is sub-optimal
 	we also force a prefetch for object declared outside the OD stream to make sure we don't loose any data before object declaration and play
 	as can be the case with MPEG2 TS (first video packet right after the PMT) - this should be refined*/
@@ -782,10 +782,10 @@ void gf_odm_setup_object(GF_ObjectManager *odm, GF_ClientService *serv)
 			gf_odm_start(odm, 2);
 		}
 	}
-		
+
 	/*for objects inserted by user (subs & co), auto select*/
-	if (odm->parentscene && odm->parentscene->is_dynamic_scene 
-		&& (odm->OD->objectDescriptorID==GF_MEDIA_EXTERNAL_ID) 
+	if (odm->parentscene && odm->parentscene->is_dynamic_scene
+		&& (odm->OD->objectDescriptorID==GF_MEDIA_EXTERNAL_ID)
 		&& (odm->flags & GF_ODM_REMOTE_OD)
 	) {
 		GF_Event evt;
@@ -798,7 +798,7 @@ void gf_odm_setup_object(GF_ObjectManager *odm, GF_ClientService *serv)
 
 			evt.type = GF_EVENT_STREAMLIST;
 			gf_term_send_event(odm->term,&evt);
-	
+
 			gf_term_lock_net(odm->term, GF_TRUE);
 		}
 	}
@@ -812,7 +812,7 @@ void ODM_CheckChannelService(GF_Channel *ch)
 {
 	if (ch->service == ch->odm->net_service) return;
 	/*if the stream has created a service check if close is needed or not*/
-	if (ch->esd->URLString && !ch->service->nb_ch_users) 
+	if (ch->esd->URLString && !ch->service->nb_ch_users)
 		gf_term_close_service(ch->odm->term, ch->service);
 }
 
@@ -853,7 +853,7 @@ GF_Err gf_odm_setup_es(GF_ObjectManager *odm, GF_ESD *esd, GF_ClientService *ser
 			while (odm_par) {
 				if (odm_par->subscene->scene_codec)
 					ck = odm_par->subscene->scene_codec->ck;
-				else 
+				else
 					ck = odm_par->subscene->dyn_ck;
 
 				if (ck) break;
@@ -870,7 +870,7 @@ GF_Err gf_odm_setup_es(GF_ObjectManager *odm, GF_ESD *esd, GF_ClientService *ser
 	scene = odm->subscene ? odm->subscene : odm->parentscene;
 
 	ck_namespace = odm->net_service->Clocks;
-	/*little trick for non-OD addressing: if object is a remote one, and service owner already has clocks, 
+	/*little trick for non-OD addressing: if object is a remote one, and service owner already has clocks,
 	override OCR. This will solve addressing like file.avi#audio and file.avi#video*/
 	if (!esd->OCRESID && (odm->flags & GF_ODM_REMOTE_OD) && (gf_list_count(ck_namespace)==1) ) {
 		ck = (GF_Clock*)gf_list_get(ck_namespace, 0);
@@ -946,7 +946,7 @@ clock_setup:
 		if (! odm->subscene->od_codec) {
 			odm->subscene->od_codec = gf_codec_new(odm, esd, odm->OD_PL, &e);
 			if (!e) gf_term_add_codec(odm->term, odm->subscene->od_codec);
-		} 
+		}
 		dec = odm->subscene->od_codec;
 		break;
 	case GF_STREAM_OCR:
@@ -1023,7 +1023,7 @@ clock_setup:
 			}
 			dec = odm->subscene->scene_codec;
 		} else {
-			/*this is a bit tricky: the scene decoder needs to ba called with the dummy streams of this 
+			/*this is a bit tricky: the scene decoder needs to ba called with the dummy streams of this
 			object, so we associate the main decoder to this object*/
 			odm->codec = dec = gf_codec_use_codec(odm->parentscene->scene_codec, odm);
 			gf_term_add_codec(odm->term, odm->codec);
@@ -1100,16 +1100,16 @@ clock_setup:
 	/*service redirection*/
 	if (esd->URLString) {
 		GF_ChannelSetup *cs;
-		/*here we have a pb with the MPEG4 model: streams are supposed to be attachable as soon as the OD 
+		/*here we have a pb with the MPEG4 model: streams are supposed to be attachable as soon as the OD
 		update is received, but this is not true with ESD URLs, where service setup may take some time (file
-		downloading, authentification, etc...). We therefore need to wait for the service connect response before 
+		downloading, authentification, etc...). We therefore need to wait for the service connect response before
 		setting up the channel...*/
 		cs = (GF_ChannelSetup*)gf_malloc(sizeof(GF_ChannelSetup));
 		cs->ch = ch;
 		cs->dec = dec;
 
 		/*HACK: special case when OD resources are statically described in the ESD itself (ISMA streaming)*/
-		if ((ch->esd->decoderConfig->streamType==GF_STREAM_OD) && strstr(ch->esd->URLString, "data:application/mpeg4-od-au;") ) 
+		if ((ch->esd->decoderConfig->streamType==GF_STREAM_OD) && strstr(ch->esd->URLString, "data:application/mpeg4-od-au;") )
 			dec->flags |= GF_ESM_CODEC_IS_STATIC_OD;
 
 		gf_term_lock_net(odm->term, 1);
@@ -1165,7 +1165,7 @@ GF_Err gf_odm_post_es_setup(GF_Channel *ch, GF_Codec *dec, GF_Err had_err)
 		network config...*/
 		e = ch->service->ifce->ConnectChannel(ch->service->ifce, ch, szURL, ch->esd->decoderConfig->upstream);
 
-		/*special case (not really specified in specs ...): if the stream is not found and is an Interaction 
+		/*special case (not really specified in specs ...): if the stream is not found and is an Interaction
 		one (ie, used by an InputSensor), consider this means the stream shall be generated by the IS device*/
 		if ((e==GF_STREAM_NOT_FOUND) && (ch->esd->decoderConfig->streamType==GF_STREAM_INTERACT)) e = GF_OK;
 	} else {
@@ -1191,7 +1191,7 @@ GF_Err gf_odm_post_es_setup(GF_Channel *ch, GF_Codec *dec, GF_Err had_err)
 			}
 			gf_list_rem(ch->odm->channels, 0);
 			/*disconnect*/
-			ch->service->ifce->DisconnectChannel(ch->service->ifce, ch); 
+			ch->service->ifce->DisconnectChannel(ch->service->ifce, ch);
 			if (ch->esd->URLString) {
 				assert(ch->service->nb_ch_users);
 				ch->service->nb_ch_users--;
@@ -1201,9 +1201,9 @@ GF_Err gf_odm_post_es_setup(GF_Channel *ch, GF_Codec *dec, GF_Err had_err)
 	}
 
 	/*in case a channel is inserted in a running OD, open and play if not in queue*/
-	if ( (ch->odm->state==GF_ODM_STATE_PLAY) 
+	if ( (ch->odm->state==GF_ODM_STATE_PLAY)
 		/*HACK: special case when OD resources are statically described in the ESD itself (ISMA streaming)*/
-//		|| 	(dec && (dec->flags & GF_ESM_CODEC_IS_STATIC_OD)) 
+//		|| 	(dec && (dec->flags & GF_ESM_CODEC_IS_STATIC_OD))
 	) {
 
 		gf_term_lock_media_queue(ch->odm->term, 1);
@@ -1252,7 +1252,7 @@ void ODM_DeleteChannel(GF_ObjectManager *odm, GF_Channel *ch)
 	for (i=0; i<count; i++) {
 		ch2 = (GF_Channel*)gf_list_get(odm->channels, i);
 		if (ch2 == ch) {
-			ch_pos = i;	
+			ch_pos = i;
 			if (ck) continue;
 			break;
 		}
@@ -1264,7 +1264,7 @@ void ODM_DeleteChannel(GF_ObjectManager *odm, GF_Channel *ch)
 
 	/*remove from the codec*/
 	count = 0;
-	if (!count && odm->codec) 
+	if (!count && odm->codec)
 		count = gf_codec_remove_channel(odm->codec, ch);
 	if (!count && odm->ocr_codec)
 		count = gf_codec_remove_channel(odm->ocr_codec, ch);
@@ -1277,7 +1277,7 @@ void ODM_DeleteChannel(GF_ObjectManager *odm, GF_Channel *ch)
 		if (!count) count = gf_codec_remove_channel(odm->subscene->od_codec, ch);
 	}
 	if (ch->service) {
-		ch->service->ifce->DisconnectChannel(ch->service->ifce, ch); 
+		ch->service->ifce->DisconnectChannel(ch->service->ifce, ch);
 		if (ch->esd->URLString) {
 			assert(ch->service->nb_ch_users);
 			ch->service->nb_ch_users--;
@@ -1316,7 +1316,7 @@ esd_found:
 	gf_odf_desc_del((GF_Descriptor *) esd);
 }
 
-/*this is the tricky part: make sure the net is locked before doing anything since an async service 
+/*this is the tricky part: make sure the net is locked before doing anything since an async service
 reply could destroy the object we're queuing for play*/
 void gf_odm_start(GF_ObjectManager *odm, u32 media_queue_state)
 {
@@ -1417,7 +1417,7 @@ void gf_odm_play(GF_ObjectManager *odm)
 	/*send play command*/
 	memset(&com, 0, sizeof(GF_NetworkCommand));
 	com.command_type = GF_NET_CHAN_PLAY;
-	
+
 	if (odm->flags & GF_ODM_INITIAL_BROADCAST_PLAY) {
 		odm->flags &= ~GF_ODM_INITIAL_BROADCAST_PLAY;
 		com.play.initial_broadcast_play = 1;
@@ -1455,7 +1455,7 @@ void gf_odm_play(GF_ObjectManager *odm)
 			ck_time = gf_clock_time(ch->clock);
 			ck_time /= 1000;
 			/*handle initial start - MPEG-4 is a bit annoying here, streams are not started through OD but through
-			scene nodes. If the stream runs on the BIFS/OD clock, the clock is already started at this point and we're 
+			scene nodes. If the stream runs on the BIFS/OD clock, the clock is already started at this point and we're
 			sure to get at least a one-frame delay in PLAY, so just remove it - note we're generous but this shouldn't hurt*/
 			if (ck_time<=0.5) ck_time = 0;
 		}
@@ -1507,7 +1507,7 @@ void gf_odm_play(GF_ObjectManager *odm)
 		if (com.play.end_range<=0) {
 			odm->media_stop_time = odm->subscene ? 0 : odm->duration;
 		} else {
-			/*segment playback - since our timing is in ms whereas segment ranges are double precision, 
+			/*segment playback - since our timing is in ms whereas segment ranges are double precision,
 			make sure we have a LARGER range in ms, otherwise media sensors won't deactivate properly*/
 			odm->media_stop_time = (u64) ceil(1000 * com.play.end_range);
 		}
@@ -1516,7 +1516,7 @@ void gf_odm_play(GF_ObjectManager *odm)
 		if (!ch->service || (skip_od_st && (ch->esd->decoderConfig->streamType==GF_STREAM_OD))) {
 			Bool gf_es_owns_clock(GF_Channel *ch);
 
-			if (gf_es_owns_clock(ch) ) 
+			if (gf_es_owns_clock(ch) )
 				gf_clock_set_time(ch->clock, (u32) (com.play.start_range*1000));
 
 			ch->IsClockInit = 1;
@@ -1560,7 +1560,7 @@ void gf_odm_play(GF_ObjectManager *odm)
 		gf_odm_pause(odm);
 }
 
-Bool gf_odm_owns_clock(GF_ObjectManager *odm, GF_Clock *ck) 
+Bool gf_odm_owns_clock(GF_ObjectManager *odm, GF_Clock *ck)
 {
 	u32 i, j;
 	GF_ObjectManager *od;
@@ -1589,7 +1589,7 @@ void gf_odm_stop(GF_ObjectManager *odm, Bool force_close)
 #endif
 
 	GF_NetworkCommand com;
-	
+
 	if (!odm->state) return;
 
 #if 0
@@ -1668,7 +1668,7 @@ void gf_odm_stop(GF_ObjectManager *odm, Bool force_close)
 			evt.channel = ch;
 			ch->ipmp_tool->process(ch->ipmp_tool, &evt);
 		}
-		
+
 		if (ch->service) {
 			com.base.on_channel = ch;
 			gf_term_service_command(ch->service, &com);
@@ -1734,11 +1734,11 @@ void gf_odm_on_eos(GF_ObjectManager *odm, GF_Channel *on_channel)
 		if (nb_eos != count) return;
 	}
 	gf_term_service_media_event(odm, GF_EVENT_MEDIA_LOAD_DONE);
-	
+
 	if (odm->codec && (on_channel->esd->decoderConfig->streamType==odm->codec->type)) {
 		gf_codec_set_status(odm->codec, GF_ESM_CODEC_EOS);
 		return;
-	} 
+	}
 	if (on_channel->esd->decoderConfig->streamType==GF_STREAM_OCR) {
 		gf_codec_set_status(odm->ocr_codec, GF_ESM_CODEC_EOS);
 		return;
@@ -1982,7 +1982,7 @@ void gf_odm_init_segments(GF_ObjectManager *odm, GF_List *list, MFURL *url)
 			first_seg = gf_odm_find_segment(odm, seg1);
 			if (!first_seg) continue;
 			last_seg = gf_odm_find_segment(odm, seg2);
-		} 
+		}
 		/*segment open range*/
 		else if ((sep = strstr(seg_url, "+")) ) {
 			sep[0] = 0;
@@ -1990,7 +1990,7 @@ void gf_odm_init_segments(GF_ObjectManager *odm, GF_List *list, MFURL *url)
 			first_seg = gf_odm_find_segment(odm, seg_url);
 			if (!first_seg) continue;
 			last_seg = NULL;
-		} 
+		}
 		/*single segment*/
 		else {
 			first_seg = gf_odm_find_segment(odm, seg_url);

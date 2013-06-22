@@ -18,9 +18,9 @@ V4SceneManager::~V4SceneManager()
 {
 	GF_SceneGraph *tmp = m_pIs->graph;
 
-	/* Deletion of the SceneManager 
+	/* Deletion of the SceneManager
 	   This is done before deleting the GF_InlineScene in the GF_Terminal in the GPAC Panel
-	   but for that we need to register the root node one more time to avoid the deletion of the scene graph 
+	   but for that we need to register the root node one more time to avoid the deletion of the scene graph
 	   But this is temporary, this register of the root node should be done at loading time.
 	*/
 	if (m_pSm) {
@@ -32,7 +32,7 @@ V4SceneManager::~V4SceneManager()
 	/* Destruction of the GPAC panel and of the associated service and terminal */
 	delete m_gpac_panel;
 	m_gpac_panel = NULL;
-	
+
 }
 
 void V4SceneManager::LoadCommon()
@@ -62,10 +62,10 @@ void V4SceneManager::LoadCommon()
 	m_pIs->root_od->term = term;
 }
 
-void V4SceneManager::LoadNew() 
+void V4SceneManager::LoadNew()
 {
 	LoadCommon();
-	
+
 	/* Create a BIFS stream with one AU with one ReplaceScene */
 	GF_StreamContext *sc = gf_sm_stream_new(m_pSm, 1, GF_STREAM_SCENE, 0);
 	GF_AUContext *au = gf_sm_stream_au_new(sc, 0, 0, 1);
@@ -79,8 +79,8 @@ void V4SceneManager::LoadNew()
 	pools.Clear();
 }
 
-void V4SceneManager::LoadFile(const char *path) 
-{	
+void V4SceneManager::LoadFile(const char *path)
+{
 	LoadCommon();
 	GF_Terminal *term = m_gpac_panel->GetMPEG4Terminal();
 
@@ -110,7 +110,7 @@ void V4SceneManager::LoadFile(const char *path)
 		    When ApplyCommand is made on a Scene Replace Command
 		    The command node is set to NULL
 		    When we save a BIFS stream whose first command is of this kind,
-		    the file saver thinks the bifs commands should come from an NHNT file 
+		    the file saver thinks the bifs commands should come from an NHNT file
 		   This is a temporary patch */
 		if (c->tag == GF_SG_SCENE_REPLACE) { c->node = m_pIs->graph->RootNode; }
 	}
@@ -127,7 +127,7 @@ void V4SceneManager::LoadFile(const char *path)
 //	CreateDictionnary();
 }
 
-void V4SceneManager::SaveFile(const char *path) 
+void V4SceneManager::SaveFile(const char *path)
 {
 	GF_SMEncodeOptions opts;
 	char rad_name[5000];
@@ -165,12 +165,12 @@ void V4SceneManager::SetSceneSize(int w, int h)
 	m_pIs->graph_attached = 1;
 }
 
-void V4SceneManager::GetSceneSize(wxSize &size) 
+void V4SceneManager::GetSceneSize(wxSize &size)
 {
-	gf_sg_get_scene_size_info(m_pIs->graph, (u32 *)&(size.x), (u32 *)&(size.y));	
+	gf_sg_get_scene_size_info(m_pIs->graph, (u32 *)&(size.x), (u32 *)&(size.y));
 }
 
-GF_Node *V4SceneManager::SetTopNode(u32 tag) 
+GF_Node *V4SceneManager::SetTopNode(u32 tag)
 {
 	GF_Node *root = NewNode(tag);
 	gf_sg_set_root_node(m_pIs->graph, root);
@@ -182,10 +182,10 @@ GF_Node *V4SceneManager::SetTopNode(u32 tag)
 		    When ApplyCommand is made on a Scene Replace Command
 		    The command node is set to NULL
 		    When we save a BIFS stream whose first command is of this kind,
-		    the file saver thinks the bifs commands should come from an NHNT file 
+		    the file saver thinks the bifs commands should come from an NHNT file
 		   This is a temporary patch */
-		if (c->tag == GF_SG_SCENE_REPLACE) { 
-			c->node = m_pIs->graph->RootNode; 
+		if (c->tag == GF_SG_SCENE_REPLACE) {
+			c->node = m_pIs->graph->RootNode;
 			gf_node_register(m_pIs->graph->RootNode, NULL);
 		}
 	}
@@ -200,7 +200,7 @@ GF_Node *V4SceneManager::NewNode(u32 tag)
 	return n;
 }
 
-GF_Node *V4SceneManager::CopyNode(GF_Node *node, GF_Node *parent, bool copy) 
+GF_Node *V4SceneManager::CopyNode(GF_Node *node, GF_Node *parent, bool copy)
 {
 	if (copy) return CloneNodeForEditing(m_pIs->graph, node);
 	u32 nodeID = gf_node_get_id(node);
@@ -339,7 +339,7 @@ void V4SceneManager::CreateDictionnary() {
 void V4SceneManager::AddToDictionnary(GF_Node * node) {
 
   // checks if nodes has a parent with an id
-  // if true then there is already a reference to this node 
+  // if true then there is already a reference to this node
   if (HasDefParent(node)) return;
 
   AddRecursive(node);
@@ -364,7 +364,7 @@ void V4SceneManager::AddRecursive(GF_Node * node, bool parentAdded) {
     if (!parentAdded) AddEffective(node);
     parentAdded = true;
   }
-  
+
   GF_FieldInfo field;
   GF_ChildNodeItem * list;
   int count = gf_node_get_field_count(node);
@@ -543,13 +543,13 @@ void V4SceneManager::MakeChild(GF_Node * child, GF_Node * parent, const u32 fiel
 
 // GetDictionnary -- access to the dictionnary
 GF_Node * V4SceneManager::GetDictionnary() const {
-  return dictionnary;  
+  return dictionnary;
 }
 
 
 // HasDefParent -- checks if an ancestor of this node has an ID
 GF_Node * V4SceneManager::HasDefParent(GF_Node * node) {
-  
+
   assert(node);
 
   // also checks the node itself
@@ -578,7 +578,7 @@ void V4SceneManager::CreateIDandAddToPool(GF_Node *node)
 	char d[10]; // supposes no more than 1 000 000 000 objects
 
 	// queries the pool to know which number to use for the name
-	itoa(pools.GetCount(gf_node_get_tag(node)), d, 10); 
+	itoa(pools.GetCount(gf_node_get_tag(node)), d, 10);
 
 	char c[50];
 	strcpy(c, gf_node_get_class_name(node));

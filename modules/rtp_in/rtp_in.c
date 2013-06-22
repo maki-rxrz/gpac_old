@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -466,7 +466,7 @@ static void gf_rtp_switch_quality(RTPClient *rtp, Bool switch_up)
 	u32 i,count;
 	RTPStream *ch, *cur_ch;
 	GF_NetworkCommand com;
-	
+
 	count = gf_list_count(rtp->channels);
 	/*find the current stream*/
 	ch = cur_ch = NULL;
@@ -502,9 +502,9 @@ static void gf_rtp_switch_quality(RTPClient *rtp, Bool switch_up)
 					rtp->cur_mid = ch->mid;
 					break;
 				}
-			
+
 			}
-		}	
+		}
 	}
 	else
 	{
@@ -528,9 +528,9 @@ static void gf_rtp_switch_quality(RTPClient *rtp, Bool switch_up)
 					gf_term_on_command(rtp->service, &com, GF_OK);
 					rtp->cur_mid = ch->mid;
 					break;
-				}		
+				}
 			}
-		}	
+		}
 	}
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_CODEC, ("Switch from ES%d to ES %d\n", cur_ch->mid, ch->mid));
 	return;

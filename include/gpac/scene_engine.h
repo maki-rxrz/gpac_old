@@ -5,21 +5,21 @@
  *			Copyright (c) Telecom ParisTech 2005-2012
  *					All rights reserved
  *
- *  This file is part of GPAC 
+ *  This file is part of GPAC
  *
  *  GPAC is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -44,7 +44,7 @@ typedef void (*gf_seng_callback)(void *udta, u16 ESID, char *data, u32 size, u64
  * @calling_object is the calling object on which call back will be called
  * @inputContext is the name of a scene file (bt, xmt or mp4) to initialize the coding context
  * @load_type is the prefered loader type for the content (e.g. SVG vs DIMS)
- * @dump_path is the path where scenes are dumped 
+ * @dump_path is the path where scenes are dumped
  * @embed_resources indicates if images and scripts should be encoded inlined with the content
  *
  * must be called only one time (by process calling the DLL) before other calls
@@ -57,7 +57,7 @@ GF_SceneEngine *gf_seng_init(void *calling_object, char *inputContext, u32 load_
  * @load_type is the prefered loader type for the content (e.g. SVG vs DIMS)
  * @width, @height: width and height of scene if no IOD is given in the context.
  * @usePixelMetrics: metrics system used in the scene, if no IOD is given in the context.
- * @dump_path is the path where scenes are dumped 
+ * @dump_path is the path where scenes are dumped
  *
  * must be called only one time (by process calling the DLL) before other calls
  */
@@ -67,7 +67,7 @@ GF_SceneEngine *gf_seng_init_from_string(void *calling_object, char *inputContex
 /**
  * @calling_object is the calling object on which call back will be called
  * @ctx is an already loaded scene manager
- * @dump_path is the path where scenes are dumped 
+ * @dump_path is the path where scenes are dumped
  *
  * must be called only one time (by process calling the DLL) before other calls
  */
@@ -83,7 +83,7 @@ u32 gf_seng_get_stream_count(GF_SceneEngine *seng);
 /**
  * @seng, pointer to the GF_SceneEngine returned by gf_seng_init()
  * @ESID, ID of the stream
- * @carousel_period: pointer to store the carousel_period 
+ * @carousel_period: pointer to store the carousel_period
  * @aggregate_on_es_id: pointer to store the target carousel stream ID
  *
  * must be called after gf_seng_init()
@@ -156,7 +156,7 @@ GF_Err gf_seng_save_context(GF_SceneEngine *seng, char *ctxFileName);
  * @ESID, stream ID
  * @onESID: set stream aggragation on to the specified stream, or off if onESID is 0
  *
- * marks the stream as carrying its own "rap" in the first AU of the stream 
+ * marks the stream as carrying its own "rap" in the first AU of the stream
  */
 GF_Err gf_seng_enable_aggregation(GF_SceneEngine *codec, u16 ESID, u16 onESID);
 

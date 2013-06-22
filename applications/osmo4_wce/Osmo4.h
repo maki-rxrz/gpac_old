@@ -23,7 +23,7 @@
 #include <gpac/terminal.h>
 
 enum {
-	WM_SCENE_DONE = WM_USER + 1, 
+	WM_SCENE_DONE = WM_USER + 1,
 	WM_NAVIGATE,
 	WM_SETSIZE,
 	WM_OPENURL,

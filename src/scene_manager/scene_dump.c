@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -52,7 +52,7 @@ struct _scenedump
 	FILE *trace;
 	u32 indent;
 	char *filename;
-	
+
 	u32 dump_mode;
 	u16 CurrentESID;
 	u8 ind_char;
@@ -108,7 +108,7 @@ GF_SceneDumper *gf_sm_dumper_new(GF_SceneGraph *graph, char *_rad_name, char ind
 		} else {
 			tmp->trace = stdout;
 		}
-	} else 
+	} else
 #endif
 	{
 
@@ -192,9 +192,9 @@ static void gf_dump_setup(GF_SceneDumper *sdump, GF_Descriptor *root_od)
 	if (sdump->XMLDump) {
 		fprintf(sdump->trace, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		if (sdump->dump_mode==GF_SM_DUMP_XML) return;
-		fprintf(sdump->trace, "<!-- %s Scene Dump - GPAC version " GPAC_FULL_VERSION " -->\n", 
-			(sdump->dump_mode==GF_SM_DUMP_SVG) ? "SVG" : 
-			(sdump->dump_mode==GF_SM_DUMP_LASER) ? "LASeR" : 
+		fprintf(sdump->trace, "<!-- %s Scene Dump - GPAC version " GPAC_FULL_VERSION " -->\n",
+			(sdump->dump_mode==GF_SM_DUMP_SVG) ? "SVG" :
+			(sdump->dump_mode==GF_SM_DUMP_LASER) ? "LASeR" :
 			sdump->X3DDump ? "X3D" : "XMT-A"
 		);
 	}
@@ -368,7 +368,7 @@ static void StartList(GF_SceneDumper *sdump, const char *name)
 	if (!sdump->trace) return;
 	DUMP_IND(sdump);
 	if (!sdump->XMLDump) {
-		if (name) 
+		if (name)
 			fprintf(sdump->trace, "%s [\n", name);
 		else
 			fprintf(sdump->trace, "[\n");
@@ -404,22 +404,22 @@ static void scene_dump_utf_string(GF_SceneDumper *sdump, Bool escape_xml, char *
 		for (i=0; i<len; i++) {
 			//if (uniLine[i] == (u16) '\"') fprintf(sdump->trace, "\\");
 			switch (uniLine[i]) {
-			case '\'': 
-				if (escape_xml) fprintf(sdump->trace, "&apos;"); 
-				else fprintf(sdump->trace, "'"); 
+			case '\'':
+				if (escape_xml) fprintf(sdump->trace, "&apos;");
+				else fprintf(sdump->trace, "'");
 				break;
-			case '\"': 
-				if (escape_xml) fprintf(sdump->trace, "&quot;"); 
-				else fprintf(sdump->trace, "\""); 
+			case '\"':
+				if (escape_xml) fprintf(sdump->trace, "&quot;");
+				else fprintf(sdump->trace, "\"");
 				break;
-			case '&': 
-				fprintf(sdump->trace, "&amp;"); 
+			case '&':
+				fprintf(sdump->trace, "&amp;");
 				break;
-			case '>': 
-				fprintf(sdump->trace, "&gt;"); 
+			case '>':
+				fprintf(sdump->trace, "&gt;");
 				break;
-			case '<': 
-				fprintf(sdump->trace, "&lt;"); 
+			case '<':
+				fprintf(sdump->trace, "&lt;");
 				break;
 			case '\r':
 			case '\n':
@@ -447,7 +447,7 @@ static void scene_dump_vrml_id(GF_SceneDumper *sdump, GF_Node *node)
 	if (!sdump->trace) return;
 	/*FIXME - optimize id/name fetch*/
 	node_name = gf_node_get_name_and_id(node, &id);
-	if (node_name) 
+	if (node_name)
 		fprintf(sdump->trace, "%s", node_name);
 	else
 		fprintf(sdump->trace, "N%d", id - 1);
@@ -488,7 +488,7 @@ static void scene_dump_vrml_route_id(GF_SceneDumper *sdump, u32 routeID, char *r
 	if (!sdump->trace) return;
 	if (!rName) scene_dump_vrml_find_route_name(sdump, routeID, (const char **) &rName);
 
-	if (rName) 
+	if (rName)
 		fprintf(sdump->trace, "%s", rName);
 	else
 		fprintf(sdump->trace, "R%d", routeID - 1);
@@ -572,13 +572,13 @@ static void gf_dump_vrml_sffield(GF_SceneDumper *sdump, u32 type, void *ptr, Boo
 					case '&': fprintf(sdump->trace, "&amp;"); break;
 					case '<': fprintf(sdump->trace, "&lt;"); break;
 					case '>': fprintf(sdump->trace, "&gt;"); break;
-					case '\'': 
-					case '"': 
+					case '\'':
+					case '"':
 						fprintf(sdump->trace, "&apos;");
 						break;
 					case 0:
 						break;
-					/*FIXME: how the heck can we preserve newlines and spaces of JavaScript in 
+					/*FIXME: how the heck can we preserve newlines and spaces of JavaScript in
 					an XML attribute in any viewer ? */
 					default:
 						if (uniLine[i]<128) {
@@ -589,7 +589,7 @@ static void gf_dump_vrml_sffield(GF_SceneDumper *sdump, u32 type, void *ptr, Boo
 						break;
 					}
 				}
-			} 
+			}
 			if (!sdump->XMLDump) fprintf(sdump->trace, "\"\n");
 		}
 		gf_free(uniLine);
@@ -789,7 +789,7 @@ static void gf_dump_vrml_field(GF_SceneDumper *sdump, GF_Node *node, GF_FieldInf
 	switch (field.fieldType) {
 	case GF_SG_VRML_SFNODE:
 		assert ( *(GF_Node **)field.far_ptr);
-		
+
 		if (sdump->XMLDump) {
 			if (!sdump->X3DDump) {
 				StartElement(sdump, (char *) field.name);
@@ -800,7 +800,7 @@ static void gf_dump_vrml_field(GF_SceneDumper *sdump, GF_Node *node, GF_FieldInf
 			StartAttribute(sdump, field.name);
 		}
 		gf_dump_vrml_node(sdump, *(GF_Node **)field.far_ptr, 0, NULL);
-		
+
 		if (sdump->XMLDump) {
 			if (!sdump->X3DDump) {
 				sdump->indent--;
@@ -871,7 +871,7 @@ static void gf_dump_vrml_field(GF_SceneDumper *sdump, GF_Node *node, GF_FieldInf
 			sdump->indent--;
 			EndElement(sdump, (char *) field.name, 1);
 			return;
-		} 
+		}
 		break;
 	}
 
@@ -906,7 +906,7 @@ static void gf_dump_vrml_field(GF_SceneDumper *sdump, GF_Node *node, GF_FieldInf
 			gf_dump_vrml_sffield(sdump, sf_type, slot_ptr, 1, node);
 		}
 		if (!sdump->XMLDump) fprintf(sdump->trace, "]");
-		
+
 		if (sdump->XMLDump && sdump->X3DDump) {
 			switch (sf_type) {
 			case GF_SG_VRML_SFSTRING:
@@ -1215,7 +1215,7 @@ static void gf_dump_vrml_proto_field(GF_SceneDumper *sdump, GF_Node *node, GF_Fi
 	}
 }
 
-static GF_Route *gf_dump_vrml_get_IS(GF_SceneDumper *sdump, GF_Node *node, GF_FieldInfo *field) 
+static GF_Route *gf_dump_vrml_get_IS(GF_SceneDumper *sdump, GF_Node *node, GF_FieldInfo *field)
 {
 	u32 i;
 	GF_Route *r;
@@ -1245,7 +1245,7 @@ static void gf_dump_vrml_IS_field(GF_SceneDumper *sdump, GF_Node *node, GF_Field
 		pfield.fieldIndex = r->FromField.fieldIndex;
 		gf_sg_proto_get_field(sdump->current_proto, NULL, &pfield);
 	}
-	
+
 	if (!sdump->XMLDump) {
 		DUMP_IND(sdump);
 		if (isScript) fprintf(sdump->trace, "%s %s ", gf_sg_vrml_get_event_type_name(field.eventType, sdump->X3DDump), gf_sg_vrml_get_field_type_by_name(field.fieldType));
@@ -1307,7 +1307,7 @@ static void gf_dump_vrml_node(GF_SceneDumper *sdump, GF_Node *node, Bool in_list
 	char *name;
 	GF_Node *base;
 	GF_FieldInfo field, base_field;
-	
+
 	if (!node) {
 		fprintf(sdump->trace, "NULL");
 		return;
@@ -1396,7 +1396,7 @@ static void gf_dump_vrml_node(GF_SceneDumper *sdump, GF_Node *node, Bool in_list
 	}
 
 	if (base) gf_node_register(base, NULL);
-	
+
 	hasISed = 0;
 	to_dump = sub_el = 0;
 	for (i=0;i<count; i++) {
@@ -1571,7 +1571,7 @@ static void gf_dump_vrml_node(GF_SceneDumper *sdump, GF_Node *node, Bool in_list
 
 	if (isScript) sub_el = 1;
 	EndElementHeader(sdump, sub_el ? 1 : 0);
-	
+
 	if (sub_el) {
 		/*dump all normal IS elements for XMT*/
 		if (hasISed && sdump->XMLDump) {
@@ -1605,7 +1605,7 @@ static void gf_dump_vrml_node(GF_SceneDumper *sdump, GF_Node *node, Bool in_list
 					/*X3D script metadata, NOT DYN*/
 					if ((i==3) && (node->sgprivate->tag==TAG_X3D_Script) ) {
 						if (*((GF_Node **)field.far_ptr)) gf_dump_vrml_field(sdump, node, field);
-					} else 
+					} else
 #endif
 					{
 						gf_dump_vrml_dyn_field(sdump, node, field, 0);
@@ -1624,7 +1624,7 @@ static void gf_dump_vrml_node(GF_SceneDumper *sdump, GF_Node *node, Bool in_list
 	if (isScript && !sdump->XMLDump) {
 		gf_node_get_field(node, 0, &field);
 		gf_dump_vrml_field(sdump, node, field);
-	} 
+	}
 
 	sdump->indent --;
 	if (!sdump->XMLDump && !in_list) {
@@ -1697,7 +1697,7 @@ static GF_Err DumpMultipleReplace(GF_SceneDumper *sdump, GF_Command *com)
 		fprintf(sdump->trace, "<Replace extended=\"fields\" atNode=\"");
 		scene_dump_vrml_id(sdump, com->node);
 		fprintf(sdump->trace, "\">\n");
-		
+
 		sdump->indent++;
 		i=0;
 		while ((inf = (GF_CommandField *) gf_list_enum(com->command_fields, &i))) {
@@ -1716,7 +1716,7 @@ static GF_Err DumpMultipleReplace(GF_SceneDumper *sdump, GF_Command *com)
 			}
 		}
 		sdump->indent--;
-		
+
 		DUMP_IND(sdump);
 		fprintf(sdump->trace, "</Replace>\n");
 	} else {
@@ -1861,7 +1861,7 @@ static GF_Err DumpIndexInsert(GF_SceneDumper *sdump, GF_Command *com)
 		if (inf->pos!=-1) fprintf(sdump->trace, "[%d]", inf->pos);
 		fprintf(sdump->trace, " ");
 	}
-	
+
 	memcpy(&sffield, &field, sizeof(GF_FieldInfo));
 	sffield.fieldType = gf_sg_vrml_get_sf_type(field.fieldType);
 
@@ -2150,7 +2150,7 @@ static GF_Err DumpXReplace(GF_SceneDumper *sdump, GF_Command *com)
 		fprintf(sdump->trace, "<Replace atNode=\"");
 		scene_dump_vrml_id(sdump, com->node);
 		fprintf(sdump->trace, "\" atField=\"%s\"", field.name);
-		
+
 		if (toNode) {
 			fprintf(sdump->trace, " atIndexNode=\"");
 			scene_dump_vrml_id(sdump, toNode);
@@ -2177,12 +2177,12 @@ static GF_Err DumpXReplace(GF_SceneDumper *sdump, GF_Command *com)
 
 			field.fieldType = cfield.fieldType;
 		}
-	
+
 		if (com->fromNodeID) {
 			target = gf_sg_find_node(com->in_scene, com->fromNodeID);
 			if (!target) return GF_NON_COMPLIANT_BITSTREAM;
 			e = gf_node_get_field(target, com->fromFieldIndex, &idxField);
-			
+
 			fprintf(sdump->trace, " fromNode=\"");
 			scene_dump_vrml_id(sdump, target);
 			fprintf(sdump->trace, "\" fromField=\"%s\">\n", idxField.name);
@@ -2273,9 +2273,9 @@ static GF_Err gf_dump_vrml_route(GF_SceneDumper *sdump, GF_Route *r, u32 dump_ty
 		r->is_setup = 1;
 	}
 	if (!r->FromNode || !r->ToNode) return GF_BAD_PARAM;
-	
+
 	if (sdump->XMLDump || !dump_type) DUMP_IND(sdump);
-	
+
 	node_name = gf_node_get_name_and_id(r->FromNode, &id);
 	if (node_name) {
 		strcpy(fromNode, node_name);
@@ -2326,7 +2326,7 @@ static GF_Err DumpProtos(GF_SceneDumper *sdump, GF_List *protoList)
 	i=0;
 	while ((proto = (GF_Proto*)gf_list_enum(protoList, &i))) {
 		sdump->current_proto = proto;
-	
+
 		DUMP_IND(sdump);
 		if (!sdump->XMLDump) {
 			fprintf(sdump->trace, proto->ExternProto.count ? "EXTERNPROTO " : "PROTO ");
@@ -2354,11 +2354,11 @@ static GF_Err DumpProtos(GF_SceneDumper *sdump, GF_List *protoList)
 			field.name = pf->FieldName;
 			field.NDTtype = NDT_SFWorldNode;
 			field.on_event_in = NULL;
-			
+
 			gf_dump_vrml_dyn_field(sdump, NULL, field, pf->QP_Type ? 1 : 0);
 
 			if (!pf->QP_Type) continue;
-			
+
 			/*dump interface coding - BT/TXT extensions, not supported by any other tool*/
 			sdump->indent++;
 			DUMP_IND(sdump);
@@ -2397,7 +2397,7 @@ static GF_Err DumpProtos(GF_SceneDumper *sdump, GF_List *protoList)
 			}
 
 		}
-		
+
 		sdump->indent--;
 		DUMP_IND(sdump);
 		if (!sdump->XMLDump) {
@@ -2419,7 +2419,7 @@ static GF_Err DumpProtos(GF_SceneDumper *sdump, GF_List *protoList)
 		sdump->indent++;
 
 		if (sdump->XMLDump && sdump->X3DDump) fprintf(sdump->trace, "<ProtoBody>\n");
-		
+
 		e = DumpProtos(sdump, proto->sub_graph->protos);
 		if (e) return e;
 
@@ -2609,7 +2609,7 @@ static GF_Err DumpLSRAddReplaceInsert(GF_SceneDumper *sdump, GF_Command *com)
 	}
 	if (f->new_node && f->new_node->sgprivate->tag==TAG_DOMText) is_text = 1;
 	/*if fieldIndex (eg attributeName) is set, this is children replacement*/
-	if (f->fieldIndex>0) 
+	if (f->fieldIndex>0)
 		fprintf(sdump->trace, "attributeName=\"children\" ");
 
 	fprintf(sdump->trace, ">");
@@ -2673,7 +2673,7 @@ static GF_Err DumpLSRSendEvent(GF_SceneDumper *sdump, GF_Command *com)
 	char szID[1024];
 	char *lsrns = sd_get_lsr_namespace(com->in_scene);
 	DUMP_IND(sdump);
-	fprintf(sdump->trace, "<%sSendEvent ref=\"%s\" event=\"%s\"", lsrns, 
+	fprintf(sdump->trace, "<%sSendEvent ref=\"%s\" event=\"%s\"", lsrns,
 		lsr_format_node_id(com->node, com->RouteID, szID),
 		gf_dom_event_get_name(com->send_event_name)
 		);
@@ -2775,7 +2775,7 @@ GF_Err gf_sm_dump_command_list(GF_SceneDumper *sdump, GF_List *comList, u32 inde
 		case GF_SG_FIELD_REPLACE: e = DumpFieldReplace(sdump, com); break;
 		case GF_SG_INDEXED_REPLACE: e = DumpIndexReplace(sdump, com); break;
 		case GF_SG_ROUTE_REPLACE: e = DumpRouteReplace(sdump, com); break;
-		case GF_SG_XREPLACE: e = DumpXReplace(sdump, com); break;			
+		case GF_SG_XREPLACE: e = DumpXReplace(sdump, com); break;
 		case GF_SG_SCENE_REPLACE:
 			/*we don't support replace scene in conditional*/
 			assert(!sdump->current_com_list);
@@ -2838,7 +2838,7 @@ GF_Err gf_sm_dump_command_list(GF_SceneDumper *sdump, GF_List *comList, u32 inde
 		case GF_SG_LSR_SEND_EVENT: e = DumpLSRSendEvent(sdump, com); break;
 		case GF_SG_LSR_ACTIVATE:
 		case GF_SG_LSR_DEACTIVATE:
-			e = DumpLSRActivate(sdump, com); 
+			e = DumpLSRActivate(sdump, com);
 			break;
 #endif
 		}
@@ -2893,7 +2893,7 @@ void gf_dump_svg_element(GF_SceneDumper *sdump, GF_Node *n, GF_Node *parent, Boo
 		switch (tag) {
 		case TAG_SVG_listener:
 			if (0 && gf_node_get_attribute_by_tag(n, TAG_XMLEV_ATT_handler, 0, 0, &info)==GF_OK) {
-				if (((XMLRI*)info.far_ptr)->target && !gf_node_get_id(((XMLRI*)info.far_ptr)->target) ) 
+				if (((XMLRI*)info.far_ptr)->target && !gf_node_get_id(((XMLRI*)info.far_ptr)->target) )
 					return;
 			}
 			break;
@@ -2905,7 +2905,7 @@ void gf_dump_svg_element(GF_SceneDumper *sdump, GF_Node *n, GF_Node *parent, Boo
 		case TAG_DOMText:
 		{
 			GF_DOMText *txt = (GF_DOMText *)n;
-			if (txt->textContent) {				
+			if (txt->textContent) {
 				if ((txt->type==GF_DOM_TEXT_CDATA) ||
 					(parent->sgprivate->tag == TAG_SVG_script) ||
 					(parent->sgprivate->tag == TAG_SVG_handler)) {
@@ -2938,8 +2938,8 @@ void gf_dump_svg_element(GF_SceneDumper *sdump, GF_Node *n, GF_Node *parent, Boo
 		if (att->data_type==SVG_ID_datatype) {
 			att = att->next;
 			continue;
-		} 
-		
+		}
+
 		info.fieldIndex = att->tag;
 		info.fieldType = att->data_type;
 		if (att->tag==TAG_DOM_ATT_any) {
@@ -2979,7 +2979,7 @@ void gf_dump_svg_element(GF_SceneDumper *sdump, GF_Node *n, GF_Node *parent, Boo
 		attValue = gf_svg_dump_attribute((GF_Node*)svg, &info);
 		if (/*strcmp(info.name, "xmlns") &&*/ (info.fieldType = (u32) strlen(attValue)))
 			fprintf(sdump->trace, " %s=\"%s\"", info.name, attValue);
-		
+
 		if (attValue) gf_free(attValue);
 
 		fflush(sdump->trace);
@@ -2999,7 +2999,7 @@ void gf_dump_svg_element(GF_SceneDumper *sdump, GF_Node *n, GF_Node *parent, Boo
 				hdl = (SVG_handlerElement *) ((XMLRI*)info.far_ptr)->target;
 				if (!hdl) continue;
 				/*this handler was declared in the graph*/
-				if (hdl->sgprivate->parents 
+				if (hdl->sgprivate->parents
 					&& (hdl->sgprivate->parents->next || (hdl->sgprivate->parents->node != listener))
 				)
 					continue;
@@ -3028,7 +3028,7 @@ void gf_dump_svg_element(GF_SceneDumper *sdump, GF_Node *n, GF_Node *parent, Boo
 				gf_sm_dump_command_list(sdump, up->updates, sdump->indent, 0);
 			} else if (up->data) {
 				fprintf(sdump->trace, "<!-- WARNING: LASeR scripts cannot be dumped at run-time -->\n");
-			} 
+			}
 		}
 		sdump->indent--;
 		DUMP_IND(sdump);
@@ -3095,11 +3095,11 @@ static void dump_od_to_saf(GF_SceneDumper *dumper, GF_AUContext *au, u32 indent)
 			if (mux && mux->file_name) fprintf(dumper->trace, " source=\"%s\"", mux->file_name);
 			fprintf(dumper->trace, "/>\n");
 		}
-		
+
 
 	}
 	fprintf(dumper->trace, "</saf:mediaUnit>\n");
-}	
+}
 
 static GF_Err SD_DumpDOMElement(GF_SceneDumper *sdump, GF_DOMFullNode *node)
 {
@@ -3168,7 +3168,7 @@ GF_Err gf_sm_dump_graph(GF_SceneDumper *sdump, Bool skip_proto, Bool skip_routes
 
 
 	tag = sdump->sg->RootNode->sgprivate->tag;
-	
+
 	if (tag<=GF_NODE_RANGE_LAST_X3D) {
 		gf_dump_setup(sdump, NULL);
 
@@ -3208,7 +3208,7 @@ GF_Err gf_sm_dump_graph(GF_SceneDumper *sdump, Bool skip_proto, Bool skip_routes
 			EndElement(sdump, "Scene", 1);
 		}
 #endif /*GPAC_DISABLE_VRML*/
-	
+
 		gf_dump_finalize(sdump, NULL);
 		return GF_OK;
 	}
@@ -3241,7 +3241,7 @@ static void ReorderAUContext(GF_List *sample_list, GF_AUContext *au, Bool lsr_du
 
 	/*
 		this happens when converting from bt to xmt
-		NOTE: Comment is wrong? this happens when just loading BT 
+		NOTE: Comment is wrong? this happens when just loading BT
 	*/
 	if (!au->timing_sec) {
 		au->timing_sec = (Double) (s64) au->timing;
@@ -3257,12 +3257,12 @@ static void ReorderAUContext(GF_List *sample_list, GF_AUContext *au, Bool lsr_du
 
 	autime = au->timing + au->owner->imp_exp_time;
 	has_base = 0;
-	i=0; 
+	i=0;
 	while ((ptr = (GF_AUContext*)gf_list_enum(sample_list, &i))) {
 		time = ptr->timing + ptr->owner->imp_exp_time;
 		if (
 			/*time ordered*/
-			(time > autime) 
+			(time > autime)
 			/*set bifs first for first AU*/
 			|| (!has_base && (time == autime) && (ptr->owner->streamType < au->owner->streamType) )
 			/*set OD first for laser*/
@@ -3315,7 +3315,7 @@ GF_Err gf_sm_dump(GF_SceneManager *ctx, char *rad_name, u32 dump_mode)
 		default:
 			continue;
 		}
-		
+
 		j=0;
 		while ((au = (GF_AUContext*)gf_list_enum(sc->AUs, &j))) {
 			ReorderAUContext(sample_list, au, dumper->LSRDump);
@@ -3356,13 +3356,13 @@ GF_Err gf_sm_dump(GF_SceneManager *ctx, char *rad_name, u32 dump_mode)
 		gf_list_rem(sample_list, 0);
 
 		if (!dumper->XMLDump) {
-		
+
 			if (!first_bifs || (au->owner->streamType != GF_STREAM_SCENE) ) {
 				if (au->flags & GF_SM_AU_RAP) fprintf(dumper->trace, "RAP ");
 				fprintf(dumper->trace, "AT "LLD" ", LLD_CAST au->timing);
 				if ( (au->owner->streamType==GF_STREAM_OD && num_od) || (au->owner->streamType==GF_STREAM_SCENE && num_scene)) {
 					fprintf(dumper->trace, "IN %d ", au->owner->ESID);
-				} 
+				}
 				fprintf(dumper->trace, "{\n");
 				indent++;
 			}
@@ -3374,7 +3374,7 @@ GF_Err gf_sm_dump(GF_SceneManager *ctx, char *rad_name, u32 dump_mode)
 				} else {
 #ifndef GPAC_DISABLE_OD_DUMP
 					e = gf_odf_dump_com_list(au->commands, dumper->trace, indent+1, 0);
-#endif				
+#endif
 				}
 				break;
 			case GF_STREAM_SCENE:
@@ -3389,7 +3389,7 @@ GF_Err gf_sm_dump(GF_SceneManager *ctx, char *rad_name, u32 dump_mode)
 				indent--;
 				fprintf(dumper->trace, "}\n\n");
 			}
-		} 
+		}
 		else {
 			if (dumper->LSRDump) {
 				if (time != au->timing_sec) {
@@ -3425,14 +3425,14 @@ GF_Err gf_sm_dump(GF_SceneManager *ctx, char *rad_name, u32 dump_mode)
 				break;
 			case GF_STREAM_SCENE:
 				if (gf_list_count(au->commands)) {
-					if (dumper->LSRDump) 
+					if (dumper->LSRDump)
 						gf_sm_dump_saf_hdr(dumper, "sceneUnit", au->timing, au->flags & GF_SM_AU_RAP);
 
 					e = gf_sm_dump_command_list(dumper, au->commands, indent+1, first_bifs);
 					first_bifs = 0;
 					no_root_found = 0;
-					
-					if (dumper->LSRDump) 
+
+					if (dumper->LSRDump)
 						fprintf(dumper->trace, "</saf:sceneUnit>\n");
 				}
 				break;

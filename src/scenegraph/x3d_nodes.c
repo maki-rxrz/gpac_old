@@ -15,7 +15,7 @@
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.	
+ *  GNU Lesser General Public License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
@@ -50,8 +50,8 @@ static void Anchor_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->description);
 	gf_sg_mfstring_del(p->parameter);
 	gf_sg_mfurl_del(p->url);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -151,12 +151,12 @@ static GF_Node *Anchor_Create()
 static void Appearance_Del(GF_Node *node)
 {
 	X_Appearance *p = (X_Appearance *) node;
-	gf_node_unregister((GF_Node *) p->material, node);	
-	gf_node_unregister((GF_Node *) p->texture, node);	
-	gf_node_unregister((GF_Node *) p->textureTransform, node);	
-	gf_node_unregister((GF_Node *) p->fillProperties, node);	
-	gf_node_unregister((GF_Node *) p->lineProperties, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->material, node);
+	gf_node_unregister((GF_Node *) p->texture, node);
+	gf_node_unregister((GF_Node *) p->textureTransform, node);
+	gf_node_unregister((GF_Node *) p->fillProperties, node);
+	gf_node_unregister((GF_Node *) p->lineProperties, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -248,7 +248,7 @@ static GF_Node *Appearance_Create()
 static void Arc2D_Del(GF_Node *node)
 {
 	X_Arc2D *p = (X_Arc2D *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -325,7 +325,7 @@ static void ArcClose2D_Del(GF_Node *node)
 {
 	X_ArcClose2D *p = (X_ArcClose2D *) node;
 	gf_sg_sfstring_del(p->closureType);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -412,7 +412,7 @@ static void AudioClip_Del(GF_Node *node)
 	X_AudioClip *p = (X_AudioClip *) node;
 	gf_sg_sfstring_del(p->description);
 	gf_sg_mfurl_del(p->url);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -563,7 +563,7 @@ static void Background_Del(GF_Node *node)
 	gf_sg_mfurl_del(p->topUrl);
 	gf_sg_mffloat_del(p->skyAngle);
 	gf_sg_mfcolor_del(p->skyColor);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -712,8 +712,8 @@ static GF_Node *Background_Create()
 static void Billboard_Del(GF_Node *node)
 {
 	X_Billboard *p = (X_Billboard *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -802,7 +802,7 @@ static GF_Node *Billboard_Create()
 static void BooleanFilter_Del(GF_Node *node)
 {
 	X_BooleanFilter *p = (X_BooleanFilter *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -885,7 +885,7 @@ static void BooleanSequencer_Del(GF_Node *node)
 	X_BooleanSequencer *p = (X_BooleanSequencer *) node;
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfbool_del(p->keyValue);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -982,7 +982,7 @@ static GF_Node *BooleanSequencer_Create()
 static void BooleanToggle_Del(GF_Node *node)
 {
 	X_BooleanToggle *p = (X_BooleanToggle *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1049,7 +1049,7 @@ static GF_Node *BooleanToggle_Create()
 static void BooleanTrigger_Del(GF_Node *node)
 {
 	X_BooleanTrigger *p = (X_BooleanTrigger *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1116,7 +1116,7 @@ static GF_Node *BooleanTrigger_Create()
 static void Box_Del(GF_Node *node)
 {
 	X_Box *p = (X_Box *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1178,7 +1178,7 @@ static GF_Node *Box_Create()
 static void Circle2D_Del(GF_Node *node)
 {
 	X_Circle2D *p = (X_Circle2D *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1238,9 +1238,9 @@ static GF_Node *Circle2D_Create()
 static void Collision_Del(GF_Node *node)
 {
 	X_Collision *p = (X_Collision *) node;
-	gf_node_unregister((GF_Node *) p->proxy, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->proxy, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1350,7 +1350,7 @@ static void Color_Del(GF_Node *node)
 {
 	X_Color *p = (X_Color *) node;
 	gf_sg_mfcolor_del(p->color);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1411,7 +1411,7 @@ static void ColorInterpolator_Del(GF_Node *node)
 	X_ColorInterpolator *p = (X_ColorInterpolator *) node;
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfcolor_del(p->keyValue);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1492,7 +1492,7 @@ static GF_Node *ColorInterpolator_Create()
 static void ColorRGBA_Del(GF_Node *node)
 {
 	X_ColorRGBA *p = (X_ColorRGBA *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1551,7 +1551,7 @@ static GF_Node *ColorRGBA_Create()
 static void Cone_Del(GF_Node *node)
 {
 	X_Cone *p = (X_Cone *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1635,8 +1635,8 @@ static GF_Node *Cone_Create()
 static void Contour2D_Del(GF_Node *node)
 {
 	X_Contour2D *p = (X_Contour2D *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1716,7 +1716,7 @@ static void ContourPolyline2D_Del(GF_Node *node)
 {
 	X_ContourPolyline2D *p = (X_ContourPolyline2D *) node;
 	gf_sg_mfvec2f_del(p->point);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1776,7 +1776,7 @@ static void Coordinate_Del(GF_Node *node)
 {
 	X_Coordinate *p = (X_Coordinate *) node;
 	gf_sg_mfvec3f_del(p->point);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1836,7 +1836,7 @@ static void CoordinateDouble_Del(GF_Node *node)
 {
 	X_CoordinateDouble *p = (X_CoordinateDouble *) node;
 	gf_sg_mfvec3d_del(p->point);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1896,7 +1896,7 @@ static void Coordinate2D_Del(GF_Node *node)
 {
 	X_Coordinate2D *p = (X_Coordinate2D *) node;
 	gf_sg_mfvec2f_del(p->point);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -1958,7 +1958,7 @@ static void CoordinateInterpolator_Del(GF_Node *node)
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfvec3f_del(p->keyValue);
 	gf_sg_mfvec3f_del(p->value_changed);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -2042,7 +2042,7 @@ static void CoordinateInterpolator2D_Del(GF_Node *node)
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfvec2f_del(p->keyValue);
 	gf_sg_mfvec2f_del(p->value_changed);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -2123,7 +2123,7 @@ static GF_Node *CoordinateInterpolator2D_Create()
 static void Cylinder_Del(GF_Node *node)
 {
 	X_Cylinder *p = (X_Cylinder *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -2215,7 +2215,7 @@ static GF_Node *Cylinder_Create()
 static void CylinderSensor_Del(GF_Node *node)
 {
 	X_CylinderSensor *p = (X_CylinderSensor *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_sg_sfstring_del(p->description);
 	gf_node_free((GF_Node *)p);
 }
@@ -2351,7 +2351,7 @@ static GF_Node *CylinderSensor_Create()
 static void DirectionalLight_Del(GF_Node *node)
 {
 	X_DirectionalLight *p = (X_DirectionalLight *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -2447,7 +2447,7 @@ static GF_Node *DirectionalLight_Create()
 static void Disk2D_Del(GF_Node *node)
 {
 	X_Disk2D *p = (X_Disk2D *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -2516,11 +2516,11 @@ static void ElevationGrid_Del(GF_Node *node)
 {
 	X_ElevationGrid *p = (X_ElevationGrid *) node;
 	gf_sg_mffloat_del(p->set_height);
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->normal, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->normal, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
 	gf_sg_mffloat_del(p->height);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -2692,8 +2692,8 @@ static void EspduTransform_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->marking);
 	gf_sg_sfstring_del(p->multicastRelayHost);
 	gf_sg_sfstring_del(p->networkMode);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -3433,7 +3433,7 @@ static void Extrusion_Del(GF_Node *node)
 	gf_sg_mfrotation_del(p->orientation);
 	gf_sg_mfvec2f_del(p->scale);
 	gf_sg_mfvec3f_del(p->spine);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -3701,7 +3701,7 @@ static void Fog_Del(GF_Node *node)
 {
 	X_Fog *p = (X_Fog *) node;
 	gf_sg_sfstring_del(p->fogType);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -3806,7 +3806,7 @@ static void FontStyle_Del(GF_Node *node)
 	gf_sg_mfstring_del(p->justify);
 	gf_sg_sfstring_del(p->language);
 	gf_sg_sfstring_del(p->style);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -3937,9 +3937,9 @@ static void GeoCoordinate_Del(GF_Node *node)
 {
 	X_GeoCoordinate *p = (X_GeoCoordinate *) node;
 	gf_sg_mfvec3d_del(p->point);
-	gf_node_unregister((GF_Node *) p->geoOrigin, node);	
+	gf_node_unregister((GF_Node *) p->geoOrigin, node);
 	gf_sg_mfstring_del(p->geoSystem);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -4020,14 +4020,14 @@ static void GeoElevationGrid_Del(GF_Node *node)
 {
 	X_GeoElevationGrid *p = (X_GeoElevationGrid *) node;
 	gf_sg_mfdouble_del(p->set_height);
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->normal, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->normal, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
 	gf_sg_sfstring_del(p->geoGridOrigin);
-	gf_node_unregister((GF_Node *) p->geoOrigin, node);	
+	gf_node_unregister((GF_Node *) p->geoOrigin, node);
 	gf_sg_mfstring_del(p->geoSystem);
 	gf_sg_mfdouble_del(p->height);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -4228,10 +4228,10 @@ static GF_Node *GeoElevationGrid_Create()
 static void GeoLocation_Del(GF_Node *node)
 {
 	X_GeoLocation *p = (X_GeoLocation *) node;
-	gf_node_unregister((GF_Node *) p->geoOrigin, node);	
+	gf_node_unregister((GF_Node *) p->geoOrigin, node);
 	gf_sg_mfstring_del(p->geoSystem);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -4345,12 +4345,12 @@ static void GeoLOD_Del(GF_Node *node)
 	gf_sg_mfurl_del(p->child2Url);
 	gf_sg_mfurl_del(p->child3Url);
 	gf_sg_mfurl_del(p->child4Url);
-	gf_node_unregister((GF_Node *) p->geoOrigin, node);	
+	gf_node_unregister((GF_Node *) p->geoOrigin, node);
 	gf_sg_mfstring_del(p->geoSystem);
 	gf_sg_mfurl_del(p->rootUrl);
-	gf_node_unregister_children(node, p->rootNode);	
-	gf_node_unregister_children(node, p->children);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister_children(node, p->rootNode);
+	gf_node_unregister_children(node, p->children);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -4492,10 +4492,10 @@ static GF_Node *GeoLOD_Create()
 static void GeoMetadata_Del(GF_Node *node)
 {
 	X_GeoMetadata *p = (X_GeoMetadata *) node;
-	gf_node_unregister_children(node, p->data);	
+	gf_node_unregister_children(node, p->data);
 	gf_sg_mfstring_del(p->summary);
 	gf_sg_mfurl_del(p->url);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -4570,7 +4570,7 @@ static void GeoOrigin_Del(GF_Node *node)
 {
 	X_GeoOrigin *p = (X_GeoOrigin *) node;
 	gf_sg_mfstring_del(p->geoSystem);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -4654,9 +4654,9 @@ static void GeoPositionInterpolator_Del(GF_Node *node)
 	X_GeoPositionInterpolator *p = (X_GeoPositionInterpolator *) node;
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfvec3d_del(p->keyValue);
-	gf_node_unregister((GF_Node *) p->geoOrigin, node);	
+	gf_node_unregister((GF_Node *) p->geoOrigin, node);
 	gf_sg_mfstring_del(p->geoSystem);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -4765,9 +4765,9 @@ static GF_Node *GeoPositionInterpolator_Create()
 static void GeoTouchSensor_Del(GF_Node *node)
 {
 	X_GeoTouchSensor *p = (X_GeoTouchSensor *) node;
-	gf_node_unregister((GF_Node *) p->geoOrigin, node);	
+	gf_node_unregister((GF_Node *) p->geoOrigin, node);
 	gf_sg_mfstring_del(p->geoSystem);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -4901,9 +4901,9 @@ static void GeoViewpoint_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->set_position);
 	gf_sg_sfstring_del(p->description);
 	gf_sg_mfstring_del(p->navType);
-	gf_node_unregister((GF_Node *) p->geoOrigin, node);	
+	gf_node_unregister((GF_Node *) p->geoOrigin, node);
 	gf_sg_mfstring_del(p->geoSystem);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -5087,8 +5087,8 @@ static GF_Node *GeoViewpoint_Create()
 static void Group_Del(GF_Node *node)
 {
 	X_Group *p = (X_Group *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -5170,7 +5170,7 @@ static void HAnimDisplacer_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->coordIndex);
 	gf_sg_mfvec3f_del(p->displacements);
 	gf_sg_sfstring_del(p->name);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -5252,17 +5252,17 @@ static void HAnimHumanoid_Del(GF_Node *node)
 {
 	X_HAnimHumanoid *p = (X_HAnimHumanoid *) node;
 	gf_sg_mfstring_del(p->info);
-	gf_node_unregister_children(node, p->joints);	
+	gf_node_unregister_children(node, p->joints);
 	gf_sg_sfstring_del(p->name);
-	gf_node_unregister_children(node, p->segments);	
-	gf_node_unregister_children(node, p->sites);	
-	gf_node_unregister_children(node, p->skeleton);	
-	gf_node_unregister_children(node, p->skin);	
-	gf_node_unregister((GF_Node *) p->skinCoord, node);	
-	gf_node_unregister((GF_Node *) p->skinNormal, node);	
+	gf_node_unregister_children(node, p->segments);
+	gf_node_unregister_children(node, p->sites);
+	gf_node_unregister_children(node, p->skeleton);
+	gf_node_unregister_children(node, p->skin);
+	gf_node_unregister((GF_Node *) p->skinCoord, node);
+	gf_node_unregister((GF_Node *) p->skinNormal, node);
 	gf_sg_sfstring_del(p->version);
-	gf_node_unregister_children(node, p->viewpoints);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister_children(node, p->viewpoints);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -5451,15 +5451,15 @@ static GF_Node *HAnimHumanoid_Create()
 static void HAnimJoint_Del(GF_Node *node)
 {
 	X_HAnimJoint *p = (X_HAnimJoint *) node;
-	gf_node_unregister_children(node, p->displacers);	
+	gf_node_unregister_children(node, p->displacers);
 	gf_sg_mffloat_del(p->llimit);
 	gf_sg_sfstring_del(p->name);
 	gf_sg_mfint32_del(p->skinCoordIndex);
 	gf_sg_mffloat_del(p->skinCoordWeight);
 	gf_sg_mffloat_del(p->stiffness);
 	gf_sg_mffloat_del(p->ulimit);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -5656,12 +5656,12 @@ static GF_Node *HAnimJoint_Create()
 static void HAnimSegment_Del(GF_Node *node)
 {
 	X_HAnimSegment *p = (X_HAnimSegment *) node;
-	gf_node_unregister((GF_Node *) p->coord, node);	
-	gf_node_unregister_children(node, p->displacers);	
+	gf_node_unregister((GF_Node *) p->coord, node);
+	gf_node_unregister_children(node, p->displacers);
 	gf_sg_mffloat_del(p->momentsOfInertia);
 	gf_sg_sfstring_del(p->name);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -5800,8 +5800,8 @@ static void HAnimSite_Del(GF_Node *node)
 {
 	X_HAnimSite *p = (X_HAnimSite *) node;
 	gf_sg_sfstring_del(p->name);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -5940,7 +5940,7 @@ static void ImageTexture_Del(GF_Node *node)
 {
 	X_ImageTexture *p = (X_ImageTexture *) node;
 	gf_sg_mfurl_del(p->url);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6019,15 +6019,15 @@ static void IndexedFaceSet_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->set_coordIndex);
 	gf_sg_mfint32_del(p->set_normalIndex);
 	gf_sg_mfint32_del(p->set_texCoordIndex);
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
-	gf_node_unregister((GF_Node *) p->normal, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
+	gf_node_unregister((GF_Node *) p->normal, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mfint32_del(p->coordIndex);
 	gf_sg_mfint32_del(p->normalIndex);
 	gf_sg_mfint32_del(p->texCoordIndex);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6221,11 +6221,11 @@ static void IndexedLineSet_Del(GF_Node *node)
 	X_IndexedLineSet *p = (X_IndexedLineSet *) node;
 	gf_sg_mfint32_del(p->set_colorIndex);
 	gf_sg_mfint32_del(p->set_coordIndex);
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
 	gf_sg_mfint32_del(p->colorIndex);
 	gf_sg_mfint32_del(p->coordIndex);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6332,12 +6332,12 @@ static void IndexedTriangleFanSet_Del(GF_Node *node)
 {
 	X_IndexedTriangleFanSet *p = (X_IndexedTriangleFanSet *) node;
 	gf_sg_mfint32_del(p->set_index);
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
-	gf_node_unregister((GF_Node *) p->normal, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
+	gf_node_unregister((GF_Node *) p->normal, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
 	gf_sg_mfint32_del(p->index);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6469,12 +6469,12 @@ static void IndexedTriangleSet_Del(GF_Node *node)
 {
 	X_IndexedTriangleSet *p = (X_IndexedTriangleSet *) node;
 	gf_sg_mfint32_del(p->set_index);
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
-	gf_node_unregister((GF_Node *) p->normal, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
+	gf_node_unregister((GF_Node *) p->normal, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
 	gf_sg_mfint32_del(p->index);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6606,12 +6606,12 @@ static void IndexedTriangleStripSet_Del(GF_Node *node)
 {
 	X_IndexedTriangleStripSet *p = (X_IndexedTriangleStripSet *) node;
 	gf_sg_mfint32_del(p->set_index);
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
-	gf_node_unregister((GF_Node *) p->normal, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
+	gf_node_unregister((GF_Node *) p->normal, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
 	gf_sg_mfint32_del(p->index);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6743,7 +6743,7 @@ static void Inline_Del(GF_Node *node)
 {
 	X_Inline *p = (X_Inline *) node;
 	gf_sg_mfurl_del(p->url);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6812,7 +6812,7 @@ static void IntegerSequencer_Del(GF_Node *node)
 	X_IntegerSequencer *p = (X_IntegerSequencer *) node;
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfint32_del(p->keyValue);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6909,7 +6909,7 @@ static GF_Node *IntegerSequencer_Create()
 static void IntegerTrigger_Del(GF_Node *node)
 {
 	X_IntegerTrigger *p = (X_IntegerTrigger *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -6986,7 +6986,7 @@ static void KeySensor_Del(GF_Node *node)
 	X_KeySensor *p = (X_KeySensor *) node;
 	gf_sg_sfstring_del(p->keyPress);
 	gf_sg_sfstring_del(p->keyRelease);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7102,7 +7102,7 @@ static GF_Node *KeySensor_Create()
 static void LineProperties_Del(GF_Node *node)
 {
 	X_LineProperties *p = (X_LineProperties *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7178,10 +7178,10 @@ static GF_Node *LineProperties_Create()
 static void LineSet_Del(GF_Node *node)
 {
 	X_LineSet *p = (X_LineSet *) node;
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
 	gf_sg_mfint32_del(p->vertexCount);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7256,8 +7256,8 @@ static GF_Node *LineSet_Create()
 static void LoadSensor_Del(GF_Node *node)
 {
 	X_LoadSensor *p = (X_LoadSensor *) node;
-	gf_node_unregister_children(node, p->watchList);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister_children(node, p->watchList);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7362,8 +7362,8 @@ static void LOD_Del(GF_Node *node)
 {
 	X_LOD *p = (X_LOD *) node;
 	gf_sg_mffloat_del(p->range);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7459,7 +7459,7 @@ static GF_Node *LOD_Create()
 static void Material_Del(GF_Node *node)
 {
 	X_Material *p = (X_Material *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7568,7 +7568,7 @@ static void MetadataDouble_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->name);
 	gf_sg_sfstring_del(p->reference);
 	gf_sg_mfdouble_del(p->value);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7644,7 +7644,7 @@ static void MetadataFloat_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->name);
 	gf_sg_sfstring_del(p->reference);
 	gf_sg_mffloat_del(p->value);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7720,7 +7720,7 @@ static void MetadataInteger_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->name);
 	gf_sg_sfstring_del(p->reference);
 	gf_sg_mfint32_del(p->value);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7795,8 +7795,8 @@ static void MetadataSet_Del(GF_Node *node)
 	X_MetadataSet *p = (X_MetadataSet *) node;
 	gf_sg_sfstring_del(p->name);
 	gf_sg_sfstring_del(p->reference);
-	gf_node_unregister_children(node, p->value);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister_children(node, p->value);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7873,7 +7873,7 @@ static void MetadataString_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->name);
 	gf_sg_sfstring_del(p->reference);
 	gf_sg_mfstring_del(p->value);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -7947,7 +7947,7 @@ static void MovieTexture_Del(GF_Node *node)
 {
 	X_MovieTexture *p = (X_MovieTexture *) node;
 	gf_sg_mfurl_del(p->url);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8100,8 +8100,8 @@ static void MultiTexture_Del(GF_Node *node)
 	gf_sg_mfstring_del(p->function);
 	gf_sg_mfstring_del(p->mode);
 	gf_sg_mfstring_del(p->source);
-	gf_node_unregister_children(node, p->texture);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister_children(node, p->texture);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8200,8 +8200,8 @@ static GF_Node *MultiTexture_Create()
 static void MultiTextureCoordinate_Del(GF_Node *node)
 {
 	X_MultiTextureCoordinate *p = (X_MultiTextureCoordinate *) node;
-	gf_node_unregister_children(node, p->texCoord);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister_children(node, p->texCoord);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8261,8 +8261,8 @@ static GF_Node *MultiTextureCoordinate_Create()
 static void MultiTextureTransform_Del(GF_Node *node)
 {
 	X_MultiTextureTransform *p = (X_MultiTextureTransform *) node;
-	gf_node_unregister_children(node, p->textureTransform);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister_children(node, p->textureTransform);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8324,7 +8324,7 @@ static void NavigationInfo_Del(GF_Node *node)
 	X_NavigationInfo *p = (X_NavigationInfo *) node;
 	gf_sg_mffloat_del(p->avatarSize);
 	gf_sg_mfstring_del(p->type);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_sg_mfstring_del(p->transitionType);
 	gf_node_free((GF_Node *)p);
 }
@@ -8462,7 +8462,7 @@ static void Normal_Del(GF_Node *node)
 {
 	X_Normal *p = (X_Normal *) node;
 	gf_sg_mfvec3f_del(p->vector);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8524,7 +8524,7 @@ static void NormalInterpolator_Del(GF_Node *node)
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfvec3f_del(p->keyValue);
 	gf_sg_mfvec3f_del(p->value_changed);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8608,7 +8608,7 @@ static void NurbsCurve_Del(GF_Node *node)
 	gf_sg_mfvec3f_del(p->controlPoint);
 	gf_sg_mfdouble_del(p->weight);
 	gf_sg_mffloat_del(p->knot);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8707,7 +8707,7 @@ static void NurbsCurve2D_Del(GF_Node *node)
 	gf_sg_mfvec2f_del(p->controlPoint);
 	gf_sg_mffloat_del(p->weight);
 	gf_sg_mffloat_del(p->knot);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8803,10 +8803,10 @@ static GF_Node *NurbsCurve2D_Create()
 static void NurbsOrientationInterpolator_Del(GF_Node *node)
 {
 	X_NurbsOrientationInterpolator *p = (X_NurbsOrientationInterpolator *) node;
-	gf_node_unregister((GF_Node *) p->controlPoints, node);	
+	gf_node_unregister((GF_Node *) p->controlPoints, node);
 	gf_sg_mfdouble_del(p->knot);
 	gf_sg_mfdouble_del(p->weight);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -8903,12 +8903,12 @@ static GF_Node *NurbsOrientationInterpolator_Create()
 static void NurbsPatchSurface_Del(GF_Node *node)
 {
 	X_NurbsPatchSurface *p = (X_NurbsPatchSurface *) node;
-	gf_node_unregister((GF_Node *) p->controlPoint, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
+	gf_node_unregister((GF_Node *) p->controlPoint, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
 	gf_sg_mfdouble_del(p->weight);
 	gf_sg_mfdouble_del(p->uKnot);
 	gf_sg_mfdouble_del(p->vKnot);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9067,10 +9067,10 @@ static GF_Node *NurbsPatchSurface_Create()
 static void NurbsPositionInterpolator_Del(GF_Node *node)
 {
 	X_NurbsPositionInterpolator *p = (X_NurbsPositionInterpolator *) node;
-	gf_node_unregister((GF_Node *) p->controlPoints, node);	
+	gf_node_unregister((GF_Node *) p->controlPoints, node);
 	gf_sg_mfdouble_del(p->knot);
 	gf_sg_mfdouble_del(p->weight);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9167,10 +9167,10 @@ static GF_Node *NurbsPositionInterpolator_Create()
 static void NurbsSet_Del(GF_Node *node)
 {
 	X_NurbsSet *p = (X_NurbsSet *) node;
-	gf_node_unregister_children(node, p->addGeometry);	
-	gf_node_unregister_children(node, p->removeGeometry);	
-	gf_node_unregister_children(node, p->geometry);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister_children(node, p->addGeometry);
+	gf_node_unregister_children(node, p->removeGeometry);
+	gf_node_unregister_children(node, p->geometry);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9256,11 +9256,11 @@ static GF_Node *NurbsSet_Create()
 static void NurbsSurfaceInterpolator_Del(GF_Node *node)
 {
 	X_NurbsSurfaceInterpolator *p = (X_NurbsSurfaceInterpolator *) node;
-	gf_node_unregister((GF_Node *) p->controlPoints, node);	
+	gf_node_unregister((GF_Node *) p->controlPoints, node);
 	gf_sg_mfdouble_del(p->weight);
 	gf_sg_mfdouble_del(p->uKnot);
 	gf_sg_mfdouble_del(p->vKnot);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9395,9 +9395,9 @@ static GF_Node *NurbsSurfaceInterpolator_Create()
 static void NurbsSweptSurface_Del(GF_Node *node)
 {
 	X_NurbsSweptSurface *p = (X_NurbsSweptSurface *) node;
-	gf_node_unregister((GF_Node *) p->crossSectionCurve, node);	
-	gf_node_unregister((GF_Node *) p->trajectoryCurve, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->crossSectionCurve, node);
+	gf_node_unregister((GF_Node *) p->trajectoryCurve, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9481,9 +9481,9 @@ static GF_Node *NurbsSweptSurface_Create()
 static void NurbsSwungSurface_Del(GF_Node *node)
 {
 	X_NurbsSwungSurface *p = (X_NurbsSwungSurface *) node;
-	gf_node_unregister((GF_Node *) p->profileCurve, node);	
-	gf_node_unregister((GF_Node *) p->trajectoryCurve, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->profileCurve, node);
+	gf_node_unregister((GF_Node *) p->trajectoryCurve, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9571,7 +9571,7 @@ static void NurbsTextureCoordinate_Del(GF_Node *node)
 	gf_sg_mffloat_del(p->weight);
 	gf_sg_mfdouble_del(p->uKnot);
 	gf_sg_mfdouble_del(p->vKnot);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9683,15 +9683,15 @@ static GF_Node *NurbsTextureCoordinate_Create()
 static void NurbsTrimmedSurface_Del(GF_Node *node)
 {
 	X_NurbsTrimmedSurface *p = (X_NurbsTrimmedSurface *) node;
-	gf_node_unregister_children(node, p->addTrimmingContour);	
-	gf_node_unregister_children(node, p->removeTrimmingContour);	
-	gf_node_unregister_children(node, p->trimmingContour);	
-	gf_node_unregister((GF_Node *) p->controlPoint, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
+	gf_node_unregister_children(node, p->addTrimmingContour);
+	gf_node_unregister_children(node, p->removeTrimmingContour);
+	gf_node_unregister_children(node, p->trimmingContour);
+	gf_node_unregister((GF_Node *) p->controlPoint, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
 	gf_sg_mfdouble_del(p->weight);
 	gf_sg_mfdouble_del(p->uKnot);
 	gf_sg_mfdouble_del(p->vKnot);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9878,7 +9878,7 @@ static void OrientationInterpolator_Del(GF_Node *node)
 	X_OrientationInterpolator *p = (X_OrientationInterpolator *) node;
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfrotation_del(p->keyValue);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -9960,7 +9960,7 @@ static void PixelTexture_Del(GF_Node *node)
 {
 	X_PixelTexture *p = (X_PixelTexture *) node;
 	gf_sg_sfimage_del(p->image);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -10035,7 +10035,7 @@ static GF_Node *PixelTexture_Create()
 static void PlaneSensor_Del(GF_Node *node)
 {
 	X_PlaneSensor *p = (X_PlaneSensor *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_sg_sfstring_del(p->description);
 	gf_node_free((GF_Node *)p);
 }
@@ -10167,7 +10167,7 @@ static GF_Node *PlaneSensor_Create()
 static void PointLight_Del(GF_Node *node)
 {
 	X_PointLight *p = (X_PointLight *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -10281,9 +10281,9 @@ static GF_Node *PointLight_Create()
 static void PointSet_Del(GF_Node *node)
 {
 	X_PointSet *p = (X_PointSet *) node;
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -10352,7 +10352,7 @@ static void Polyline2D_Del(GF_Node *node)
 {
 	X_Polyline2D *p = (X_Polyline2D *) node;
 	gf_sg_mfvec2f_del(p->lineSegments);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -10412,7 +10412,7 @@ static void Polypoint2D_Del(GF_Node *node)
 {
 	X_Polypoint2D *p = (X_Polypoint2D *) node;
 	gf_sg_mfvec2f_del(p->point);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -10473,7 +10473,7 @@ static void PositionInterpolator_Del(GF_Node *node)
 	X_PositionInterpolator *p = (X_PositionInterpolator *) node;
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfvec3f_del(p->keyValue);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -10556,7 +10556,7 @@ static void PositionInterpolator2D_Del(GF_Node *node)
 	X_PositionInterpolator2D *p = (X_PositionInterpolator2D *) node;
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mfvec2f_del(p->keyValue);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -10637,7 +10637,7 @@ static GF_Node *PositionInterpolator2D_Create()
 static void ProximitySensor_Del(GF_Node *node)
 {
 	X_ProximitySensor *p = (X_ProximitySensor *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -10762,7 +10762,7 @@ static void ReceiverPdu_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->address);
 	gf_sg_sfstring_del(p->multicastRelayHost);
 	gf_sg_sfstring_del(p->networkMode);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11008,7 +11008,7 @@ static GF_Node *ReceiverPdu_Create()
 static void Rectangle2D_Del(GF_Node *node)
 {
 	X_Rectangle2D *p = (X_Rectangle2D *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11071,7 +11071,7 @@ static void ScalarInterpolator_Del(GF_Node *node)
 	X_ScalarInterpolator *p = (X_ScalarInterpolator *) node;
 	gf_sg_mffloat_del(p->key);
 	gf_sg_mffloat_del(p->keyValue);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11153,7 +11153,7 @@ static void Script_Del(GF_Node *node)
 {
 	X_Script *p = (X_Script *) node;
 	gf_sg_mfscript_del(p->url);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11226,9 +11226,9 @@ static GF_Node *Script_Create()
 static void Shape_Del(GF_Node *node)
 {
 	X_Shape *p = (X_Shape *) node;
-	gf_node_unregister((GF_Node *) p->appearance, node);	
-	gf_node_unregister((GF_Node *) p->geometry, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->appearance, node);
+	gf_node_unregister((GF_Node *) p->geometry, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11300,7 +11300,7 @@ static void SignalPdu_Del(GF_Node *node)
 	gf_sg_mfint32_del(p->data);
 	gf_sg_sfstring_del(p->multicastRelayHost);
 	gf_sg_sfstring_del(p->networkMode);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11545,8 +11545,8 @@ static GF_Node *SignalPdu_Create()
 static void Sound_Del(GF_Node *node)
 {
 	X_Sound *p = (X_Sound *) node;
-	gf_node_unregister((GF_Node *) p->source, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->source, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11682,7 +11682,7 @@ static GF_Node *Sound_Create()
 static void Sphere_Del(GF_Node *node)
 {
 	X_Sphere *p = (X_Sphere *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11742,7 +11742,7 @@ static GF_Node *Sphere_Create()
 static void SphereSensor_Del(GF_Node *node)
 {
 	X_SphereSensor *p = (X_SphereSensor *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_sg_sfstring_del(p->description);
 	gf_node_free((GF_Node *)p);
 }
@@ -11857,7 +11857,7 @@ static GF_Node *SphereSensor_Create()
 static void SpotLight_Del(GF_Node *node)
 {
 	X_SpotLight *p = (X_SpotLight *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -11997,8 +11997,8 @@ static GF_Node *SpotLight_Create()
 static void StaticGroup_Del(GF_Node *node)
 {
 	X_StaticGroup *p = (X_StaticGroup *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12061,7 +12061,7 @@ static void StringSensor_Del(GF_Node *node)
 	X_StringSensor *p = (X_StringSensor *) node;
 	gf_sg_sfstring_del(p->enteredText);
 	gf_sg_sfstring_del(p->finalText);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12150,8 +12150,8 @@ static GF_Node *StringSensor_Create()
 static void Switch_Del(GF_Node *node)
 {
 	X_Switch *p = (X_Switch *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12240,8 +12240,8 @@ static void Text_Del(GF_Node *node)
 	X_Text *p = (X_Text *) node;
 	gf_sg_mfstring_del(p->string);
 	gf_sg_mffloat_del(p->length);
-	gf_node_unregister((GF_Node *) p->fontStyle, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->fontStyle, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12325,16 +12325,16 @@ static void TextureBackground_Del(GF_Node *node)
 	X_TextureBackground *p = (X_TextureBackground *) node;
 	gf_sg_mffloat_del(p->groundAngle);
 	gf_sg_mfcolor_del(p->groundColor);
-	gf_node_unregister((GF_Node *) p->backTexture, node);	
-	gf_node_unregister((GF_Node *) p->bottomTexture, node);	
-	gf_node_unregister((GF_Node *) p->frontTexture, node);	
-	gf_node_unregister((GF_Node *) p->leftTexture, node);	
-	gf_node_unregister((GF_Node *) p->rightTexture, node);	
-	gf_node_unregister((GF_Node *) p->topTexture, node);	
+	gf_node_unregister((GF_Node *) p->backTexture, node);
+	gf_node_unregister((GF_Node *) p->bottomTexture, node);
+	gf_node_unregister((GF_Node *) p->frontTexture, node);
+	gf_node_unregister((GF_Node *) p->leftTexture, node);
+	gf_node_unregister((GF_Node *) p->rightTexture, node);
+	gf_node_unregister((GF_Node *) p->topTexture, node);
 	gf_sg_mffloat_del(p->skyAngle);
 	gf_sg_mfcolor_del(p->skyColor);
 	gf_sg_mffloat_del(p->transparency);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12500,7 +12500,7 @@ static void TextureCoordinate_Del(GF_Node *node)
 {
 	X_TextureCoordinate *p = (X_TextureCoordinate *) node;
 	gf_sg_mfvec2f_del(p->point);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12561,7 +12561,7 @@ static void TextureCoordinateGenerator_Del(GF_Node *node)
 	X_TextureCoordinateGenerator *p = (X_TextureCoordinateGenerator *) node;
 	gf_sg_sfstring_del(p->mode);
 	gf_sg_mffloat_del(p->parameter);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12629,7 +12629,7 @@ static GF_Node *TextureCoordinateGenerator_Create()
 static void TextureTransform_Del(GF_Node *node)
 {
 	X_TextureTransform *p = (X_TextureTransform *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12716,7 +12716,7 @@ static GF_Node *TextureTransform_Create()
 static void TimeSensor_Del(GF_Node *node)
 {
 	X_TimeSensor *p = (X_TimeSensor *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12865,7 +12865,7 @@ static GF_Node *TimeSensor_Create()
 static void TimeTrigger_Del(GF_Node *node)
 {
 	X_TimeTrigger *p = (X_TimeTrigger *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -12932,7 +12932,7 @@ static GF_Node *TimeTrigger_Create()
 static void TouchSensor_Del(GF_Node *node)
 {
 	X_TouchSensor *p = (X_TouchSensor *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_sg_sfstring_del(p->description);
 	gf_node_free((GF_Node *)p);
 }
@@ -13042,8 +13042,8 @@ static GF_Node *TouchSensor_Create()
 static void Transform_Del(GF_Node *node)
 {
 	X_Transform *p = (X_Transform *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
-	gf_sg_vrml_parent_destroy(node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
+	gf_sg_vrml_parent_destroy(node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -13177,7 +13177,7 @@ static void TransmitterPdu_Del(GF_Node *node)
 	gf_sg_sfstring_del(p->address);
 	gf_sg_sfstring_del(p->multicastRelayHost);
 	gf_sg_sfstring_del(p->networkMode);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -13555,12 +13555,12 @@ static GF_Node *TransmitterPdu_Create()
 static void TriangleFanSet_Del(GF_Node *node)
 {
 	X_TriangleFanSet *p = (X_TriangleFanSet *) node;
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
 	gf_sg_mfint32_del(p->fanCount);
-	gf_node_unregister((GF_Node *) p->normal, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->normal, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -13683,11 +13683,11 @@ static GF_Node *TriangleFanSet_Create()
 static void TriangleSet_Del(GF_Node *node)
 {
 	X_TriangleSet *p = (X_TriangleSet *) node;
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
-	gf_node_unregister((GF_Node *) p->normal, node);	
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
+	gf_node_unregister((GF_Node *) p->normal, node);
+	gf_node_unregister((GF_Node *) p->texCoord, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -13804,7 +13804,7 @@ static void TriangleSet2D_Del(GF_Node *node)
 {
 	X_TriangleSet2D *p = (X_TriangleSet2D *) node;
 	gf_sg_mfvec2f_del(p->vertices);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -13863,12 +13863,12 @@ static GF_Node *TriangleSet2D_Create()
 static void TriangleStripSet_Del(GF_Node *node)
 {
 	X_TriangleStripSet *p = (X_TriangleStripSet *) node;
-	gf_node_unregister((GF_Node *) p->color, node);	
-	gf_node_unregister((GF_Node *) p->coord, node);	
-	gf_node_unregister((GF_Node *) p->normal, node);	
+	gf_node_unregister((GF_Node *) p->color, node);
+	gf_node_unregister((GF_Node *) p->coord, node);
+	gf_node_unregister((GF_Node *) p->normal, node);
 	gf_sg_mfint32_del(p->stripCount);
-	gf_node_unregister((GF_Node *) p->texCoord, node);	
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->texCoord, node);
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -13992,7 +13992,7 @@ static void Viewpoint_Del(GF_Node *node)
 {
 	X_Viewpoint *p = (X_Viewpoint *) node;
 	gf_sg_sfstring_del(p->description);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -14120,7 +14120,7 @@ static GF_Node *Viewpoint_Create()
 static void VisibilitySensor_Del(GF_Node *node)
 {
 	X_VisibilitySensor *p = (X_VisibilitySensor *) node;
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 
@@ -14223,7 +14223,7 @@ static void WorldInfo_Del(GF_Node *node)
 	X_WorldInfo *p = (X_WorldInfo *) node;
 	gf_sg_mfstring_del(p->info);
 	gf_sg_sfstring_del(p->title);
-	gf_node_unregister((GF_Node *) p->metadata, node);	
+	gf_node_unregister((GF_Node *) p->metadata, node);
 	gf_node_free((GF_Node *)p);
 }
 

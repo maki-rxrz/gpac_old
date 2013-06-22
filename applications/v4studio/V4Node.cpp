@@ -1,6 +1,6 @@
 /*
   V4Node.cpp
- 
+
     Implements V4Node class
 */
 
@@ -16,7 +16,7 @@ V4Node::V4Node(const u32 _NodeID, GF_Node * _node) : NodeID(_NodeID), node(_node
 
 // GetID --
 u32 V4Node::GetID() const {
-  return NodeID;  
+  return NodeID;
 }
 
 
@@ -28,7 +28,7 @@ GF_Node * V4Node::GetNode() const {
 
 // IsAliveAt -- check all aparitions
 bool V4Node::IsAliveAt(const u32 frame) {
-  std::list<segment>::iterator i; 
+  std::list<segment>::iterator i;
 
   for (i = lifeSpan.begin(); i != lifeSpan.end(); i++)
     if ( ((*i).from >= frame) && ((*i).to <= frame) ) return true;
@@ -51,7 +51,7 @@ void V4Node::Disappear(const u32 startFrame, const u32 stopFrame) {
 }
 
 
-// GetName -- 
+// GetName --
 wxString V4Node::GetName() {
   return wxString(gf_node_get_name(node));
 }

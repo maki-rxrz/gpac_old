@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -190,13 +190,13 @@ GF_Err gf_box_dump(void *ptr, FILE * trace)
 		return chpl_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_PDIN:
 		return dpin_dump(a, trace);
-	case GF_ISOM_BOX_TYPE_SBGP: 
+	case GF_ISOM_BOX_TYPE_SBGP:
 		return sbgp_dump(a, trace);
-	case GF_ISOM_BOX_TYPE_SGPD: 
+	case GF_ISOM_BOX_TYPE_SGPD:
 		return sgpd_dump(a, trace);
-	case GF_ISOM_BOX_TYPE_SAIZ: 
+	case GF_ISOM_BOX_TYPE_SAIZ:
 		return saiz_dump(a, trace);
-	case GF_ISOM_BOX_TYPE_SAIO: 
+	case GF_ISOM_BOX_TYPE_SAIO:
 		return saio_dump(a, trace);
 
 	case GF_ISOM_BOX_TYPE_RTP_STSD:
@@ -250,8 +250,8 @@ GF_Err gf_box_dump(void *ptr, FILE * trace)
 	case GF_ISOM_BOX_TYPE_NAME:
 		return name_dump(a, trace);
 
-	case GF_ISOM_BOX_TYPE_FTYP: 
-	case GF_ISOM_BOX_TYPE_STYP: 
+	case GF_ISOM_BOX_TYPE_FTYP:
+	case GF_ISOM_BOX_TYPE_STYP:
         return ftyp_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_PADB:
 		return padb_dump(a, trace);
@@ -274,9 +274,9 @@ GF_Err gf_box_dump(void *ptr, FILE * trace)
 	case GF_ISOM_BOX_TYPE_TRUN:
 		return trun_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_TFDT:
-		return tfdt_dump(a, trace);		
+		return tfdt_dump(a, trace);
 #endif
-	
+
 	case GF_ISOM_BOX_TYPE_SUBS:
 		return subs_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_RVCC:
@@ -302,29 +302,29 @@ GF_Err gf_box_dump(void *ptr, FILE * trace)
 	case GF_ISOM_BOX_TYPE_D263:
 		return gppc_dump(a, trace);
 
-	case GF_ISOM_BOX_TYPE_AVCC: 
-	case GF_ISOM_BOX_TYPE_SVCC: 
+	case GF_ISOM_BOX_TYPE_AVCC:
+	case GF_ISOM_BOX_TYPE_SVCC:
 		return avcc_dump(a, trace);
-	case GF_ISOM_BOX_TYPE_HVCC: 
+	case GF_ISOM_BOX_TYPE_HVCC:
 		return hvcc_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_BTRT:
 		return btrt_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_M4DS:
 		return m4ds_dump(a, trace);
-	case GF_ISOM_BOX_TYPE_AVC1: 
-	case GF_ISOM_BOX_TYPE_AVC2: 
+	case GF_ISOM_BOX_TYPE_AVC1:
+	case GF_ISOM_BOX_TYPE_AVC2:
 	case GF_ISOM_BOX_TYPE_AVC3:
 	case GF_ISOM_BOX_TYPE_AVC4:
-	case GF_ISOM_BOX_TYPE_SVC1: 
-	case GF_ISOM_BOX_TYPE_HVC1: 
-	case GF_ISOM_BOX_TYPE_HEV1: 
+	case GF_ISOM_BOX_TYPE_SVC1:
+	case GF_ISOM_BOX_TYPE_HVC1:
+	case GF_ISOM_BOX_TYPE_HEV1:
 		return mp4v_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_PASP:
 		return pasp_dump(a, trace);
 
 	case GF_ISOM_BOX_TYPE_FTAB:
 		return ftab_dump(a, trace);
-	case GF_ISOM_BOX_TYPE_TX3G: 
+	case GF_ISOM_BOX_TYPE_TX3G:
 		return tx3g_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_TEXT:
 		return text_dump(a, trace);
@@ -475,8 +475,8 @@ GF_Err gf_box_dump(void *ptr, FILE * trace)
 		case GF_ISOM_BOX_UUID_TENC: return piff_tenc_dump(a, trace);
 		case GF_ISOM_BOX_UUID_PSEC: return piff_psec_dump(a, trace);
 		case GF_ISOM_BOX_UUID_PSSH: return piff_pssh_dump(a, trace);
-		case GF_ISOM_BOX_UUID_TFRF: 
-		case GF_ISOM_BOX_UUID_TFXD: 
+		case GF_ISOM_BOX_UUID_TFRF:
+		case GF_ISOM_BOX_UUID_TFXD:
 		default:
 			return defa_dump(a, trace);
 		}
@@ -492,8 +492,8 @@ GF_Err gf_box_dump(void *ptr, FILE * trace)
 		return vtte_dump(a, trace);
 	case GF_ISOM_BOX_TYPE_WVTT:
 		return wvtt_dump(a, trace);
-		
-	default: 
+
+	default:
 		return defa_dump(a, trace);
 	}
 }
@@ -515,7 +515,7 @@ void gf_box_dump_done(char *name, GF_Box *ptr, FILE *trace)
 	if (ptr && ptr->other_boxes) {
 		gf_box_array_dump(ptr->other_boxes, trace);
 	}
-	if (name) 
+	if (name)
 		fprintf(trace, "</%s>\n", name);
 }
 
@@ -758,7 +758,7 @@ GF_Err stbl_dump(GF_Box *a, FILE * trace)
 	if (p->Fragments) gf_box_dump(p->Fragments, trace);
 	if (p->sampleGroupsDescription) gf_box_array_dump(p->sampleGroupsDescription, trace);
 	if (p->sampleGroups) gf_box_array_dump(p->sampleGroups, trace);
-	
+
 	gf_box_dump_done("SampleTableBox", a, trace);
 	return GF_OK;
 }
@@ -1645,7 +1645,7 @@ GF_Err avcc_dump(GF_Box *a, FILE * trace)
 	fprintf(trace, "<%sDecoderConfigurationRecord configurationVersion=\"%d\" AVCProfileIndication=\"%d\" profile_compatibility=\"%d\" AVCLevelIndication=\"%d\" nal_unit_size=\"%d\"",
 					name, p->config->configurationVersion, p->config->AVCProfileIndication, p->config->profile_compatibility, p->config->AVCLevelIndication, p->config->nal_unit_size);
 
-	if (p->type==GF_ISOM_BOX_TYPE_SVCC) 
+	if (p->type==GF_ISOM_BOX_TYPE_SVCC)
 		fprintf(trace, " complete_representation=\"%d\"", p->config->complete_representation);
 
 	if (p->type==GF_ISOM_BOX_TYPE_AVCC) {
@@ -3536,7 +3536,7 @@ GF_Err asrt_dump(GF_Box *a, FILE * trace)
 	fprintf(trace, "<AdobeSegmentRunTableBox>\n");
 	DumpBox(a, trace);
 	gf_full_box_dump(a, trace);
-	
+
 	for (i=0; i<p->quality_entry_count; i++) {
 		char *str = (char*)gf_list_get(p->quality_segment_url_modifiers, i);
 		fprintf(trace, "<QualityEntry>%s</QualityEntry>\n", str);
@@ -3828,7 +3828,7 @@ GF_Err sidx_dump(GF_Box *a, FILE * trace)
 	fprintf(trace, "<SegmentIndexBox reference_ID=\"%d\" timescale=\"%d\" earliest_presentation_time=\""LLD"\" first_offset=\""LLD"\">\n", p->reference_ID, p->timescale, p->earliest_presentation_time, p->first_offset);
 	DumpBox(a, trace);
 	gf_full_box_dump(a, trace);
-	
+
 	for (i=0; i<p->nb_refs; i++) {
 		fprintf(trace, "<Reference type=\"%d\" size=\"%d\" duration=\"%d\" startsWithSAP=\"%d\" SAP_type=\"%d\" SAPDeltaTime=\"%d\"/>\n", p->refs[i].reference_type, p->refs[i].reference_size, p->refs[i].subsegment_duration, p->refs[i].starts_with_SAP, p->refs[i].SAP_type, p->refs[i].SAP_delta_time);
 	}
@@ -3842,7 +3842,7 @@ GF_Err pcrb_dump(GF_Box *a, FILE * trace)
 	GF_PcrInfoBox *p = (GF_PcrInfoBox *)a;
 	fprintf(trace, "<MPEG2TSPCRInfoBox subsegment_count=\"%d\">\n", p->subsegment_count);
 	DumpBox(a, trace);
-	
+
 	for (i=0; i<p->subsegment_count; i++) {
 		fprintf(trace, "<PCRInfo PCR=\""LLU"\" />\n", p->pcr_values[i]);
 	}
@@ -3872,11 +3872,11 @@ GF_Err subs_dump(GF_Box *a, FILE * trace)
 		fprintf(trace, "<SampleEntry SampleDelta=\"%d\" SubSampleCount=\"%d\">\n", pSamp->sample_delta, subsample_count);
 
 		for (j=0; j<subsample_count; j++) {
-			pSubSamp = (GF_SubSampleEntry*) gf_list_get(pSamp->SubSamples, j);	
+			pSubSamp = (GF_SubSampleEntry*) gf_list_get(pSamp->SubSamples, j);
 			fprintf(trace, "<SubSample Size=\"%u\" Priority=\"%u\" Discardable=\"%d\" Reserved=\"%08X\"/>\n", pSubSamp->subsample_size, pSubSamp->subsample_priority, pSubSamp->discardable, pSubSamp->reserved);
 		}
 		fprintf(trace, "</SampleEntry>\n");
-	} 
+	}
 
 	gf_box_dump_done("SubSampleInformationBox", a, trace);
 	return GF_OK;
@@ -4109,12 +4109,12 @@ GF_Err piff_psec_dump(GF_Box *a, FILE * trace)
 					fprintf(trace, "\"");
 				}
 				fprintf(trace, ">\n");
-				
+
 				for (j=0; j<cenc_sample->subsample_count; j++) {
 					fprintf(trace, "<PIFFSubSampleEncryptionEntry NumClearBytes=\"%d\" NumEncryptedBytes=\"%d\"/>\n", cenc_sample->subsamples[j].bytes_clear_data, cenc_sample->subsamples[j].bytes_encrypted_data);
 				}
 				fprintf(trace, "</PIFFSampleEncryptionEntry>\n");
-	
+
 				gf_isom_cenc_sample_del(cenc_sample);
 			}
 		}

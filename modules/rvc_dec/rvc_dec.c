@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2010-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -46,7 +46,7 @@ typedef struct{
 	int Width;
 	int Height;
 	unsigned char* pY[1];
-	unsigned char* pU[1]; 
+	unsigned char* pU[1];
 	unsigned char* pV[1];
 } RVCFRAME;
 
@@ -74,13 +74,13 @@ static GF_Err RVCD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 	s32 res;
 	char Picture;
 	RVCDec *ctx = (RVCDec*) ifcg->privateStack;
-	char* VTLFolder; 
-	char *XDF_doc = NULL; 
+	char* VTLFolder;
+	char *XDF_doc = NULL;
 	int isAVCFile;
 
 	/*not supported in this version*/
 	if (esd->dependsOnESID) return GF_NOT_SUPPORTED;
-	
+
 	ctx->ES_ID = esd->ESID;
 	ctx->width = ctx->height = ctx->out_size = 0;
 
@@ -114,7 +114,7 @@ static GF_Err RVCD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 		fclose(f);
 		XDF_doc[size]=0;
 	} else {
-		if (!esd->decoderConfig->rvc_config) 
+		if (!esd->decoderConfig->rvc_config)
 			return GF_NOT_SUPPORTED;
 		XDF_doc = esd->decoderConfig->rvc_config->data;
 	}
@@ -131,9 +131,9 @@ static GF_Err RVCD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 		esd->decoderConfig->rvc_config->data = NULL;
 		esd->decoderConfig->rvc_config->dataLength = 0;
 	}
-		
+
 	/*decoder config not known, output buffers will be reconfigured at run-time*/
-	if (!esd->decoderConfig->decoderSpecificInfo || !esd->decoderConfig->decoderSpecificInfo->data) 
+	if (!esd->decoderConfig->decoderSpecificInfo || !esd->decoderConfig->decoderSpecificInfo->data)
 		return GF_OK;
 
 	/*initialize the decoder */
@@ -141,7 +141,7 @@ static GF_Err RVCD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 		GF_AVCConfig *cfg = gf_odf_avc_cfg_read(esd->decoderConfig->decoderSpecificInfo->data, esd->decoderConfig->decoderSpecificInfo->dataLength);
 		if (!cfg) return GF_NON_COMPLIANT_BITSTREAM;
 		ctx->nalu_size_length = cfg->nal_unit_size;
-		
+
 		/*decode all NALUs*/
 		count = gf_list_count(cfg->sequenceParameterSets);
 		for (i=0; i<count; i++) {
@@ -159,12 +159,12 @@ static GF_Err RVCD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 				}
 			}
 			/* call decode - warning for AVC: the data blocks do not contain startcode prefixes (00000001), you may need to add them) */
-			
+
 			res = rvc_decode(slc->data, slc->size, &Picture, 1);
 			if (res<0) {
 				GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[SVC Decoder] Error decoding SPS %d\n", res));
 			}
-			
+
 		}
 
 		count = gf_list_count(cfg->pictureParameterSets);
@@ -172,12 +172,12 @@ static GF_Err RVCD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 			GF_AVCConfigSlot *slc = gf_list_get(cfg->pictureParameterSets, i);
 			/*same remark as above*/
 
-			
+
 			res = rvc_decode(slc->data, slc->size, &Picture, 1);
 			if (res<0) {
 				GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[SVC Decoder] Error decoding PPS %d\n", res));
 			}
-			
+
 		}
 
 		gf_odf_avc_cfg_del(cfg);
@@ -191,22 +191,22 @@ static GF_Err RVCD_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 		ctx->width = dsi.width;
 		ctx->height = dsi.height;
 		ctx->pixel_ar = (dsi.par_num<<16) | dsi.par_den;
-		
-		
+
+
 		res = rvc_decode(esd->decoderConfig->decoderSpecificInfo->data, esd->decoderConfig->decoderSpecificInfo->dataLength, &Picture, 1);
 		if (res<0) {
 			GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[SVC Decoder] Error decoding PPS %d\n", res));
 		}
-		
+
 
 	} else {
 		/*unknown type, do what you want*/
-		
+
 		res = rvc_decode(esd->decoderConfig->decoderSpecificInfo->data, esd->decoderConfig->decoderSpecificInfo->dataLength, &Picture, 1);
 		if (res<0) {
 			GF_LOG(GF_LOG_ERROR, GF_LOG_CODEC, ("[SVC Decoder] Error decoding PPS %d\n", res));
 		}
-		
+
 	}
 	/*adjust stride to what you decoder uses*/
 	ctx->stride = ctx->width;
@@ -278,7 +278,7 @@ static GF_Err RVCD_SetCapabilities(GF_BaseDecoder *ifcg, GF_CodecCapability capa
 
 int bookmark = 0;
 
-static GF_Err RVCD_ProcessData(GF_MediaDecoder *ifcg, 
+static GF_Err RVCD_ProcessData(GF_MediaDecoder *ifcg,
 		char *inBuffer, u32 inBufferLength,
 		u16 ES_ID,
 		char *outBuffer, u32 *outBufferLength,
@@ -299,12 +299,12 @@ static GF_Err RVCD_ProcessData(GF_MediaDecoder *ifcg,
 	//if your decoder outputs directly in the memory passed, setup pointers for your decoder output picture
 
 	got_pic = 0;
-	
+
 	if (ctx->nalu_size_length) {
 		u32 i, nalu_size = 0;
 		u8 *ptr = inBuffer;
 		int nalNumber = 1;
-		
+
 		while (inBufferLength) {
 			for (i=0; i<ctx->nalu_size_length; i++) {
 				nalu_size = (nalu_size<<8) + ptr[i];
@@ -312,7 +312,7 @@ static GF_Err RVCD_ProcessData(GF_MediaDecoder *ifcg,
 			ptr += ctx->nalu_size_length;
 
 			//same remark as above regardin start codes
-			
+
 			if(nalNumber > bookmark){
 				got_pic = rvc_decode(ptr, nalu_size, outBuffer, !got_pic);
 				bookmark ++;
@@ -328,7 +328,7 @@ static GF_Err RVCD_ProcessData(GF_MediaDecoder *ifcg,
 			nalNumber ++;
 
 			ptr += nalu_size;
-			if (inBufferLength < nalu_size + ctx->nalu_size_length) 
+			if (inBufferLength < nalu_size + ctx->nalu_size_length)
 				break;
 
 			inBufferLength -= nalu_size + ctx->nalu_size_length;
@@ -338,7 +338,7 @@ static GF_Err RVCD_ProcessData(GF_MediaDecoder *ifcg,
 	} else {
 		u32 nalu_size = 0;
 		u8 *ptr = inBuffer;
-		
+
 
 		got_pic = rvc_decode(ptr, inBufferLength, outBuffer, 1);
 	}
@@ -346,7 +346,7 @@ static GF_Err RVCD_ProcessData(GF_MediaDecoder *ifcg,
 	//if (got_pic!=1) return GF_OK;
 
 	/*if size changed during the decoding, resize the composition buffer*/
-	/*if ((pic.Width != ctx->width) || (pic.Height!=ctx->height)) 
+	/*if ((pic.Width != ctx->width) || (pic.Height!=ctx->height))
 	{
 		ctx->width = pic.Width;
 		ctx->stride = pic.Width;
@@ -355,14 +355,14 @@ static GF_Err RVCD_ProcessData(GF_MediaDecoder *ifcg,
 		*outBufferLength = ctx->out_size;
 		return GF_BUFFER_TOO_SMALL;
 	}
-	
+
 	*outBufferLength = ctx->out_size;*/
 
 	/*if your decoder does not output directly in the memory passed, copy over the data*/
-	
-	/*memcpy(outBuffer, pic.pY[0], ctx->stride*ctx->height); 
+
+	/*memcpy(outBuffer, pic.pY[0], ctx->stride*ctx->height);
 	memcpy(outBuffer + ctx->stride * ctx->height, pic.pU[0], ctx->stride*ctx->height/4);
-	memcpy(outBuffer + 5*ctx->stride * ctx->height/4, pic.pV[0], ctx->stride*ctx->height/4);*/	
+	memcpy(outBuffer + 5*ctx->stride * ctx->height/4, pic.pV[0], ctx->stride*ctx->height/4);*/
 
 	if(got_pic>1) return GF_PACKED_FRAMES;
 	return GF_OK;
@@ -391,14 +391,14 @@ GF_BaseDecoder *NewRVCDec()
 {
 	GF_MediaDecoder *ifcd;
 	RVCDec *dec;
-	
+
 	GF_SAFEALLOC(ifcd, GF_MediaDecoder);
 	GF_SAFEALLOC(dec, RVCDec);
 	GF_REGISTER_MODULE_INTERFACE(ifcd, GF_MEDIA_DECODER_INTERFACE, "RVC Decoder", "gpac distribution")
 
 	ifcd->privateStack = dec;
 
-	/*setup our own interface*/	
+	/*setup our own interface*/
 	ifcd->AttachStream = RVCD_AttachStream;
 	ifcd->DetachStream = RVCD_DetachStream;
 	ifcd->GetCapabilities = RVCD_GetCapabilities;
@@ -417,7 +417,7 @@ void DeleteRVCDec(GF_BaseDecoder *ifcg)
 }
 
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 #ifndef GPAC_DISABLE_AV_PARSERS
@@ -425,11 +425,11 @@ const u32 *QueryInterfaces()
 #endif
 		0
 	};
-	return si; 
+	return si;
 }
 
 GPAC_MODULE_EXPORT
-GF_BaseInterface *LoadInterface(u32 InterfaceType) 
+GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
 #ifndef GPAC_DISABLE_AV_PARSERS
 	if (InterfaceType == GF_MEDIA_DECODER_INTERFACE) return (GF_BaseInterface *)NewRVCDec();
@@ -442,7 +442,7 @@ void ShutdownInterface(GF_BaseInterface *ifce)
 {
 	switch (ifce->InterfaceType) {
 #ifndef GPAC_DISABLE_AV_PARSERS
-	case GF_MEDIA_DECODER_INTERFACE: 
+	case GF_MEDIA_DECODER_INTERFACE:
 		DeleteRVCDec((GF_BaseDecoder*)ifce);
 		break;
 #endif

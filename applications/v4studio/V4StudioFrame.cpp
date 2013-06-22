@@ -1,4 +1,4 @@
-#include "safe_include.h" 
+#include "safe_include.h"
 
 #include "wx/wxprec.h"
 
@@ -204,12 +204,12 @@ void V4StudioFrame::OnChangeLength(wxCommandEvent &event) {
 	SceneGraphChanged();
 }
 
-void V4StudioFrame::OnChangeSize(wxCommandEvent &event) 
+void V4StudioFrame::OnChangeSize(wxCommandEvent &event)
 {
 	if (!m_pV4sm) return;
 	u32 w, h;
 	wxSize sceneSize;
-	m_pV4sm->GetSceneSize(sceneSize);	
+	m_pV4sm->GetSceneSize(sceneSize);
 	w = sceneSize.GetX();
 	h = sceneSize.GetY();
 	wxString sSize;
@@ -228,7 +228,7 @@ void V4StudioFrame::OnChangeSize(wxCommandEvent &event)
 }
 
 // Dispatchs the new scene graph to all the sub components who need it.
-void V4StudioFrame::SceneGraphChanged() 
+void V4StudioFrame::SceneGraphChanged()
 {
 	m_parentSelection = NULL;
 	m_selection = (!m_pV4sm ? NULL : m_pV4sm->GetRootNode());
@@ -262,7 +262,7 @@ void V4StudioFrame::do_layout()
 	sizer_8->Add(fieldView, 1, wxEXPAND, 0);
 
 	wxBoxSizer* sizer_9 = new wxBoxSizer(wxHORIZONTAL);
-	
+
 	sizer_9->Add(m_pLowLevelNodeToolbar, 0, wxEXPAND, 0);
 /*
 	if (m_uSelectedNodeToolBar == 0) sizer_9->Add(m_pLowLevelNodeToolbar, 0, wxEXPAND, 0);
@@ -367,7 +367,7 @@ void V4StudioFrame::OnFileOpen(wxCommandEvent &event)
 		if (m_pV4sm) delete m_pV4sm;
 		m_pV4sm = new V4SceneManager(this);
 		m_pV4sm->LoadFile(dlg->GetPath().c_str());
-		
+
 		m_pMainToolbar->EnableTool(TOOL_ADD_TO_TL, true);
 		m_pMainToolbar->EnableTool(TOOL_VIEW_DICT, true);
 		m_pMainToolbar->EnableTool(TOOL_FILE_SAVE, true);
@@ -458,7 +458,7 @@ void V4StudioFrame::OnHighLevelTools(wxCommandEvent &event)
 /**********************************************/
 /*  Functions to add components to the scene  */
 /**********************************************/
-void V4StudioFrame::OnNewOrderedGroup(wxCommandEvent &event) 
+void V4StudioFrame::OnNewOrderedGroup(wxCommandEvent &event)
 {
 	if (!m_pV4sm) return;
 	GF_Node *top = m_pV4sm->GetRootNode();
@@ -476,7 +476,7 @@ void V4StudioFrame::OnNewOrderedGroup(wxCommandEvent &event)
 	Update();
 }
 
-void V4StudioFrame::OnNewLayer2D(wxCommandEvent &event) 
+void V4StudioFrame::OnNewLayer2D(wxCommandEvent &event)
 {
 	if (!m_pV4sm) return;
 	GF_Node *top = m_pV4sm->GetRootNode();
@@ -494,7 +494,7 @@ void V4StudioFrame::OnNewLayer2D(wxCommandEvent &event)
 	Update();
 }
 
-void V4StudioFrame::OnNewText(wxCommandEvent &event) 
+void V4StudioFrame::OnNewText(wxCommandEvent &event)
 {
 	if (!m_pV4sm) return;
 	GF_Node *text = m_pV4sm->NewNode(TAG_MPEG4_Text);
@@ -506,7 +506,7 @@ void V4StudioFrame::OnNewText(wxCommandEvent &event)
 	Update();
 }
 
-void V4StudioFrame::OnNewFontStyle(wxCommandEvent &event) 
+void V4StudioFrame::OnNewFontStyle(wxCommandEvent &event)
 {
 	if (!m_pV4sm) return;
 	GF_Node *fs = m_pV4sm->NewNode(TAG_MPEG4_FontStyle);
@@ -518,7 +518,7 @@ void V4StudioFrame::OnNewFontStyle(wxCommandEvent &event)
 	Update();
 }
 
-void V4StudioFrame::OnNewRect(wxCommandEvent &event) 
+void V4StudioFrame::OnNewRect(wxCommandEvent &event)
 {
 	if (!m_pV4sm) return;
 	GF_Node *rect = m_pV4sm->NewNode(TAG_MPEG4_Rectangle);
@@ -530,7 +530,7 @@ void V4StudioFrame::OnNewRect(wxCommandEvent &event)
 	Update();
 }
 
-void V4StudioFrame::OnNewCircle(wxCommandEvent &event) 
+void V4StudioFrame::OnNewCircle(wxCommandEvent &event)
 {
 	if (!m_pV4sm) return;
 	GF_Node *circle = m_pV4sm->NewNode(TAG_MPEG4_Circle);
@@ -590,7 +590,7 @@ void V4StudioFrame::OnNewShape(wxCommandEvent &event)
 	Update();
 }
 
-void V4StudioFrame::OnNewAppearance(wxCommandEvent &event) 
+void V4StudioFrame::OnNewAppearance(wxCommandEvent &event)
 {
 	if (!m_pV4sm) return;
 	GF_Node *app = m_pV4sm->NewNode(TAG_MPEG4_Appearance);
@@ -703,7 +703,7 @@ void V4StudioFrame::OnNewMovieTexture(wxCommandEvent &event)
 	Update();
 }
 
-void V4StudioFrame::UpdateSelection(GF_Node *node, GF_Node *parent) 
+void V4StudioFrame::UpdateSelection(GF_Node *node, GF_Node *parent)
 {
 	SetSelection(node);
 	SetParentSelection(parent);
@@ -717,7 +717,7 @@ void V4StudioFrame::UpdateSelection(GF_Node *node, GF_Node *parent)
 
 
 // Update display
-void V4StudioFrame::Update() 
+void V4StudioFrame::Update()
 {
 	if (m_pV4sm){
 		if (m_pV4sm->GetGPACPanel()) m_pV4sm->GetGPACPanel()->Update();
@@ -730,14 +730,14 @@ void V4StudioFrame::Update()
 
 void V4StudioFrame::UpdateToolBar()
 {
-	bool enableGeometry   = false, 
-		 enableAppearance = false, 
-		 enableMaterial   = false, 
+	bool enableGeometry   = false,
+		 enableAppearance = false,
+		 enableMaterial   = false,
 		 enableGroupNode  = false,
-		 enableLineProps  = false, 
-		 enableFontStyle  = false, 
-		 enable2DNode     = false, 
-		 enableTexture    = false, 
+		 enableLineProps  = false,
+		 enableFontStyle  = false,
+		 enable2DNode     = false,
+		 enableTexture    = false,
 		 enableTopNode    = false,
 		 enableBackground = false;
 
@@ -781,7 +781,7 @@ void V4StudioFrame::UpdateToolBar()
 		} else {
 			enableTopNode = true;
 		}
-	} 
+	}
 
 	m_pLowLevelNodeToolbar->EnableTool(TOOL_NEW_ORDEREDGROUP, enableGroupNode || enable2DNode || enableTopNode);
 	m_pLowLevelNodeToolbar->EnableTool(TOOL_NEW_LAYER2D, enableGroupNode || enable2DNode || enableTopNode);
@@ -896,7 +896,7 @@ void V4StudioFrame::OnAddToTimeLine(wxCommandEvent &event) {
 	// if object has no node id then create one
 	if (! gf_node_get_id(m_selection) )
 		m_pV4sm->CreateIDandAddToPool(m_selection);
-	
+
 	// Adds the node to the dictionnary
 //	m_pV4sm->AddToDictionnary(m_selection);
 
@@ -909,7 +909,7 @@ void V4StudioFrame::OnAddToTimeLine(wxCommandEvent &event) {
 
 // NextFrame -- goto next frame
 void V4StudioFrame::NextFrame(wxCommandEvent &event) {
-	//gf_term_play_from_time(gpacPanel->GetMPEG4Terminal(), 1000);  
+	//gf_term_play_from_time(gpacPanel->GetMPEG4Terminal(), 1000);
 	m_selection = NULL;
 	Update();
 }
@@ -926,7 +926,7 @@ void V4StudioFrame::SwitchView(wxCommandEvent &event) {
 
 // changes time to the frame specified, implies playing the scene up to that point
 void V4StudioFrame::SetFrame(unsigned long _frame) {
-	// TODO : 
+	// TODO :
 	m_frame = _frame;
 }
 

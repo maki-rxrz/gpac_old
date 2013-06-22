@@ -18,7 +18,7 @@ endif
 #common obj
 OBJS=mpd_in.o
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_mpd_in.$(DYN_LIB_SUFFIX)
 
@@ -31,13 +31,13 @@ ifeq ($(STATICBUILD),yes)
 	$(CC) $(SHFLAGS) $(LDFLAGS) -o ../../bin/gcc/gm_mpegts_in-static.$(DYN_LIB_SUFFIX) $(OBJS) $(EXTRALIBS) -L../../bin/gcc -lgpac_static
 endif
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean
