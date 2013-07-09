@@ -46,6 +46,25 @@ typedef pthread_t TH_HANDLE ;
 
 #endif
 
+#if defined(WIN32) && defined(__MINGW32__)
+#undef __try
+#undef __catch
+#undef __except
+#undef __throw_exception_again
+
+#ifdef __EXCEPTIONS
+# define __try          try
+# define __catch(X)     catch(X)
+# define __except(X)    except(X)
+# define __throw_exception_again throw
+#else
+# define __try          if (1)
+# define __catch(X)     if (0)
+# define __except(X)    if (0)
+# define __throw_exception_again
+#endif
+#endif
+
 
 
 /*********************************************************************
