@@ -82,6 +82,7 @@ typedef struct
 	Bool variable_seg_rad_name;
 
 	Bool fragments_start_with_rap;
+	Bool memory_mode;
 
 	GF_Config *dash_ctx;
 	const char *tmpdir;
@@ -501,7 +502,7 @@ static GF_Err gf_media_isom_segment_file(GF_ISOFile *input, const char *output_f
 		opt = gf_cfg_get_key(dash_cfg->dash_ctx, RepSecName, "BitstreamSwitching");
 		if (opt && !strcmp(opt, "yes")) {
 			is_bs_switching = 1;
-			if (bs_switch_segment) 
+			if (bs_switch_segment)
 				gf_isom_delete(bs_switch_segment);
 			bs_switch_segment = output;
 			bs_switching_is_output = 1;
@@ -517,7 +518,7 @@ static GF_Err gf_media_isom_segment_file(GF_ISOFile *input, const char *output_f
 		sprintf(szMPDTempLine, "    <SegmentTimeline>\n");
 		gf_bs_write_data(mpd_timeline_bs, szMPDTempLine, (u32) strlen(szMPDTempLine));
 	}
-		
+
 	nb_sync = 0;
 	nb_samp = 0;
 	fragmenters = gf_list_new();
@@ -914,7 +915,7 @@ restart_fragmentation_pass:
 				start_range = gf_isom_get_file_size(output);
 				if (seg_rad_name) {
 					gf_media_mpd_format_segment_name(GF_DASH_TEMPLATE_SEGMENT, is_bs_switching, SegmentName, output_file, dash_input->representationID, seg_rad_name, !stricmp(seg_ext, "null") ? NULL : seg_ext, (u64) ( period_duration * dash_cfg->dash_scale + segment_start_time), bandwidth, cur_seg, dash_cfg->use_segment_timeline);
-					e = gf_isom_start_segment(output, SegmentName);
+					e = gf_isom_start_segment(output, SegmentName, dash_cfg->memory_mode);
 
 					gf_dasher_store_segment_info(dash_cfg, SegmentName, period_duration + segment_start_time / (Double) dash_cfg->dash_scale);
 
@@ -936,7 +937,7 @@ restart_fragmentation_pass:
 						}
 					}
 				} else {
-					e = gf_isom_start_segment(output, NULL);
+					e = gf_isom_start_segment(output, NULL, dash_cfg->memory_mode);
 				}
 			}
 
@@ -1415,7 +1416,7 @@ restart_fragmentation_pass:
 		if (!dash_cfg->variable_seg_rad_name && first_in_set) {
 			const char *rad_name = gf_url_get_resource_name(seg_rad_name);
 			gf_media_mpd_format_segment_name(GF_DASH_TEMPLATE_TEMPLATE, is_bs_switching, SegmentName, output_file, dash_input->representationID, rad_name, !stricmp(seg_ext, "null") ? NULL : seg_ext, 0, 0, 0, dash_cfg->use_segment_timeline);
-			fprintf(dash_cfg->mpd, "   <SegmentTemplate timescale=\"%d\" duration=\"%d\" media=\"%s\" startNumber=\"%d\"", mpd_timescale, (u32) (max_segment_duration * mpd_timescale), SegmentName, startNumber - startNumberRewind);	
+			fprintf(dash_cfg->mpd, "   <SegmentTemplate timescale=\"%d\" duration=\"%d\" media=\"%s\" startNumber=\"%d\"", mpd_timescale, (u32) (max_segment_duration * mpd_timescale), SegmentName, startNumber - startNumberRewind);
 			/*in BS switching we share the same IS for all reps*/
 			if (is_bs_switching) {
 				strcpy(SegmentName, bs_switching_segment_name);
@@ -1423,7 +1424,7 @@ restart_fragmentation_pass:
 				gf_media_mpd_format_segment_name(GF_DASH_TEMPLATE_INITIALIZATION_TEMPLATE, is_bs_switching, SegmentName, output_file, dash_input->representationID, rad_name, !stricmp(seg_ext, "null") ? NULL : "mp4", 0, 0, 0, dash_cfg->use_segment_timeline);
 			}
 			fprintf(dash_cfg->mpd, " initialization=\"%s\"", SegmentName);
-			if (presentationTimeOffset) 
+			if (presentationTimeOffset)
 				fprintf(dash_cfg->mpd, " presentationTimeOffset=\"%d\"", presentationTimeOffset);
 
 			if (mpd_timeline_bs) {
@@ -1442,7 +1443,7 @@ restart_fragmentation_pass:
 		/*in BS switching we share the same IS for all reps, write the SegmentTemplate for the init segment*/
 		else if (is_bs_switching && first_in_set) {
 			fprintf(dash_cfg->mpd, "   <SegmentTemplate initialization=\"%s\"", bs_switching_segment_name);
-			if (presentationTimeOffset) 
+			if (presentationTimeOffset)
 				fprintf(dash_cfg->mpd, " presentationTimeOffset=\"%d\"", presentationTimeOffset);
 
 			if (mpd_timeline_bs) {
@@ -1475,7 +1476,7 @@ restart_fragmentation_pass:
 	fprintf(dash_cfg->mpd, "   <Representation ");
 	if (dash_input->representationID) fprintf(dash_cfg->mpd, "id=\"%s\"", dash_input->representationID);
 	else fprintf(dash_cfg->mpd, "id=\"%p\"", output);
-		
+
 	fprintf(dash_cfg->mpd, " mimeType=\"%s/mp4\" codecs=\"%s\"", audio_only ? "audio" : "video", szCodecs);
 	if (width && height) {
 		fprintf(dash_cfg->mpd, " width=\"%d\" height=\"%d\"", width, height);
@@ -1537,7 +1538,7 @@ restart_fragmentation_pass:
 				gf_media_mpd_format_segment_name(GF_DASH_TEMPLATE_INITIALIZATION_TEMPLATE, is_bs_switching, SegmentName, output_file, dash_input->representationID, rad_name, !stricmp(seg_ext, "null") ? NULL : "mp4", 0, 0, 0, dash_cfg->use_segment_timeline);
 				fprintf(dash_cfg->mpd, " initialization=\"%s\"", SegmentName);
 			}
-			if (presentationTimeOffset) 
+			if (presentationTimeOffset)
 				fprintf(dash_cfg->mpd, " presentationTimeOffset=\"%d\"", presentationTimeOffset);
 			fprintf(dash_cfg->mpd, "/>\n");
 		}
@@ -1546,7 +1547,7 @@ restart_fragmentation_pass:
 		fprintf(dash_cfg->mpd, "    <SegmentBase indexRangeExact=\"true\" indexRange=\"%d-%d\"", index_start_range, index_end_range);
 		if (presentationTimeOffset)
 			fprintf(dash_cfg->mpd, " presentationTimeOffset=\"%d\"", presentationTimeOffset);
-		fprintf(dash_cfg->mpd, "/>\n");	
+		fprintf(dash_cfg->mpd, "/>\n");
 	} else {
 		if (!seg_rad_name) {
 			fprintf(dash_cfg->mpd, "    <BaseURL>%s</BaseURL>\n", gf_url_get_resource_name( gf_isom_get_filename(output) ) );
@@ -2439,7 +2440,7 @@ static void m2ts_check_indexing(GF_TSSegmenter *index_info)
 	if (index_info->segment_at_rap) {
 		s32 diff = (s32) ((s64) current_duration - (s64) segment_duration);
 		if (diff<0)diff=-diff;
-		//check if below 10% limit 
+		//check if below 10% limit
 		if (diff/900 < 5) {
 			//below 10% limit of segment duration, if we have a RAP flush now
 			if (index_info->pes_after_last_pat_is_sap)
@@ -2482,7 +2483,7 @@ static void dash_m2ts_event_check_pat(GF_M2TS_Demuxer *ts, u32 evt_type, void *p
 			for (i=0; i<count; i++) {
 				GF_M2TS_ES *es = (GF_M2TS_ES *)gf_list_get(prog->streams, i);
 				if (es->flags&GF_M2TS_ES_IS_PES) {
-					GF_M2TS_PES *pes = (GF_M2TS_PES *)es; 
+					GF_M2TS_PES *pes = (GF_M2TS_PES *)es;
 					if (!pes->aud_sr && !pes->vid_w) {
 						done = 0;
 						break;
@@ -3141,7 +3142,7 @@ static GF_Err dasher_mp2t_segment_file(GF_DashSegInput *dash_input, const char *
 
 		sprintf(szOpt, LLU, ts_seg.suspend_indexing);
 		gf_cfg_set_key(dash_cfg->dash_ctx, szSectionName, "ByteOffset", ts_seg.suspend_indexing ? szOpt : NULL);
-		
+
 		sprintf(szOpt, LLD, ts_seg.duration_at_last_pass);
 		gf_cfg_set_key(dash_cfg->dash_ctx, szSectionName, "DurationAtLastPass", ts_seg.suspend_indexing ? szOpt : NULL);
 
@@ -3663,7 +3664,7 @@ GF_Err gf_dasher_segment_files(const char *mpdfile, GF_DashSegmenterInput *input
 							   Bool use_url_template, Bool use_segment_timeline,  Bool single_segment, Bool single_file, GF_DashSwitchingMode bitstream_switching,
 							   Bool seg_at_rap, Double dash_duration, char *seg_name, char *seg_ext, u32 segment_marker_4cc,
 							   Double frag_duration, s32 subsegs_per_sidx, Bool daisy_chain_sidx, Bool frag_at_rap, const char *tmpdir,
-							   GF_Config *dash_ctx, u32 dash_dynamic, u32 mpd_update_time, u32 time_shift_depth, Double subduration, Double min_buffer, u32 ast_shift_sec, u32 dash_scale)
+							   GF_Config *dash_ctx, u32 dash_dynamic, u32 mpd_update_time, u32 time_shift_depth, Double subduration, Double min_buffer, u32 ast_shift_sec, u32 dash_scale, Bool fragments_in_memory)
 {
 	u32 i, j, segment_mode;
 	char *sep, szSegName[GF_MAX_PATH], szSolvedSegName[GF_MAX_PATH], szTempMPD[GF_MAX_PATH];
@@ -3878,6 +3879,7 @@ GF_Err gf_dasher_segment_files(const char *mpdfile, GF_DashSegmenterInput *input
 	dash_opts.time_shift_depth = (s32) time_shift_depth;
 	dash_opts.segment_marker_4cc = segment_marker_4cc;
 	dash_opts.inband_param_set = ((bitstream_switching == GF_DASH_BSMODE_INBAND) || (bitstream_switching == GF_DASH_BSMODE_SINGLE) ) ? 1 : 0;
+	dash_opts.memory_mode = fragments_in_memory;
 
 	dash_opts.segment_duration = dash_duration * 1000 / dash_scale;
 	dash_opts.subduration = subduration * 1000 / dash_scale;

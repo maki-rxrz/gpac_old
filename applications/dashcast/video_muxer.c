@@ -120,7 +120,7 @@ int dc_gpac_video_isom_open_seg(VideoOutputFile * p_voutf, char * psz_name) {
 
 	GF_Err ret;
 
-	ret = gf_isom_start_segment(p_voutf->p_isof, psz_name);
+	ret = gf_isom_start_segment(p_voutf->p_isof, psz_name, 0);
 	if (ret != GF_OK) {
 		fprintf(stderr, "%s: gf_isom_start_segment\n", gf_error_to_string(ret));
 		return -1;
@@ -308,7 +308,7 @@ int dc_ffmpeg_video_muxer_open(VideoOutputFile * p_voutf, char * psz_name) {
 	p_video_stream->codec->width = p_video_codec_ctx->width; //p_voutf->p_vdata->i_width;
 	p_video_stream->codec->height = p_video_codec_ctx->height; //p_voutf->p_vdata->i_height;
 	{
-		AVRational time_base; 
+		AVRational time_base;
 		time_base.num = p_video_codec_ctx->time_base.num;
 		time_base.den = p_video_codec_ctx->time_base.den;
 		p_video_stream->codec->time_base = time_base;
