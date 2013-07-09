@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *				Authors: Jean Le Feuvre 
+ *				Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2010
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -95,7 +95,7 @@ typedef double jsdouble;
 
 #if defined(USE_FFDEV_17)
 
-#define SMJS_DECL_FUNC_PROP_SET(func_name) JSBool func_name(JSContext *c, JSHandleObject __hobj, JSHandleId __hid, JSBool strict, JSMutableHandleValue __vp) 
+#define SMJS_DECL_FUNC_PROP_SET(func_name) JSBool func_name(JSContext *c, JSHandleObject __hobj, JSHandleId __hid, JSBool strict, JSMutableHandleValue __vp)
 #define SMJS_FUNC_PROP_SET(func_name) SMJS_DECL_FUNC_PROP_SET(func_name) { JSObject *obj = *(__hobj._); jsid id = *(__hid._); jsval *vp = __vp._;
 #define SMJS_FUNC_PROP_SET_NOVP(func_name) SMJS_DECL_FUNC_PROP_SET(func_name) { JSObject *obj = *(__hobj._); jsid id = *(__hid._);
 
@@ -113,7 +113,7 @@ typedef double jsdouble;
 
 #ifdef USE_FFDEV_15
 
-#define SMJS_DECL_FUNC_PROP_SET(func_name) JSBool func_name(JSContext *c, JSHandleObject __hobj, JSHandleId __hid, JSBool strict, jsval *vp) 
+#define SMJS_DECL_FUNC_PROP_SET(func_name) JSBool func_name(JSContext *c, JSHandleObject __hobj, JSHandleId __hid, JSBool strict, jsval *vp)
 #define SMJS_FUNC_PROP_SET(func_name) SMJS_DECL_FUNC_PROP_SET(func_name) { JSObject *obj = *(__hobj._); jsid id = *(__hid._);
 #define SMJS_DECL_FUNC_PROP_GET(func_name) JSBool func_name(JSContext *c, JSHandleObject __hobj, JSHandleId __hid, jsval *vp)
 #define SMJS_FUNC_PROP_GET(func_name) SMJS_DECL_FUNC_PROP_GET( func_name ) { JSObject *obj = *(__hobj._); jsid id = *(__hid._);
@@ -124,8 +124,8 @@ typedef double jsdouble;
 
 #define SMJS_DECL_FUNC_PROP_SET(func_name) JSBool func_name(JSContext *c, JSObject *obj, jsid id, JSBool strict, jsval *vp)
 #define SMJS_FUNC_PROP_SET(func_name) SMJS_DECL_FUNC_PROP_SET( func_name) {
-#define SMJS_DECL_FUNC_PROP_GET(func_name) JSBool func_name(JSContext *c, JSObject *obj, jsid id, jsval *vp) 
-#define SMJS_FUNC_PROP_GET(func_name) SMJS_DECL_FUNC_PROP_GET(func_name) { 
+#define SMJS_DECL_FUNC_PROP_GET(func_name) JSBool func_name(JSContext *c, JSObject *obj, jsid id, jsval *vp)
+#define SMJS_FUNC_PROP_GET(func_name) SMJS_DECL_FUNC_PROP_GET(func_name) {
 #define SMJS_CALL_PROP_STUB() JS_PropertyStub(c, obj, id, vp)
 #define DECL_FINALIZE(func_name) void func_name(JSContext *c, JSObject *obj) {
 
@@ -213,8 +213,8 @@ typedef double jsdouble;
 #define SMJS_DECL_FUNC_PROP_SET(func_name) JSBool func_name(JSContext *c, JSObject *obj, jsval id, jsval *vp)
 #define SMJS_FUNC_PROP_SET(func_name) SMJS_DECL_FUNC_PROP_SET(func_name) {
 #define SMJS_FUNC_PROP_SET_NOVP	SMJS_FUNC_PROP_SET
-#define SMJS_DECL_FUNC_PROP_GET(func_name) JSBool func_name(JSContext *c, JSObject *obj, jsval id, jsval *vp) 
-#define SMJS_FUNC_PROP_GET(func_name) SMJS_DECL_FUNC_PROP_GET( func_name) { 
+#define SMJS_DECL_FUNC_PROP_GET(func_name) JSBool func_name(JSContext *c, JSObject *obj, jsval id, jsval *vp)
+#define SMJS_FUNC_PROP_GET(func_name) SMJS_DECL_FUNC_PROP_GET( func_name) {
 #define DECL_FINALIZE(func_name) void func_name(JSContext *c, JSObject *obj) {
 
 #define SMJS_CALL_PROP_STUB() JS_PropertyStub(c, obj, id, vp)
@@ -226,7 +226,7 @@ typedef double jsdouble;
 #define SMJS_FUNCTION(__name) __name(JSContext *c, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
 #define SMJS_FUNCTION_EXT(__name, __ext) __name(JSContext *c, JSObject *obj, uintN argc, jsval *argv, jsval *rval, __ext)
 #define SMJS_ARGS
-#define SMJS_OBJ	
+#define SMJS_OBJ
 #define SMJS_OBJ_CONSTRUCTOR(__classp)
 #define SMJS_GET_RVAL rval
 #define SMJS_SET_RVAL(__rval) *rval = __rval
@@ -281,7 +281,7 @@ JSBool gf_sg_js_has_instance(JSContext *c, JSObject *obj, jsval val, JSBool *vp)
 	the_class._class.hasInstance = gf_sg_js_has_instance;
 
 
-#define JS_MAKE_DOUBLE(__c, __double)	DOUBLE_TO_JSVAL(JS_NewDouble(__c, __double) ) 
+#define JS_MAKE_DOUBLE(__c, __double)	DOUBLE_TO_JSVAL(JS_NewDouble(__c, __double) )
 
 
 #define GF_JS_InstanceOf(_a, _b, __class, _d) JS_InstanceOf(_a, _b, & (__class)->_class, NULL)

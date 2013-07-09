@@ -2,16 +2,16 @@
 #define _AMR_NB_API_H
 
 enum Mode { MR475 = 0,
-            MR515,            
+            MR515,
             MR59,
             MR67,
             MR74,
             MR795,
             MR102,
-            MR122,            
+            MR122,
 
 	    MRDTX,
-	    
+
             N_MODES     /* number of (SPC) modes */
 
           };

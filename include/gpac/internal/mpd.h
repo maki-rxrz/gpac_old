@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 #ifndef _MPD_H_
 #define _MPD_H_
@@ -30,62 +30,62 @@
 #include <gpac/media_tools.h>
 
 /*TODO*/
-typedef struct 
+typedef struct
 {
 	u32 dummy;
 } GF_MPD_Metrics;
 
 /*TODO*/
-typedef struct 
+typedef struct
 {
 	u32 dummy;
 } GF_MPD_ContentComponent;
 
 /*TODO*/
-typedef struct 
+typedef struct
 {
 	char *scheme_id_uri; /*MANDATORY*/
 	char *value;
 } GF_MPD_Descriptor;
 
 /*TODO*/
-typedef struct 
+typedef struct
 {
 	u32 dummy;
 } GF_MPD_Subset;
 
-typedef struct 
+typedef struct
 {
 	u64 start_time;
 	u32 duration; /*MANDATORY*/
 	u32 repeat_count;
 } GF_MPD_SegmentTimelineEntry;
 
-typedef struct 
+typedef struct
 {
 	GF_List *entries;
 } GF_MPD_SegmentTimeline;
 
-typedef struct 
+typedef struct
 {
 	u64 start_range, end_range;
 } GF_MPD_ByteRange;
 
 
-typedef struct 
+typedef struct
 {
     char *URL;
     char *service_location;
     GF_MPD_ByteRange *byte_range;
 } GF_MPD_BaseURL;
 
-typedef struct 
+typedef struct
 {
     char *sourceURL;
     GF_MPD_ByteRange *byte_range;
 } GF_MPD_URL;
 
-typedef struct 
+typedef struct
 {
     u32 num, den;
 } GF_MPD_Fractional;
@@ -101,7 +101,7 @@ typedef struct
 	GF_MPD_URL *representation_index;	\
 
 
-typedef struct 
+typedef struct
 {
 	GF_MPD_SEGMENT_BASE
 } GF_MPD_SegmentBase;
@@ -114,12 +114,12 @@ typedef struct
 	GF_MPD_SegmentTimeline *segment_timeline;	\
 	GF_MPD_URL *bitstream_switching_url;	\
 
-typedef struct 
+typedef struct
 {
 	GF_MPD_MULTIPLE_SEGMENT_BASE
 } GF_MPD_MultipleSegmentBase;
 
-typedef struct 
+typedef struct
 {
 	char *media;
 	GF_MPD_ByteRange *media_range;
@@ -128,9 +128,9 @@ typedef struct
 	u64 duration;
 } GF_MPD_SegmentURL;
 
-typedef struct 
+typedef struct
 {
-	GF_MPD_MULTIPLE_SEGMENT_BASE	
+	GF_MPD_MULTIPLE_SEGMENT_BASE
 	/*list of segments - can be NULL if no segment*/
 	GF_List *segment_URLs;
 
@@ -138,9 +138,9 @@ typedef struct
 	Bool xlink_actuate_on_load;
 } GF_MPD_SegmentList;
 
-typedef struct 
+typedef struct
 {
-	GF_MPD_MULTIPLE_SEGMENT_BASE	
+	GF_MPD_MULTIPLE_SEGMENT_BASE
 	char *media;
 	char *index;
 	char *initialization;
@@ -184,7 +184,7 @@ typedef struct {
 
 typedef struct {
 	GF_MPD_COMMON_ATTRIBUTES_ELEMENTS
-	
+
 	u32 level;
 	char *dependecy_level;
 	u32 bandwidth; /*MANDATORY if level set*/
@@ -206,7 +206,7 @@ typedef struct {
 	u32 quality_ranking;
 	char *dependency_id;
 	char *media_stream_structure_id;
-	
+
 	GF_List *base_URLs;
 	GF_MPD_SegmentBase *segment_base;
 	GF_MPD_SegmentList *segment_list;
@@ -219,8 +219,8 @@ typedef struct {
 } GF_MPD_Representation;
 
 
-typedef struct 
-{	
+typedef struct
+{
 	GF_MPD_COMMON_ATTRIBUTES_ELEMENTS
 
 	u32 id;
@@ -261,7 +261,7 @@ typedef struct
 } GF_MPD_AdaptationSet;
 
 
-typedef struct 
+typedef struct
 {
 	char *ID;
     u32 start; /* expressed in ms, relative to the start of the MPD */
@@ -279,7 +279,7 @@ typedef struct
 	Bool xlink_actuate_on_load;
 } GF_MPD_Period;
 
-typedef struct 
+typedef struct
 {
     char *lang;
     char *title;
@@ -299,7 +299,7 @@ typedef struct {
     char *profiles;	/*MANDATORY*/
     GF_MPD_Type type;
 	u64 availabilityStartTime; /* expressed in milliseconds */	/*MANDATORY if type=dynamic*/
-	u64 availabilityEndTime;/* expressed in milliseconds */	
+	u64 availabilityEndTime;/* expressed in milliseconds */
     u32 media_presentation_duration; /* expressed in milliseconds */	/*MANDATORY if type=static*/
     u32 minimum_update_period; /* expressed in milliseconds */
     u32 min_buffer_time; /* expressed in milliseconds */	/*MANDATORY*/

@@ -1,7 +1,7 @@
 #ifndef _V4_FIELD_LIST_H
 #define _V4_FIELD_LIST_H
 
-#include "safe_include.h" 
+#include "safe_include.h"
 #include <gpac/scenegraph.h>
 
 #include <wx/grid.h>
@@ -14,11 +14,11 @@ class V4FieldList: public wxGrid {
 
 public:
 	V4FieldList(wxWindow *parent, wxSize size);
-	~V4FieldList(); 
+	~V4FieldList();
 
 	void SetNode(GF_Node *node) { m_pNode = node; }
-	
-	void Create(); 
+
+	void Create();
 	void GetFieldValue(GF_FieldInfo f, wxString *s, int pos);
 	void SetFieldValue(GF_FieldInfo f, wxString *s, int pos);
 

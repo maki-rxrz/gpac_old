@@ -5,18 +5,18 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *		Authors: Stanislas Selle - Jonathan Sillan		
- *				
+ *		Authors: Stanislas Selle - Jonathan Sillan
+ *
  */
 
 #include "hbbtvterminal.h"
@@ -25,7 +25,7 @@
 #include <X11/Xlib.h>
 #else
 #include <gdk/gdk.h>
-#include <gdk/gdkwin32.h> 
+#include <gdk/gdkwin32.h>
 #endif
 
 #include <JavaScriptCore/JSStringRef.h>
@@ -50,7 +50,7 @@ static gboolean on_windowconfigure(GtkWidget *	widget, GdkEvent  *event, gpointe
 	static int oldx = 0;
 	static int oldy = 0;
 	int x, y, olddatax, olddatay;
-	
+
 	sPlayerInterface* player_interf = (sPlayerInterface*)data;
 
 	gtk_window_get_position(GTK_WINDOW(player_interf->ui->pWebWindow), &olddatax, &olddatay);
@@ -142,7 +142,7 @@ int ui_init(sPlayerInterface* player_interf)
 	ui->pTVWindow = pTVWindow;
 	ui->pWebWindow = pWebWindow;
 	ui->pBackgroundWindow = pBackgroundWindow;
-	 
+
 	gtk_window_set_title(GTK_WINDOW(pWindow), "RCU");
 	gtk_window_set_title(GTK_WINDOW(pTVWindow), "TV");
 	gtk_window_set_title(GTK_WINDOW(pWebWindow), "WEB");
@@ -153,11 +153,11 @@ int ui_init(sPlayerInterface* player_interf)
 	gtk_window_set_decorated(GTK_WINDOW(pBackgroundWindow), false);
 	gtk_window_set_transient_for(GTK_WINDOW(pTVWindow),GTK_WINDOW(pBackgroundWindow));
 	gtk_window_set_transient_for(GTK_WINDOW(pWebWindow),GTK_WINDOW(pTVWindow));
-	
+
 	gtk_window_set_resizable(GTK_WINDOW(pTVWindow), false);
 	gtk_window_set_resizable(GTK_WINDOW(pWebWindow), false);
 	gtk_window_set_resizable(GTK_WINDOW(pBackgroundWindow), false);
-	
+
 	/** Quit button **/
 	pQuitButton =  gtk_button_new_with_label("Quit");
 
@@ -177,7 +177,7 @@ int ui_init(sPlayerInterface* player_interf)
 	//gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(pWebScrollWindow), GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS);
 
 	ui->pWebView = WEBKIT_WEB_VIEW(webkit_web_view_new());
-	
+
 	webkit_web_view_set_transparent(ui->pWebView, TRUE);
 
 	if (ui->pWebView)
@@ -329,8 +329,8 @@ int ui_init(sPlayerInterface* player_interf)
 	gtk_widget_set_size_request(GTK_WIDGET(ui->pTVView),  HBBTV_VIDEO_WIDTH,HBBTV_VIDEO_HEIGHT);
 	gtk_widget_set_size_request(GTK_WIDGET(ui->pBackgroundView),  HBBTV_VIDEO_WIDTH,HBBTV_VIDEO_HEIGHT);
 	gtk_widget_set_size_request(GTK_WIDGET(pBrowserPositionTable), HBBTV_VIDEO_WIDTH,HBBTV_VIDEO_HEIGHT);
-	
-	gtk_window_set_position(GTK_WINDOW(pWebWindow), GTK_WIN_POS_CENTER_ALWAYS);	
+
+	gtk_window_set_position(GTK_WINDOW(pWebWindow), GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_window_set_position(GTK_WINDOW(pBackgroundWindow), GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_window_set_position(GTK_WINDOW(pTVWindow),  GTK_WIN_POS_CENTER_ALWAYS);
 
@@ -367,14 +367,14 @@ int ui_init(sPlayerInterface* player_interf)
 	g_signal_connect (G_OBJECT(pNumber[9]), "clicked", G_CALLBACK (on_channelbuttonclicked), player_interf);
 	g_signal_connect (G_OBJECT(pNumber[0]), "clicked", G_CALLBACK (on_channelbuttonclicked), player_interf);
 	g_signal_connect (G_OBJECT(pTeletextButton), "clicked", G_CALLBACK (on_teletextbuttonclicked), player_interf);
-	
-	
+
+
 	/* HBBTV Button */
 	g_signal_connect (G_OBJECT(pRedButton), 	"clicked", G_CALLBACK (on_redbuttonclicked), 	player_interf);
 	g_signal_connect (G_OBJECT(pGreenButton), 	"clicked", G_CALLBACK (on_greenbuttonclicked), 	player_interf);
 	g_signal_connect (G_OBJECT(pYellowButton), 	"clicked", G_CALLBACK (on_yellowbuttonclicked), player_interf);
 	g_signal_connect (G_OBJECT(pBlueButton), 	"clicked", G_CALLBACK (on_bluebuttonclicked), 	player_interf);
-	
+
 	/* Navigation */
 	g_signal_connect (G_OBJECT(pUpButton), 	"clicked", G_CALLBACK (on_upbuttonclicked), 	player_interf);
 	g_signal_connect (G_OBJECT(pDownButton), 	"clicked", G_CALLBACK (on_downbuttonclicked), 	player_interf);
@@ -382,7 +382,7 @@ int ui_init(sPlayerInterface* player_interf)
 	g_signal_connect (G_OBJECT(pRightButton), 	"clicked", G_CALLBACK (on_rightbuttonclicked), 	player_interf);
 	g_signal_connect (G_OBJECT(pEnterButton), 	"clicked", G_CALLBACK (on_returnbuttonclicked), player_interf);
 	g_signal_connect (G_OBJECT(pExitButton), 	"clicked", G_CALLBACK (on_exitbuttonclicked), 	player_interf);
-	
+
 
 	//	gtk_widget_add_events(GTK_WIDGET(pWebWindow), GDK_CONFIGURE);
 	// g_signal_connect(G_OBJECT(pTVWindow), "configure-event", G_CALLBACK(on_windowconfigure), pBackgroundWindow);
@@ -405,7 +405,7 @@ int ui_init(sPlayerInterface* player_interf)
 	gtk_widget_set_colormap(GTK_WIDGET(pBrowserPositionTable), rgba);
 
 	/** center the windows **/
-	
+
 	gtk_widget_set_default_colormap(rgba);
 	gtk_widget_show_all(pWindow);
 	gtk_widget_show_all(pBackgroundWindow);
@@ -430,7 +430,7 @@ int init_playerinterface(sPlayerInterface* player_interf, char* input_data, char
 
 	player_interf->ui = (sGraphicInterface*) gf_calloc(1,sizeof(sGraphicInterface));
 
-	
+
 	player_interf->input_data = (char*)gf_calloc(strlen(input_data)+1,sizeof(char));
 	sprintf(player_interf->input_data,"%s",input_data);
 	player_interf->input_data[strlen(input_data)] = 0;
@@ -455,24 +455,24 @@ int init_playerinterface(sPlayerInterface* player_interf, char* input_data, char
 	while(!hbbtv_demuxer->Check_all_channel_info_received(ChannelScanTimer)) {
 		ChannelScanTimer++;
 		gf_sleep(1000);
-		GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Wainting for the PMTs \n"));					
+		GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Wainting for the PMTs \n"));
 	}
-	
+
 	hbbtvterm_scan_channel(player_interf);
 
 	/* The check for init is made inside this function. AIT received have to be processed before getting new ones */
-	
+
 	nb_chan = gf_list_count(hbbtv_demuxer->Get_ChannelList());
 
-	for(i=0;i<nb_chan;i++){		
-	      Channel* chan = ( Channel*)gf_list_get(hbbtv_demuxer->Get_ChannelList(),i);	      
-	      Get_application_for_channel(hbbtv_demuxer,chan->Get_service_id());		
+	for(i=0;i<nb_chan;i++){
+	      Channel* chan = ( Channel*)gf_list_get(hbbtv_demuxer->Get_ChannelList(),i);
+	      Get_application_for_channel(hbbtv_demuxer,chan->Get_service_id());
 	}
-	player_interf->init = 1;	
-	
-	put_app_url(player_interf);	  
-	
-	
+	player_interf->init = 1;
+
+	put_app_url(player_interf);
+
+
 
 	return GF_OK;
 
@@ -481,12 +481,12 @@ int init_playerinterface(sPlayerInterface* player_interf, char* input_data, char
 
 int init_gpac(sPlayerInterface* player_interf)
 {
-	TRACEINFO;	
+	TRACEINFO;
 	char config_path[GF_MAX_PATH];
 	const char *str;
 	const char *gpac_cfg;
 	sGraphicInterface *ui = player_interf->ui;
-	
+
 
 #ifdef XP_UNIX
 	gpac_cfg = (char *) ".gpacrc";
@@ -501,7 +501,7 @@ int init_gpac(sPlayerInterface* player_interf)
 	player_interf->m_user = (GF_User*)gf_malloc(sizeof(GF_User));
 	memset(player_interf->m_user, 0, sizeof(GF_User));
 	//~ player_interf->m_user->config = gf_cfg_new((const char *) config_path, gpac_cfg);
-				
+
 	/*init config and modules*/
 	player_interf->m_user->config = check_config_file();
 	if(!player_interf->m_user->config){
@@ -562,7 +562,7 @@ int init_gpac(sPlayerInterface* player_interf)
 	GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Input URL : %s\n", player_interf->input_data));
 	gf_term_connect( player_interf->m_term, (const char*)player_interf->input_data );
 	GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Terminal connected\n"));
-	
+
 	return GF_OK;
 }
 
@@ -629,41 +629,41 @@ int init_player(sPlayerInterface* player_interf)
 
 GF_Err get_app_url(sPlayerInterface* player_interf, GF_M2TS_CHANNEL_APPLICATION_INFO*ChannelApp)
 {
-	u32 current_service_id;	
+	u32 current_service_id;
 
 	current_service_id = player_interf->m_term->root_scene->selected_service_id;
-	
+
 	if(!ChannelApp){
 		return GF_IO_ERR;
 	}
-	
+
 	if((ChannelApp->service_id == current_service_id)) {
 		GF_M2TS_AIT_APPLICATION* app_info;
-		Channel* Chan;	
-		
+		Channel* Chan;
+
 		HbbtvDemuxer* hbbtvdemuxer = (HbbtvDemuxer*)player_interf->Demuxer;
 		Chan = (Channel*)ZapChannel(hbbtvdemuxer,current_service_id,0);
-				
-		app_info = Chan->App_to_play(player_interf->is_connected,0);	
+
+		app_info = Chan->App_to_play(player_interf->is_connected,0);
 
 		if(!app_info){
 			GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] This service id %d does not have an autostart application. \n",ChannelApp->service_id,current_service_id));
 			return GF_IO_ERR;
-		}		
-	
+		}
+
 		if(player_interf->init){
 			if(app_info->broadband){
 				player_interf->url = app_info->http_url;
 			}else if(app_info->broadcast){
 				player_interf->url = app_info->carousel_url;
-			} 		
-  			webkit_web_view_load_uri(player_interf->ui->pWebView, player_interf->url);  				
-			GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] HBBTV Application URL : %s   \n",player_interf->url));			
+			}
+  			webkit_web_view_load_uri(player_interf->ui->pWebView, player_interf->url);
+			GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] HBBTV Application URL : %s   \n",player_interf->url));
 			return GF_OK;
 		}
 		GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Cannot start the application until player initialization is finished \n"));
 		return GF_IO_ERR;
-	}	
+	}
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_MODULE, ("ChannelApp->service_id %d is wrong current_service_id %d !!\n",ChannelApp->service_id,current_service_id));
 	return GF_IO_ERR;
 
@@ -679,16 +679,16 @@ int put_app_url(sPlayerInterface* player_interf)
 
 	ignore_TS_url = hbbtvdemux->Get_Ignore_TS_URL();
 	e = GF_OK;
-	
+
 	if(!ignore_TS_url && !player_interf->no_url){
-		
+
 		current_service_id = player_interf->m_term->root_scene->selected_service_id;
-		Channel* chan = (Channel*)ZapChannel(hbbtvdemux,current_service_id,0);		
+		Channel* chan = (Channel*)ZapChannel(hbbtvdemux,current_service_id,0);
 		e = get_app_url(player_interf,chan->Get_App_info());
 		if(e == GF_OK) {
 			GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Application started\n"));
 				return GF_OK;
-		}		    
+		}
 	    player_interf->url = "";
 	    webkit_web_view_load_uri(player_interf->ui->pWebView, player_interf->url);
 	    GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal]No Application found for this service ID %d \n",current_service_id));
@@ -697,10 +697,10 @@ int put_app_url(sPlayerInterface* player_interf)
 	}else{
 
 	    if(!player_interf->no_url){
-		    GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Forced URL %s  Reaload Application \n",player_interf->url));		   
+		    GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Forced URL %s  Reaload Application \n",player_interf->url));
 		     webkit_web_view_load_uri(player_interf->ui->pWebView, player_interf->url);
 	    }else{
-		    GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] URL blocked by the user. \n"));		    
+		    GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] URL blocked by the user. \n"));
 	    }
 	    return GF_OK;
 	}
@@ -712,37 +712,37 @@ int hbbtvterm_scan_channel(sPlayerInterface* player_interf)
 
 	GF_MediaInfo odi;
 	u32 i, count;
-	
+
 	HbbtvDemuxer* HbbtvDemux = (HbbtvDemuxer*)player_interf->Demuxer;
 
 	GF_ObjectManager *root_odm = gf_term_get_root_object(player_interf->m_term);
-	if (!root_odm){		
+	if (!root_odm){
 		 return GF_IO_ERR;
 	 }
 
 	if (gf_term_get_object_info(player_interf->m_term, root_odm, &odi) != GF_OK) return GF_IO_ERR;
-	if (!odi.od) {	
+	if (!odi.od) {
 		return GF_IO_ERR;
 	}
-	count = gf_term_get_object_count(player_interf->m_term, root_odm);	
+	count = gf_term_get_object_count(player_interf->m_term, root_odm);
 	GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Count: %d \n",count));
 
-	for (i=0; i<count; i++) {		
+	for (i=0; i<count; i++) {
 		GF_ObjectManager *odm;
 		odm = gf_term_get_object(player_interf->m_term, root_odm, i);
 		if (!odm) break;
 		if (gf_term_get_object_info(player_interf->m_term, odm, &odi) == GF_OK) {
 			u32 service_id = odi.od->ServiceID;
 			Channel* chan = (Channel*)ZapChannel(HbbtvDemux,service_id,0);
-			
-			if (odi.od_type==GF_STREAM_VISUAL && !chan->Get_processed()) {				
+
+			if (odi.od_type==GF_STREAM_VISUAL && !chan->Get_processed()) {
 				chan->Add_video_ID(i);
  				GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal] Service: %d chan->video_index : %d \n",service_id,chan->Get_video_ID()));
-			}else if(odi.od_type==GF_STREAM_AUDIO && !chan->Get_processed()) {				
+			}else if(odi.od_type==GF_STREAM_AUDIO && !chan->Get_processed()) {
 				chan->Add_audio_ID(i);
 				GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal]Service:%d chan->current_audio_index : %d \n",service_id,chan->Get_audio_ID(0)));;
  			}
- 			
+
 		}
 	}
 	HbbtvDemux->Channel_check();
@@ -782,10 +782,10 @@ int hbbtvterm_get_channel_on_air(sPlayerInterface* player_interf, u32 service_id
 	}
 
  	GF_LOG(GF_LOG_INFO, GF_LOG_MODULE, ("[HBBTVTerminal]service_id:%d video pid : %d audio pid:%d\n",chan->Get_service_id(),chan->Get_video_ID(),chan->Get_audio_ID(0)));
- 	 	
+
  	gf_term_select_object(player_interf->m_term, gf_term_get_object(player_interf->m_term, root_odm, chan->Get_video_ID()));
-	gf_term_select_object(player_interf->m_term, gf_term_get_object(player_interf->m_term, root_odm, chan->Get_audio_ID(0)));	
-		
+	gf_term_select_object(player_interf->m_term, gf_term_get_object(player_interf->m_term, root_odm, chan->Get_audio_ID(0)));
+
 	put_app_url(player_interf);
 
 	return GF_OK;
@@ -836,7 +836,7 @@ void OnKEYSET_SetValue(double param)
 {
 	TRACEINFO;
 	fprintf(stderr, "\t param transmitted : %i\n", (int)param);
-	
+
 	int 	KEYMASK_RED 		= 0x1;
 	int 	KEYMASK_GREEN 		= 0x2;
 	int 	KEYMASK_YELLOW 		= 0x4;
@@ -848,7 +848,7 @@ void OnKEYSET_SetValue(double param)
 	int 	KEYMASK_NUMERIC 	= 0x100;
 	int 	KEYMASK_ALPHA 		= 0x200;
 	int 	KEYMASK_OTHER 		= 0x400;
-	
+
 	player_interf->keyregistered[RK_RED]        = (((int)param & KEYMASK_RED))	      ? true : false;
 	player_interf->keyregistered[RK_GREEN]      = (((int)param & KEYMASK_GREEN))	  ? true : false;
 	player_interf->keyregistered[RK_YELLOW]     = (((int)param & KEYMASK_YELLOW))	  ? true : false;
@@ -859,7 +859,7 @@ void OnKEYSET_SetValue(double param)
 	player_interf->keyregistered[RK_INFO] 		= (((int)param & KEYMASK_INFO))		  ? true : false;
 	player_interf->keyregistered[RK_NUMERIC] 	= (((int)param & KEYMASK_NUMERIC))	  ? true : false;
 	player_interf->keyregistered[RK_ALPHA] 		= (((int)param & KEYMASK_ALPHA))      ? true : false;
-	player_interf->keyregistered[RK_OTHER] 		= (((int)param & KEYMASK_OTHER))	  ? true : false;	
+	player_interf->keyregistered[RK_OTHER] 		= (((int)param & KEYMASK_OTHER))	  ? true : false;
 }
 
 void OnNoFullscreenSetWindow(int x, int y, int width, int height)
@@ -871,7 +871,7 @@ void OnVIDBRC_SetFullScreen(int fullscreenparam)
 {
 	TRACEINFO;
 	fprintf(stderr,"SET FULLSCREEN OnVIDBRC_SetFullScreen Param : %d\n",fullscreenparam);
-	
+
 	///Getting the videobroadcast element.
 	WebKitDOMDocument *pDOMdoc  = webkit_web_view_get_dom_document(player_interf->ui->pWebView);
 	WebKitDOMNodeList *objectslist = webkit_dom_document_get_elements_by_tag_name(pDOMdoc,"object");
@@ -879,7 +879,7 @@ void OnVIDBRC_SetFullScreen(int fullscreenparam)
 	gulong i = 0;
 	bool videofound = false;
 	WebKitDOMNode* videonode;
-	char *videonodetype;	
+	char *videonodetype;
 	while ((i < l) && !videofound)
 	{
 			videonode = webkit_dom_node_list_item(objectslist,i);
@@ -889,17 +889,17 @@ void OnVIDBRC_SetFullScreen(int fullscreenparam)
 			else
 				i++;
 	}
-	
+
 	if (!videofound)
 	{
 		fprintf(stderr,"object video broadcast not found \n");
 		return;
 	}
 	else
-	{		
+	{
 		fprintf(stderr,"object video broadcast found \n");
 		WebKitDOMElement* videoelt = WEBKIT_DOM_ELEMENT(videonode);
-		
+
 		///Getting the position of the WebView
 		gint posx, posy;
 		get_window_position(player_interf->ui->pWebWindow, &posx, &posy);
@@ -917,7 +917,7 @@ void OnVIDBRC_SetFullScreen(int fullscreenparam)
 			top = 0;
 			eltwidth = HBBTV_VIDEO_WIDTH;
 			eltheight = HBBTV_VIDEO_HEIGHT;
-			get_window_position(player_interf->ui->pWebWindow, &newx, &newy);			
+			get_window_position(player_interf->ui->pWebWindow, &newx, &newy);
 		}else{
 			gtk_window_set_position(GTK_WINDOW(player_interf->ui->pTVWindow), GTK_WIN_POS_NONE);
 			///Getting the top and left values of the video/broadcast element  .
@@ -927,28 +927,28 @@ void OnVIDBRC_SetFullScreen(int fullscreenparam)
 			eltwidth = webkit_dom_element_get_offset_width(videoelt);
 			eltheight = webkit_dom_element_get_offset_height(videoelt);
 			newx = posx + left;
-			newy = posy + top;		
-		}		
+			newy = posy + top;
+		}
 
 		fprintf(stderr,"Videoelt offset : Left : %d ,  Top : %d, ", left, top);
-		fprintf(stderr,"EltWidth : %d ,  EltHeight : %d \n", eltwidth, eltheight);		
+		fprintf(stderr,"EltWidth : %d ,  EltHeight : %d \n", eltwidth, eltheight);
 		set_window_position(player_interf->ui->pTVWindow, newx, newy);
-		fprintf(stderr,"Supposed TVWindow new position : %d x %d \n", newx, newy);				
-		resizevideoplayer(player_interf, eltwidth, eltheight);	
+		fprintf(stderr,"Supposed TVWindow new position : %d x %d \n", newx, newy);
+		resizevideoplayer(player_interf, eltwidth, eltheight);
 		if(fullscreenparam){
 			gtk_window_set_position(GTK_WINDOW(player_interf->ui->pTVWindow), GTK_WIN_POS_CENTER_ALWAYS);
 		}
-		fprintf(stderr,"Checking position : \n ");			
+		fprintf(stderr,"Checking position : \n ");
 		gint checkx, checky;
 		get_window_position(player_interf->ui->pTVWindow, &checkx, &checky);
 		fprintf(stderr,"CHECK TVWindow Left : %d , CHECK TVWindow Top : %d \n", checkx, checky);
 	}
-		 		
+
 }
 
 void OnKEYSET_Allocate()
 {
-	webkit_web_view_execute_script(player_interf->ui->pWebView, 
+	webkit_web_view_execute_script(player_interf->ui->pWebView,
 	"   var KeyEvent = new Object(); \
 		KeyEvent.VK_RED = 403; \
 		KeyEvent.VK_YELLOW = 405;\
@@ -1014,12 +1014,12 @@ static void getargs(int argc, char *argv[], char* &input_data, Bool* dsmcc, char
 					url = arg+5;
 			}else if (!strnicmp(arg, "-no_url", 7)) {
 						*no_url = 1;
-			}else if (!strnicmp(arg, "-dsmcc", 6)) {						
+			}else if (!strnicmp(arg, "-dsmcc", 6)) {
 						*dsmcc = 1;
 			}else {
 				usage();
 				exit(0);
-			}			
+			}
 		}else {
 			usage();
 			exit(0);
@@ -1054,7 +1054,7 @@ int main (int argc, char* argv[])
 	//TRACEINFO;
 	gf_sys_init(1);
 	gf_log_set_tool_level(GF_LOG_MODULE,GF_LOG_INFO);
-	printf("GPAC HBBTV Terminal (c) Telecom ParisTech 2011\n");	
+	printf("GPAC HBBTV Terminal (c) Telecom ParisTech 2011\n");
 
 	getargs(argc, argv, input_data , &dsmcc, url, &no_url);
 

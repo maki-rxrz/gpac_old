@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 
@@ -186,7 +186,7 @@ static void init_reader(ISOMChannel *ch)
 	u32 ivar;
 	if (ch->wait_for_segment_switch) {
 		isor_check_segment_switch(ch->owner, 0);
-		if (ch->wait_for_segment_switch) 
+		if (ch->wait_for_segment_switch)
 			return;
 	}
 
@@ -214,7 +214,7 @@ static void init_reader(ISOMChannel *ch)
 			ch->last_state = gf_isom_get_sample_for_movie_time(ch->owner->mov, ch->track, ch->start, &ivar, GF_ISOM_SEARCH_SYNC_BACKWARD, &ch->sample, &ch->sample_num);
 		}
 		ch->last_state = GF_OK;
-	
+
 		if (ch->has_rap && ch->has_edit_list) {
 			ch->edit_sync_frame = ch->sample_num;
 		}
@@ -281,7 +281,7 @@ void isor_reader_get_sample(ISOMChannel *ch)
 				/*if we get the same sample, figure out next interesting time (current sample + DTS gap to next sample should be a good bet)*/
 				if (prev_sample == ch->sample_num) {
 					if (ch->owner->frag_type && (ch->sample_num==gf_isom_get_sample_count(ch->owner->mov, ch->track))) {
-						if (ch->sample) 
+						if (ch->sample)
 							gf_isom_sample_del(&ch->sample);
 					} else {
 						u32 time_diff = 2;

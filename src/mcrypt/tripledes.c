@@ -12,7 +12,7 @@
  *	char kn[16][8];
  */
 
-/* modified in order to use the libmcrypt API by Nikos Mavroyanopoulos 
+/* modified in order to use the libmcrypt API by Nikos Mavroyanopoulos
  * All modifications are placed under the license of libmcrypt.
  */
 
@@ -749,7 +749,7 @@ void gf_crypt_register_3des(GF_Crypt *td)
 	td->algo_name = "3DES";
 	td->algo_version = 19991129;
 	td->num_key_sizes = 1;
-	td->key_sizes[0] = 24; 
+	td->key_sizes[0] = 24;
 	td->key_size = 24;
 	td->is_block_algo = 1;
 	td->algo_block_size = 8;

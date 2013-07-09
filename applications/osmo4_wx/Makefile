@@ -41,17 +41,17 @@ endif
 
 CFLAGS+=$(WX_CFLAGS)
 
-SRCS := $(OBJS:.o=.cpp) 
+SRCS := $(OBJS:.o=.cpp)
 
 all: $(PROG)
 
 Osmo4$(EXE): $(OBJS)
 	$(CC) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) -L../../bin/gcc -lgpac $(WX_LFLAGS) $(LINKFLAGS)
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(PROG)
 
-install: 
+install:
 ifeq ($(CONFIG_DARWIN),yes)
 	mkdir -p $(DESTDIR)$(mac_apps)/Osmo4.app/Contents/MacOS
 	mkdir -p $(DESTDIR)$(mac_apps)/Osmo4.app/Contents/Resources/English.lproj
@@ -76,7 +76,7 @@ uninstall:
 dep:
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

@@ -151,7 +151,7 @@ typedef struct  TRaster_
 
 #define AA_CELL_STEP_ALLOC	8
 
-static GFINLINE void gray_record_cell( TRaster *raster ) 
+static GFINLINE void gray_record_cell( TRaster *raster )
 {
 	if (( raster->area | raster->cover) && (raster->ey<raster->max_ey)) {
 		AACell *cell;
@@ -241,7 +241,7 @@ static void gray_render_scanline( TRaster *raster,  TCoord  ey, TPos x1, TCoord 
 	long    p, first;
 	long dx;
 	int     incr, lift, mod, rem;
-	
+
 	dx = x2 - x1;
 	ex1 = TRUNC( x1 ); /* if (ex1 >= raster->max_ex) ex1 = raster->max_ex-1; */
 	ex2 = TRUNC( x2 ); /* if (ex2 >= raster->max_ex) ex2 = raster->max_ex-1; */
@@ -261,13 +261,13 @@ static void gray_render_scanline( TRaster *raster,  TCoord  ey, TPos x1, TCoord 
 		raster->cover += delta;
 		return;
 	}
-	
+
 	/* ok, we'll have to render a run of adjacent cells on the same */
 	/* scanline...                                                  */
 	p     = ( ONE_PIXEL - fx1 ) * ( y2 - y1 );
 	first = ONE_PIXEL;
 	incr  = 1;
-	
+
 	if ( dx < 0 ) {
 		p     = fx1 * ( y2 - y1 );
 		first = 0;
@@ -302,7 +302,7 @@ static void gray_render_scanline( TRaster *raster,  TCoord  ey, TPos x1, TCoord 
 			mod  += rem;
 			if ( mod >= 0 ) {
 				mod -= (TCoord)dx;
-				delta++; 
+				delta++;
 			}
 
 			raster->area  += (TArea)ONE_PIXEL * delta;
@@ -455,7 +455,7 @@ End:
 }
 
 
- 
+
 static int EVG_Outline_Decompose(EVG_Outline *outline, TRaster *user)
 {
 	EVG_Vector   v_start;
@@ -515,7 +515,7 @@ static int EVG_Outline_Decompose(EVG_Outline *outline, TRaster *user)
 #define QSORT_THRESHOLD  9  /* below this size, a sub-array will be sorted */
                             /* through a normal insertion sort             */
 
-static void gray_quick_sort( AACell *cells, int    count ) 
+static void gray_quick_sort( AACell *cells, int    count )
 {
 	AACell *stack[80];  /* should be enough ;-) */
 	AACell **top;        /* top of stack */
@@ -579,7 +579,7 @@ static void gray_quick_sort( AACell *cells, int    count )
 			for ( ; i < limit; j = i, i++ ) {
 				for ( ; j[1].x < j->x; j-- ) {
 					SWAP_CELLS( j + 1, j, temp );
-					if ( j == base ) 
+					if ( j == base )
 						break;
 				}
 			}
@@ -680,7 +680,7 @@ static void gray_sweep_line( TRaster *raster, AAScanline *sl, int y, Bool zero_n
 			area  += cur->area;
 			cover += cur->cover;
 		}
-		
+
 		/* if the start cell has a non-null area, we must draw an */
 		/* individual gray pixel there                            */
 		if ( area && x >= 0 ) {
@@ -724,14 +724,14 @@ int evg_raster_render(EVG_Raster raster, EVG_Raster_Params*  params)
 		memset(&raster->scanlines[raster->max_lines], 0, sizeof(AAScanline)*(size_y-raster->max_lines) );
 		raster->max_lines = size_y;
 	}
-	
+
 	raster->ex = raster->max_ex+1;
 	raster->ey = raster->max_ey+1;
 	raster->cover = 0;
 	raster->area = 0;
 	EVG_Outline_Decompose(outline, raster);
     gray_record_cell( raster );
-	
+
 	/*store odd/even rule*/
 	zero_non_zero_rule = (outline->flags & GF_PATH_FILL_ZERO_NONZERO) ? 1 : 0;
 

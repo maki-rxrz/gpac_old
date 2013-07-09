@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2006-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -152,11 +152,11 @@ void COsmo4AppView::MessageBox(const char *text, const char *title)
 	TInt length = User::StringLength( ( TUint8* ) text) + 1;
 	msg1 = HBufC::NewL( length );
 	msg1->Des().Copy( TPtrC8(( TText8* ) text) );
-	
+
 	length = User::StringLength( ( TUint8* ) title) + 1;
 	msg2 = HBufC::NewL( length );
 	msg2->Des().Copy( TPtrC8(( TText8* ) title) );
-	
+
 	CEikonEnv::Static()->InfoWinL(*msg2, *msg1);
 	delete msg1;
 	delete msg2;
@@ -251,7 +251,7 @@ void COsmo4AppView::SetupLogs()
 	}
 	/*setup GPAC logs: log all errors*/
 	opt = gf_cfg_get_key(m_user.config, "General", "Logs");
-	if (opt && !strstr(opt, "none")){ 
+	if (opt && !strstr(opt, "none")){
 		const char *filename = gf_cfg_get_key(m_user.config, "General", "LogFile");
 		if (!filename) {
 			gf_cfg_set_key(m_user.config, "General", "LogFile", "\\data\\gpac_logs.txt");
@@ -357,7 +357,7 @@ void COsmo4AppView::ConstructL( const TRect& aRect )
 		}
 	}
 
-	/*we don't thread the terminal, ie appart from the audio renderer, media decoding and visual rendering is 
+	/*we don't thread the terminal, ie appart from the audio renderer, media decoding and visual rendering is
 	handled by the app process*/
 	m_user.init_flags = GF_TERM_NO_VISUAL_THREAD | GF_TERM_NO_REGULATION;
 	m_user.EventProc = GPAC_EventProc;
@@ -442,7 +442,7 @@ void COsmo4AppView::ShowHide(Bool show)
 // -----------------------------------------------------------------------------
 //
 void COsmo4AppView::SizeChanged()
-{  
+{
 #ifndef GPAC_GUI_ONLY
 	if (m_term) {
 		TSize s = m_window.Size();
@@ -546,18 +546,18 @@ void COsmo4AppView::MrccatoCommand(TRemConCoreApiOperationId aOperationId, TRemC
 		e.key.flags = 0;
 		e.key.key_code = (aOperationId==ERemConCoreApiVolumeUp) ? GF_KEY_VOLUMEUP : GF_KEY_VOLUMEDOWN;
 		switch (aButtonAct) {
-		case ERemConCoreApiButtonPress: 
-			e.type = GF_EVENT_KEYDOWN; 
+		case ERemConCoreApiButtonPress:
+			e.type = GF_EVENT_KEYDOWN;
 			gf_term_user_event(m_term, &e);
 			break;
-		case ERemConCoreApiButtonRelease: 
-			e.type = GF_EVENT_KEYUP; 
+		case ERemConCoreApiButtonRelease:
+			e.type = GF_EVENT_KEYUP;
 			gf_term_user_event(m_term, &e);
 			break;
-		default: 
-			e.type = GF_EVENT_KEYDOWN; 
+		default:
+			e.type = GF_EVENT_KEYDOWN;
 			gf_term_user_event(m_term, &e);
-			e.type = GF_EVENT_KEYUP; 
+			e.type = GF_EVENT_KEYUP;
 			gf_term_user_event(m_term, &e);
 			break;
 		}

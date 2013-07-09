@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #ifndef __GPAXPLUGIN_H_
@@ -124,15 +124,15 @@ public:
     COM_INTERFACE_ENTRY_IMPL_IID(IID_IOleWindow, IOleInPlaceObjectWindowless)
     COM_INTERFACE_ENTRY_IMPL_IID(IID_IOleInPlaceObject, IOleInPlaceObjectWindowless)
     COM_INTERFACE_ENTRY_IMPL_IID(IID_IOleWindow, IOleInPlaceActiveObject)
-    
+
 	COM_INTERFACE_ENTRY_IMPL(IOleInPlaceActiveObject)
     COM_INTERFACE_ENTRY_IMPL(IOleInPlaceObjectWindowless)
-	
+
 //	COM_INTERFACE_ENTRY(IObjectSafety)
 	COM_INTERFACE_ENTRY_IID(IID_IObjectSafety, IObjectSafety)
 	COM_INTERFACE_ENTRY(IPersistPropertyBag)
     COM_INTERFACE_ENTRY_IMPL_IID(IID_IPersist, IPersistPropertyBag)
-	
+
 /*	COM_INTERFACE_ENTRY(IViewObject)
     COM_INTERFACE_ENTRY(IViewObject2)
     COM_INTERFACE_ENTRY2(IOleWindow, IOleInPlaceObjectWindowless)
@@ -190,13 +190,13 @@ public:
         }
         return S_FALSE;
     }
-    STDMETHODIMP GetInterfaceSafetyOptions(      
+    STDMETHODIMP GetInterfaceSafetyOptions(
         REFIID riid,
         DWORD *pdwSupportedOptions,
         DWORD *pdwEnabledOptions
     );
 
-    STDMETHODIMP SetInterfaceSafetyOptions(      
+    STDMETHODIMP SetInterfaceSafetyOptions(
         REFIID riid,
         DWORD dwOptionSetMask,
         DWORD dwEnabledOptions
@@ -235,7 +235,7 @@ public:
 	//		<PARAM name="..." value="...">
 	//   </object>
 	//the interface IPersistPropertyBag enable MSIE and ActiveX Control to communicate these
-	//properties included in tags <PARAM> 
+	//properties included in tags <PARAM>
     STDMETHODIMP Load(LPPROPERTYBAG pPropBag, LPERRORLOG pErrorLog);
     STDMETHODIMP Save(LPPROPERTYBAG, BOOL, BOOL);
 

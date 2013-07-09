@@ -34,8 +34,8 @@ int dc_audio_encoder_open(AudioOutputFile * p_aout, AudioData * p_adata);
  *
  * @param aoutf [in] add an audio stream to the file
  * with the parameters already passed to open_audio_output
- * 
- * @return 0 on success, -1 on failure 
+ *
+ * @return 0 on success, -1 on failure
  */
 
 int dc_audio_encoder_read(AudioOutputFile * p_aout, AudioInputData * p_aind);
@@ -44,21 +44,21 @@ int dc_audio_encoder_read(AudioOutputFile * p_aout, AudioInputData * p_aind);
 int dc_audio_encoder_flush(AudioOutputFile * p_aout, AudioInputData * p_aind);
 
 /*
- * Read the decoded audio sample from circular buffer (which is in aind) 
+ * Read the decoded audio sample from circular buffer (which is in aind)
  * and encode and write them on the output file
- * 
+ *
  * @param aoutf [in] audio output file
  * @param aind [in] audio input data structure which contains a circular buffer with audio samples
- * 
+ *
  * @return 0 on success, -1 on failure, -2 on finishing;
- * when there is no more data on circular buffer to encode 
- */ 
+ * when there is no more data on circular buffer to encode
+ */
 int dc_audio_encoder_encode(AudioOutputFile * aoutf, AudioInputData * aind);
 
 
 /*
  * Close the output audio file
- * 
+ *
  * @param aoutf [in] audio output file
  */
 void dc_audio_encoder_close(AudioOutputFile * aoutf);

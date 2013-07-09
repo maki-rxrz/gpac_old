@@ -6,7 +6,7 @@
 
 extern "C" {
 
-	
+
 V4Channel *V4Service::V4_GetChannel(V4Service *v4service, LPNETCHANNEL ch)
 {
 	u32 i;
@@ -68,11 +68,11 @@ static GF_Descriptor *V4_GetServiceDesc(GF_InputService *plug, u32 expect_type, 
 	esd->slConfig->useTimestampsFlag = 1;
 	esd->ESID = 0xFFFE;
 	esd->decoderConfig->streamType = GF_STREAM_PRIVATE_SCENE;
-	esd->decoderConfig->objectTypeIndication = 0x01; //V4_PRIVATE_SCENE_OTI; 
+	esd->decoderConfig->objectTypeIndication = 0x01; //V4_PRIVATE_SCENE_OTI;
 	if (v4service->GetPath()) {
 		esd->decoderConfig->decoderSpecificInfo->dataLength = strlen(v4service->GetPath()) + 1;
 		esd->decoderConfig->decoderSpecificInfo->data = gf_strdup(v4service->GetPath());
-	} 
+	}
 	gf_list_add(iod->ESDescriptors, esd);
 	return (GF_Descriptor *)iod;
 }
@@ -81,7 +81,7 @@ static GF_Err V4_ConnectChannel(GF_InputService *plug, LPNETCHANNEL channel, con
 {
 	u32 ESID;
 	V4Service *v4serv = (V4Service *)plug->priv;
-	
+
 	sscanf(url, "ES_ID=%ud", &ESID);
 	if (!ESID) {
 		gf_term_on_connect(v4serv->GetService(), channel, GF_STREAM_NOT_FOUND);
@@ -171,7 +171,7 @@ static Bool V4_CanHandleURLInService(GF_InputService *plug, const char *url)
 
 } // extern "C"
 
-V4Service::V4Service(const char *path) 
+V4Service::V4Service(const char *path)
 {
 
 	m_pNetClient = (GF_InputService *)gf_malloc(sizeof(GF_InputService));
@@ -181,10 +181,10 @@ V4Service::V4Service(const char *path)
 
 	m_pNetClient->ConnectService		= V4_ConnectService;
 	m_pNetClient->CloseService			= V4_CloseService;
-	
+
 	m_pNetClient->ConnectChannel		= V4_ConnectChannel;
 	m_pNetClient->DisconnectChannel		= V4_DisconnectChannel;
-	
+
 	m_pNetClient->GetServiceDescriptor = V4_GetServiceDesc;
 	m_pNetClient->ServiceCommand		= V4_ServiceCommand;
 
@@ -197,7 +197,7 @@ V4Service::V4Service(const char *path)
 	if (path) m_path = gf_strdup(path);
 }
 
-V4Service::~V4Service() 
+V4Service::~V4Service()
 {
 	if (m_path) gf_free(m_path);
 	gf_list_del(channels);

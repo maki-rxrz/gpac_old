@@ -17,7 +17,7 @@ endif
 CFLAGS+=$(XML2_CFLAGS)
 
 #common obj
-OBJS= loadcompare.o ../../../modules/svg_loader/svg_parser.o ../../../modules/svg_loader/lsr_parser.o  
+OBJS= loadcompare.o ../../../modules/svg_loader/svg_parser.o ../../../modules/svg_loader/lsr_parser.o
 
 LINKFLAGS=-L../../../bin/gcc
 ifeq ($(CONFIG_WIN32),yes)
@@ -33,20 +33,20 @@ LINKFLAGS+=-lgpac -lz $(XML2_LIBS)
 endif
 
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 all: $(PROG)
 
 $(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) -o ../../../bin/gcc/$@ $(OBJS) $(LINKFLAGS)
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../../bin/gcc/$(PROG)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

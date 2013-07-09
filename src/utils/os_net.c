@@ -640,10 +640,10 @@ GF_Err gf_sk_bind(GF_Socket *sock, const char *local_ip, u16 port, const char *p
 
 	if (!sock || sock->socket) return GF_BAD_PARAM;
 
-#ifndef WIN32	
+#ifndef WIN32
 	if(!local_ip){
 		if(!peer_name || !strcmp(peer_name,"localhost")){
-			peer_name="127.0.0.1";	
+			peer_name="127.0.0.1";
 		}
 	}
 #endif

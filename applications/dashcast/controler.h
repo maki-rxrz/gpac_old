@@ -60,7 +60,7 @@ typedef struct {
 	int video_conf_idx;
 	/* Video input data structure
 	 * corresponding to the thread. (This data
-	 * is shared between video decoder and 
+	 * is shared between video decoder and
 	 * video scaler)
 	 */
 	VideoInputData * p_vind;
@@ -70,7 +70,7 @@ typedef struct {
 	 * video encoder)
 	 */
 	VideoScaledData * p_vsd;
-	/* Video input file structure 
+	/* Video input file structure
 	 * corresponding to the thread
 	 */
 	VideoInputFile ** p_vinf;
@@ -93,7 +93,7 @@ typedef struct {
 	 */
 	int audio_conf_idx;
 	/* Audio input data
-	 * (This data is shared between audio 
+	 * (This data is shared between audio
 	 * decoder and audio encoder
 	 */
 	AudioInputData * p_aind;
@@ -108,12 +108,12 @@ typedef struct {
 
 } AudioThreadParam;
 
-/* 
+/*
  * Run controler runs all decoder, scalers, and encoders
  * of audio and video
- * 
- * @param cmdd [in] command data 
- * 
+ *
+ * @param cmdd [in] command data
+ *
  * @return 0 on success, -1 on failure
  */
 int dc_run_controler(CmdData *);

@@ -1,7 +1,7 @@
 /*
  *					GPAC Multimedia Framework
  *
- *			Authors: Romain Bouqueau - Jean Le Feuvre 
+ *			Authors: Romain Bouqueau - Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2010-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -53,7 +53,7 @@ static int do_xor = 0;
                     DirectFBErrorFatal( #x, err );                         \
                }                                                           \
           } while (0)
-         
+
 #define SET_DRAWING_FLAGS( flags ) \
           ctx->primary->SetDrawingFlags( ctx->primary, (flags) | (do_xor ? DSDRAW_XOR : 0) )
 
@@ -66,7 +66,7 @@ struct __DirectFBVidCtx
     IDirectFB *dfb;
     /* the primary surface */
     IDirectFBSurface *primary;
-    
+
     /* for keyboard input */
     //~ IDirectFBInputDevice *keyboard;
 
@@ -82,17 +82,17 @@ struct __DirectFBVidCtx
 
     /* Input interfaces: devices and its buffer */
     IDirectFBEventBuffer *events;
-    
+
     /* mouse events */
     IDirectFBInputDevice *mouse;
 
      /*=============================
 	if using window
     ============================= */
-    
+
     /* DirectFB window */
     IDirectFBWindow *window;
-    
+
     /* display layer */
     IDirectFBDisplayLayer *layer;
 
@@ -118,18 +118,18 @@ struct _DeviceInfo {
 
 /**
  *	function DirectFBVid_DrawHLineWrapper
- * 	- using hardware accelerator to draw horizontal line     
+ * 	- using hardware accelerator to draw horizontal line
  **/
 void DirectFBVid_DrawHLineWrapper(DirectFBVidCtx *ctx, u32 x, u32 y, u32 length, u8 r, u8 g, u8 b)
 {
 	//GF_LOG(GF_LOG_DEBUG, GF_LOG_MMIO, ("[DirectFB] in DirectFBVid_DrawHLine(). Drawing line x %d y %d length %d color %08X\n", x, y, length, color));
-	
-	// DSDRAW_NOFX: flag controlling drawing command, drawing without using any effects 
+
+	// DSDRAW_NOFX: flag controlling drawing command, drawing without using any effects
 	SET_DRAWING_FLAGS( DSDRAW_NOFX );
 
-	// set the color used without alpha 
-	ctx->primary->SetColor(ctx->primary, r, g, b, 0xFF); 
-	
+	// set the color used without alpha
+	ctx->primary->SetColor(ctx->primary, r, g, b, 0xFF);
+
 	// to draw a line using hardware accelerators, we can use either DrawLine (in our STB, DrawLine() function is not accelerated) or FillRectangle function with height equals to 1
 	//ctx->primary->DrawLine(ctx->primary, x, y, x+length, y);	// no acceleration
 	ctx->primary->FillRectangle(ctx->primary, x, y,length, 1);
@@ -138,7 +138,7 @@ void DirectFBVid_DrawHLineWrapper(DirectFBVidCtx *ctx, u32 x, u32 y, u32 length,
 
 /**
  *	function DirectFBVid_DrawHLineWrapper
- * 	- using hardware accelerator to draw horizontal line with alpha     
+ * 	- using hardware accelerator to draw horizontal line with alpha
  **/
 void DirectFBVid_DrawHLineAlphaWrapper(DirectFBVidCtx *ctx, u32 x, u32 y, u32 length, u8 r, u8 g, u8 b, u8 alpha)
 {
@@ -155,7 +155,7 @@ void DirectFBVid_DrawHLineAlphaWrapper(DirectFBVidCtx *ctx, u32 x, u32 y, u32 le
 
 /**
  *	function DirectFBVid_DrawRectangleWrapper
- *	- using hardware accelerator to fill a rectangle with the given color  
+ *	- using hardware accelerator to fill a rectangle with the given color
  **/
 void DirectFBVid_DrawRectangleWrapper(DirectFBVidCtx *ctx, u32 x, u32 y, u32 width, u32 height, u8 r, u8 g, u8 b, u8 a)
 {
@@ -171,7 +171,7 @@ void DirectFBVid_DrawRectangleWrapper(DirectFBVidCtx *ctx, u32 x, u32 y, u32 wid
 
 /**
  *	function DirectFBVid_CtxPrimaryLock
- * 	- lock the surface (in order to access certain data)  
+ * 	- lock the surface (in order to access certain data)
  **/
 u32 DirectFBVid_CtxPrimaryLock(DirectFBVidCtx *ctx, void **buf, u32 *pitch)
 {
@@ -186,7 +186,7 @@ static DFBEnumerationResult enum_input_device(DFBInputDeviceID device_id, DFBInp
 	DeviceInfo **devices = data;
 
 	DeviceInfo *device = malloc(sizeof(DeviceInfo) );
-	
+
 	device->device_id = device_id;
 	device->desc = desc;
 	device->next = *devices;
@@ -199,7 +199,7 @@ static DFBEnumerationResult enum_input_device(DFBInputDeviceID device_id, DFBInp
 
 /**
  *	function DirectFBVid_InitAndCreateSurface
- * 	- initialize and create DirectFB surface 
+ * 	- initialize and create DirectFB surface
  **/
 u32 DirectFBVid_TranslatePixelFormatToGPAC(u32 dfbpf);
 void DirectFBVid_InitAndCreateSurface(DirectFBVidCtx *ctx, u32 window_mode)
@@ -208,7 +208,7 @@ void DirectFBVid_InitAndCreateSurface(DirectFBVidCtx *ctx, u32 window_mode)
 	DFBSurfaceDescription dsc;
 	DFBSurfacePixelFormat dfbpf;
 	DeviceInfo *devices = NULL;
-	
+
 	//fake arguments and DirectFBInit()
 	{
 		int i, argc=2, argc_ro=2;
@@ -222,14 +222,14 @@ void DirectFBVid_InitAndCreateSurface(DirectFBVidCtx *ctx, u32 window_mode)
 		} else {
 			argv_ro[1]=argv[1]=strdup("--dfb:system=x11");
 		}
-		
+
 		// screen resolution 640x480
 		//~ argv_ro[2]=argv[2]=strdup("--dfb:mode=640x480");
 		//~ argv_ro[2]=argv[2]=strdup("");
 
 		/* create the super interface */
 		DFBCHECK(DirectFBInit(&argc, &argv));
-	
+
 		for (i=0; i<argc_ro; i++)
 			free(argv_ro[i]);
 		free(argv);
@@ -249,7 +249,7 @@ void DirectFBVid_InitAndCreateSurface(DirectFBVidCtx *ctx, u32 window_mode)
 		// for mouse
 		DFBCHECK(ctx->dfb->GetInputDevice(ctx->dfb, devices->device_id, &(ctx->mouse)));
 	}
-	
+
 	/* create an event buffer for all devices */
 	DFBCHECK(ctx->dfb->CreateInputEventBuffer(ctx->dfb, DICAPS_KEYS, DFB_FALSE, &(ctx->events) ));
 
@@ -289,7 +289,7 @@ void DirectFBVid_CtxPrimaryUnlock(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxGetWidth
- * 	- returns screen width 
+ * 	- returns screen width
  **/
 u32 DirectFBVid_CtxGetWidth(DirectFBVidCtx *ctx)
 {
@@ -299,7 +299,7 @@ u32 DirectFBVid_CtxGetWidth(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxGetHeight
- * 	- returns screen height 
+ * 	- returns screen height
  **/
 u32 DirectFBVid_CtxGetHeight(DirectFBVidCtx *ctx)
 {
@@ -309,7 +309,7 @@ u32 DirectFBVid_CtxGetHeight(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxGetPrimary
- * 	- return the primary surface  
+ * 	- return the primary surface
  **/
 void *DirectFBVid_CtxGetPrimary(DirectFBVidCtx *ctx)
 {
@@ -319,7 +319,7 @@ void *DirectFBVid_CtxGetPrimary(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxGetPixelFormat
- * 	- get pixel format  
+ * 	- get pixel format
  **/
 u32 DirectFBVid_CtxGetPixelFormat(DirectFBVidCtx *ctx)
 {
@@ -329,7 +329,7 @@ u32 DirectFBVid_CtxGetPixelFormat(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxIsHwMemory
- * 	- return value whether system memory is used or not  
+ * 	- return value whether system memory is used or not
  **/
 Bool DirectFBVid_CtxIsHwMemory(DirectFBVidCtx *ctx)
 {
@@ -339,7 +339,7 @@ Bool DirectFBVid_CtxIsHwMemory(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxPrimaryFlip
- * 	- flipping buffers 
+ * 	- flipping buffers
  **/
 u32 DirectFBVid_CtxPrimaryFlip(DirectFBVidCtx *ctx)
 {
@@ -349,7 +349,7 @@ u32 DirectFBVid_CtxPrimaryFlip(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxSetDisableDisplay
- * 	- set disable display value   
+ * 	- set disable display value
  **/
 void DirectFBVid_CtxSetDisableDisplay(DirectFBVidCtx *ctx, Bool val)
 {
@@ -359,7 +359,7 @@ void DirectFBVid_CtxSetDisableDisplay(DirectFBVidCtx *ctx, Bool val)
 
 /**
  *	function DirectFBVid_CtxGetDisableDisplay
- * 	- boolean showing whether display is enabled/disabled   
+ * 	- boolean showing whether display is enabled/disabled
  **/
 Bool DirectFBVid_CtxGetDisableDisplay(DirectFBVidCtx *ctx)
 {
@@ -369,7 +369,7 @@ Bool DirectFBVid_CtxGetDisableDisplay(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxSetDisableAcceleration
- * 	- boolean showing whether hardware accelerator is enabled/disabled   
+ * 	- boolean showing whether hardware accelerator is enabled/disabled
  **/
 void DirectFBVid_CtxSetDisableAcceleration(DirectFBVidCtx *ctx, Bool val)
 {
@@ -379,7 +379,7 @@ void DirectFBVid_CtxSetDisableAcceleration(DirectFBVidCtx *ctx, Bool val)
 
 /**
  *	function DirectFBVid_CtxGetDisableAcceleration
- * 	- return disable_acceleration value  
+ * 	- return disable_acceleration value
  **/
 Bool DirectFBVid_CtxGetDisableAcceleration(DirectFBVidCtx *ctx)
 {
@@ -389,7 +389,7 @@ Bool DirectFBVid_CtxGetDisableAcceleration(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_CtxSetIsInit
- * 	- boolean showing whether DirectFB is initialized   
+ * 	- boolean showing whether DirectFB is initialized
  **/
 void DirectFBVid_CtxSetIsInit(DirectFBVidCtx *ctx, Bool val)
 {
@@ -399,7 +399,7 @@ void DirectFBVid_CtxSetIsInit(DirectFBVidCtx *ctx, Bool val)
 
 /**
  *	function DirectFBVid_CtxSetFlipMode
- * 	- set flip mode   
+ * 	- set flip mode
  **/
 void DirectFBVid_CtxSetFlipMode(DirectFBVidCtx *ctx, u32 flip_mode)
 {
@@ -439,7 +439,7 @@ void DirectFBVid_CtxPrimaryProcessGetAccelerationMask(DirectFBVidCtx *ctx)
 
 /**
  *	function DirectFBVid_ShutdownWrapper
- * 	- shutdown DirectFB module  
+ * 	- shutdown DirectFB module
  **/
 u32 DirectFBVid_ShutdownWrapper(DirectFBVidCtx *ctx)
 {
@@ -458,7 +458,7 @@ u32 DirectFBVid_ShutdownWrapper(DirectFBVidCtx *ctx)
 
 
 /**
- *	Blit a surface 
+ *	Blit a surface
  **/
 u32 DirectFBVid_TranslatePixelFormatFromGPAC(u32 gpacpf);
 u32 DirectFBVid_BlitWrapper(DirectFBVidCtx *ctx, u32 video_src_width, u32 video_src_height, u32 video_src_pixel_format, char *video_src_buffer, s32 video_src_pitch_y, u32 src_wnd_x, u32 src_wnd_y, u32 src_wnd_w, u32 src_wnd_h, u32 dst_wnd_x, u32 dst_wnd_y, u32 dst_wnd_w, u32 dst_wnd_h, u32 overlay_type)
@@ -516,13 +516,13 @@ u32 DirectFBVid_BlitWrapper(DirectFBVidCtx *ctx, u32 video_src_width, u32 video_
 	}
 
 	src->Release(src);
-	
+
 	return 0;
 }
 
 
 /**
- *	function DirectFBVid_ProcessMessageQueueWrapper  
+ *	function DirectFBVid_ProcessMessageQueueWrapper
  * 	- handle DirectFB events
  * 	- key events
  **/
@@ -563,7 +563,7 @@ u32 DirectFBVid_ProcessMessageQueueWrapper(DirectFBVidCtx *ctx, u8 *type, u32 *f
 			default:
 				break;
 		}
-		
+
 		return 0;
 	}
 
@@ -574,7 +574,7 @@ u32 DirectFBVid_ProcessMessageQueueWrapper(DirectFBVidCtx *ctx, u8 *type, u32 *f
 /* Events translation */
 /**
  *	function DirectFBVid_TranslatePixelFormatToGPAC
- * 	- translate pixel from DirectFb to GPAC  
+ * 	- translate pixel from DirectFb to GPAC
  **/
 u32 DirectFBVid_TranslatePixelFormatToGPAC(u32 dfbpf)
 {
@@ -590,7 +590,7 @@ u32 DirectFBVid_TranslatePixelFormatToGPAC(u32 dfbpf)
 
 /**
  *	function DirectFBVid_TranslatePixelFormatToGPAC
- * 	- translate pixel from GPAC to DirectFB  
+ * 	- translate pixel from GPAC to DirectFB
  **/
 u32 DirectFBVid_TranslatePixelFormatFromGPAC(u32 gpacpf)
 {
@@ -614,7 +614,7 @@ u32 DirectFBVid_TranslatePixelFormatFromGPAC(u32 gpacpf)
 
 /**
  *	function directfb_translate_key
- * 	- translate key from DirectFB to GPAC  
+ * 	- translate key from DirectFB to GPAC
  **/
 void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags, u32 *key_code)
 {
@@ -622,43 +622,43 @@ void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags,
 
 	switch (DirectFBkey) {
 		case DIKI_BACKSPACE:
-			*key_code = GF_KEY_BACKSPACE; 
-			//~ fprintf(stderr, "DIKI_BACKSPACE\n"); 
+			*key_code = GF_KEY_BACKSPACE;
+			//~ fprintf(stderr, "DIKI_BACKSPACE\n");
 			break;
 		case DIKI_TAB:
-			*key_code = GF_KEY_TAB; 
-			//~ fprintf(stderr, "DIKI_TAB\n"); 
+			*key_code = GF_KEY_TAB;
+			//~ fprintf(stderr, "DIKI_TAB\n");
 			break;
 		case DIKI_ENTER:
-			*key_code = GF_KEY_ENTER; 
-			//~ fprintf(stderr, "DIKI_ENTER\n"); 
+			*key_code = GF_KEY_ENTER;
+			//~ fprintf(stderr, "DIKI_ENTER\n");
 			break;
 		case DIKI_ESCAPE:
-			*key_code = GF_KEY_ESCAPE; 
-			//~ fprintf(stderr, "DIKI_ESCAPE\n"); 
+			*key_code = GF_KEY_ESCAPE;
+			//~ fprintf(stderr, "DIKI_ESCAPE\n");
 			break;
 		case DIKI_SPACE:
-			*key_code = GF_KEY_SPACE; 
-			//~ fprintf(stderr, "DIKI_SPACE\n"); 
+			*key_code = GF_KEY_SPACE;
+			//~ fprintf(stderr, "DIKI_SPACE\n");
 			break;
 		case DIKI_SHIFT_L:
 		case DIKI_SHIFT_R:
-			*key_code = GF_KEY_SHIFT; 
-			//~ fprintf(stderr, "DIKI_SHIFT_R/DIKI_SHIFT_L\n"); 
+			*key_code = GF_KEY_SHIFT;
+			//~ fprintf(stderr, "DIKI_SHIFT_R/DIKI_SHIFT_L\n");
 			break;
 		case DIKI_CONTROL_L:
 		case DIKI_CONTROL_R:
-			*key_code = GF_KEY_CONTROL; 
-			//~ fprintf(stderr, "DIKI_CONTROL_L/DIKI_CONTROL_R\n"); 
+			*key_code = GF_KEY_CONTROL;
+			//~ fprintf(stderr, "DIKI_CONTROL_L/DIKI_CONTROL_R\n");
 			break;
 		case DIKI_ALT_L:
 		case DIKI_ALT_R:
-			*key_code = GF_KEY_ALT; 
-			//~ fprintf(stderr, "DIKI_ALT_L/DIKI_ALT_R\n"); 
+			*key_code = GF_KEY_ALT;
+			//~ fprintf(stderr, "DIKI_ALT_L/DIKI_ALT_R\n");
 			break;
 		case DIKI_CAPS_LOCK:
-			*key_code = GF_KEY_CAPSLOCK; 
-			//~ fprintf(stderr, "DIKI_CAPS_LOCK\n"); 
+			*key_code = GF_KEY_CAPSLOCK;
+			//~ fprintf(stderr, "DIKI_CAPS_LOCK\n");
 			break;
 		case DIKI_META_L:
 		case DIKI_META_R:
@@ -668,27 +668,27 @@ void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags,
 		case DIKI_SUPER_L:
 		case DIKI_SUPER_R:
 			*key_code = GF_KEY_WIN; break;
-		
+
 		/* alphabets */
 		case DIKI_A:
-			*key_code = GF_KEY_A; 
-			//~ fprintf(stderr, "DIKI_A\n"); 
+			*key_code = GF_KEY_A;
+			//~ fprintf(stderr, "DIKI_A\n");
 			break;
 		case DIKI_B:
-			*key_code = GF_KEY_B; 
-			//~ fprintf(stderr, "DIKI_B\n"); 
+			*key_code = GF_KEY_B;
+			//~ fprintf(stderr, "DIKI_B\n");
 			break;
 		case DIKI_C:
-			*key_code = GF_KEY_C; 
-			//~ fprintf(stderr, "DIKI_C\n"); 
+			*key_code = GF_KEY_C;
+			//~ fprintf(stderr, "DIKI_C\n");
 			break;
 		case DIKI_D:
-			*key_code = GF_KEY_D; 
-			//~ fprintf(stderr, "DIKI_D\n"); 
+			*key_code = GF_KEY_D;
+			//~ fprintf(stderr, "DIKI_D\n");
 			break;
 		case DIKI_E:
-			*key_code = GF_KEY_E; 
-			//~ fprintf(stderr, "DIKI_E\n"); 
+			*key_code = GF_KEY_E;
+			//~ fprintf(stderr, "DIKI_E\n");
 			break;
 		case DIKI_F:
 			*key_code = GF_KEY_F; break;
@@ -732,7 +732,7 @@ void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags,
 			*key_code = GF_KEY_Y; break;
 		case DIKI_Z:
 			*key_code = GF_KEY_Z; break;
-			
+
 		case DIKI_PRINT:
 			*key_code = GF_KEY_PRINTSCREEN; break;
 		case DIKI_SCROLL_LOCK:
@@ -751,7 +751,7 @@ void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags,
 			*key_code = GF_KEY_PAGEUP; break;
 		case DIKI_PAGE_DOWN:
 			*key_code = GF_KEY_PAGEDOWN; break;
-		
+
 		/* arrows */
 		case DIKI_UP:
 			*key_code = GF_KEY_UP; break;
@@ -761,7 +761,7 @@ void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags,
 			*key_code = GF_KEY_RIGHT; break;
 		case DIKI_LEFT:
 			*key_code = GF_KEY_LEFT; break;
- 
+
 		/* extended numerical pad */
 		case DIKI_NUM_LOCK:
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_NUMLOCK; break;
@@ -774,7 +774,7 @@ void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags,
 		case DIKI_KP_PLUS:
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_PLUS; break;
 		case DIKI_KP_ENTER:
-			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_ENTER; break; 
+			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_ENTER; break;
 		case DIKI_KP_DECIMAL:
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_FULLSTOP; break;
 		case DIKI_KP_0:
@@ -787,7 +787,7 @@ void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags,
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_3; break;
 		case DIKI_KP_4:
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_4; break;
-		case DIKI_KP_5: 
+		case DIKI_KP_5:
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_5; break;
 		case DIKI_KP_6:
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_6; break;
@@ -797,7 +797,7 @@ void directfb_translate_key(DFBInputDeviceKeyIdentifier DirectFBkey, u32 *flags,
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_8; break;
 		case DIKI_KP_9:
 			*flags = GF_KEY_EXT_NUMPAD; *key_code = GF_KEY_9; break;
-		
+
 		/* Fn functions */
 		case DIKI_F1:
 			*key_code = GF_KEY_F1; break;

@@ -17,8 +17,8 @@ V4NodePools::V4NodePools() {
 }
 
 
-// pool -- returns the pool of object for the given tag 
-V4NodePool& V4NodePools::pool(const u32 tag) 
+// pool -- returns the pool of object for the given tag
+V4NodePool& V4NodePools::pool(const u32 tag)
 {
 	u32 n = poolN(tag);
   if ((u32) -1 == n) return dummy;

@@ -83,7 +83,7 @@ GF_Err gf_mse_source_buffer_load_parser(GF_HTML_SourceBuffer *sourcebuffer, cons
             parser = (GF_InputService *) gf_modules_load_interface_by_name(sourcebuffer->mediasource->service->term->user->modules, sPlug, GF_NET_CLIENT_INTERFACE);
         }
     }
-    if (parser) 
+    if (parser)
     {
         sourcebuffer->parser = parser;
         parser->query_proxy = gf_mse_proxy;
@@ -91,7 +91,7 @@ GF_Err gf_mse_source_buffer_load_parser(GF_HTML_SourceBuffer *sourcebuffer, cons
         parser->proxy_type = GF_TRUE;
         return GF_OK;
     }
-    else 
+    else
     {
         GF_LOG(GF_LOG_ERROR, GF_LOG_DASH, ("[MSE] Error locating plugin for source - mime type %s\n", mime));
         return GF_BAD_PARAM;
@@ -105,15 +105,15 @@ static GF_HTML_Track *gf_mse_source_buffer_add_track(GF_HTML_SourceBuffer *sb, G
 
     track = NULL;
     type = HTML_MEDIA_TRACK_TYPE_UNKNOWN;
-    if (esd->decoderConfig->streamType==GF_STREAM_VISUAL) 
+    if (esd->decoderConfig->streamType==GF_STREAM_VISUAL)
     {
         type = HTML_MEDIA_TRACK_TYPE_VIDEO;
-    } 
-    else if (esd->decoderConfig->streamType==GF_STREAM_AUDIO) 
+    }
+    else if (esd->decoderConfig->streamType==GF_STREAM_AUDIO)
     {
         type = HTML_MEDIA_TRACK_TYPE_AUDIO;
-    } 
-    else 
+    }
+    else
     {
         /* TODO: Text tracks */
     }
@@ -135,7 +135,7 @@ static GF_HTML_Track *gf_mse_source_buffer_add_track(GF_HTML_SourceBuffer *sb, G
 static GF_Err gf_mse_source_buffer_setup_tracks(GF_HTML_SourceBuffer *sb)
 {
     sb->service_desc = (GF_ObjectDescriptor *)sb->parser->GetServiceDescriptor(sb->parser, GF_MEDIA_OBJECT_UNDEF, NULL);
-    if (sb->service_desc) 
+    if (sb->service_desc)
     {
         u32 count;
         count = gf_list_count(sb->service_desc->ESDescriptors);
@@ -184,7 +184,7 @@ static GF_Err gf_mse_source_buffer_store_track_desc(GF_HTML_SourceBuffer *sb, GF
             /* TODO: error */
             return GF_BAD_PARAM;
         }
-    } 
+    }
     return GF_OK;
 }
 
@@ -215,19 +215,19 @@ void gf_mse_source_buffer_update_buffered(GF_HTML_SourceBuffer *sb)
             if (packet) {
                 double packet_start = (packet->sl_header.compositionTimeStamp * 1.0 )/ track->timescale;
                 double packet_end = ((packet->sl_header.compositionTimeStamp + packet->sl_header.au_duration) * 1.0) / track->timescale;
-                if (!start_set) 
+                if (!start_set)
                 {
                     start = packet_start;
                     start_set = GF_TRUE;
-                } 
-                else 
+                }
+                else
                 {
                     if (start > packet_start)
                     {
                         start = packet_start;
                     }
                 }
-                if (!end_set) 
+                if (!end_set)
                 {
                     end = packet_end;
                     end_set = GF_TRUE;
@@ -257,7 +257,7 @@ static void gf_mse_source_buffer_reset_parser(GF_HTML_SourceBuffer *sb)
 
     /* wait until all remaining entire AU are parsed and then flush the remaining bytes in the parser */
 
-    for (i = 0; i < track_count; i++) 
+    for (i = 0; i < track_count; i++)
     {
         GF_HTML_Track *track = (GF_HTML_Track *)gf_list_get(sb->tracks, i);
         track->last_dts_set     = GF_FALSE;
@@ -287,7 +287,7 @@ GF_Err gf_mse_source_buffer_abort(GF_HTML_SourceBuffer *sb, GF_HTML_MediaSource_
         }
     }
 
-    if (sb->updating) 
+    if (sb->updating)
     {
         sb->updating = GF_FALSE;
     }
@@ -305,13 +305,13 @@ void gf_mse_packet_del(GF_MSE_Packet *packet)
     gf_free(packet);
 }
 
-static GF_MSE_Packet *gf_mse_find_overlapped_packet(GF_HTML_Track           *track, 
+static GF_MSE_Packet *gf_mse_find_overlapped_packet(GF_HTML_Track           *track,
                                                     GF_MSE_Packet           *packet)
 {
     u32     i;
     u32     count;
     Bool    found_previous;
-    
+
     found_previous = GF_FALSE;
     gf_mx_p(track->buffer_mutex);
     count = gf_list_count(track->buffer);
@@ -329,7 +329,7 @@ static GF_MSE_Packet *gf_mse_find_overlapped_packet(GF_HTML_Track           *tra
     return NULL;
 }
 
-static void gf_mse_remove_frames_from_to(GF_HTML_Track *track, 
+static void gf_mse_remove_frames_from_to(GF_HTML_Track *track,
                                          u64           from,
                                          u64           to)
 {
@@ -343,7 +343,7 @@ static void gf_mse_remove_frames_from_to(GF_HTML_Track *track,
     for (i = 0; i < frame_count; i++)
     {
         GF_MSE_Packet *frame = (GF_MSE_Packet *)gf_list_get(track->buffer, i);
-        if (frame->sl_header.compositionTimeStamp >= from && frame->sl_header.compositionTimeStamp < to) 
+        if (frame->sl_header.compositionTimeStamp >= from && frame->sl_header.compositionTimeStamp < to)
         {
             GF_LOG(GF_LOG_DEBUG, GF_LOG_DASH, ("[MSE] Removing frame %g (%d frames)\n", (frame->sl_header.compositionTimeStamp*1.0)/track->timescale, gf_list_count(track->buffer)));
             gf_list_rem(track->buffer, i);
@@ -352,11 +352,11 @@ static void gf_mse_remove_frames_from_to(GF_HTML_Track *track,
     gf_mx_v(track->buffer_mutex);
 }
 
-static GF_Err gf_mse_process_coded_frame(GF_HTML_SourceBuffer    *sb, 
-                                       GF_HTML_Track           *track, 
+static GF_Err gf_mse_process_coded_frame(GF_HTML_SourceBuffer    *sb,
+                                       GF_HTML_Track           *track,
                                        GF_MSE_Packet           *frame)
 {
-    if (sb->abort_mode != MEDIA_SOURCE_ABORT_MODE_NONE) 
+    if (sb->abort_mode != MEDIA_SOURCE_ABORT_MODE_NONE)
     {
         switch (sb->abort_mode)
         {
@@ -375,7 +375,7 @@ static GF_Err gf_mse_process_coded_frame(GF_HTML_SourceBuffer    *sb,
 
     if (sb->timestampOffset < 0) {
         u64 offset = (u64)((-sb->timestampOffset)*track->timescale);
-        if (offset > frame->sl_header.compositionTimeStamp || offset > frame->sl_header.decodingTimeStamp) 
+        if (offset > frame->sl_header.compositionTimeStamp || offset > frame->sl_header.decodingTimeStamp)
         {
              return GF_NON_COMPLIANT_BITSTREAM;
         }
@@ -383,16 +383,16 @@ static GF_Err gf_mse_process_coded_frame(GF_HTML_SourceBuffer    *sb,
     frame->sl_header.compositionTimeStamp  += (u64)(sb->timestampOffset*track->timescale);
     frame->sl_header.decodingTimeStamp     += (u64)(sb->timestampOffset*track->timescale);
 
-    if (track->last_dts_set) 
+    if (track->last_dts_set)
     {
-        if (track->last_dts*track->timescale > frame->sl_header.decodingTimeStamp) 
+        if (track->last_dts*track->timescale > frame->sl_header.decodingTimeStamp)
         {
             return GF_NON_COMPLIANT_BITSTREAM;
         }
 
-        /* why ??? 
-         * If last decode timestamp for track buffer is set and decode timestamp is less than last decode timestamp 
-         * or the difference between decode timestamp and last decode timestamp is greater than 100 milliseconds, 
+        /* why ???
+         * If last decode timestamp for track buffer is set and decode timestamp is less than last decode timestamp
+         * or the difference between decode timestamp and last decode timestamp is greater than 100 milliseconds,
          * then call endOfStream("decode") and abort these steps.
          */
         if (frame->sl_header.decodingTimeStamp - track->last_dts*track->timescale > 0.1*track->timescale)
@@ -411,7 +411,7 @@ static GF_Err gf_mse_process_coded_frame(GF_HTML_SourceBuffer    *sb,
         return GF_OK;
     }
 
-    if (track->needs_rap) 
+    if (track->needs_rap)
     {
         if (!frame->sl_header.randomAccessPointFlag) {
             return GF_OK;
@@ -426,14 +426,14 @@ static GF_Err gf_mse_process_coded_frame(GF_HTML_SourceBuffer    *sb,
         if (overlapped_packet) {
             gf_mse_remove_frames_from_to(track, overlapped_packet->sl_header.compositionTimeStamp, overlapped_packet->sl_header.compositionTimeStamp + (u64)(0.000001*track->timescale));
         }
-    } 
+    }
 
-    if (!track->highest_pts_set) 
+    if (!track->highest_pts_set)
     {
         /* this is the first time a frame is processed in the append sequence */
         gf_mse_remove_frames_from_to(track, frame->sl_header.compositionTimeStamp, frame->sl_header.compositionTimeStamp /* + dur */);
-    } 
-    else if (track->highest_pts*track->timescale <= frame->sl_header.compositionTimeStamp) 
+    }
+    else if (track->highest_pts*track->timescale <= frame->sl_header.compositionTimeStamp)
     {
         /* the highest pts has already been set in this append sequence, so we just need to remove frames from that point on, it's safe */
         gf_mse_remove_frames_from_to(track, (u64)(track->highest_pts*track->timescale), (u64)(track->highest_pts*track->timescale) /* + dur */);
@@ -481,7 +481,7 @@ u32 gf_mse_parse_segment(void *par)
     GF_LOG(GF_LOG_DEBUG, GF_LOG_DASH, ("[MSE] Starting to fetch AUs from parser\n"));
 
     /* For each track, ask the parser for all the Access Unit, until it is empty
-     * AU are placed as GF_MSE_Packets in the track buffer 
+     * AU are placed as GF_MSE_Packets in the track buffer
      */
     track_count = gf_list_count(sb->tracks);
     while (sb->updating)
@@ -492,10 +492,10 @@ u32 gf_mse_parse_segment(void *par)
             GF_Err e;
             track = (GF_HTML_Track *)gf_list_get(sb->tracks, i);
             GF_SAFEALLOC(packet, GF_MSE_Packet);
-            e = sb->parser->ChannelGetSLP(sb->parser, track->channel, 
-                                          &packet->data, &packet->size, &packet->sl_header, 
+            e = sb->parser->ChannelGetSLP(sb->parser, track->channel,
+                                          &packet->data, &packet->size, &packet->sl_header,
                                           &packet->is_compressed, &packet->status, &packet->is_new_data);
-            if (e == GF_OK && packet->is_new_data && packet->size) 
+            if (e == GF_OK && packet->is_new_data && packet->size)
             {
                 char *data = (char *)gf_malloc(packet->size);
                 GF_LOG(GF_LOG_DEBUG, GF_LOG_DASH, ("[MSE] New AU parsed %g\n", (packet->sl_header.compositionTimeStamp*1.0/track->timescale)));
@@ -508,7 +508,7 @@ u32 gf_mse_parse_segment(void *par)
         }
         if (!track_with_data)
         {
-            if (step) 
+            if (step)
             {
                 /* try to delete the previous buffer */
                 gf_arraybuffer_del((GF_HTML_ArrayBuffer *)sb->prev_buffer, GF_FALSE);
@@ -544,7 +544,7 @@ void gf_mse_source_buffer_append_arraybuffer(GF_HTML_SourceBuffer *sb, GF_HTML_A
         GF_LOG(GF_LOG_DEBUG, GF_LOG_DASH, ("[MSE] Appending segment %s\n", buffer->url));
 
         /* TODO: detect if the buffer contains an initialization segment or a media segment */
-        if (!sb->parser_connected) 
+        if (!sb->parser_connected)
         {
             /* we expect an initialization segment to connect the service */
             sb->parser->ConnectService(sb->parser, sb->mediasource->service, buffer->url);
@@ -589,10 +589,10 @@ u32 gf_mse_source_buffer_remove(void *par)
         /* find the next random access point */
         gf_mx_p(track->buffer_mutex);
         frame_count = gf_list_count(track->buffer);
-        for (j = 0; j < frame_count; j++) 
+        for (j = 0; j < frame_count; j++)
         {
             GF_MSE_Packet *frame = (GF_MSE_Packet *)gf_list_get(track->buffer, j);
-            if ((frame->sl_header.randomAccessPointFlag && 
+            if ((frame->sl_header.randomAccessPointFlag &&
                  frame->sl_header.compositionTimeStamp >= sb->remove_end*track->timescale) ||
                  (j == frame_count - 1))
             {
@@ -654,7 +654,7 @@ GF_Err gf_mse_proxy(GF_InputService *parser, GF_NetworkCommand *command)
                 if (command->status.desc)
                 {
                     gf_mse_source_buffer_store_track_desc(sb, (GF_ObjectDescriptor *)command->status.desc);
-                } 
+                }
                 else
                 {
                     /* this is the last add media, we can switch updating to false */
@@ -666,8 +666,8 @@ GF_Err gf_mse_proxy(GF_InputService *parser, GF_NetworkCommand *command)
                 gf_term_add_media(sb->mediasource->service, command->status.desc, (command->status.desc ? GF_TRUE : GF_FALSE));
             }
             /* general connection/disconnection messages from the media parser (not track related) */
-            else if (!command->status.channel) 
-            { 
+            else if (!command->status.channel)
+            {
                 /* connection message */
                 if (!command->status.is_disconnect) {
                     if (command->status.e == GF_OK) {
@@ -686,7 +686,7 @@ GF_Err gf_mse_proxy(GF_InputService *parser, GF_NetworkCommand *command)
                 }
             }
             /* channel (track related) specific connection/disconnection messages from the media parser */
-            else 
+            else
             {
                 if (!command->status.is_disconnect) {
                     gf_term_on_connect(sb->mediasource->service, command->status.channel, command->status.e);

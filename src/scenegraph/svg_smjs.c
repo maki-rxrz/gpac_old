@@ -1165,7 +1165,7 @@ JSBool SMJS_FUNCTION(svg_udom_set_path_trait)
 	if (!GF_JS_InstanceOf(c, pO, &svg_rt->pathClass, NULL) ) return JS_TRUE;
 	path = SMJS_GET_PRIVATE(c, pO);
 	if (!path) return JS_TRUE;
-	
+
 	szName = SMJS_CHARS(c, argv[0]);
 	e = gf_node_get_field_by_name(n, szName, &info);
 	SMJS_FREE(c, szName);
@@ -2531,7 +2531,7 @@ static Bool svg_js_load_script(GF_Node *script, char *file)
 	}
 
 	gf_sg_lock_javascript(svg_js->js_ctx, GF_TRUE);
-	
+
 	ret = JS_EvaluateScript(svg_js->js_ctx, svg_js->global, jsscript, sizeof(char)*fsize, 0, 0, &rval);
 
 	if (svg_js->force_gc) {
@@ -2664,7 +2664,7 @@ static Bool svg_script_execute_handler(GF_Node *node, GF_DOM_Event *event, GF_No
 	svg_js = node->sgprivate->scenegraph->svg_js;
 
 #ifndef GPAC_DISABLE_LOG
-	if (gf_log_tool_level_on(GF_LOG_SCRIPT, GF_LOG_DEBUG)) { 
+	if (gf_log_tool_level_on(GF_LOG_SCRIPT, GF_LOG_DEBUG)) {
 		char *content, *_content = NULL;
 		if (utf8_script) {
 			content = utf8_script;
@@ -2679,7 +2679,7 @@ static Bool svg_script_execute_handler(GF_Node *node, GF_DOM_Event *event, GF_No
 		} else {
 			content = "unknown";
 		}
-		gf_log_lt(GF_LOG_DEBUG, GF_LOG_SCRIPT); 
+		gf_log_lt(GF_LOG_DEBUG, GF_LOG_SCRIPT);
 		gf_log("[DOM Events    ] Executing script code from handler: %s\n", content);
 		SMJS_FREE(svg_js->js_ctx, _content);
 	}
@@ -2707,7 +2707,7 @@ static Bool svg_script_execute_handler(GF_Node *node, GF_DOM_Event *event, GF_No
 
 	if (utf8_script) {
 		ret = JS_EvaluateScript(svg_js->js_ctx, __this, utf8_script, (u32) strlen(utf8_script), 0, 0, &rval);
-	} 
+	}
 	else if (hdl->js_fun || hdl->js_fun_val || hdl->evt_listen_obj) {
 		JSObject *evt;
 		jsval argv[1];

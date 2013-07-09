@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 
@@ -98,7 +98,7 @@ typedef struct
 	u32 time_scale;
 	Bool to_init, is_playing, has_rap;
 	u8 streamType;
-	
+
 	Bool is_encrypted;
 
 	/*cache stuff*/
@@ -124,7 +124,7 @@ void isor_declare_objects(ISOMReader *read);
 
 /*progressive_mode indicates the type of check we do:
 0: regular check at the end of the segment : all samples from the segment have been processed
-1: check upon first data received in progressive mode: we possibly need to discard the previous segment and open the new segment 
+1: check upon first data received in progressive mode: we possibly need to discard the previous segment and open the new segment
 2: check when more data is received: we only fetch the new URL and reload the file
 */
 void isor_check_segment_switch(ISOMReader *read, u32 progressive_mode);

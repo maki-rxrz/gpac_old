@@ -43,11 +43,11 @@ OBJS=amr_in.o amr_dec.o \
 	./amr_nb/set_zero.o ./amr_nb/strfunc.o ./amr_nb/n_proc.o ./amr_nb/sid_sync.o
 
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_amr_dec.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
-#LDFLAGS+=-export-symbols amr_dec.def 
+#LDFLAGS+=-export-symbols amr_dec.def
 endif
 
 all: $(LIB)
@@ -57,13 +57,13 @@ $(LIB): $(OBJS)
 	$(CC) $(SHFLAGS) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) $(EXTRALIBS) -L../../bin/gcc -lgpac
 
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

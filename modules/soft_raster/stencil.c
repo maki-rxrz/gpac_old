@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #include "rast_soft.h"
@@ -32,8 +32,8 @@ EVGStencil *evg_radial_gradient_brush();
 
 
 
-GF_Color color_interpolate(u32 a, u32 b, u8 pos) 
-{ 
+GF_Color color_interpolate(u32 a, u32 b, u8 pos)
+{
 	u32 ca = ((a>>24)     )*(u32)(0xFF-pos)+((b>>24)     )*(u32)pos;
 	u32 cr = ((a>>16)&0xFF)*(u32)(0xFF-pos)+((b>>16)&0xFF)*(u32)pos;
 	u32 cg = ((a>> 8)&0xFF)*(u32)(0xFF-pos)+((b>> 8)&0xFF)*(u32)pos;
@@ -90,7 +90,7 @@ static void gradient_update(EVG_BaseGradient *_this)
 	}
 }
 
-static u32 gradient_get_color(EVG_BaseGradient *_this, s32 pos) 
+static u32 gradient_get_color(EVG_BaseGradient *_this, s32 pos)
 {
 	s32 max_pos = 1 << EVGGRADIENTBITS;
 
@@ -224,7 +224,7 @@ GF_Err evg_stencil_set_brush_color(GF_STENCIL st, GF_Color c)
 	linear gradient stencil
 */
 
-static void lgb_fill_run(EVGStencil *p, EVGSurface *surf, s32 x, s32 y, u32 count) 
+static void lgb_fill_run(EVGStencil *p, EVGSurface *surf, s32 x, s32 y, u32 count)
 {
 	Bool has_cmat, has_a;
 	Fixed _res;
@@ -246,7 +246,7 @@ static void lgb_fill_run(EVGStencil *p, EVGSurface *surf, s32 x, s32 y, u32 coun
 		if (has_a) {
 			ca = ((GF_COL_A(col) + 1) * _this->alpha) >> 8;
 			col = ( ((ca<<24) & 0xFF000000) ) | (col & 0x00FFFFFF);
-		} 
+		}
 		if (has_cmat) col = gf_cmx_apply(&p->cmat, col);
 		*data++ = col;
 		count--;
@@ -306,7 +306,7 @@ EVGStencil *evg_linear_gradient_brush()
 	radial gradient stencil
 */
 
-static void rg_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 count) 
+static void rg_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 count)
 {
 	Fixed x, y, dx, dy, b, val;
 	Bool has_cmat, has_a;
@@ -334,8 +334,8 @@ static void rg_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 cou
 		if (has_a) {
 			ca = ((GF_COL_A(col) + 1) * _this->alpha) >> 8;
 			col = ( ((ca<<24) & 0xFF000000) ) | (col & 0x00FFFFFF);
-		} 
-		if (has_cmat) col = gf_cmx_apply(&p->cmat, col);		
+		}
+		if (has_cmat) col = gf_cmx_apply(&p->cmat, col);
 		*data++ = col;
 
 		dx += _this->d_i.x;
@@ -344,7 +344,7 @@ static void rg_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 cou
 	}
 }
 
-void evg_radial_init(EVG_RadialGradient *_this) 
+void evg_radial_init(EVG_RadialGradient *_this)
 {
 	GF_Point2D p0, p1;
 	p0.x = p0.y = p1.y = 0;
@@ -499,7 +499,7 @@ static void bmp_untransform_coord(EVG_Texture *_this, s32 _x, s32 _y, Fixed *out
 	*outy=y;
 }
 
-static void bmp_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 count) 
+static void bmp_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 count)
 {
 	s32 cx, x0, y0;
 	u32 pix, replace_col;
@@ -518,12 +518,12 @@ static void bmp_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 co
 	incy = (_this->inc_y>0) ? 1 : -1;
 #endif
 
-	_fd = INT2FIX(_this->width); 
+	_fd = INT2FIX(_this->width);
 	repeat_s = _this->mod & GF_TEXTURE_REPEAT_S;
 	if (!repeat_s && (x < - _fd)) x = 0;
 	while (x<0) x += _fd;
 
-	_fd = INT2FIX(_this->height); 
+	_fd = INT2FIX(_this->height);
 	repeat_t = _this->mod & GF_TEXTURE_REPEAT_T;
 	if (!repeat_t && (y < - _fd)) y = 0;
 	while (y<0) y += _fd;
@@ -542,7 +542,7 @@ static void bmp_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 co
 		} else {
 			x0 = MIN(x0, (s32) _this->width - 1);
 		}
-		
+
 		y0 = FIX2INT(y);
 		assert((s32)y0 >=0);
 		if (repeat_t) {
@@ -624,7 +624,7 @@ static void bmp_fill_run(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 co
 
 
 /*just a little faster...*/
-static void bmp_fill_run_straight(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 count) 
+static void bmp_fill_run_straight(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _y, u32 count)
 {
 	s32 x0, y0;
 	u32 pix;
@@ -683,7 +683,7 @@ static void bmp_fill_run_straight(EVGStencil *p, EVGSurface *surf, s32 _x, s32 _
 	}
 }
 
-void evg_bmp_init(EVGStencil *p) 
+void evg_bmp_init(EVGStencil *p)
 {
 	GF_Point2D p0, p1;
 	EVG_Texture *_this = (EVG_Texture *) p;

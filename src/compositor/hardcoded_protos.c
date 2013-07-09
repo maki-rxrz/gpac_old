@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -87,7 +87,7 @@ static void TraversePathExtrusion(GF_Node *node, void *rs, Bool is_destroy)
 	Drawable *stack_2d;
 	GF_TraverseState *tr_state = (GF_TraverseState *)rs;
 	Drawable3D *stack = (Drawable3D *)gf_node_get_private(node);
-	
+
 	if (is_destroy) {
 		drawable_3d_del(node);
 		return;
@@ -259,7 +259,7 @@ static void TraversePlanarExtrusion(GF_Node *node, void *rs, Bool is_destroy)
 		for (i=0; i<spine->n_contours; i++) {
 			nb_pts = 1 + spine->contours[i] - cur;
 			spine_vec.vals = NULL;
-			gf_sg_vrml_mf_alloc(&spine_vec, GF_SG_VRML_MFVEC3F, nb_pts); 
+			gf_sg_vrml_mf_alloc(&spine_vec, GF_SG_VRML_MFVEC3F, nb_pts);
 			spine_len = 0;
 			for (j=cur; j<nb_pts; j++) {
 				spine_vec.vals[j].x = spine->points[j].x;
@@ -272,8 +272,8 @@ static void TraversePlanarExtrusion(GF_Node *node, void *rs, Bool is_destroy)
 			}
 			cur += nb_pts;
 			if (!plane_ext.orientation->count && !plane_ext.scale->count) {
-				mesh_extrude_path_ext(stack->mesh, geo, &spine_vec, plane_ext.creaseAngle, 
-					bounds.x, bounds.y-bounds.height, bounds.width, bounds.height, 
+				mesh_extrude_path_ext(stack->mesh, geo, &spine_vec, plane_ext.creaseAngle,
+					bounds.x, bounds.y-bounds.height, bounds.width, bounds.height,
 					plane_ext.beginCap, plane_ext.endCap, NULL, NULL, plane_ext.txAlongSpine);
 			}
 			/*interpolate orientation and scale along subpath line*/
@@ -306,8 +306,8 @@ static void TraversePlanarExtrusion(GF_Node *node, void *rs, Bool is_destroy)
 							for (k=1; k<plane_ext.orientationKeys->count; k++) {
 								Fixed kDiff = plane_ext.orientationKeys->vals[k] - plane_ext.orientationKeys->vals[k-1];
 								if (!kDiff) continue;
-								if (frac < plane_ext.orientationKeys->vals[k-1]) continue; 
-								if (frac > plane_ext.orientationKeys->vals[k]) continue; 
+								if (frac < plane_ext.orientationKeys->vals[k-1]) continue;
+								if (frac > plane_ext.orientationKeys->vals[k]) continue;
 								frac = gf_divfix(frac - plane_ext.orientationKeys->vals[k-1], kDiff);
 								break;
 							}
@@ -323,8 +323,8 @@ static void TraversePlanarExtrusion(GF_Node *node, void *rs, Bool is_destroy)
 							for (k=1; k<plane_ext.scaleKeys->count; k++) {
 								Fixed kDiff = plane_ext.scaleKeys->vals[k] - plane_ext.scaleKeys->vals[k-1];
 								if (!kDiff) continue;
-								if (frac < plane_ext.scaleKeys->vals[k-1]) continue; 
-								if (frac > plane_ext.scaleKeys->vals[k]) continue; 
+								if (frac < plane_ext.scaleKeys->vals[k-1]) continue;
+								if (frac > plane_ext.scaleKeys->vals[k]) continue;
 								frac = gf_divfix(frac - plane_ext.scaleKeys->vals[k-1], kDiff);
 								break;
 							}
@@ -334,8 +334,8 @@ static void TraversePlanarExtrusion(GF_Node *node, void *rs, Bool is_destroy)
 					}
 				}
 
-				mesh_extrude_path_ext(stack->mesh, geo, &spine_vec, plane_ext.creaseAngle, 
-					bounds.x, bounds.y-bounds.height, bounds.width, bounds.height, 
+				mesh_extrude_path_ext(stack->mesh, geo, &spine_vec, plane_ext.creaseAngle,
+					bounds.x, bounds.y-bounds.height, bounds.width, bounds.height,
 					plane_ext.beginCap, plane_ext.endCap, &ori, &scale, plane_ext.txAlongSpine);
 
 				gf_sg_vrml_mf_reset(&ori, GF_SG_VRML_MFROTATION);
@@ -425,9 +425,9 @@ static void TraversePlaneClipper(GF_Node *node, void *rs, Bool is_destroy)
 		tr_state->clip_planes[tr_state->num_clip_planes] = stack->pc.plane;
 		gf_mx_apply_plane(&tr_state->model_matrix, &tr_state->clip_planes[tr_state->num_clip_planes]);
 		tr_state->num_clip_planes++;
-		
+
 		group_3d_traverse((GF_Node*)&stack->pc, (GroupingNode*)stack, tr_state);
-	
+
 		tr_state->num_clip_planes--;
 	}
 
@@ -533,7 +533,7 @@ static void TraverseOffscreenGroup(GF_Node *node, void *rs, Bool is_destroy)
 
 			tr_state->subscene_not_over = 0;
 			group_cache_traverse((GF_Node *)&stack->og, stack->cache, tr_state, stack->cache->force_recompute, 1, stack->detached ? 1 : 0);
-			
+
 			if (gf_node_dirty_get(node)) {
 				gf_node_dirty_clear(node, GF_SG_CHILD_DIRTY);
 			} else if ((stack->og.offscreen==2) && !stack->detached && !tr_state->subscene_not_over && stack->cache->txh.width && stack->cache->txh.height) {
@@ -675,14 +675,14 @@ static void TraverseDepthGroup(GF_Node *node, void *rs, Bool is_destroy)
 			visual_3d_matrix_add(tr_state->visual, mx.m);
 
 			group_2d_traverse((GF_Node *)&stack->dg, (GroupingNode2D*)stack, tr_state);
-		
+
 			visual_3d_matrix_pop(tr_state->visual);
 		} else {
 			group_2d_traverse((GF_Node *)&stack->dg, (GroupingNode2D*)stack, tr_state);
 		}
 		gf_mx_copy(tr_state->model_matrix, mx_bckup);
 
-	} else 
+	} else
 #endif
 	{
 
@@ -706,7 +706,7 @@ void compositor_init_depth_group(GF_Compositor *compositor, GF_Node *node)
 		stack->dg = dg;
 		gf_node_proto_set_grouping(node);
 	} else GF_LOG(GF_LOG_DEBUG, GF_LOG_COMPOSE, ("[Compositor2D] Unable to initialize depth group  \n"));
-        	
+
 }
 
 #ifdef GF_SR_USE_DEPTH
@@ -772,7 +772,7 @@ static Bool IndexedCurve2D_GetNode(GF_Node *node, IndexedCurve2D *ic2d)
 	if (gf_node_get_field(node, 0, &field) != GF_OK) return 0;
 	if (field.fieldType != GF_SG_VRML_SFNODE) return 0;
 	ic2d->point = * (GF_Node **) field.far_ptr;
-	
+
 	if (gf_node_get_field(node, 1, &field) != GF_OK) return 0;
 	if (field.fieldType != GF_SG_VRML_SFFLOAT) return 0;
 	ic2d->fineness = *(SFFloat *) field.far_ptr;
@@ -796,7 +796,7 @@ static void TraverseIndexedCurve2D(GF_Node *node, void *rs, Bool is_destroy)
 	IndexedCurve2D ic2d;
 	GF_TraverseState *tr_state = (GF_TraverseState *)rs;
 	Drawable *stack = (Drawable *)gf_node_get_private(node);
-	
+
 	if (is_destroy) {
 		drawable_node_del(node);
 		return;
@@ -943,11 +943,11 @@ static void TraverseUntransform(GF_Node *node, void *rs, Bool is_destroy)
 			gf_mx_copy(tr_state->model_matrix, mx_model);
 			memcpy(tr_state->camera, &backup_cam, sizeof(GF_Camera));
 			tr_state->ray = r;
-			
+
 			/*nothing picked, restore previous pick*/
-			if (!tr_state->visual->compositor->hit_square_dist) 
+			if (!tr_state->visual->compositor->hit_square_dist)
 				tr_state->visual->compositor->hit_square_dist = prev_dist;
-	
+
 		} else {
 			gf_node_traverse_children((GF_Node *)&stack->untr, tr_state);
 
@@ -955,7 +955,7 @@ static void TraverseUntransform(GF_Node *node, void *rs, Bool is_destroy)
 			memcpy(tr_state->camera, &backup_cam, sizeof(GF_Camera));
 		}
 
-	} else 
+	} else
 #endif
 	{
 		GF_Matrix2D mx2d_backup;
@@ -1026,7 +1026,7 @@ void compositor_init_hardcoded_proto(GF_Compositor *compositor, GF_Node *node)
 		if (!strcmp(url, "urn:inet:gpac:builtin:DepthViewPoint")) {
 			compositor_init_depth_viewpoint(compositor, node);
 			return;
-		}		
+		}
 		if (!strcmp(url, "urn:inet:gpac:builtin:IndexedCurve2D")) {
 			compositor_init_idx_curve2d(compositor, node);
 			return;

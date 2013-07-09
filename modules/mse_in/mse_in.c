@@ -27,7 +27,7 @@
 #include <gpac/internal/terminal_dev.h>
 #include <gpac/html5_mse.h>
 
-typedef struct __mse_module 
+typedef struct __mse_module
 {
     GF_HTML_MediaSource *mediasource;
     GF_InputService *plug;
@@ -156,14 +156,14 @@ static GF_Err MSE_ConnectService(GF_InputService *plug, GF_ClientService *serv, 
 static GF_Descriptor *MSE_GetServiceDesc(GF_InputService *plug, u32 expect_type, const char *sub_url)
 {
     //GF_MSE_In *msein = (GF_MSE_In*) plug->priv;
-    //if (msein->mediasource && gf_list_count(msein->mediasource->sourceBuffers.list)) 
+    //if (msein->mediasource && gf_list_count(msein->mediasource->sourceBuffers.list))
     //{
     //    GF_HTML_SourceBuffer *sb = (GF_HTML_SourceBuffer *)gf_list_get(msein->mediasource->sourceBuffers.list, 0);
-    //    if (!sb->service_desc) 
-    //    { 
+    //    if (!sb->service_desc)
+    //    {
     //        /* WARNING: we should not reach this point, the descriptor should be fetched upon MSE connection */
     //        sb->service_desc = (GF_ObjectDescriptor *)sb->parser->GetServiceDescriptor(sb->parser, expect_type, sub_url);
-    //    } 
+    //    }
     //    return (GF_Descriptor *)sb->service_desc;
     //}
     GF_LOG(GF_LOG_DEBUG, GF_LOG_DASH, ("[MSE_IN] Received Service Description request from terminal for %s\n", sub_url));
@@ -224,7 +224,7 @@ static GF_Err MSE_ServiceCommand(GF_InputService *plug, GF_NetworkCommand *com)
         return sb->parser->ServiceCommand(sb->parser, com);
 
     case GF_NET_CHAN_DURATION:
-        /* Ignore the duration given by the input service and 
+        /* Ignore the duration given by the input service and
            Note: the duration of the initial segment will be 0 anyway (in MP4).*/
         com->duration.duration = 0;
         return GF_OK;

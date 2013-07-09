@@ -163,7 +163,7 @@ u32 ext_media_load_th(void *par) {
 	return 0;
 }
 
-static u32 audio_gen_th(void *par) 
+static u32 audio_gen_th(void *par)
 {
 	GF_Err e;
 	char *data;

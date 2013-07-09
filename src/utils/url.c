@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -47,15 +47,15 @@ static u32 URL_GetProtocolType(const char *pathName)
 	char *begin;
 	if (!pathName) return GF_URL_TYPE_ANY;
 
-	if ((pathName[0] == '/') || (pathName[0] == '\\') 
-		|| (pathName[1] == ':') 
+	if ((pathName[0] == '/') || (pathName[0] == '\\')
+		|| (pathName[1] == ':')
 		|| ((pathName[0] == ':') && (pathName[1] == ':'))
 		) return GF_URL_TYPE_FILE;
 
     if (!strncmp(pathName, "blob:", 5)) return GF_URL_TYPE_BLOB;
 
 	begin = strstr(pathName, "://");
-	if (!begin) begin = strstr(pathName, "|//"); 
+	if (!begin) begin = strstr(pathName, "|//");
 	if (!begin) return GF_URL_TYPE_RELATIVE;
 	if (!strnicmp(pathName, "file", 4)) return GF_URL_TYPE_FILE;
 	return GF_URL_TYPE_ANY;
@@ -192,13 +192,13 @@ char *gf_url_concatenate(const char *parentName, const char *pathName)
 		}
 		for (i = 0; i< strlen(pathName) - 2; i++) {
 			/*current dir*/
-			if ( (pathName[i] == '.') 
+			if ( (pathName[i] == '.')
 				&& ( (pathName[i+1] == GF_PATH_SEPARATOR) || (pathName[i+1] == '/') ) ) {
 				i++;
 				continue;
 			}
 			/*parent dir*/
-			if ( (pathName[i] == '.') && (pathName[i+1] == '.') 
+			if ( (pathName[i] == '.') && (pathName[i+1] == '.')
 				&& ( (pathName[i+2] == GF_PATH_SEPARATOR) || (pathName[i+2] == '/') )
 				) {
 				pathSepCount ++;
@@ -242,7 +242,7 @@ char *gf_url_concatenate(const char *parentName, const char *pathName)
 	sprintf(outPath, "%s%s", tmp, name);
 
 	/*cleanup paths sep for win32*/
-	for (i = 0; i<strlen(outPath); i++) 
+	for (i = 0; i<strlen(outPath); i++)
 		if (outPath[i]=='\\') outPath[i] = '/';
 
 check_spaces:

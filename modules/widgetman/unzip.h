@@ -67,7 +67,7 @@ extern "C" {
 
 #define ZLIB_FILEFUNC_MODE_EXISTING (4)
 #define ZLIB_FILEFUNC_MODE_CREATE   (8)
-	
+
 typedef voidpf (ZCALLBACK *open_file_func) OF((voidpf opaque, const char* filename, int mode));
 typedef uLong  (ZCALLBACK *read_file_func) OF((voidpf opaque, voidpf stream, void* buf, uLong size));
 typedef uLong  (ZCALLBACK *write_file_func) OF((voidpf opaque, voidpf stream, const void* buf, uLong size));

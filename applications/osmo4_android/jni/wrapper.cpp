@@ -166,7 +166,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved){
 				return -1;
 			}
 		}
-		
+
 	}
 	javaVM = vm;
 	LOGI("Registering %s natives\n", className);
@@ -375,10 +375,10 @@ void CNativeWrapper::on_gpac_log(void *cbk, u32 ll, u32 lm, const char *fmt, va_
         {
           JavaEnvTh *env = self->getEnv();
           jstring msg;
-          
+
           if (!env || !env->cbk_onLog)
                 goto displayInAndroidlogs;
-		  
+
 		  env->env->PushLocalFrame(1);
           msg = env->env->NewStringUTF(szMsg);
           env->env->CallVoidMethod(env->cbk_obj, env->cbk_onLog, debug, lm, msg);
@@ -484,14 +484,14 @@ Bool CNativeWrapper::GPAC_EventProc(void *cbk, GF_Event *evt){
                   case GF_EVENT_TEXTINPUT:
                     /* We ignore all these events */
                     break;
-                  case GF_EVENT_MEDIA_SETUP_BEGIN: 
-                  case GF_EVENT_MEDIA_SETUP_DONE: 
-                  case GF_EVENT_MEDIA_LOAD_START: 
-                  case GF_EVENT_MEDIA_PLAYING: 
-                  case GF_EVENT_MEDIA_WAITING: 
-                  case GF_EVENT_MEDIA_PROGRESS: 
-                  case GF_EVENT_MEDIA_LOAD_DONE: 
-                  case GF_EVENT_ABORT: 
+                  case GF_EVENT_MEDIA_SETUP_BEGIN:
+                  case GF_EVENT_MEDIA_SETUP_DONE:
+                  case GF_EVENT_MEDIA_LOAD_START:
+                  case GF_EVENT_MEDIA_PLAYING:
+                  case GF_EVENT_MEDIA_WAITING:
+                  case GF_EVENT_MEDIA_PROGRESS:
+                  case GF_EVENT_MEDIA_LOAD_DONE:
+                  case GF_EVENT_ABORT:
                   case GF_EVENT_ERROR:
                     LOGD("GPAC_EventProc() Media Event detected = [index=%d]", evt->type - GF_EVENT_MEDIA_SETUP_BEGIN);
                     break;
@@ -561,11 +561,11 @@ Bool CNativeWrapper::GPAC_EventProc(void *cbk, GF_Event *evt){
 }
 
 void CNativeWrapper::navigate( GF_Event* evt)
-{	
-	if (gf_term_is_supported_url(m_term, evt->navigate.to_url, GF_TRUE, GF_TRUE)) 
+{
+	if (gf_term_is_supported_url(m_term, evt->navigate.to_url, GF_TRUE, GF_TRUE))
 	{
 		gf_term_navigate_to(m_term, evt->navigate.to_url);
-	} 
+	}
 }
 
 void CNativeWrapper::progress_cbk(const char *title, u64 done, u64 total){
@@ -732,8 +732,8 @@ int CNativeWrapper::init(JNIEnv * env, void * bitmap, jobject * callback, int wi
         debug_log("init end");
 	LOGD("Saving config file %s...\n", m_cfg_filename);
         gf_cfg_save(m_user.config);
-        LOGI("Initialization complete, config file saved as %s.\n", m_cfg_filename);	
-	
+        LOGI("Initialization complete, config file saved as %s.\n", m_cfg_filename);
+
         return 0;
 }
 //-------------------------------
@@ -741,19 +741,19 @@ int CNativeWrapper::connect(const char *url)
 {
 	const char *str;
 	char the_url[256];
-	
+
 	if (m_term)
 	{
 		debug_log("Starting to connect ...");
 		str = gf_cfg_get_key(m_user.config, "General", "StartupFile");
-		if (str) 
+		if (str)
 		{
 			gf_cfg_set_key(m_user.config, "Temp", "GUIStartupFile", url);
 			gf_term_connect(m_term, str);
 		}
 		if( url )
 		{
-			gf_term_connect_from_time(m_term, url, 0, GF_FALSE);		
+			gf_term_connect_from_time(m_term, url, 0, GF_FALSE);
 		}
 	}
 	debug_log("connected ...");

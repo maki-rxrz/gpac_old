@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -239,7 +239,7 @@ static Bool term_check_locales(void *__self, const char *locales_parent_path, co
 	}
 
 	/*Checks if the absolute path is really absolute and points to a local file (no http or else) */
-	if (!locales_parent_path || 
+	if (!locales_parent_path ||
 		(locales_parent_path && (locales_parent_path[0] != '/') && strstr(locales_parent_path, "://") && strnicmp(locales_parent_path, "file://", 7))) {
 		return 0;
 	}
@@ -263,7 +263,7 @@ static Bool term_check_locales(void *__self, const char *locales_parent_path, co
 		if (sep_lang) {
 			sep_lang[0] = ';';
 			opt = sep_lang+1;
-		} else { 
+		} else {
 			opt = NULL;
 		}
 
@@ -274,7 +274,7 @@ static Bool term_check_locales(void *__self, const char *locales_parent_path, co
 		}
 
 		sprintf(path, "locales/%s/%s", lan, rel_path);
-		if (term_find_res(loc, (char *) locales_parent_path, (char *) path, relocated_path, localized_rel_path)) 
+		if (term_find_res(loc, (char *) locales_parent_path, (char *) path, relocated_path, localized_rel_path))
 			return 1;
 
 		/*recursively remove region (sub)tags*/
@@ -283,12 +283,12 @@ static Bool term_check_locales(void *__self, const char *locales_parent_path, co
 			if (!sep) break;
 			sep[0] = 0;
 			sprintf(path, "locales/%s/%s", lan, rel_path);
-			if (term_find_res(loc, (char *) locales_parent_path, (char *) path, relocated_path, localized_rel_path)) 
+			if (term_find_res(loc, (char *) locales_parent_path, (char *) path, relocated_path, localized_rel_path))
 				return 1;
 		}
 	}
 
-	if (term_find_res(loc, (char *) locales_parent_path, (char *) rel_path, relocated_path, localized_rel_path)) 
+	if (term_find_res(loc, (char *) locales_parent_path, (char *) rel_path, relocated_path, localized_rel_path))
 		return 1;
 	/* if we did not find the localized file, both the relocated and localized strings are NULL */
 	strcpy(localized_rel_path, "");
@@ -304,7 +304,7 @@ static void gf_term_reload_cfg(GF_Terminal *term)
 	s32 prio;
 
 	if (!term) return;
-	
+
 	/*reload term part*/
 
 	sOpt = gf_cfg_get_key(term->user->config, "Systems", "DrawLateFrames");
@@ -314,7 +314,7 @@ static void gf_term_reload_cfg(GF_Terminal *term)
 		term->flags |= GF_TERM_DROP_LATE_FRAMES;
 
 	sOpt = gf_cfg_get_key(term->user->config, "Systems", "ForceSingleClock");
-	if (sOpt && !stricmp(sOpt, "yes")) 
+	if (sOpt && !stricmp(sOpt, "yes"))
 		term->flags |= GF_TERM_SINGLE_CLOCK;
 	else
 		term->flags &= ~GF_TERM_SINGLE_CLOCK;
@@ -361,7 +361,7 @@ static void gf_term_reload_cfg(GF_Terminal *term)
 		gf_sg_reload_xml_doc(sOpt, term->dcci_doc);
 	}
 #endif
-	
+
 	gf_term_load_shortcuts(term);
 
 	/*reload compositor config*/
@@ -410,7 +410,7 @@ static void gf_term_set_play_state(GF_Terminal *term, u32 PlayState, Bool reset_
 	else
 		gf_sc_set_option(term->compositor, GF_OPT_PLAY_STATE, PlayState);
 
-	/* if the current play state in the terminal is the same as the requested play state, we don't touch the clocks 
+	/* if the current play state in the terminal is the same as the requested play state, we don't touch the clocks
 	   in particular, if the request is a step, if the clocks are paused, we leave them paused */
 	if (PlayState==GF_STATE_STEP_PAUSE) {
 		//PlayState = term->play_state ? GF_STATE_PLAYING : GF_STATE_PAUSED;
@@ -505,7 +505,7 @@ void gf_term_refresh_cache(GF_Config *cfg)
 		sscanf(opt, "%u", &exp);
 		gf_net_get_ntp(&sec, &frac);
 		if (exp && (exp<sec)) force_delete=1;
-		
+
 		if (force_delete) {
 			if (file) gf_delete_file((char*) opt);
 
@@ -639,8 +639,8 @@ GF_Terminal *gf_term_new(GF_User *user)
 			gf_list_rem(tmp->extensions, i);
 			i--;
 			continue;
-		} 
-		
+		}
+
 		if (ifce->caps & GF_TERM_EXTENSION_NOT_THREADED)
 			gf_list_add(tmp->unthreaded_extensions, ifce);
 	}
@@ -667,7 +667,7 @@ GF_Terminal *gf_term_new(GF_User *user)
 		}
 	  }
           GF_LOG(GF_LOG_INFO, GF_LOG_MEDIA, ("[Terminal] Finished Initializing Mime Types."));
-	  
+
 	}
 
 	tmp->uri_relocators = gf_list_new();
@@ -713,7 +713,7 @@ GF_Err gf_term_del(GF_Terminal * term)
 		assert(!gf_list_count(term->net_services));
 		assert(!gf_list_count(term->net_services_to_remove));
 		e = GF_OK;
-	} 
+	}
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_MEDIA, ("[Terminal] All network services deleted\n"));
 
 	/*unload extensions*/
@@ -760,7 +760,7 @@ GF_Err gf_term_del(GF_Terminal * term)
 	assert(!term->nodes_pending);
 	gf_list_del(term->media_queue);
 	if (term->downloader) gf_dm_del(term->downloader);
-	
+
 	gf_mx_del(term->media_queue_mx);
 
 	if (term->locales.szAbsRelocatedPath) gf_free(term->locales.szAbsRelocatedPath);
@@ -863,11 +863,11 @@ void gf_term_disconnect(GF_Terminal *term)
 		term->root_scene = NULL;
 	}
 	handle_services = 0;
-	if (term->flags & GF_TERM_NO_DECODER_THREAD) 
+	if (term->flags & GF_TERM_NO_DECODER_THREAD)
 		handle_services = 1;
 	/*if an unthreaded term extension decides to disconnect the scene (validator does so), we must flush services now
 	because we are called from gf_term_handle_services*/
-	if (term->thread_id_handling_services == gf_th_id()) 
+	if (term->thread_id_handling_services == gf_th_id())
 		handle_services = 1;
 
 	while (term->root_scene || gf_list_count(term->net_services_to_remove) || gf_list_count(term->connection_tasks)  || gf_list_count(term->media_queue) ) {
@@ -973,7 +973,7 @@ u32 gf_term_get_option(GF_Terminal * term, u32 type)
 	case GF_OPT_HAS_JAVASCRIPT: return gf_sg_has_scripting();
 	case GF_OPT_IS_FINISHED: return gf_term_check_end_of_scene(term, 0);
 	case GF_OPT_IS_OVER: return gf_term_check_end_of_scene(term, 1);
-	case GF_OPT_PLAY_STATE: 
+	case GF_OPT_PLAY_STATE:
 		if (term->compositor->step_mode) return GF_STATE_STEP_PAUSE;
 		if (term->root_scene) {
 			GF_Clock *ck = term->root_scene->dyn_ck;
@@ -987,7 +987,7 @@ u32 gf_term_get_option(GF_Terminal * term, u32 type)
 		}
 		if (term->play_state != GF_STATE_PLAYING) return GF_STATE_PAUSED;
 		return GF_STATE_PLAYING;
-	case GF_OPT_MEDIA_CACHE: 
+	case GF_OPT_MEDIA_CACHE:
 		if (!term->enable_cache) return GF_MEDIA_CACHE_DISABLED;
 		else if (term->root_scene && term->root_scene->root_od->net_service->cache) return GF_MEDIA_CACHE_RUNNING;
 		else return GF_MEDIA_CACHE_ENABLED;
@@ -1029,7 +1029,7 @@ void gf_term_handle_services(GF_Terminal *term)
 	/*we could run into a deadlock if some thread has requested opening of a URL. If we cannot
 	grab the media queue now, we'll do our management at the next cycle*/
 	if (!gf_mx_try_lock(term->media_queue_mx))
-		return;	
+		return;
 
 	term->thread_id_handling_services = gf_th_id();
 
@@ -1046,7 +1046,7 @@ void gf_term_handle_services(GF_Terminal *term)
 		odm->action_type = GF_ODM_ACTION_PLAY;
 		switch (act_type) {
 		case GF_ODM_ACTION_STOP:
-			if (odm->mo /*&& odm->codec && odm->codec->CB  && (odm->codec->CB->Capacity==1)*/) 
+			if (odm->mo /*&& odm->codec && odm->codec->CB  && (odm->codec->CB->Capacity==1)*/)
 			{
 				if (odm->mo->OD_ID==GF_MEDIA_EXTERNAL_ID) destroy = 1;
 				else if (odm->OD && (odm->OD->objectDescriptorID==GF_MEDIA_EXTERNAL_ID)) destroy = 1;
@@ -1076,17 +1076,17 @@ void gf_term_handle_services(GF_Terminal *term)
 			gf_scene_mpeg4_inline_restart(odm->subscene);
 			break;
 		}
-	
+
 		/*relock before sending play/pause*/
 		gf_term_lock_media_queue(term, 1);
 	}
 
-	/*finally process all connection tasks - we MUST do that after processing ODM tasks, as an ODM might have just destroyed 
+	/*finally process all connection tasks - we MUST do that after processing ODM tasks, as an ODM might have just destroyed
 	a service we could query during the connection step*/
 	while (gf_list_count(term->connection_tasks)) {
 		GF_TermConnectObject *connect = gf_list_get(term->connection_tasks, 0);
 		gf_list_rem(term->connection_tasks, 0);
-	
+
 		/*unlock media queue before sending connect*/
 		gf_term_lock_media_queue(term, 0);
 
@@ -1098,7 +1098,7 @@ void gf_term_handle_services(GF_Terminal *term)
 		}
 
 //		gf_mx_v(term->net_mx);
-		
+
 		gf_free(connect->service_url);
 		if (connect->parent_url) gf_free(connect->parent_url);
 		gf_free(connect);
@@ -1146,7 +1146,7 @@ void gf_term_handle_services(GF_Terminal *term)
 		}
 	}
 
-	
+
 	/*need to reload*/
 	if (term->reload_state == 1) {
 		term->reload_state = 0;
@@ -1206,7 +1206,7 @@ void gf_term_close_service(GF_Terminal *term, GF_ClientService *ns)
 	GF_Err e;
 
 	/*prevent the media manager / term to access the list of services to destroy, otherwise
-	we could unload the module while poping its CloseService() call stack which can lead to 
+	we could unload the module while poping its CloseService() call stack which can lead to
 	random crashes (return adresses no longer valid) - cf any "stress mode" playback of a playlist*/
 	gf_term_lock_media_queue(term, 1);
 
@@ -1283,7 +1283,7 @@ void media_event_collect_info(GF_ClientService *net, GF_ObjectManager *odm, GF_D
 			} else {
 				if (*min_buffer > 100) *min_buffer = 100;
 			}
-			if (*min_time > (u32) ch->BufferTime) 
+			if (*min_time > (u32) ch->BufferTime)
 				*min_time = ch->BufferTime;
 		} else {
 			*min_time = 0;
@@ -1365,7 +1365,7 @@ void gf_term_service_media_event(GF_ObjectManager *odm, u32 event_type)
 
 /* Browses all registered relocators (ZIP-based, ISOFF-based or file-system-based to relocate a URI based on the locale */
 GF_EXPORT
-Bool gf_term_relocate_url(GF_Terminal *term, const char *service_url, const char *parent_url, char *out_relocated_url, char *out_localized_url) 
+Bool gf_term_relocate_url(GF_Terminal *term, const char *service_url, const char *parent_url, char *out_relocated_url, char *out_localized_url)
 {
 	u32 i, count;
 
@@ -1402,7 +1402,7 @@ static void gf_term_connect_object(GF_Terminal *term, GF_ObjectManager *odm, cha
 	GF_ClientService *ns;
 	u32 i, count;
 	GF_Err e;
-	Bool reloc_result, net_locked; 
+	Bool reloc_result, net_locked;
 	char relocated_url[GF_MAX_PATH], localized_url[GF_MAX_PATH];
 
 	/*try to relocate the url*/
@@ -1479,7 +1479,7 @@ static void gf_term_connect_object(GF_Terminal *term, GF_ObjectManager *odm, cha
 				if (ns->owner->OD) break;
 				gf_sleep(5);
 			}
-			
+
 			gf_mx_p(term->net_mx);
 			if (odm->net_service) {
 				gf_mx_v(term->net_mx);
@@ -1497,7 +1497,7 @@ static void gf_term_connect_object(GF_Terminal *term, GF_ObjectManager *odm, cha
 			return;
 		}
 	}
-	if (net_locked) 
+	if (net_locked)
 		gf_term_lock_net(term, 0);
 
 	odm->net_service = gf_term_service_new(term, odm, serviceURL, reloc_result ? NULL : parent_url, &e);
@@ -1576,7 +1576,7 @@ u32 gf_term_play_from_time(GF_Terminal *term, u64 from_time, u32 pause_at_first_
 			pause_at_first_frame = 0;
 	}
 
-	/*for dynamic scene OD ressources are static and all object use the same clock, so don't restart the root 
+	/*for dynamic scene OD ressources are static and all object use the same clock, so don't restart the root
 	OD, just act as a mediaControl on all playing streams*/
 	if (term->root_scene->is_dynamic_scene) {
 
@@ -1590,7 +1590,7 @@ u32 gf_term_play_from_time(GF_Terminal *term, u64 from_time, u32 pause_at_first_
 		gf_scene_restart_dynamic(term->root_scene, from_time);
 		gf_sc_lock(term->compositor, 0);
 		return 2;
-	} 
+	}
 
 	/*pause everything*/
 	gf_term_set_play_state(term, GF_STATE_PAUSED, 0, 1);
@@ -1603,7 +1603,7 @@ u32 gf_term_play_from_time(GF_Terminal *term, u64 from_time, u32 pause_at_first_
 
 	gf_odm_start(term->root_scene->root_od, 0);
 	gf_term_set_play_state(term, GF_STATE_PLAYING, 0, 1);
-	if (pause_at_first_frame) 
+	if (pause_at_first_frame)
 		gf_sc_set_option(term->compositor, GF_OPT_PLAY_STATE, GF_STATE_STEP_PAUSE);
 	return 2;
 }
@@ -1652,7 +1652,7 @@ void gf_term_navigate_to(GF_Terminal *term, const char *toURL)
 	if (term->reload_url) gf_free(term->reload_url);
 	term->reload_url = NULL;
 	if (toURL) {
-		if (term->root_scene && term->root_scene->root_od && term->root_scene->root_od->net_service) 
+		if (term->root_scene && term->root_scene->root_od && term->root_scene->root_od->net_service)
 			term->reload_url = gf_url_concatenate(term->root_scene->root_od->net_service->url, toURL);
 		if (!term->reload_url) term->reload_url = gf_strdup(toURL);
 	}
@@ -1715,7 +1715,7 @@ void gf_term_attach_service(GF_Terminal *term, GF_InputService *service_hdl)
 	if (term->root_scene) gf_term_disconnect(term);
 
 	gf_term_lock_net(term, 1);
-	
+
 	/*create a new scene*/
 	scene = gf_scene_new(NULL);
 	odm = gf_odm_new();
@@ -1928,7 +1928,7 @@ GF_Err gf_term_paste_text(GF_Terminal *term, const char *txt, Bool probe_only)
 Bool gf_term_forward_event(GF_Terminal *term, GF_Event *evt, Bool consumed, Bool forward_only)
 {
 	if (!term) return 0;
-	
+
 	if (term->event_filters) {
 		GF_TermEventFilter *ef;
 		u32 i=0;
@@ -1945,7 +1945,7 @@ Bool gf_term_forward_event(GF_Terminal *term, GF_Event *evt, Bool consumed, Bool
 		term->in_event_filter --;
 	}
 
-	if (!forward_only && !consumed && term->user->EventProc) 
+	if (!forward_only && !consumed && term->user->EventProc)
 		return term->user->EventProc(term->user->opaque, evt);
 
 	return 0;
@@ -2036,7 +2036,7 @@ void gf_term_set_speed(GF_Terminal *term, Fixed speed)
 	u32 i, j;
 	const char *opt;
 	GF_ClientService *ns;
-	if (!speed) return; 
+	if (!speed) return;
 
 	/*adjust all clocks on all services*/
 	i=0;
@@ -2049,7 +2049,7 @@ void gf_term_set_speed(GF_Terminal *term, Fixed speed)
 	}
 
 	opt = gf_cfg_get_key(term->user->config, "Systems", "TimeSlice");
-	if (!opt) opt="30";	
+	if (!opt) opt="30";
 	i = (u32) ( atoi(opt) / FIX2FLT(speed) );
 	if (!i) i = 1;
 	term->frame_duration = i;
@@ -2070,7 +2070,7 @@ void gf_term_process_shortcut(GF_Terminal *term, GF_Event *ev)
 		u8 mod = 0;
 		if (ev->key.flags & GF_KEY_MOD_CTRL) mod |= GF_KEY_MOD_CTRL;
 		if (ev->key.flags & GF_KEY_MOD_ALT) mod |= GF_KEY_MOD_ALT;
-	
+
 		for (i=0; i<MAX_SHORTCUTS; i++) {
 			u32 val;
 			if (!term->shortcuts[i].code) break;
@@ -2278,7 +2278,7 @@ void gf_scene_switch_quality(GF_Scene *scene, Bool up)
 	net_cmd.switch_quality.on_channel = NULL;
 	net_cmd.switch_quality.up = up;
 	if (scene->root_od->net_service) {
-		root_service = scene->root_od->net_service; 
+		root_service = scene->root_od->net_service;
 		root_service->ifce->ServiceCommand(root_service->ifce, &net_cmd);
 	}
 
