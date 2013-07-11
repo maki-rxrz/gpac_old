@@ -480,6 +480,7 @@ GF_Err gf_box_dump(void *ptr, FILE * trace)
 		default:
 			return defa_dump(a, trace);
 		}
+#ifndef GPAC_DISABLE_TTXT
 #ifndef GPAC_DISABLE_VTT
 	case GF_ISOM_BOX_TYPE_VTTC:
 	case GF_ISOM_BOX_TYPE_CTIM:
@@ -494,6 +495,7 @@ GF_Err gf_box_dump(void *ptr, FILE * trace)
 	case GF_ISOM_BOX_TYPE_WVTT:
 		return wvtt_dump(a, trace);
 #endif /*GPAC_DISABLE_VTT*/
+#endif
 
 	default:
 		return defa_dump(a, trace);
