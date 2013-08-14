@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2010-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -57,7 +57,7 @@ static GF_Err HEVC_ConfigureStream(HEVCDec *ctx, GF_ESD *esd)
 	ctx->ES_ID = esd->ESID;
 	ctx->width = ctx->height = ctx->out_size = 0;
 	ctx->state_found = GF_FALSE;
-	
+
 	openHevcHandle = libOpenHevcInit(ctx->nb_threads);
 	ctx->is_init = GF_TRUE;
 
@@ -193,7 +193,7 @@ static GF_Err HEVC_SetCapabilities(GF_BaseDecoder *ifcg, GF_CodecCapability capa
 
 }
 
-static GF_Err HEVC_ProcessData(GF_MediaDecoder *ifcg, 
+static GF_Err HEVC_ProcessData(GF_MediaDecoder *ifcg,
 		char *inBuffer, u32 inBufferLength,
 		u16 ES_ID,
 		char *outBuffer, u32 *outBufferLength,
@@ -319,7 +319,7 @@ static GF_Err HEVC_ProcessData(GF_MediaDecoder *ifcg,
     if (libOpenHevcGetOutputCpy(openHevcHandle, 1, &openHevcFrame)) {
         *outBufferLength = ctx->out_size;
     }
-    
+
 	return GF_OK;
 }
 
@@ -346,14 +346,14 @@ GF_BaseDecoder *NewHEVCDec()
 {
 	GF_MediaDecoder *ifcd;
 	HEVCDec *dec;
-	
+
 	GF_SAFEALLOC(ifcd, GF_MediaDecoder);
 	GF_SAFEALLOC(dec, HEVCDec);
 	GF_REGISTER_MODULE_INTERFACE(ifcd, GF_MEDIA_DECODER_INTERFACE, "HEVC Decoder", "gpac distribution")
 
 	ifcd->privateStack = dec;
 
-	/*setup our own interface*/	
+	/*setup our own interface*/
 	ifcd->AttachStream = HEVC_AttachStream;
 	ifcd->DetachStream = HEVC_DetachStream;
 	ifcd->GetCapabilities = HEVC_GetCapabilities;
@@ -372,7 +372,7 @@ void DeleteHEVCDec(GF_BaseDecoder *ifcg)
 }
 
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 #ifndef GPAC_DISABLE_AV_PARSERS
@@ -380,11 +380,11 @@ const u32 *QueryInterfaces()
 #endif
 		0
 	};
-	return si; 
+	return si;
 }
 
 GPAC_MODULE_EXPORT
-GF_BaseInterface *LoadInterface(u32 InterfaceType) 
+GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
 #ifndef GPAC_DISABLE_AV_PARSERS
 	if (InterfaceType == GF_MEDIA_DECODER_INTERFACE) return (GF_BaseInterface *)NewHEVCDec();
@@ -397,7 +397,7 @@ void ShutdownInterface(GF_BaseInterface *ifce)
 {
 	switch (ifce->InterfaceType) {
 #ifndef GPAC_DISABLE_AV_PARSERS
-	case GF_MEDIA_DECODER_INTERFACE: 
+	case GF_MEDIA_DECODER_INTERFACE:
 		DeleteHEVCDec((GF_BaseDecoder*)ifce);
 		break;
 #endif

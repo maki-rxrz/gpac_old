@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2010-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -63,7 +63,7 @@ static GF_Err OSVC_AttachStream(GF_BaseDecoder *ifcg, GF_ESD *esd)
 	int Layer[4];
 	OSVCDec *ctx = (OSVCDec*) ifcg->privateStack;
 
-	/*todo: we should check base layer of this stream is indeed our base layer*/ 	
+	/*todo: we should check base layer of this stream is indeed our base layer*/
 	if (!ctx->ES_ID) {
 		ctx->ES_ID = esd->ESID;
 	 	ctx->width = ctx->height = ctx->out_size = 0;
@@ -209,7 +209,7 @@ static GF_Err OSVC_SetCapabilities(GF_BaseDecoder *ifcg, GF_CodecCapability capa
 
 }
 
-static GF_Err OSVC_ProcessData(GF_MediaDecoder *ifcg, 
+static GF_Err OSVC_ProcessData(GF_MediaDecoder *ifcg,
 		char *inBuffer, u32 inBufferLength,
 		u16 ES_ID,
 		char *outBuffer, u32 *outBufferLength,
@@ -235,10 +235,10 @@ static GF_Err OSVC_ProcessData(GF_MediaDecoder *ifcg,
 
 	ctx->MaxDqId = GetDqIdMax(inBuffer, inBufferLength, ctx->nalu_size_length, ctx->DqIdTable, ctx->nalu_size_length ? 1 : 0);
 	if (!ctx->init_layer_set) {
-		//AVC stream in a h264 file 
-		if (ctx->MaxDqId == -1) 
+		//AVC stream in a h264 file
+		if (ctx->MaxDqId == -1)
 			ctx->MaxDqId = 0;
-		
+
 		ctx->CurrentDqId = ctx->MaxDqId;
 		ctx->init_layer_set = 1;
 	}
@@ -309,7 +309,7 @@ static GF_Err OSVC_ProcessData(GF_MediaDecoder *ifcg,
 		}
 
 		if (ctx->state_found) {
-			if (!got_pic) 
+			if (!got_pic)
 				got_pic = decodeNAL(ctx->codec, ptr, nalu_size, &pic, Layer);
 			else
 				decodeNAL(ctx->codec, ptr, nalu_size, &pic, Layer);
@@ -396,14 +396,14 @@ GF_BaseDecoder *NewOSVCDec()
 {
 	GF_MediaDecoder *ifcd;
 	OSVCDec *dec;
-	
+
 	GF_SAFEALLOC(ifcd, GF_MediaDecoder);
 	GF_SAFEALLOC(dec, OSVCDec);
 	GF_REGISTER_MODULE_INTERFACE(ifcd, GF_MEDIA_DECODER_INTERFACE, "OpenSVC Decoder", "gpac distribution")
 
 	ifcd->privateStack = dec;
 
-	/*setup our own interface*/	
+	/*setup our own interface*/
 	ifcd->AttachStream = OSVC_AttachStream;
 	ifcd->DetachStream = OSVC_DetachStream;
 	ifcd->GetCapabilities = OSVC_GetCapabilities;
@@ -422,7 +422,7 @@ void DeleteOSVCDec(GF_BaseDecoder *ifcg)
 }
 
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 #ifndef GPAC_DISABLE_AV_PARSERS
@@ -430,11 +430,11 @@ const u32 *QueryInterfaces()
 #endif
 		0
 	};
-	return si; 
+	return si;
 }
 
 GPAC_MODULE_EXPORT
-GF_BaseInterface *LoadInterface(u32 InterfaceType) 
+GF_BaseInterface *LoadInterface(u32 InterfaceType)
 {
 #ifndef GPAC_DISABLE_AV_PARSERS
 	if (InterfaceType == GF_MEDIA_DECODER_INTERFACE) return (GF_BaseInterface *)NewOSVCDec();
@@ -447,7 +447,7 @@ void ShutdownInterface(GF_BaseInterface *ifce)
 {
 	switch (ifce->InterfaceType) {
 #ifndef GPAC_DISABLE_AV_PARSERS
-	case GF_MEDIA_DECODER_INTERFACE: 
+	case GF_MEDIA_DECODER_INTERFACE:
 		DeleteOSVCDec((GF_BaseDecoder*)ifce);
 		break;
 #endif

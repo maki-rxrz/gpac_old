@@ -17,7 +17,7 @@ class V4TimeLine;
 
 class V4TimeLineHdr : public V4TimeLineLine {
   public:
-    // Constructor 
+    // Constructor
     V4TimeLineHdr(V4TimeLine * parent, unsigned int pos=0);
 
     // Destructor

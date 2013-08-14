@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -98,7 +98,7 @@ u32 gf_ipmpx_get_field_type(GF_IPMPX_Data *p, char *fieldName)
 		if (!stricmp(fieldName, "candidateAlgorithms") || !stricmp(fieldName, "agreedAlgorithms")) return GF_ODF_FT_IPMPX_LIST;
 		else if (!stricmp(fieldName, "certificates")) return GF_ODF_FT_IPMPX_BA_LIST;
 		else if (!stricmp(fieldName, "publicKey") || !stricmp(fieldName, "trustData")) return GF_ODF_FT_IPMPX;
-		else if (!stricmp(fieldName, "authCodes") || !stricmp(fieldName, "opaque") || !stricmp(fieldName, "AuthenticationData")) 
+		else if (!stricmp(fieldName, "authCodes") || !stricmp(fieldName, "opaque") || !stricmp(fieldName, "AuthenticationData"))
 			return GF_ODF_FT_IPMPX_BA;
 		break;
 	case GF_IPMPX_ALGORITHM_DESCRIPTOR_TAG:
@@ -111,7 +111,7 @@ u32 gf_ipmpx_get_field_type(GF_IPMPX_Data *p, char *fieldName)
 		if (!stricmp(fieldName, "descriptionComment")) return GF_ODF_FT_IPMPX_BA;
 		else if (!stricmp(fieldName, "descriptions")) return GF_ODF_FT_IPMPX_LIST;
 		break;
-	case GF_IPMPX_PARAM_DESCRIPTOR_ITEM_TAG: 
+	case GF_IPMPX_PARAM_DESCRIPTOR_ITEM_TAG:
 		/*all is IPMPX data*/
 		return GF_ODF_FT_IPMPX_BA;
 	case GF_IPMPX_PARAMETRIC_CAPS_QUERY_TAG:
@@ -374,7 +374,7 @@ GF_Err gf_ipmpx_set_field(GF_IPMPX_Data *_p, char *fieldName, char *val)
 		if (!stricmp(fieldName, "keyBody")) {
 			u32 s;
 			GF_IPMPX_ParseBinData(val, &p->keyBody, &s);
-			p->keyBodyLength = s; 
+			p->keyBodyLength = s;
 			ret = 1;
 		}
 	}

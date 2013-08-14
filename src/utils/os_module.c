@@ -53,7 +53,7 @@ void gf_modules_free_module(ModuleInstance *inst)
 	if (inst->interfaces)
 		gf_list_del(inst->interfaces);
 	inst->interfaces = NULL;
-	
+
 	if (inst->name && !inst->ifce_reg) {
 		gf_free(inst->name);
 		inst->name = NULL;
@@ -253,7 +253,7 @@ Bool enum_modules(void *cbck, char *item_name, char *item_path)
 	inst->plugman = pm;
 	inst->name = gf_strdup(item_name);
 	inst->dir = gf_strdup(item_path);
-	gf_url_get_resource_path(item_path, inst->dir); 
+	gf_url_get_resource_path(item_path, inst->dir);
 	GF_LOG(GF_LOG_INFO, GF_LOG_CORE, ("[Core] Added module %s.\n", inst->name));
 	gf_list_add(pm->plug_list, inst);
 	return GF_FALSE;

@@ -26,7 +26,7 @@
 #include <gpac/term_info.h>
 
 enum {
-	WM_SCENE_DONE = WM_USER + 1, 
+	WM_SCENE_DONE = WM_USER + 1,
 	WM_NAVIGATE,
 	WM_SETSIZE,
 	WM_OPENURL,
@@ -48,7 +48,7 @@ public:
 	Bool m_isopen, m_reset;
 	u32 max_duration;
 	Bool can_seek;
-	u32 orig_width,orig_height, m_reconnect_time; 
+	u32 orig_width,orig_height, m_reconnect_time;
 
 	CString m_navigate_url;
 	void Pause();
@@ -63,7 +63,7 @@ public:
 	u32 start_mode;
 
 	CString GetFileFilter();
-	
+
 	char szApplicationPath[GF_MAX_PATH];
 	char szUserPath[GF_MAX_PATH];
 

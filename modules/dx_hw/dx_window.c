@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 
@@ -88,7 +88,7 @@ static void w32_translate_key(WPARAM wParam, LPARAM lParam, GF_EventKey *evt)
 	case VK_RIGHT: evt->key_code = GF_KEY_RIGHT; break;
 	case VK_DOWN: evt->key_code = GF_KEY_DOWN; break;
 	case VK_SELECT: evt->key_code = GF_KEY_SELECT; break;
-	case VK_PRINT: 
+	case VK_PRINT:
 	case VK_SNAPSHOT:
 		evt->key_code = GF_KEY_PRINTSCREEN; break;
 	case VK_EXECUTE: evt->key_code = GF_KEY_EXECUTE; break;
@@ -99,7 +99,7 @@ static void w32_translate_key(WPARAM wParam, LPARAM lParam, GF_EventKey *evt)
 #if !defined(_WIN32_WCE) && !defined(__GNUC__)
 	case VK_OEM_PLUS: evt->key_code = GF_KEY_PLUS; break;
 	case VK_OEM_MINUS: evt->key_code = GF_KEY_PLUS; break;
-#endif 
+#endif
 
 #ifndef _WIN32_WCE
 	case VK_NONCONVERT: evt->key_code = GF_KEY_NONCONVERT; break;
@@ -137,14 +137,14 @@ static void w32_translate_key(WPARAM wParam, LPARAM lParam, GF_EventKey *evt)
 	case '{': evt->key_code = GF_KEY_LEFTCURLYBRACKET; break;
 	case '}': evt->key_code = GF_KEY_RIGHTCURLYBRACKET; break;
 	case '|': evt->key_code = GF_KEY_PIPE; break;
-*/		
+*/
 
 
 /*	case VK_LWIN: return ;
 	case VK_RWIN: return ;
 	case VK_APPS: return ;
 */
-	case VK_NUMPAD0: 
+	case VK_NUMPAD0:
 		evt->key_code = GF_KEY_0;
 		evt->flags = GF_KEY_EXT_NUMPAD;
 		break;
@@ -184,11 +184,11 @@ static void w32_translate_key(WPARAM wParam, LPARAM lParam, GF_EventKey *evt)
 		evt->key_code = GF_KEY_9;
 		evt->flags = GF_KEY_EXT_NUMPAD;
 		break;
-	case VK_MULTIPLY: 
+	case VK_MULTIPLY:
 		evt->key_code = GF_KEY_STAR;
 		evt->flags = GF_KEY_EXT_NUMPAD;
 		break;
-	case VK_ADD: 
+	case VK_ADD:
 		evt->key_code = GF_KEY_PLUS;
 		evt->flags = GF_KEY_EXT_NUMPAD;
 		break;
@@ -241,7 +241,7 @@ static void w32_translate_key(WPARAM wParam, LPARAM lParam, GF_EventKey *evt)
  * Used only as parameters to GetAsyncKeyState() and GetKeyState().
  * No other API or message will distinguish left and right keys in this way.
  */
-	case VK_LSHIFT: 
+	case VK_LSHIFT:
 		evt->key_code = GF_KEY_SHIFT;
 		evt->flags = GF_KEY_EXT_LEFT;
 		break;
@@ -282,7 +282,7 @@ static void w32_translate_key(WPARAM wParam, LPARAM lParam, GF_EventKey *evt)
 
 	/*thru VK_9 are the same as ASCII '0' thru '9' (0x30 - 0x39) */
 	/* VK_A thru VK_Z are the same as ASCII 'A' thru 'Z' (0x41 - 0x5A) */
-	default: 
+	default:
 		if ((wParam>=0x30) && (wParam<=0x39))  evt->key_code = GF_KEY_0 + (u32) (wParam-0x30);
 		else if ((wParam>=0x41) && (wParam<=0x5A))  evt->key_code = GF_KEY_A + (u32) (wParam-0x41);
 		/*DOM 3 Events: Implementations that are unable to identify a key must use the key identifier "Unidentified".*/
@@ -389,7 +389,7 @@ LRESULT APIENTRY DD_WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		break;
 
 	case WM_ACTIVATE:
-		if (!ctx->on_secondary_screen && ctx->fullscreen && (LOWORD(wParam)==WA_INACTIVE) 
+		if (!ctx->on_secondary_screen && ctx->fullscreen && (LOWORD(wParam)==WA_INACTIVE)
 			&& (hWnd==ctx->fs_hwnd)
 #ifndef GPAC_DISABLE_3D
 			&& (ctx->output_3d_type!=2)
@@ -429,7 +429,7 @@ LRESULT APIENTRY DD_WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		}
 		/*this avoids 100% cpu usage in Firefox*/
 		return DefWindowProc (hWnd, msg, wParam, lParam);
-		
+
 	case WM_SETCURSOR:
 		if (ctx->cur_hwnd==hWnd) DD_SetCursor(vout, ctx->cursor_type);
 		break;
@@ -439,7 +439,7 @@ LRESULT APIENTRY DD_WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			char szFile[GF_MAX_PATH];
 			GF_Event evt;
 			u32 i;
-			
+
 			HDROP hDrop = (HDROP) wParam;
 			evt.type = GF_EVENT_OPENFILE;
 			evt.open_file.nb_files = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
@@ -542,7 +542,7 @@ LRESULT APIENTRY DD_WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		ret = vout->on_event(vout->evt_cbk_hdl, &evt);
 		mouse_start_timer(ctx, hWnd, vout);
 		break;
-	case WM_MOUSEWHEEL: 
+	case WM_MOUSEWHEEL:
 		if (ctx->cur_hwnd==hWnd) {
 			DD_SetCursor(vout, (ctx->cursor_type==GF_CURSOR_HIDE) ? ctx->cursor_type_backup : ctx->cursor_type);
 			evt.type = GF_EVENT_MOUSEWHEEL;
@@ -595,9 +595,9 @@ LRESULT APIENTRY DD_WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 				evt.type = GF_EVENT_PASTE_TEXT;
 				evt.message.message = lptstrCopy;
 				ret = vout->on_event(vout->evt_cbk_hdl, &evt);
-				GlobalUnlock(hglbCopy); 
+				GlobalUnlock(hglbCopy);
 			}
-			CloseClipboard(); 
+			CloseClipboard();
 			break;
 		}
 		else if (ctx->ctrl_down && (evt.type==GF_EVENT_KEYUP) && (evt.key.key_code==GF_KEY_C)) {
@@ -609,22 +609,22 @@ LRESULT APIENTRY DD_WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 				if (!IsClipboardFormatAvailable(CF_TEXT)) break;
 				if (!OpenClipboard(ctx->cur_hwnd)) break;
 				EmptyClipboard();
-				
+
 				len = strlen(evt.message.message);
 				if (!len) break;
 
-				hglbCopy = GlobalAlloc(GMEM_MOVEABLE, (len + 1) * sizeof(char)); 
+				hglbCopy = GlobalAlloc(GMEM_MOVEABLE, (len + 1) * sizeof(char));
 				lptstrCopy = (char *) GlobalLock(hglbCopy);
-				memcpy(lptstrCopy, evt.message.message, len * sizeof(char)); 
+				memcpy(lptstrCopy, evt.message.message, len * sizeof(char));
 				lptstrCopy[len] = 0;
-				GlobalUnlock(hglbCopy); 
+				GlobalUnlock(hglbCopy);
 				SetClipboardData(CF_TEXT, hglbCopy);
-				CloseClipboard(); 
+				CloseClipboard();
 				break;
 			}
 		}
 		ret = vout->on_event(vout->evt_cbk_hdl, &evt);
-		
+
 		if ( !ctx->ctrl_down && !ctx->alt_down
 			&& evt.key.key_code != GF_KEY_CONTROL && evt.key.key_code != GF_KEY_ALT )
 			ret = 1;
@@ -633,7 +633,7 @@ LRESULT APIENTRY DD_WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 	case WM_UNICHAR:
 	case WM_CHAR:
 		/*no reason to filter out things*/
-//		if (wParam>=32) 
+//		if (wParam>=32)
 		{
 			evt.type = GF_EVENT_TEXTINPUT;
 			evt.character.unicode_char = (u32) wParam;
@@ -650,13 +650,13 @@ LRESULT APIENTRY DD_WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		return DefWindowProc (hWnd, msg, wParam, lParam);
 	}
 
-	if (!ret &&(ctx->os_hwnd==hWnd) && ctx->orig_wnd_proc) 
+	if (!ret &&(ctx->os_hwnd==hWnd) && ctx->orig_wnd_proc)
 		return CallWindowProc((WNDPROC) ctx->orig_wnd_proc, hWnd, msg, wParam, lParam);
 	return 0;
 }
 
 #ifndef WS_EX_LAYERED
-#define WS_EX_LAYERED 0x80000 
+#define WS_EX_LAYERED 0x80000
 #endif
 #ifndef LWA_COLORKEY
 #define LWA_COLORKEY   0x00000001
@@ -681,9 +681,9 @@ static void SetWindowless(GF_VideoOutput *vout, HWND hWnd)
 	u32 isWin2K;
 	OSVERSIONINFO Version = {sizeof(OSVERSIONINFO)};
 	GetVersionEx(&Version);
-	isWin2K = (Version.dwPlatformId == VER_PLATFORM_WIN32_NT && Version.dwMajorVersion >= 5); 
+	isWin2K = (Version.dwPlatformId == VER_PLATFORM_WIN32_NT && Version.dwMajorVersion >= 5);
 	if (!isWin2K) return;
-	
+
 	GF_LOG(GF_LOG_INFO, GF_LOG_MMIO, ("[DX Out] Enabling windowless mode\n"));
 	hUser32 = GetModuleHandle("USER32.DLL");
 	if (hUser32 == NULL) return;
@@ -815,7 +815,7 @@ Bool DD_InitWindows(GF_VideoOutput *vout, DDContext *ctx)
 	} else {
 		ctx->fs_hwnd = ctx->os_hwnd;
 	}
-	
+
 	/*if visible set focus*/
 	if (!ctx->switch_res) SetFocus(ctx->os_hwnd);
 
@@ -849,7 +849,7 @@ u32 DD_WindowThread(void *par)
 		ctx->th_state = 1;
 		while (msg_ok) {
 			msg_ok = GetMessage (&(msg), NULL, 0, 0);
-			if (msg_ok == -1) msg_ok = 0;			
+			if (msg_ok == -1) msg_ok = 0;
 			if (msg.message == WM_DESTROY) PostQuitMessage(0);	//WM_DESTROY: exit
 			TranslateMessage (&(msg));
 			DispatchMessage (&(msg));
@@ -927,7 +927,7 @@ void DD_ShutdownWindow(GF_VideoOutput *dr)
 #endif
 
 	if (ctx->th) {
-		while (ctx->th_state!=2) 
+		while (ctx->th_state!=2)
 			gf_sleep(10);
 
 		gf_th_del(ctx->th);
@@ -1003,7 +1003,7 @@ static u32 get_sys_col(int idx)
 
 
 /*Note: all calls to SetWindowPos are made in a non-blocking way using SWP_ASYNCWINDOWPOS. This avoids deadlocks
-when the compositor request a size change and the DX window thread has grabbed the main compositor mutex. 
+when the compositor request a size change and the DX window thread has grabbed the main compositor mutex.
 This typically happens when switching playlist items as fast as possible*/
 GF_Err DD_ProcessEvent(GF_VideoOutput*dr, GF_Event *evt)
 {
@@ -1065,7 +1065,7 @@ GF_Err DD_ProcessEvent(GF_VideoOutput*dr, GF_Event *evt)
 			} else {
 				if (ctx->windowless)
 					SetWindowPos(ctx->os_hwnd, NULL, 0, 0, evt->size.width, evt->size.height, SWP_NOZORDER | SWP_NOMOVE | SWP_ASYNCWINDOWPOS);
-				else 
+				else
 					SetWindowPos(ctx->os_hwnd, NULL, 0, 0, evt->size.width + ctx->off_w, evt->size.height + ctx->off_h, SWP_NOZORDER | SWP_NOMOVE | SWP_ASYNCWINDOWPOS);
 			}
 		}
@@ -1093,7 +1093,7 @@ GF_Err DD_ProcessEvent(GF_VideoOutput*dr, GF_Event *evt)
 		case 2:
 			ctx->output_3d_type = 2;
 			GF_LOG(GF_LOG_DEBUG, GF_LOG_MMIO, ("[DX Out] Attempting to resize Offscreen OpenGL window to %d x %d\n", evt->size.width, evt->size.height));
-			if (ctx->gl_hwnd) 
+			if (ctx->gl_hwnd)
 				SetWindowPos(ctx->gl_hwnd, NULL, 0, 0, evt->size.width, evt->size.height, SWP_NOZORDER | SWP_NOMOVE | SWP_ASYNCWINDOWPOS);
 			GF_LOG(GF_LOG_DEBUG, GF_LOG_MMIO, ("[DX Out] Resizing Offscreen OpenGL window to %d x %d\n", evt->size.width, evt->size.height));
 			SetForegroundWindow(ctx->cur_hwnd);

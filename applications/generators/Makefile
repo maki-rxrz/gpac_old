@@ -10,17 +10,17 @@ GENDIRS+=SVG
 endif
 endif
 
-all: sggen 
+all: sggen
 
 sggen:
-	set -e; for i in $(GENDIRS) ; do $(MAKE) -C $$i all; done 
+	set -e; for i in $(GENDIRS) ; do $(MAKE) -C $$i all; done
 
 dep:
-	set -e; for i in $(GENDIRS) ; do $(MAKE) -C $$i dep; done 
+	set -e; for i in $(GENDIRS) ; do $(MAKE) -C $$i dep; done
 
-clean: 
-	set -e; for i in $(GENDIRS) ; do $(MAKE) -C $$i clean; done 
+clean:
+	set -e; for i in $(GENDIRS) ; do $(MAKE) -C $$i clean; done
 
-distclean: 
-	set -e; for i in $(GENDIRS) ; do $(MAKE) -C $$i distclean; done 
+distclean:
+	set -e; for i in $(GENDIRS) ; do $(MAKE) -C $$i distclean; done
 

@@ -200,7 +200,7 @@ GF_Err gf_log_modify_tools_levels(const char *val)
 			fprintf(stderr, "Unknown log level specified: %s\n", sep_level+1);
 			return GF_BAD_PARAM;
 		}
-	
+
 		sep_level[0] = 0;
 		tools = val;
 		while (tools) {
@@ -210,7 +210,7 @@ GF_Err gf_log_modify_tools_levels(const char *val)
 			if (sep) sep[0] = 0;
 
 			if (!stricmp(tools, "all")) {
-				for (i=0; i<GF_LOG_TOOL_MAX; i++) 
+				for (i=0; i<GF_LOG_TOOL_MAX; i++)
 					global_log_tools[i].level = level;
 			}
 			else {
@@ -247,7 +247,7 @@ GF_Err gf_log_set_tools_levels(const char *val)
 {
 #ifndef GPAC_DISABLE_LOG
 	u32 i;
-	for (i=0; i<GF_LOG_TOOL_MAX; i++) 
+	for (i=0; i<GF_LOG_TOOL_MAX; i++)
 		global_log_tools[i].level = GF_LOG_WARNING;
 
 	return gf_log_modify_tools_levels(val);
@@ -264,7 +264,7 @@ char *gf_log_get_tools_levels()
 	char szLogs[GF_MAX_PATH];
 	char szLogTools[GF_MAX_PATH];
 	strcpy(szLogTools, "");
-	
+
 	level = GF_LOG_QUIET;
 	while (level <= GF_LOG_DEBUG) {
 		u32 nb_tools = 0;
@@ -321,7 +321,7 @@ u32 call_tool = 0;
 GF_EXPORT
 Bool gf_log_tool_level_on(u32 log_tool, u32 log_level)
 {
-	assert(log_tool<GF_LOG_TOOL_MAX); 
+	assert(log_tool<GF_LOG_TOOL_MAX);
 	if (global_log_tools[log_tool].level >= log_level) return GF_TRUE;
 	return GF_FALSE;
 }
@@ -357,7 +357,7 @@ void gf_log_set_strict_error(Bool strict)
 GF_EXPORT
 void gf_log_set_tool_level(u32 tool, u32 level)
 {
-	assert(tool<=GF_LOG_TOOL_MAX); 
+	assert(tool<=GF_LOG_TOOL_MAX);
 	if (tool==GF_LOG_ALL) {
 		u32 i;
 		for (i=0; i<GF_LOG_TOOL_MAX; i++)

@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -29,13 +29,13 @@
 
 #include <gpac/internal/scenegraph_dev.h>
 #include <gpac/nodes_svg.h>
-/* 
-	Initialization of properties at the top level before any rendering 
+/*
+	Initialization of properties at the top level before any rendering
 	The value shall not use the 'inherit' value, it uses the initial value.
-    The property values are then updated when going down the tree using svg_properties_apply 
+    The property values are then updated when going down the tree using svg_properties_apply
 */
 GF_EXPORT
-void gf_svg_properties_init_pointers(SVGPropertiesPointers *svg_props) 
+void gf_svg_properties_init_pointers(SVGPropertiesPointers *svg_props)
 {
 	if (!svg_props) return;
 
@@ -66,7 +66,7 @@ void gf_svg_properties_init_pointers(SVGPropertiesPointers *svg_props)
 	GF_SAFEALLOC(svg_props->fill_opacity, SVG_Number);
 	svg_props->fill_opacity->type = SVG_NUMBER_VALUE;
 	svg_props->fill_opacity->value = FIX_ONE;
-	
+
 	GF_SAFEALLOC(svg_props->fill_rule, SVG_FillRule);
 	*svg_props->fill_rule = SVG_FILLRULE_NONZERO;
 
@@ -295,48 +295,48 @@ Bool gf_svg_is_property(GF_Node *node, GF_FieldInfo *target_attribute)
 		}
 		if (!att) return 0;
 		switch (att->tag) {
-			case TAG_SVG_ATT_audio_level: 
-			case TAG_SVG_ATT_color: 
-			case TAG_SVG_ATT_color_rendering: 
-			case TAG_SVG_ATT_display: 
-			case TAG_SVG_ATT_display_align: 
-			case TAG_SVG_ATT_fill: 
-			case TAG_SVG_ATT_fill_opacity: 
-			case TAG_SVG_ATT_fill_rule: 
-			case TAG_SVG_ATT_font_family: 
-			case TAG_SVG_ATT_font_size: 
-			case TAG_SVG_ATT_font_style: 
-			case TAG_SVG_ATT_font_variant: 
-			case TAG_SVG_ATT_font_weight: 
-			case TAG_SVG_ATT_image_rendering: 
-			case TAG_SVG_ATT_line_increment: 
-			case TAG_SVG_ATT_opacity: 
-			case TAG_SVG_ATT_pointer_events: 
-			case TAG_SVG_ATT_shape_rendering: 
-			case TAG_SVG_ATT_solid_color: 
-			case TAG_SVG_ATT_solid_opacity: 
-			case TAG_SVG_ATT_stop_color: 
-			case TAG_SVG_ATT_stop_opacity: 
-			case TAG_SVG_ATT_stroke: 
-			case TAG_SVG_ATT_stroke_dasharray: 
-			case TAG_SVG_ATT_stroke_dashoffset: 
-			case TAG_SVG_ATT_stroke_linecap: 
-			case TAG_SVG_ATT_stroke_linejoin: 
-			case TAG_SVG_ATT_stroke_miterlimit: 
-			case TAG_SVG_ATT_stroke_opacity: 
-			case TAG_SVG_ATT_stroke_width: 
-			case TAG_SVG_ATT_text_align: 
-			case TAG_SVG_ATT_text_anchor: 
-			case TAG_SVG_ATT_text_rendering: 
-			case TAG_SVG_ATT_vector_effect: 
-			case TAG_SVG_ATT_viewport_fill: 
-			case TAG_SVG_ATT_viewport_fill_opacity: 
-			case TAG_SVG_ATT_visibility: 
+			case TAG_SVG_ATT_audio_level:
+			case TAG_SVG_ATT_color:
+			case TAG_SVG_ATT_color_rendering:
+			case TAG_SVG_ATT_display:
+			case TAG_SVG_ATT_display_align:
+			case TAG_SVG_ATT_fill:
+			case TAG_SVG_ATT_fill_opacity:
+			case TAG_SVG_ATT_fill_rule:
+			case TAG_SVG_ATT_font_family:
+			case TAG_SVG_ATT_font_size:
+			case TAG_SVG_ATT_font_style:
+			case TAG_SVG_ATT_font_variant:
+			case TAG_SVG_ATT_font_weight:
+			case TAG_SVG_ATT_image_rendering:
+			case TAG_SVG_ATT_line_increment:
+			case TAG_SVG_ATT_opacity:
+			case TAG_SVG_ATT_pointer_events:
+			case TAG_SVG_ATT_shape_rendering:
+			case TAG_SVG_ATT_solid_color:
+			case TAG_SVG_ATT_solid_opacity:
+			case TAG_SVG_ATT_stop_color:
+			case TAG_SVG_ATT_stop_opacity:
+			case TAG_SVG_ATT_stroke:
+			case TAG_SVG_ATT_stroke_dasharray:
+			case TAG_SVG_ATT_stroke_dashoffset:
+			case TAG_SVG_ATT_stroke_linecap:
+			case TAG_SVG_ATT_stroke_linejoin:
+			case TAG_SVG_ATT_stroke_miterlimit:
+			case TAG_SVG_ATT_stroke_opacity:
+			case TAG_SVG_ATT_stroke_width:
+			case TAG_SVG_ATT_text_align:
+			case TAG_SVG_ATT_text_anchor:
+			case TAG_SVG_ATT_text_rendering:
+			case TAG_SVG_ATT_vector_effect:
+			case TAG_SVG_ATT_viewport_fill:
+			case TAG_SVG_ATT_viewport_fill_opacity:
+			case TAG_SVG_ATT_visibility:
 				return 1;
 			default:
 				return 0;
 		}
-	} 
+	}
 	else {
 		return 0;
 	}
@@ -416,7 +416,7 @@ u32 gf_svg_get_modification_flags(SVG_Element *n, GF_FieldInfo *info)
 {
 //	return 0xFFFFFFFF;
 	switch (info->fieldType) {
-	case SVG_Paint_datatype: 
+	case SVG_Paint_datatype:
 		if (info->fieldIndex == TAG_SVG_ATT_fill)	return GF_SG_SVG_FILL_DIRTY;
 		if (info->fieldIndex == TAG_SVG_ATT_stroke) return GF_SG_SVG_STROKE_DIRTY;
 		if (info->fieldIndex == TAG_SVG_ATT_solid_color) return GF_SG_SVG_SOLIDCOLOR_OR_OPACITY_DIRTY;
@@ -436,8 +436,8 @@ u32 gf_svg_get_modification_flags(SVG_Element *n, GF_FieldInfo *info)
 		if (info->fieldIndex == TAG_SVG_ATT_stroke_dashoffset) return GF_SG_SVG_STROKEDASHOFFSET_DIRTY;
 		if (info->fieldIndex == TAG_SVG_ATT_stroke_width) return GF_SG_SVG_STROKEWIDTH_DIRTY;
 		break;
-	case SVG_DisplayAlign_datatype: 
-		return GF_SG_SVG_DISPLAYALIGN_DIRTY;		
+	case SVG_DisplayAlign_datatype:
+		return GF_SG_SVG_DISPLAYALIGN_DIRTY;
 	case SVG_FillRule_datatype:
 		return GF_SG_SVG_FILLRULE_DIRTY;
 	case SVG_FontFamily_datatype:
@@ -467,7 +467,7 @@ u32 gf_svg_get_modification_flags(SVG_Element *n, GF_FieldInfo *info)
 	}
 
 	/* this is not a property but a regular attribute, the animatable attributes are at the moment:
-		focusable, focusHighlight, gradientUnits, nav-*, target, xlink:href, xlink:type, 
+		focusable, focusHighlight, gradientUnits, nav-*, target, xlink:href, xlink:type,
 
 
 		the following affect the geometry of the element (some affect the positioning):
@@ -502,13 +502,13 @@ u32 gf_svg_get_modification_flags(SVG_Element *n, GF_FieldInfo *info)
 	}
 }
 
-/* NOTE: Some properties (audio-level, display, opacity, solid*, stop*, vector-effect, viewport*) 
+/* NOTE: Some properties (audio-level, display, opacity, solid*, stop*, vector-effect, viewport*)
          are inherited only when they are  specified with the value 'inherit'
          otherwise they default to their initial value
 		 which for the function below means NULL, the compositor will take care of the rest
  */
 GF_EXPORT
-u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *render_svg_props) 
+u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *render_svg_props)
 {
 	u32 inherited_flags_mask = GF_SG_NODE_DIRTY | GF_SG_CHILD_DIRTY;
 	if(!all_atts || !render_svg_props) return ~inherited_flags_mask;
@@ -519,7 +519,7 @@ u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *
 		Fixed par_val = render_svg_props->computed_audio_level;
 		Fixed val = par_val;
 		if (all_atts->audio_level->type != SVG_NUMBER_INHERIT) {
-			render_svg_props->audio_level = all_atts->audio_level;	
+			render_svg_props->audio_level = all_atts->audio_level;
 			val = all_atts->audio_level->value;
 		} else if (render_svg_props->audio_level) {
 			val = render_svg_props->audio_level->value;
@@ -530,8 +530,8 @@ u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *
 		val = MIN(FIX_ONE, MAX( val, 0));
 		render_svg_props->computed_audio_level = gf_mulfix(val, par_val);
 	}
-	
-	if (all_atts->color && all_atts->color->type == SVG_PAINT_COLOR 
+
+	if (all_atts->color && all_atts->color->type == SVG_PAINT_COLOR
 		&& all_atts->color->color.type != SVG_COLOR_INHERIT) {
 		render_svg_props->color = all_atts->color;
 	} else {
@@ -555,9 +555,9 @@ u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *
 	}
 	if (all_atts->fill && all_atts->fill->type != SVG_PAINT_INHERIT) {
 		render_svg_props->fill = all_atts->fill;
-		if (all_atts->fill->type == SVG_PAINT_COLOR && 
+		if (all_atts->fill->type == SVG_PAINT_COLOR &&
 			all_atts->fill->color.type == SVG_COLOR_CURRENTCOLOR) {
-			render_svg_props->fill = render_svg_props->color; 
+			render_svg_props->fill = render_svg_props->color;
 			if (inherited_flags_mask & GF_SG_SVG_COLOR_DIRTY) {
 				inherited_flags_mask |= GF_SG_SVG_FILL_DIRTY;
 			}
@@ -623,8 +623,8 @@ u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *
 		render_svg_props->shape_rendering = all_atts->shape_rendering;
 	}
 	if (all_atts->solid_color && all_atts->solid_color->type != SVG_PAINT_INHERIT) {
-		render_svg_props->solid_color = all_atts->solid_color;		
-		if (all_atts->solid_color->type == SVG_PAINT_COLOR && 
+		render_svg_props->solid_color = all_atts->solid_color;
+		if (all_atts->solid_color->type == SVG_PAINT_COLOR &&
 			all_atts->solid_color->color.type == SVG_COLOR_CURRENTCOLOR) {
 			render_svg_props->solid_color = render_svg_props->color;
 			if (inherited_flags_mask & GF_SG_SVG_COLOR_DIRTY) {
@@ -645,7 +645,7 @@ u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *
 	}
 	if (all_atts->stop_color && all_atts->stop_color->type != SVG_PAINT_INHERIT) {
 		render_svg_props->stop_color = all_atts->stop_color;
-		if (all_atts->stop_color->type == SVG_PAINT_COLOR && 
+		if (all_atts->stop_color->type == SVG_PAINT_COLOR &&
 			all_atts->stop_color->color.type == SVG_COLOR_CURRENTCOLOR) {
 			render_svg_props->stop_color = render_svg_props->color;
 			if (inherited_flags_mask & GF_SG_SVG_COLOR_DIRTY) {
@@ -666,7 +666,7 @@ u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *
 	}
 	if (all_atts->stroke && all_atts->stroke->type != SVG_PAINT_INHERIT) {
 		render_svg_props->stroke = all_atts->stroke;
-		if (all_atts->stroke->type == SVG_PAINT_COLOR && 
+		if (all_atts->stroke->type == SVG_PAINT_COLOR &&
 			all_atts->stroke->color.type == SVG_COLOR_CURRENTCOLOR) {
 			render_svg_props->stroke = render_svg_props->color;
 			if (inherited_flags_mask & GF_SG_SVG_COLOR_DIRTY) {
@@ -732,10 +732,10 @@ u32 gf_svg_apply_inheritance(SVGAllAttributes *all_atts, SVGPropertiesPointers *
 		inherited_flags_mask |= GF_SG_SVG_VECTOREFFECT_DIRTY;
 	}
 	if (all_atts->viewport_fill && all_atts->viewport_fill->type != SVG_PAINT_INHERIT) {
-		render_svg_props->viewport_fill = all_atts->viewport_fill;		
+		render_svg_props->viewport_fill = all_atts->viewport_fill;
 	} else if (!all_atts->viewport_fill) {
 		render_svg_props->viewport_fill = NULL;
-	} 
+	}
 	if (all_atts->viewport_fill_opacity && all_atts->viewport_fill_opacity->type != SVG_NUMBER_INHERIT) {
 		render_svg_props->viewport_fill_opacity = all_atts->viewport_fill_opacity;
 	} else if (!all_atts->viewport_fill_opacity) {
@@ -968,7 +968,7 @@ void gf_svg_flatten_attributes(SVG_Element *e, SVGAllAttributes *all_atts)
         case TAG_GSVG_ATT_depthOffset: all_atts->gpac_depthOffset = (SVG_Number *)att->data; break;
         case TAG_GSVG_ATT_depthGain: all_atts->gpac_depthGain = (SVG_Number *)att->data; break;
 		}
-		
+
 		att = att->next;
 	}
 }

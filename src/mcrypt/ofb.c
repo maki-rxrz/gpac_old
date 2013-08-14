@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 1998,1999,2000,2001,2002 Nikos Mavroyanopoulos
- * 
- * This library is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Library General Public License as published 
- * by the Free Software Foundation; either version 2 of the License, or 
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Library General Public License as published
+ * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
@@ -36,7 +36,7 @@ static GF_Err _init_mcrypt( OFB_BUFFER* buf, void *key, int lenofkey, void *IV, 
     buf->s_register = buf->enc_s_register = NULL;
 
     buf->blocksize = size;
-    
+
     /* For ofb */
 	buf->s_register=gf_malloc( size);
     if (buf->s_register==NULL) goto freeall;

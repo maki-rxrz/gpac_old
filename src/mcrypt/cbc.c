@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 1998,1999,2000,2001 Nikos Mavroyanopoulos
- * 
- * This library is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Library General Public License as published 
- * by the Free Software Foundation; either version 2 of the License, or 
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Library General Public License as published
+ * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
@@ -37,13 +37,13 @@ static GF_Err _init_mcrypt( CBC_BUFFER* buf,void *key, int lenofkey, void *IV, i
 	buf->previous_cipher = NULL;
 
 	buf->blocksize = size;
-		
+
 	buf->previous_ciphertext = gf_malloc( size);
 	buf->previous_cipher = gf_malloc( size);
-	
+
 	if (buf->previous_ciphertext==NULL ||
 		buf->previous_cipher==NULL) goto freeall;
-	
+
 	if (IV!=NULL) {
 		memcpy(buf->previous_ciphertext, IV, size);
 	} else {
@@ -64,7 +64,7 @@ static GF_Err _mcrypt_set_state( CBC_BUFFER* buf, void *IV, int size)
 
 	memcpy(buf->previous_ciphertext, IV, size);
 	memcpy(buf->previous_cipher, IV, size);
- 
+
 	return GF_OK;
 }
 
@@ -91,11 +91,11 @@ static GF_Err _mcrypt( CBC_BUFFER* buf, void *plaintext, int len, int blocksize,
 {
 	u32 *fplain = plaintext;
 	u32 *plain;
-	int dblock, dlen, i, j; 
+	int dblock, dlen, i, j;
 	void (*_mcrypt_block_encrypt) (void *, void *);
 
 	_mcrypt_block_encrypt = func;
-	
+
 	dblock = blocksize / sizeof(u32);
 	dlen = len / blocksize;
 	for (j = 0; j < dlen ; j++) {
@@ -121,7 +121,7 @@ static GF_Err _mdecrypt( CBC_BUFFER* buf, void *ciphertext, int len, int blocksi
 {
 	u32 *cipher;
 	u32 *fcipher = ciphertext;
-	int i, j, dlen, dblock; 
+	int i, j, dlen, dblock;
 	void (*_mcrypt_block_decrypt) (void *, void *);
 
 	_mcrypt_block_decrypt = func2;

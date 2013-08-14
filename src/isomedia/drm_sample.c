@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -52,9 +52,9 @@ GF_ISMASample *gf_isom_ismacryp_sample_from_data(char *data, u32 dataLength, Boo
 	if (!data || !dataLength) {
 		return gf_isom_ismacryp_new_sample();
 	}
-	
+
 	s = gf_isom_ismacryp_new_sample();
-		
+
 	/*empty sample*/
 	if (!data || !dataLength) return s;
 
@@ -106,7 +106,7 @@ GF_Err gf_isom_ismacryp_sample_to_sample(GF_ISMASample *s, GF_ISOSample *dest)
 	if (s->flags & GF_ISOM_ISMA_USE_SEL_ENC) {
 		gf_bs_write_int(bs, (s->flags & GF_ISOM_ISMA_IS_ENCRYPTED) ? 1 : 0, 1);
 		gf_bs_write_int(bs, 0, 7);
-	} 
+	}
 	if (s->flags & GF_ISOM_ISMA_IS_ENCRYPTED) {
 		if (s->IV_length) gf_bs_write_long_int(bs, (s64) s->IV, 8*s->IV_length);
 		if (s->KI_length) gf_bs_write_data(bs, (char*)s->key_indicator, s->KI_length);
@@ -206,7 +206,7 @@ Bool gf_isom_is_ismacryp_media(GF_ISOFile *the_file, u32 trackNumber, u32 sample
 	if (!sinf) return 0;
 
 	/*non-encrypted or non-ISMA*/
-	if (!sinf->info || !sinf->info->ikms || !sinf->info->isfm ) 
+	if (!sinf->info || !sinf->info->ikms || !sinf->info->isfm )
 		return 0;
 
 	return 1;
@@ -225,7 +225,7 @@ Bool gf_isom_is_omadrm_media(GF_ISOFile *the_file, u32 trackNumber, u32 sampleDe
 	if (!sinf) return 0;
 
 	/*non-encrypted or non-OMA*/
-	if (!sinf->info || !sinf->info->okms || !sinf->info->okms->hdr) 
+	if (!sinf->info || !sinf->info->okms || !sinf->info->okms->hdr)
 		return 0;
 
 	return 1;
@@ -237,7 +237,7 @@ GF_Err gf_isom_get_ismacryp_info(GF_ISOFile *the_file, u32 trackNumber, u32 samp
 {
 	GF_TrackBox *trak;
 	GF_ProtectionInfoBox *sinf;
-	
+
 	trak = gf_isom_get_track_from_file(the_file, trackNumber);
 	if (!trak) return GF_BAD_PARAM;
 
@@ -278,7 +278,7 @@ GF_Err gf_isom_get_omadrm_info(GF_ISOFile *the_file, u32 trackNumber, u32 sample
 {
 	GF_TrackBox *trak;
 	GF_ProtectionInfoBox *sinf;
-	
+
 	trak = gf_isom_get_track_from_file(the_file, trackNumber);
 	if (!trak) return GF_BAD_PARAM;
 
@@ -325,7 +325,7 @@ GF_Err gf_isom_remove_ismacryp_protection(GF_ISOFile *the_file, u32 trackNumber,
 
 	e = CanAccessMovie(the_file, GF_ISOM_OPEN_WRITE);
 	if (e) return e;
-	
+
 	trak = gf_isom_get_track_from_file(the_file, trackNumber);
 	if (!trak || !trak->Media || !sampleDescriptionIndex) return GF_BAD_PARAM;
 
@@ -351,7 +351,7 @@ GF_Err gf_isom_change_ismacryp_protection(GF_ISOFile *the_file, u32 trackNumber,
 
 	e = CanAccessMovie(the_file, GF_ISOM_OPEN_WRITE);
 	if (e) return e;
-	
+
 	trak = gf_isom_get_track_from_file(the_file, trackNumber);
 	if (!trak || !trak->Media || !sampleDescriptionIndex) return GF_BAD_PARAM;
 
@@ -371,7 +371,7 @@ GF_Err gf_isom_change_ismacryp_protection(GF_ISOFile *the_file, u32 trackNumber,
 }
 
 
-GF_Err gf_isom_set_ismacryp_protection(GF_ISOFile *the_file, u32 trackNumber, u32 desc_index, u32 scheme_type, 
+GF_Err gf_isom_set_ismacryp_protection(GF_ISOFile *the_file, u32 trackNumber, u32 desc_index, u32 scheme_type,
 						   u32 scheme_version, char *scheme_uri, char *kms_URI,
 						   Bool selective_encryption, u32 KI_length, u32 IV_length)
 {
@@ -404,14 +404,14 @@ GF_Err gf_isom_set_ismacryp_protection(GF_ISOFile *the_file, u32 trackNumber, u3
 	/*special case for AVC1*/
 	case GF_ISOM_BOX_TYPE_AVC1:
 	case GF_ISOM_BOX_TYPE_AVC2:
-	case GF_ISOM_BOX_TYPE_AVC3: 
-	case GF_ISOM_BOX_TYPE_AVC4: 
+	case GF_ISOM_BOX_TYPE_AVC3:
+	case GF_ISOM_BOX_TYPE_AVC4:
 	case GF_ISOM_BOX_TYPE_SVC1:
 		original_format = GF_4CC('2','6','4','b');
 		sea->type = GF_ISOM_BOX_TYPE_ENCV;
 		break;
-	case GF_ISOM_BOX_TYPE_HVC1: 
-	case GF_ISOM_BOX_TYPE_HEV1: 
+	case GF_ISOM_BOX_TYPE_HVC1:
+	case GF_ISOM_BOX_TYPE_HEV1:
 		original_format = GF_4CC('2','6','5','b');
 		sea->type = GF_ISOM_BOX_TYPE_ENCV;
 		break;
@@ -427,7 +427,7 @@ GF_Err gf_isom_set_ismacryp_protection(GF_ISOFile *the_file, u32 trackNumber, u3
 	default:
 		return GF_BAD_PARAM;
 	}
-	
+
 	sinf = (GF_ProtectionInfoBox *)sinf_New();
 	gf_list_add(sea->protections, sinf);
 
@@ -479,12 +479,12 @@ GF_Err gf_isom_set_oma_protection(GF_ISOFile *the_file, u32 trackNumber, u32 des
 	case GF_ISOM_BOX_TYPE_MP4V:
 	case GF_ISOM_BOX_TYPE_AVC1:
 	case GF_ISOM_BOX_TYPE_AVC2:
-	case GF_ISOM_BOX_TYPE_AVC3: 
-	case GF_ISOM_BOX_TYPE_AVC4: 
+	case GF_ISOM_BOX_TYPE_AVC3:
+	case GF_ISOM_BOX_TYPE_AVC4:
 	case GF_ISOM_BOX_TYPE_SVC1:
 	case GF_ISOM_BOX_TYPE_D263:
-	case GF_ISOM_BOX_TYPE_HVC1: 
-	case GF_ISOM_BOX_TYPE_HEV1: 
+	case GF_ISOM_BOX_TYPE_HVC1:
+	case GF_ISOM_BOX_TYPE_HEV1:
 		original_format = sea->type;
 		sea->type = GF_ISOM_BOX_TYPE_ENCV;
 		break;
@@ -500,7 +500,7 @@ GF_Err gf_isom_set_oma_protection(GF_ISOFile *the_file, u32 trackNumber, u32 des
 	default:
 		return GF_BAD_PARAM;
 	}
-	
+
 	sinf = (GF_ProtectionInfoBox *)sinf_New();
 	gf_list_add(sea->protections, sinf);
 	sinf->scheme_type = (GF_SchemeTypeBox *)schm_New();
@@ -601,7 +601,7 @@ GF_CENCSampleInfo *gf_isom_cenc_get_sample(GF_TrackBox *trak, GF_TrackFragmentBo
 		memcpy(cenc_sample->keyID, sinf->info->piff_tenc->KID, 16);
 		cenc_sample->IV_size = sinf->info->piff_tenc->IV_size;
 		cenc_sample->algo_id = sinf->info->piff_tenc->AlgorithmID;
-		
+
 		if (traf->piff_sample_encryption->flags & 1) {
 			memcpy(cenc_sample->keyID, traf->piff_sample_encryption->KID, 16);
 			cenc_sample->IV_size = traf->piff_sample_encryption->IV_size;

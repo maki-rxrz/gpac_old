@@ -42,18 +42,18 @@ END_EVENT_TABLE()
 
 
 // Constructor
-V4CommandPanel::V4CommandPanel(V4StudioFrame * parent_) 
-	: wxPanel(parent_, -1), 
+V4CommandPanel::V4CommandPanel(V4StudioFrame * parent_)
+	: wxPanel(parent_, -1),
 	// tabs
-	tabs(this, -1), 
-	tabView(&tabs, -1), 
+	tabs(this, -1),
+	tabView(&tabs, -1),
 	tabAdd(&tabs, -1),
 
 	// add Page
 	cmbCommands(&tabAdd, cmbCommandID, ""),
 	lblCommands(&tabAdd, -1, "Action :"),
 	cmbNodes(&tabAdd, -1, ""),
-	lblNodes(&tabAdd, -1, "Node :"), 
+	lblNodes(&tabAdd, -1, "Node :"),
 	cmbFields(&tabAdd ,cmbFieldID, ""),
 	lblFields(&tabAdd, -1, "Field :"),
 	txtField(&tabAdd, -1, ""),
@@ -168,7 +168,7 @@ void V4CommandPanel::OnCommandCombo(wxCommandEvent &event) {
 
   // retrieves the current node
   GF_Node * node = GetCurrentNode();
-  
+
   if (! IsCommandValidForNode(command, node)) {
     cmbCommands.SetSelection(-1);
     command = (u32) -1;
@@ -264,7 +264,7 @@ void V4CommandPanel::OnCreateCommand(wxCommandEvent &event) {
       GF_CommandField * cmdField = gf_sg_command_field_new(c); // if failure, will be freed with freeing the command
       cmdField->fieldIndex = field.fieldIndex;
       cmdField->fieldType  = field.fieldType;
-      
+
       // fills the GF_CommandField structures with data depending on the field type
       switch (field.fieldType) {
         case GF_SG_VRML_SFNODE: {
@@ -303,7 +303,7 @@ void V4CommandPanel::OnCreateCommand(wxCommandEvent &event) {
         }
 
       }
-      
+
       break;
     }
 
@@ -356,7 +356,7 @@ void V4CommandPanel::OnCreateCommand(wxCommandEvent &event) {
   if (gf_list_count(chain) > 0) {
     GF_Command * old;
     old = (GF_Command *) gf_list_get(chain, gf_list_count(chain) - 1);
-    if ( (old->tag = 
+    if ( (old->tag =
   }
 */
 
@@ -414,7 +414,7 @@ void V4CommandPanel::RefreshCommands() {
 
   // Prints the different possible commands, associates them with their id
   for (int i=0; i<sizeof(cmdNames)/sizeof(wxString); i++) {
-    if ( cmdNames[i].CompareTo(wxT("")) ) 
+    if ( cmdNames[i].CompareTo(wxT("")) )
       if (IsCommandValidForNode(i, node)) cmbCommands.Append(cmdNames[i], (void *)i);
   }
 
@@ -470,7 +470,7 @@ void V4CommandPanel::RefreshNodes() {
       V4NodePool &pool = parent->GetV4SceneManager()->pools.poolFromFieldName(field.name);
 
       // fills the combo box
-      PopulateNodes(pool, node);      
+      PopulateNodes(pool, node);
 
       break;
     }

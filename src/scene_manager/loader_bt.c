@@ -1113,12 +1113,12 @@ u32 gf_bt_get_def_id(GF_BTParser *parser, char *defName)
 				return ID;
 			}
 		}
-	} 
+	}
 
 	ID = gf_bt_get_next_node_id(parser);
 	if (n) {
 		GF_LOG(GF_LOG_DEBUG, GF_LOG_PARSER, ("[BT Parsing] (line %d) Binary ID %d already assigned to %s - keeping internal ID %d", parser->line, gf_node_get_name(n), ID));
-	} 
+	}
 	return ID;
 }
 
@@ -1180,7 +1180,7 @@ u32 gf_bt_get_node_tag(GF_BTParser *parser, char *node_name)
 	if (parser->is_wrl && !(parser->load->flags & GF_SM_LOAD_MPEG4_STRICT)) {
 #ifndef GPAC_DISABLE_X3D
 		tag = gf_node_x3d_type_by_class_name(node_name);
-		if (!tag) 
+		if (!tag)
 #endif
 			tag = gf_node_mpeg4_type_by_class_name(node_name);
 		if (tag) return tag;
@@ -1293,7 +1293,7 @@ GF_Node *gf_bt_sf_node(GF_BTParser *parser, char *node_name, GF_Node *parent, ch
 		if (!parser->parsing_proto) init_node = 1;
 	}
 	is_script = 0;
-	if ((tag==TAG_MPEG4_Script) 
+	if ((tag==TAG_MPEG4_Script)
 #ifndef GPAC_DISABLE_X3D
 		|| (tag==TAG_X3D_Script)
 #endif
@@ -1394,7 +1394,7 @@ GF_Node *gf_bt_sf_node(GF_BTParser *parser, char *node_name, GF_Node *parent, ch
 						str = "children";
 						parser->last_error = gf_node_get_field_by_name(node, str, &info);
 					}
-					else 
+					else
 #endif
 					if (!strcmp(str, "collide")) {
 						SFBool b;
@@ -2200,7 +2200,7 @@ GF_Err gf_bt_parse_bifs_command(GF_BTParser *parser, char *name, GF_List *cmdLis
 		char csep;
 		GF_Node *targetNode, *idxNode, *childNode, *fromNode;
 		GF_FieldInfo targetField, idxField, childField, fromField;
-		
+
 		targetNode = idxNode = childNode = fromNode = NULL;
 		str = gf_bt_get_next(parser, 1);
 		/*get source node*/
@@ -2230,7 +2230,7 @@ GF_Err gf_bt_parse_bifs_command(GF_BTParser *parser, char *name, GF_List *cmdLis
 					/*get idx node*/
 					idxNode = gf_bt_peek_node(parser, str);
 					if (!idxNode) return gf_bt_report(parser, GF_BAD_PARAM, "%s: unknown node", field);
-					if (!gf_bt_check_code(parser, '.')) 
+					if (!gf_bt_check_code(parser, '.'))
 						return gf_bt_report(parser, GF_BAD_PARAM, "XREPLACE: '.' expected");
 
 					/*get idx field*/
@@ -2242,7 +2242,7 @@ GF_Err gf_bt_parse_bifs_command(GF_BTParser *parser, char *name, GF_List *cmdLis
 				}
 			}
 			gf_bt_check_code(parser, ']');
-		
+
 			/*check if we have a child node*/
 			if (gf_bt_check_code(parser, '.')) {
 				s32 apos = pos;
@@ -3217,7 +3217,7 @@ GF_Err gf_bt_loader_run_intern(GF_BTParser *parser, GF_Command *init_com, Bool i
 
 	vrml_root_node = NULL;
 	has_id = 0;
-	
+
 	if (init_com)
 		parser->in_com = 0 ;
 
@@ -3370,8 +3370,8 @@ GF_Err gf_bt_loader_run_intern(GF_BTParser *parser, GF_Command *init_com, Bool i
 		/*BIFS commands*/
 		else if (!strcmp(str, "REPLACE") || !strcmp(str, "INSERT") || !strcmp(str, "APPEND") || !strcmp(str, "DELETE")
 			/*BIFS extended commands*/
-			|| !strcmp(str, "GLOBALQP") || !strcmp(str, "MULTIPLEREPLACE") || !strcmp(str, "MULTIPLEINDREPLACE") || !strcmp(str, "XDELETE") || !strcmp(str, "DELETEPROTO") || !strcmp(str, "INSERTPROTO") 
-			|| !strcmp(str, "XREPLACE") 
+			|| !strcmp(str, "GLOBALQP") || !strcmp(str, "MULTIPLEREPLACE") || !strcmp(str, "MULTIPLEINDREPLACE") || !strcmp(str, "XDELETE") || !strcmp(str, "DELETEPROTO") || !strcmp(str, "INSERTPROTO")
+			|| !strcmp(str, "XREPLACE")
 			) {
 			Bool is_base_stream = parser->stream_id ? 0 : 1;
 
@@ -3465,9 +3465,9 @@ static GF_Err gf_sm_load_bt_initialize(GF_SceneLoader *load, const char *str, Bo
 	GF_Err e;
 	unsigned char BOM[5];
 	GF_BTParser *parser = load->loader_priv;
-	
+
 	parser->last_error = GF_OK;
-	
+
 	if (load->fileName) {
 		FILE *test = gf_f64_open(load->fileName, "rb");
 		if (!test) return GF_URL_ERROR;
@@ -3493,7 +3493,7 @@ static GF_Err gf_sm_load_bt_initialize(GF_SceneLoader *load, const char *str, Bo
 			parser->initialized = 0;
 			return GF_OK;
 		}
-		strncpy(BOM, str, 5); 
+		strncpy(BOM, str, 5);
 	}
 
 	/*0: no unicode, 1: UTF-16BE, 2: UTF-16LE*/
@@ -3519,13 +3519,13 @@ static GF_Err gf_sm_load_bt_initialize(GF_SceneLoader *load, const char *str, Bo
 		if (parser->gz_in) gzseek(parser->gz_in, 3, SEEK_CUR);
 	}
 	parser->initialized = 1;
-	
+
 	if ( load->fileName )
 	{
 		sep = strrchr(load->fileName, '.');
 		if (sep && !strnicmp(sep, ".wrl", 4)) parser->is_wrl = 1;
 	}
-	
+
 	if (input_only) return GF_OK;
 
 	/*initalize default streams in the context*/

@@ -24,9 +24,9 @@ extern "C" {
                         }\
                         jlong h = env->GetLongField(obj, fid);
                         //CNativeWrapper* wr = (CNativeWrapper*) h;*/
- 
+
 char ** ConvertCommandLine( const char* sCommand, int* iNbArg );
-                        
+
 JNIEXPORT void JNICALL Java_com_enst_mp4box_mp4terminal_run(JNIEnv * env, jobject obj, jstring sCommand)
 {
 	//CAST_HANDLE(wr);
@@ -38,16 +38,16 @@ JNIEXPORT void JNICALL Java_com_enst_mp4box_mp4terminal_run(JNIEnv * env, jobjec
     }*/
     jboolean isCopy;
     const char * sOriginalCommand = (*env)->GetStringUTFChars(env, sCommand, &isCopy);
-    
+
     jniLOGV("mp4terminal::command get back ok");
     jniLOGV(sOriginalCommand);
 
 	int iNbArg = 0;
-	
+
 	int i = 0;
 	char** sConvertedCommandLine;
 	sConvertedCommandLine = ConvertCommandLine( sOriginalCommand, &i );
-	
+
     jniLOGV("Convert command line done");
 	FILE* ferr = freopen( "/mnt/sdcard/stderrout.txt", "w", stderr );
 
@@ -83,7 +83,7 @@ char ** ConvertCommandLine( const char* sCommand, int* iNbArg )
 	pReturn[0] = (char*)malloc(sizeof( char) * ( 7 ));
 	strcpy( pReturn[0], "MP4Box" );//just a place holder , will never be read.
 	pReturn[0][6] = '\0';
-	
+
 	for ( l = 0; l <= iLength ; l++ )
 	{
 		if( sCommand[l] ==  ' ' ||  l == ( iLength ) )

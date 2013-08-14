@@ -27,7 +27,7 @@ endif
 OBJS=dx_audio.o dx_video.o dx_window.o dx_2d.o copy_pixels.o
 
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_dx_hw.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
@@ -39,9 +39,9 @@ all: $(LIB)
 
 $(LIB): $(OBJS)
 	$(WINDRES) "$(SRC_PATH)/modules/dx_hw/dx_hw.rc" dw_hw.o
-	$(CC) $(SHFLAGS) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) dw_hw.o $(LDFLAGS_DX) -L../../bin/gcc -lgpac $(EXTRALIBS) 
+	$(CC) $(SHFLAGS) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) dw_hw.o $(LDFLAGS_DX) -L../../bin/gcc -lgpac $(EXTRALIBS)
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 ifeq ($(CONFIG_WIN32),yes)
 	rm -f dx_hw.o
@@ -50,7 +50,7 @@ endif
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

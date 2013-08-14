@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2005-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -42,7 +42,7 @@ enum
 	ISMAEA_STATE_PLAY,
 };
 
-typedef struct 
+typedef struct
 {
 	GF_Crypt *crypt;
 	char key[16], salt[8];
@@ -124,16 +124,16 @@ static GF_Err ISMA_Setup(ISMAEAPriv *priv, GF_IPMPEvent *evt)
 		if (strlen(cfg->kms_uri) < 10+32+16) return GF_NON_COMPLIANT_BITSTREAM;
 
 		k = (char *)cfg->kms_uri + 10;
-		for (i=0; i<16; i++) { 
+		for (i=0; i<16; i++) {
 			szT[0] = k[2*i]; szT[1] = k[2*i + 1];
-			sscanf(szT, "%X", &v); 
+			sscanf(szT, "%X", &v);
 			priv->key[i] = v;
 		}
 
 		k = (char *)cfg->kms_uri + 10 + 32;
-		for (i=0; i<8; i++) { 
+		for (i=0; i<8; i++) {
 			szT[0] = k[2*i]; szT[1] = k[2*i + 1];
-			sscanf(szT, "%X", &v); 
+			sscanf(szT, "%X", &v);
 			priv->salt[i] = v;
 		}
 	}
@@ -166,14 +166,14 @@ static GF_Err ISMA_Access(ISMAEAPriv *priv, GF_IPMPEvent *evt)
 {
 	GF_Err e;
 	char IV[16];
-	
+
 	if (evt->event_type==GF_IPMP_TOOL_GRANT_ACCESS) {
 		if (priv->state != ISMAEA_STATE_SETUP) return GF_SERVICE_ERROR;
 		assert(!priv->crypt);
 
 		//if (!priv->nb_allow_play) return GF_AUTHENTICATION_FAILURE;
 		//priv->nb_allow_play--;
-		
+
 		/*init decrypter*/
 		priv->crypt = gf_crypt_open("AES-128", "CTR");
 		if (!priv->crypt) return GF_IO_ERR;
@@ -199,7 +199,7 @@ static GF_Err ISMA_Access(ISMAEAPriv *priv, GF_IPMPEvent *evt)
 static GF_Err ISMA_ProcessData(ISMAEAPriv *priv, GF_IPMPEvent *evt)
 {
 	if (!priv->crypt) return GF_SERVICE_ERROR;
-	
+
 	if (!evt->is_encrypted) return GF_OK;
 
 	/*resync IV*/
@@ -261,7 +261,7 @@ static GF_Err OMA_DRM_Setup(ISMAEAPriv *priv, GF_IPMPEvent *evt)
 	if (!cfg->kms_uri) return GF_NON_COMPLIANT_BITSTREAM;
 	priv->state = ISMAEA_STATE_SETUP;
 	//priv->nb_allow_play = 1;
-	
+
 	/*we have preview*/
 	if (priv->preview_range) return GF_OK;
 	return GF_NOT_SUPPORTED;
@@ -279,7 +279,7 @@ static GF_Err ISMA_Process(GF_IPMPTool *plug, GF_IPMPEvent *evt)
 		if (evt->config_data_code == GF_4CC('o','d','r','m')) return OMA_DRM_Setup(priv, evt);
 #endif
 		return GF_NOT_SUPPORTED;
-		
+
 	case GF_IPMP_TOOL_GRANT_ACCESS:
 	case GF_IPMP_TOOL_RELEASE_ACCESS:
 		if (priv->is_oma) {
@@ -313,7 +313,7 @@ GF_IPMPTool *NewISMACrypTool()
 {
 	ISMAEAPriv *priv;
 	GF_IPMPTool *tmp;
-	
+
 	GF_SAFEALLOC(tmp, GF_IPMPTool);
 	if (!tmp) return NULL;
 	GF_SAFEALLOC(priv, ISMAEAPriv);
@@ -326,7 +326,7 @@ GF_IPMPTool *NewISMACrypTool()
 #endif /*GPAC_DISABLE_MCRYPT*/
 
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 #ifndef GPAC_DISABLE_MCRYPT

@@ -326,7 +326,7 @@ static void term_on_media_add(void *user_priv, GF_ClientService *service, GF_Des
 		u32 match_esid = 0;
 		GF_MediaObject *mo = gf_list_get(scene->scene_objects, i);
 
-		if ((mo->OD_ID != GF_MEDIA_EXTERNAL_ID) && (min_od_id<mo->OD_ID)) 
+		if ((mo->OD_ID != GF_MEDIA_EXTERNAL_ID) && (min_od_id<mo->OD_ID))
 			min_od_id = mo->OD_ID;
 
 		if (!mo->odm) continue;
@@ -375,7 +375,7 @@ static void term_on_media_add(void *user_priv, GF_ClientService *service, GF_Des
 		if (ext) ext[0] = '#';
 
 		esd = gf_list_get(od->ESDescriptors, 0);
-		if (match_esid && (esd->ESID != match_esid)) 
+		if (match_esid && (esd->ESID != match_esid))
 			continue;
 		/*match type*/
 		switch (esd->decoderConfig->streamType) {
@@ -407,13 +407,13 @@ static void term_on_media_add(void *user_priv, GF_ClientService *service, GF_Des
 		break;
 	}
 
-	/*add a pass on scene->resource to check for min_od_id, 
+	/*add a pass on scene->resource to check for min_od_id,
 	otherwise we may have another modules declaring an object with ID 0 from
 	another thread, which will assert (only one object with a givne OD ID)*/
 	for (i=0; i<gf_list_count(scene->resources); i++) {
 		GF_ObjectManager *an_odm = gf_list_get(scene->resources, i);
 
-		if (an_odm->OD && (an_odm->OD->objectDescriptorID != GF_MEDIA_EXTERNAL_ID) && (min_od_id < an_odm->OD->objectDescriptorID)) 
+		if (an_odm->OD && (an_odm->OD->objectDescriptorID != GF_MEDIA_EXTERNAL_ID) && (min_od_id < an_odm->OD->objectDescriptorID))
 			min_od_id = an_odm->OD->objectDescriptorID;
 	}
 
@@ -431,11 +431,11 @@ static void term_on_media_add(void *user_priv, GF_ClientService *service, GF_Des
 	}
 
 	if (the_mo) the_mo->OD_ID = od->objectDescriptorID;
-	if (!scene->selected_service_id) 
+	if (!scene->selected_service_id)
 		scene->selected_service_id = od->ServiceID;
 
 
-	/*net is unlocked before seting up the object as this might trigger events going into JS and deadlocks 
+	/*net is unlocked before seting up the object as this might trigger events going into JS and deadlocks
 	with the compositor*/
 	gf_term_lock_net(term, 0);
 
@@ -545,7 +545,7 @@ static void term_on_command(void *user_priv, GF_ClientService *service, GF_Netwo
 			if (com->map_time.reset_buffers) {
 				gf_es_reset_buffers(ch);
 			}
-			/*if we were reassembling an AU, do not perform clock init check when dispatching it since we computed its timestamps 
+			/*if we were reassembling an AU, do not perform clock init check when dispatching it since we computed its timestamps
 			according to the previous clock origin*/
 			else {
 				gf_mx_p(ch->mx);
@@ -1150,10 +1150,10 @@ void gf_term_download_update_stats(GF_DownloadSession * sess)
 		if (0&& (serv->download_rebuffer || serv->auto_rebuffer) && serv->owner && !(serv->owner->flags & GF_ODM_DESTROYED) && serv->owner->duration) {
 			GF_Clock *ck = gf_odm_get_media_clock(serv->owner);
 			Double download_percent, playback_percent, adj_percent;
-			download_percent = 100 * bytes_done; 
+			download_percent = 100 * bytes_done;
 			download_percent /= total_size;
 
-			playback_percent = 100 * serv->owner->current_time; 
+			playback_percent = 100 * serv->owner->current_time;
 			playback_percent /= serv->owner->duration;
 			if (serv->auto_rebuffer)
 				adj_percent = 0.0;

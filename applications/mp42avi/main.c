@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -34,7 +34,7 @@
 #define GPAC_CFG_FILE "GPAC.cfg"
 #else
 #include <pwd.h>
-typedef struct tagBITMAPFILEHEADER 
+typedef struct tagBITMAPFILEHEADER
 {
     u16	bfType;
     u32	bfSize;
@@ -92,7 +92,7 @@ void PrintUsage()
 }
 
 
-typedef struct 
+typedef struct
 {
 	GF_Compositor *sr;
 	GF_SceneGraph *sg;
@@ -295,7 +295,7 @@ void bifs3d_viewpoints_merger(GF_ISOFile *file, char *szConfigFile, u32 width, u
 	b2v.sr = gf_sc_new(&user, 0, NULL);
 	gf_sc_set_option(b2v.sr, GF_OPT_VISIBLE, 0);
 
-	/* Initialization of the scene graph */	
+	/* Initialization of the scene graph */
 	b2v.sg = gf_sg_new();
 	gf_sg_set_scene_time_callback(b2v.sg, get_scene_time, &b2v);
 	gf_sg_set_init_callback(b2v.sg, node_init, &b2v);
@@ -343,7 +343,7 @@ void bifs3d_viewpoints_merger(GF_ISOFile *file, char *szConfigFile, u32 width, u
 		b2v.duration = gf_isom_get_media_duration(file, track_number+1);
 
 		gf_odf_desc_del((GF_Descriptor *) esd);
-	
+
 	}
 	gf_sc_set_scene(b2v.sr, b2v.sg);
 
@@ -460,7 +460,7 @@ void bifs_to_vid(GF_ISOFile *file, char *szConfigFile, u32 width, u32 height, ch
 	char old_driv[1024];
 	const char *test;
 	char config_path[GF_MAX_PATH];
-	avi_t *avi_out; 
+	avi_t *avi_out;
 	Bool reset_fps;
 	GF_ESD *esd;
 	char comp[5];
@@ -566,7 +566,7 @@ void bifs_to_vid(GF_ISOFile *file, char *szConfigFile, u32 width, u32 height, ch
 	count = gf_isom_get_sample_count(file, i+1);
 
 	reset_fps = 0;
-	if (!fps) { 
+	if (!fps) {
 		fps = (Float) (count * timescale);
 		fps /= (Double) (s64) b2v.duration;
 		printf("Estimated BIFS FrameRate %g\n", fps);
@@ -689,7 +689,7 @@ int main (int argc, char **argv)
 		if (arg[0] != '-') {
 			inName = arg;
 			break;
-		}		
+		}
 		if (!stricmp(arg, "-h")) {
 			PrintUsage();
 			return 0;
@@ -775,7 +775,7 @@ int main (int argc, char **argv)
 	rad[strlen(rad)-1] = 0;
 	if (dump_type == 3) {
 		bifs3d_viewpoints_merger(file, szConfigFile, dump_w, dump_h, rad, dump_type, dump_out, fps_dump, frameID, dump_time);
-	} 
+	}
 	else bifs_to_vid(file, szConfigFile, dump_w, dump_h, rad, dump_type, dump_out, fps_dump, frameID, dump_time);
 	printf("\ndone\n");
 	gf_isom_delete(file);

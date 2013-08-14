@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #include "isom_in.h"
@@ -74,7 +74,7 @@ static const char * ISOR_MIME_TYPES[] = {
   "audio/3gpp2", "3g2 3gp2", "3GPP2/MMS Music",
   NULL
 };
-  
+
 u32 ISOR_RegisterMimeTypes(const GF_InputService *plug){
   u32 i;
   for (i = 0 ; ISOR_MIME_TYPES[i]; i+=3)
@@ -120,7 +120,7 @@ void isor_net_io(void *cbk, GF_NETIO_Parameter *param)
 	u32 size = 0;
 	char *local_name;
 	ISOMReader *read = (ISOMReader *) cbk;
-	
+
 	/*handle service message*/
 	gf_term_download_update_stats(read->dnload);
 
@@ -170,7 +170,7 @@ void isor_net_io(void *cbk, GF_NETIO_Parameter *param)
         }
 		if (read->no_service_desc) isor_declare_objects(read);
 	}
-	
+
 	if (!size) return;
 
 	/*service is opened, nothing to do*/
@@ -201,7 +201,7 @@ void isor_net_io(void *cbk, GF_NETIO_Parameter *param)
 		read->missing_bytes -= size;
 		return;
 	}
-	
+
 	e = gf_isom_open_progressive(local_name, 0, 0, &read->mov, &read->missing_bytes);
 	switch (e) {
 	case GF_ISOM_INCOMPLETE_FILE:
@@ -217,7 +217,7 @@ void isor_net_io(void *cbk, GF_NETIO_Parameter *param)
 		return;
 	}
 	read->frag_type = gf_isom_is_fragmented(read->mov) ? 1 : 0;
-	
+
 	/*ok let's go*/
 	read->time_scale = gf_isom_get_timescale(read->mov);
     if (read->input->query_proxy && read->input->proxy_udta && read->input->proxy_type) {
@@ -468,7 +468,7 @@ static GF_Descriptor *ISOR_GetServiceDesc(GF_InputService *plug, u32 expect_type
 		for (i=0; i<gf_isom_get_track_count(read->mov); i++) {
 			u32 type = gf_isom_get_media_type(read->mov, i+1);
 			if (
-				((type==GF_ISOM_MEDIA_VISUAL) && (expect_type==GF_MEDIA_OBJECT_VIDEO)) 
+				((type==GF_ISOM_MEDIA_VISUAL) && (expect_type==GF_MEDIA_OBJECT_VIDEO))
 				|| ((type==GF_ISOM_MEDIA_AUDIO) && (expect_type==GF_MEDIA_OBJECT_AUDIO)) ) {
 				trackID = gf_isom_get_track_id(read->mov, i+1);
 				break;
@@ -764,9 +764,13 @@ GF_Err ISOR_ChannelGetSLP(GF_InputService *plug, LPNETCHANNEL channel, char **ou
 		*out_sl_hdr = ch->current_slh;
 	}
 	*out_reception_status = ch->last_state;
+<<<<<<< HEAD
 	if (read->waiting_for_data)
+=======
+	if (read->wait_for_next_frag)
+>>>>>>> b31924a... Clean up the source files
 		*out_reception_status = GF_BUFFER_TOO_SMALL;
-	
+
 	return GF_OK;
 }
 
@@ -824,7 +828,7 @@ u32 gf_channel_switch_quality(ISOMChannel *ch, GF_ISOFile *the_file, Bool switch
 				break;
 			}
 		}
-		/*this is the highest quality*/ 
+		/*this is the highest quality*/
 		if (!next_track)
 			return cur_track;
 	}
@@ -1036,7 +1040,7 @@ GF_InputService *isor_client_load()
 	GF_SAFEALLOC(reader, ISOMReader);
 	reader->channels = gf_list_new();
 	reader->segment_mutex = gf_mx_new("ISO Segment");
-	
+
 	plug->priv = reader;
 	return plug;
 }

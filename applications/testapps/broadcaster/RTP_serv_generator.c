@@ -10,14 +10,14 @@ GF_Err SampleCallBack(void *calling_object, u16 ESID, char *au, u32 size, u64 ts
 {
 	PNC_CallbackData *data = (PNC_CallbackData *)calling_object;
 	/* call the packetizer to create RTP packets */
-	PNC_ProcessData(data, au, size, ts); 
+	PNC_ProcessData(data, au, size, ts);
 	return GF_OK;
 }
 
 GF_Err (*MySampleCallBack)(void *, u16, char *data, u32 size, u64 ts) = &SampleCallBack;
 
 PNC_CallbackData *PNC_Init_SceneGenerator(GF_RTPChannel *p_chan, GF_RTPHeader *p_hdr, char *default_scene,
-										  u32 socketType, u16 socketPort, int debug) 
+										  u32 socketType, u16 socketPort, int debug)
 {
 	GF_Err e;
 	PNC_CallbackData *data = gf_malloc(sizeof(PNC_CallbackData));
@@ -36,7 +36,7 @@ PNC_CallbackData *PNC_Init_SceneGenerator(GF_RTPChannel *p_chan, GF_RTPHeader *p
 	}
 	data->server_socket = NULL;
 	data->socket = NULL;
-	
+
 	if (socketType == GF_SOCK_TYPE_TCP)
 	{
 		data->server_socket = gf_sk_new(socketType);
@@ -62,7 +62,7 @@ PNC_CallbackData *PNC_Init_SceneGenerator(GF_RTPChannel *p_chan, GF_RTPHeader *p
 	u32 socket_type = 0;
 	e |= gf_sk_get_local_ip(data->socket, buffIp);
 	e |= gf_sk_get_local_info(data->socket, &port, &socket_type);
-	dprintf(DEBUG_RTP_serv_generator, "RTS_serv_generator %s:%d %s\n", 
+	dprintf(DEBUG_RTP_serv_generator, "RTS_serv_generator %s:%d %s\n",
 		buffIp, port, socket_type==GF_SOCK_TYPE_UDP?"UDP":"TCP", e==GF_OK?"OK":"ERROR");
 	*/
 	if (e) {
@@ -83,7 +83,7 @@ PNC_CallbackData *PNC_Init_SceneGenerator(GF_RTPChannel *p_chan, GF_RTPHeader *p
 
 void PNC_SendInitScene(PNC_CallbackData * data)
 {
-	data->RAP = 1; 
+	data->RAP = 1;
 	data->SAUN_inc = 1;
 	gf_seng_encode_context(data->codec, MySampleCallBack);
 }
@@ -138,7 +138,7 @@ static GF_Err processRapReset(PNC_CallbackData * data, char * bsBuffer)
 	GF_Err error;
 	dprintf(DEBUG_RTP_serv_generator, "RTP STREAM RAP RESET\n");
 	gf_mx_p(data->carrousel_mutex);
-	data->RAP = 1; 
+	data->RAP = 1;
 	data->RAPsent++;
 	data->SAUN_inc = 1;
 	error = gf_seng_aggregate_context(data->codec, 0);
