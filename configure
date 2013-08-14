@@ -3199,7 +3199,7 @@ Name: gpac
 Description: GPAC Multimedia Framework
 URL: http://gpac.sourceforge.net
 Version:$version
-Cflags: -I\${prefix}/include/gpac
+Cflags: -I\${prefix}/include
 Libs: -L\${libdir} -lgpac
 EOF
 
