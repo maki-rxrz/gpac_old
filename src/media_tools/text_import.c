@@ -613,6 +613,8 @@ exit:
 	return e;
 }
 
+#ifndef GPAC_DISABLE_VTT
+
 typedef struct {
     GF_MediaImporter *import;
     u32 timescale;
@@ -741,6 +743,8 @@ static GF_Err gf_text_import_webvtt(GF_MediaImporter *import)
     gf_webvtt_parser_del(vttparser);
     return e;
 }
+
+#endif // GPAC_DISABLE_VTT
 
 static GF_Err gf_text_import_sub(GF_MediaImporter *import)
 {
@@ -1852,7 +1856,9 @@ GF_Err gf_import_timed_text(GF_MediaImporter *import)
 		GF_LOG(GF_LOG_WARNING, GF_LOG_PARSER, ("[TTXT Import] Input %s does not look like a supported text format - ignoring\n", import->in_name));
 		return GF_NOT_SUPPORTED;
 	}
+#ifndef GPAC_DISABLE_VTT
 	if (import->streamFormat && !strcmp(import->streamFormat, "VTT")) fmt = GF_TEXT_IMPORT_WEBVTT;
+#endif // GPAC_DISABLE_VTT
 	if (import->flags & GF_IMPORT_PROBE_ONLY) {
 		if (fmt==GF_TEXT_IMPORT_SUB) import->flags |= GF_IMPORT_OVERRIDE_FPS;
 		return GF_OK;
@@ -1862,7 +1868,9 @@ GF_Err gf_import_timed_text(GF_MediaImporter *import)
 	case GF_TEXT_IMPORT_SUB: return gf_text_import_sub(import);
 	case GF_TEXT_IMPORT_TTXT: return gf_text_import_ttxt(import);
 	case GF_TEXT_IMPORT_TEXML: return gf_text_import_texml(import);
+#ifndef GPAC_DISABLE_VTT
 	case GF_TEXT_IMPORT_WEBVTT: return gf_text_import_webvtt(import);
+#endif // GPAC_DISABLE_VTT
 	default: return GF_BAD_PARAM;
 	}
 }
