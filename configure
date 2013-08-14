@@ -3211,6 +3211,7 @@ URL: http://gpac.sourceforge.net
 Version:$version
 Cflags: -I\${prefix}/include
 Libs: -L\${libdir} -lgpac
+Libs.private: $extralibs
 EOF
 
 echo "Done - type 'make help' for make info, 'make' to build"
