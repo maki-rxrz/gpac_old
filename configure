@@ -3199,16 +3199,18 @@ fi
 echo '	$(CXX) $(CFLAGS) -c -o $@ $<' >> config.mak
 
 #pkg-config
-echo "prefix=$prefix"				 > gpac.pc
-echo "exec_prefix=\${prefix}"			>> gpac.pc
-echo "libdir=\${exec_prefix}/$libdir"		>> gpac.pc
-echo "includedir=\${exec_prefix}/include"	>> gpac.pc
-echo ""						>> gpac.pc
-echo "Name: gpac"				>> gpac.pc
-echo "Description: GPAC Multimedia Framework"	>> gpac.pc
-echo "URL: http://gpac.sourceforge.net"		>> gpac.pc
-echo "Version:$version"				>> gpac.pc
-echo "Cflags: -I\${prefix}/include/gpac"	>> gpac.pc
-echo "Libs: -L\${libdir} -lgpac"		>> gpac.pc
+cat > gpac.pc << EOF
+prefix=$prefix
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/$libdir
+includedir=\${exec_prefix}/include
+
+Name: gpac
+Description: GPAC Multimedia Framework
+URL: http://gpac.sourceforge.net
+Version:$version
+Cflags: -I\${prefix}/include/gpac
+Libs: -L\${libdir} -lgpac
+EOF
 
 echo "Done - type 'make help' for make info, 'make' to build"
