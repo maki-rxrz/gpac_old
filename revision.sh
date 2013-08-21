@@ -32,8 +32,7 @@ if [ -d ".git" ]; then
         git_version="$svn_revision"
         git_svn_revision="`git rev-list $base_branch | wc -l`"
         git_revision="`git rev-list HEAD | wc -l`"
-        git_rev_diff="`git rev-list $base_branch | wc -l`"
-        git_rev_diff="$(($git_revision-$git_rev_diff))"
+        git_rev_diff="$(($git_revision-$git_svn_revision))"
         if [ $git_rev_diff != 0 ] ; then
             git_version="$git_version+$git_rev_diff"
         fi
