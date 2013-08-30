@@ -88,7 +88,7 @@ typedef struct _it_map{
 
 	/* The current index in the hasmap*/
 	u32 hash;
-	
+
 }GF_It_Map;
 
 /*!

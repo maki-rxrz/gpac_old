@@ -5,17 +5,17 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
- *		Authors:    Stanislas Selle		
- *				
+ *		Authors:    Stanislas Selle
+ *
  */
 #include "applicationprivatedataclass.h"
 #include "applicationclass.h"
@@ -88,10 +88,10 @@ NPObject *          APPLICATION_Allocate(NPP npp, NPClass *theClass)
         v_bAPPLICATIONIdentifiersInitialized = true;
         APPLICATIONinitializeIdentifiers();
     }
-    
+
     NPObj_Application* newapplication = (NPObj_Application*)MEMALLOC(sizeof(NPObj_Application));
     fprintf(stderr, "\t%s : Allocation at \x1b[%i;3%im%p\n\x1b[0m",__FUNCTION__, 1, 1, newapplication );
-	newapplication->npp = npp;	
+	newapplication->npp = npp;
 	newapplication->visible = true;
     newapplication->privateData = sBrowserFuncs->createobject(npp, fillAPPPRIVDATApclass());
     fprintf(stderr, "\t%s : Create privateData property at \x1b[%i;3%im%p\n\x1b[0m ",__FUNCTION__,  1, 1, newapplication->privateData );
@@ -129,7 +129,7 @@ NPObject *          APPLICATION_Allocate(NPP npp, NPClass *theClass)
         }
         i++;
     }
-	
+
     return result;
 }
 
@@ -158,7 +158,7 @@ bool        APPLICATION_Invoke(NPObject* obj, NPIdentifier name, const NPVariant
 		fctresult = true;
     }
     else
-    {       
+    {
         fctresult = false;
     }
     return fctresult;
@@ -185,30 +185,30 @@ bool        APPLICATION_Invoke(NPObject* obj, NPIdentifier name, const NPVariant
         }
         i++;
     }
-  
+
     return result;
 }
 
 bool        APPLICATION_GetProperty(NPObject* obj, NPIdentifier name, NPVariant* result)
 {
     TRACEINFO;
-   
+
     bool fctresult = false;
     NPObj_Application* AppliObj = (NPObj_Application*)obj;
-    
+
     if (name == v_APPLICATIONPropertyIdentifiers[kAPPLICATION_ID_PROPERTY_PRIVATEDATA])
-    {    			
+    {
 		sBrowserFuncs->retainobject(AppliObj->privateData);
-		OBJECT_TO_NPVARIANT(AppliObj->privateData, *result);	
+		OBJECT_TO_NPVARIANT(AppliObj->privateData, *result);
     	fctresult = true;
     }
     else  if (name == v_APPLICATIONPropertyIdentifiers[kAPPLICATION_ID_PROPERTY_VISIBLE])
-    {    			
+    {
 		BOOLEAN_TO_NPVARIANT(AppliObj->visible, *result);
 		fctresult = true;
     }
     else
-		
+
     return fctresult;
 }
 
@@ -247,7 +247,7 @@ void APPLICATION_Invoke_DestroyApplication(NPObject* obj,const NPVariant* args, 
 
 void APPLICATION_Invoke_Show(NPObject* obj,const NPVariant* args, uint32_t argCount)
 {
-	TRACEINFO;	
+	TRACEINFO;
 	NPObj_Application* AppliObj = (NPObj_Application*)obj;
 	OnAPPLICATION_Show();
 	AppliObj->visible = true;
@@ -257,9 +257,9 @@ void APPLICATION_Invoke_Show(NPObject* obj,const NPVariant* args, uint32_t argCo
 void APPLICATION_Invoke_Hide(NPObject* obj,const NPVariant* args, uint32_t argCount)
 {
 	TRACEINFO;
-	
+
 	NPObj_Application* AppliObj = (NPObj_Application*)obj;
 	OnAPPLICATION_Hide();
 	AppliObj->visible = false;
-	NOTIMPLEMENTED; 
+	NOTIMPLEMENTED;
 }

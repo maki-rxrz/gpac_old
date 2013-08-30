@@ -164,7 +164,7 @@ int dc_read_switch_config(CmdData * p_cmdd) {
 	struct tm end_tm  = *localtime(&now_t);
 
 	GF_Config * p_conf = p_cmdd->p_switch_conf;
-  
+
 	u32 i_sec_count = gf_cfg_get_section_count(p_conf);
 
 	dc_task_init(&p_cmdd->task_list);
@@ -685,7 +685,7 @@ int dc_parse_command(int i_argc, char ** p_argv, CmdData * p_cmdd) {
 			gf_sys_init(GF_TRUE);
 			gf_log_set_tool_level(GF_LOG_MEMORY, GF_LOG_INFO);
 #else
-			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n"); 
+			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n");
 #endif
 		} else if (!strcmp(p_argv[i], "-lf") || !strcmp(p_argv[i], "-log-file")) {
 			i++;

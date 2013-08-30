@@ -5,17 +5,17 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
- *		Authors:    Stanislas Selle		
- *				
+ *		Authors:    Stanislas Selle
+ *
  */
 #include "videobroadcast.h"
 
@@ -110,36 +110,36 @@ NPObject *          VIDBRC_Allocate(NPP npp, NPClass *theClass)
 {
     TRACEINFO;
 
-    
+
     if (!v_bVIDBRCIdentifiersInitialized)
     {
         v_bVIDBRCIdentifiersInitialized = true;
         VIDBRCinitializeIdentifiers();
     }
-	
+
 	NPObj_VidBrc* newvidbrc = (NPObj_VidBrc*)MEMALLOC(sizeof(NPObj_VidBrc));
     newvidbrc->npp = npp;
-    
+
     return (NPObject*) newvidbrc;
 }
 
 void		VIDBRC_Deallocate(NPObject* obj)
 {
     TRACEINFO;
-    OnVIDBRC_SetFullScreen(true); 
+    OnVIDBRC_SetFullScreen(true);
     NPObj_VidBrc* vidbrc = (NPObj_VidBrc*)obj;
     /*
     if (vidbrc->pcArg_onChannelChangeSucceeded)
     {
         MEMFREE(vidbrc->pcArg_onChannelChangeSucceeded);
- //       vidbrc->pcArg_onChannelChangeSucceeded = NULL;        
-    }	
+ //       vidbrc->pcArg_onChannelChangeSucceeded = NULL;
+    }
 	if ( vidbrc->onChannelChangeSucceeded )
 	{
-		// sBrowserFuncs->releaseobject(vidbrc->onChannelChangeSucceeded);		
+		// sBrowserFuncs->releaseobject(vidbrc->onChannelChangeSucceeded);
 	//	vidbrc->onChannelChangeSucceeded = NULL;
 	}
- 
+
     */
     MEMFREE(obj);
     return;
@@ -166,7 +166,7 @@ void		VIDBRC_Deallocate(NPObject* obj)
         }
         i++;
     }
-	
+
     return result;
 }
 
@@ -180,7 +180,7 @@ bool        VIDBRC_Invoke(NPObject* obj, NPIdentifier name, const NPVariant* arg
     	VIDBRC_Invoke_getChannelConfig((NPObj_VidBrc*)obj, args, argCount, result);
     	fctresult = true;
     }
-    
+
     if (name == v_VIDBRCMethodIdentifiers[kVIDBRC_ID_METHOD_SETFULLSCREEN])
     {
     	VIDBRC_Invoke_setFullScreen((NPObj_VidBrc*)obj, args, argCount);
@@ -192,8 +192,8 @@ bool        VIDBRC_Invoke(NPObject* obj, NPIdentifier name, const NPVariant* arg
     	VIDBRC_Invoke_bindToCurrentChannel(obj, args, argCount);
     	fctresult = true;
     }
-    
-    
+
+
     return fctresult;
 }
 
@@ -225,52 +225,52 @@ bool        VIDBRC_Invoke(NPObject* obj, NPIdentifier name, const NPVariant* arg
     TRACEINFO;
 	bool fctresult = false;
 	NPObj_VidBrc* vidbrc = (NPObj_VidBrc*)obj;
-	
-    if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_WIDTH]) {    
+
+    if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_WIDTH]) {
 		INT32_TO_NPVARIANT(vidbrc->width,*result);
     	fctresult = true;
-    } else 
+    } else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_HEIGHT]) {
 		INT32_TO_NPVARIANT(vidbrc->height,*result);
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_FULLSCREEN]) {
 		BOOLEAN_TO_NPVARIANT(vidbrc->fullscreen, *result);
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_PLAYSTATE]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONPLAYSTATECHANGE]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONCHANNELCHANGEERROR]) {
 		fctresult = true;
-	} else 
-    if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONCHANNELCHANGESUCCEEDED]) {		
+	} else
+    if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONCHANNELCHANGESUCCEEDED]) {
    /*         if ( vidbrc->pcArg_onChannelChangeSucceeded != NULL )
             {
-               char*  dup_str = strdup(vidbrc->pcArg_onChannelChangeSucceeded);                              
-               NPString npstr = { dup_str, (uint32_t)(strlen(dup_str)) }; 
+               char*  dup_str = strdup(vidbrc->pcArg_onChannelChangeSucceeded);
+               NPString npstr = { dup_str, (uint32_t)(strlen(dup_str)) };
                result->type = NPVariantType_String;
-               result->value.stringValue = npstr;               
+               result->value.stringValue = npstr;
                fctresult = true;
             }
             else
             {
                 OBJECT_TO_NPVARIANT(vidbrc->onPlayStateChange,*result);
-            }*/					
-	} else 
+            }*/
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONFULLSCREENCHANGE]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONFOCUS]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONBLUR]) {
 		fctresult = true;
 	}
-    
+
     return fctresult;
 }
 
@@ -279,28 +279,28 @@ bool        VIDBRC_Invoke(NPObject* obj, NPIdentifier name, const NPVariant* arg
 	TRACEINFO;
 	bool fctresult = false;
 	NPObj_VidBrc* vidbrc = (NPObj_VidBrc*)obj;
-    if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_WIDTH]) {    
+    if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_WIDTH]) {
 		vidbrc->width = NPVARIANT_TO_INT32(*value);
 		VIDBRC_setsize(vidbrc, vidbrc->width, vidbrc->height);
     	fctresult = true;
-    } else 
+    } else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_HEIGHT]) {
 		vidbrc->height = NPVARIANT_TO_INT32(*value);
 		VIDBRC_setsize(vidbrc, vidbrc->width, vidbrc->height);
 		fctresult = true;
-	} else 
-    if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_FULLSCREEN]) {		
+	} else
+    if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_FULLSCREEN]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_PLAYSTATE]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONPLAYSTATECHANGE]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONCHANNELCHANGEERROR]) {
 		fctresult = true;
-	} else 
+	} else
 	if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONCHANNELCHANGESUCCEEDED]) {
     /*    if ( vidbrc->onChannelChangeSucceeded != NULL )
         {
@@ -311,17 +311,17 @@ bool        VIDBRC_Invoke(NPObject* obj, NPIdentifier name, const NPVariant* arg
         {
             MEMFREE( vidbrc->pcArg_onChannelChangeSucceeded );
             vidbrc->pcArg_onChannelChangeSucceeded = NULL;
-        }        
+        }
         vidbrc->onChannelChangeSucceeded = NPVARIANT_TO_OBJECT(*value);
         sBrowserFuncs->retainobject( vidbrc->onChannelChangeSucceeded);*/
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONFULLSCREENCHANGE]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONFOCUS]) {
 		fctresult = true;
-	} else 
+	} else
     if (name == v_VIDBRCPropertyIdentifiers[kVIDBRC_ID_PROPERTY_ONBLUR]) {
 		fctresult = true;
 	}
@@ -353,14 +353,14 @@ void		VIDBRC_Invoke_setFullScreen(NPObj_VidBrc* obj,const NPVariant* args, uint3
 {
 	TRACEINFO;
 	//NOTIMPLEMENTED; ///inprogress
-	
+
 	NPP npp = obj->npp;
 	int param;
 	if (argCount != 1 || !NPVARIANT_IS_BOOLEAN(args[0])) {
 		return;
     }
     else {
-		param = NPVARIANT_TO_BOOLEAN( args[0] );		
+		param = NPVARIANT_TO_BOOLEAN( args[0] );
 		if (param != obj->fullscreen)
 		{
 			if (param){
@@ -370,16 +370,16 @@ void		VIDBRC_Invoke_setFullScreen(NPObj_VidBrc* obj,const NPVariant* args, uint3
 			else{
 				obj->fullscreen = false;
 			}
-			
+
 			HBBTVPluginData* pdata = (HBBTVPluginData*)npp->pdata;
 			if(pdata){
-				if (pdata->window){						
-					OnVIDBRC_SetFullScreen(param);			
+				if (pdata->window){
+					OnVIDBRC_SetFullScreen(param);
 				}
-			}										
-		}	
+			}
+		}
 }
-    
+
 }
 
 void		VIDBRC_Invoke_bindToCurrentChannel(NPObject* obj,const NPVariant* args, uint32_t argCount)
@@ -396,13 +396,13 @@ void		VIDBRC_setsize(NPObj_VidBrc* obj,int32_t width, int32_t height)
 		///set the size
 		obj->width = width;
 		obj->height = height;
-		
+
 		/// get the plugin object and his style object
 		NPIdentifier    npIdent;
-		NPVariant       npVar;		
+		NPVariant       npVar;
 		NPObject *      npObjPlugin = NULL;
 		NPObject *      npObjStyle = NULL;
-		
+
 		if (obj->npp)
 		{
 			sBrowserFuncs->getvalue( obj->npp ,
