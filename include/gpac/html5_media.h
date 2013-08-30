@@ -157,6 +157,7 @@ typedef enum {
     LPNETCHANNEL            channel;   /* channel object used by the terminal */\
     GF_ObjectDescriptor     *od;       /* MPEG-4 Object descriptor for this track */\
     GF_List                 *buffer;   /* List of MSE Packets */\
+    u32						packet_index;   /* index of MSE Packets*/\
     GF_Mutex                *buffer_mutex;\
     Bool                    last_dts_set; \
     double                  last_dts; /* MSE  last decode timestamp */ \
@@ -290,7 +291,9 @@ typedef struct
     char    *data;
     u32     length;
     char    *url;
+	Bool	is_init;
 
+	/* used to do proper garbage collection between JS and Terminal */
     u32     reference_count;
 } GF_HTML_ArrayBuffer;
 
