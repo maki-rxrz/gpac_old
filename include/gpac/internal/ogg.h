@@ -99,7 +99,7 @@ typedef struct {
   s32  e_o_s;
 
   s64  granulepos;
-  
+
   s64  packetno;     /* sequence number for decode; the framing
 				knows where there's a hole in the data,
 				but we need coupling so that the codec

@@ -10,15 +10,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -61,7 +61,7 @@ enum
 	GF_M2TS_MPEG4_FMC_DESCRIPTOR				= 0x1F,
 	/* ... */
 	GF_M2TS_AVC_VIDEO_DESCRIPTOR				= 0x28,
-	/* ... */	
+	/* ... */
 	GF_M2TS_AVC_TIMING_HRD_DESCRIPTOR			= 0x2A,
 	/* ... */
 	GF_M2TS_SVC_EXTENSION_DESCRIPTOR			= 0x30,
@@ -107,7 +107,7 @@ enum
 	GF_M2TS_DVB_TIME_SLICE_FEC_DESCRIPTOR 		   = 0x77,
 	/* ... */
 	GF_M2TS_DVB_EAC3_DESCRIPTOR				= 0x7A,
-	GF_M2TS_DVB_LOGICAL_CHANNEL_DESCRIPTOR = 0x83,		
+	GF_M2TS_DVB_LOGICAL_CHANNEL_DESCRIPTOR = 0x83,
 };
 
 /* Reserved PID values */
@@ -115,7 +115,7 @@ enum {
 	GF_M2TS_PID_PAT			= 0x0000,
 	GF_M2TS_PID_CAT			= 0x0001,
 	GF_M2TS_PID_TSDT		= 0x0002,
-	/* reserved 0x0003 to 0x000F */ 
+	/* reserved 0x0003 to 0x000F */
 	GF_M2TS_PID_NIT_ST		= 0x0010,
 	GF_M2TS_PID_SDT_BAT_ST	= 0x0011,
 	GF_M2TS_PID_EIT_ST_CIT	= 0x0012,
@@ -123,7 +123,7 @@ enum {
 	GF_M2TS_PID_TDT_TOT_ST	= 0x0014,
 	GF_M2TS_PID_NET_SYNC	= 0x0015,
 	GF_M2TS_PID_RNT			= 0x0016,
-	/* reserved 0x0017 to 0x001B */ 
+	/* reserved 0x0017 to 0x001B */
 	GF_M2TS_PID_IN_SIG		= 0x001C,
 	GF_M2TS_PID_MEAS		= 0x001D,
 	GF_M2TS_PID_DIT			= 0x001E,
@@ -133,16 +133,16 @@ enum {
 /* max size includes first header, second header, payload and CRC */
 enum {
 	GF_M2TS_TABLE_ID_PAT			= 0x00,
-	GF_M2TS_TABLE_ID_CAT			= 0x01, 
-	GF_M2TS_TABLE_ID_PMT			= 0x02, 
+	GF_M2TS_TABLE_ID_CAT			= 0x01,
+	GF_M2TS_TABLE_ID_PMT			= 0x02,
 	GF_M2TS_TABLE_ID_TSDT			= 0x03, /* max size for section 1024 */
 	GF_M2TS_TABLE_ID_MPEG4_BIFS		= 0x04, /* max size for section 4096 */
 	GF_M2TS_TABLE_ID_MPEG4_OD		= 0x05, /* max size for section 4096 */
-	GF_M2TS_TABLE_ID_METADATA		= 0x06, 
-	GF_M2TS_TABLE_ID_IPMP_CONTROL	= 0x07, 
+	GF_M2TS_TABLE_ID_METADATA		= 0x06,
+	GF_M2TS_TABLE_ID_IPMP_CONTROL	= 0x07,
 	/* 0x08 - 0x37 reserved */
 	/* 0x38 - 0x3D DSM-CC defined */
-	GF_M2TS_TABLE_ID_DSM_CC_ENCAPSULATED_DATA		= 0x3A, 
+	GF_M2TS_TABLE_ID_DSM_CC_ENCAPSULATED_DATA		= 0x3A,
 	GF_M2TS_TABLE_ID_DSM_CC_UN_MESSAGE				= 0x3B, /* used for MPE (only, not MPE-FEC) */
 	GF_M2TS_TABLE_ID_DSM_CC_DOWNLOAD_DATA_MESSAGE	= 0x3C, /* used for MPE (only, not MPE-FEC) */
 	GF_M2TS_TABLE_ID_DSM_CC_STREAM_DESCRIPTION		= 0x3D, /* used for MPE (only, not MPE-FEC) */
@@ -158,7 +158,7 @@ enum {
 	/* 0x4b	reserved */
 	GF_M2TS_TABLE_ID_INT			= 0x4c, /* max size for section 4096 */
 	/* 0x4d reserved */
-	
+
 	GF_M2TS_TABLE_ID_EIT_ACTUAL_PF	= 0x4E, /* max size for section 4096 */
 	GF_M2TS_TABLE_ID_EIT_OTHER_PF	= 0x4F,
 	/* 0x50 - 0x6f EIT SCHEDULE */
@@ -189,7 +189,7 @@ enum
 	GF_M2TS_VIDEO_MPEG1				= 0x01,
 	GF_M2TS_VIDEO_MPEG2				= 0x02,
 	GF_M2TS_AUDIO_MPEG1				= 0x03,
-	GF_M2TS_AUDIO_MPEG2				= 0x04, 
+	GF_M2TS_AUDIO_MPEG2				= 0x04,
 	GF_M2TS_PRIVATE_SECTION			= 0x05,
 	GF_M2TS_PRIVATE_DATA			= 0x06,
 	GF_M2TS_MHEG					= 0x07,
@@ -216,8 +216,8 @@ enum
 	GF_M2TS_AUDIO_DTS				= 0x8A,
 	GF_M2TS_MPE_SECTIONS            = 0x90,
 	GF_M2TS_SUBTITLE_DVB			= 0x100,
-	
-	/*internal use*/	
+
+	/*internal use*/
 	GF_M2TS_AUDIO_EC3				= 0x150,
 	GF_M2TS_VIDEO_VC1				= 0x151,
 	GF_M2TS_DVB_TELETEXT			= 0x152,
@@ -259,7 +259,7 @@ const char *gf_m2ts_get_stream_name(u32 streamType);
 /*returns 1 if file is an MPEG-2 TS */
 Bool gf_m2ts_probe_file(const char *fileName);
 
-/*shifts all timing by the given value 
+/*shifts all timing by the given value
 @is_pes: array of GF_M2TS_MAX_STREAMS u8 set to 1 for PES PIDs to be restamped
 */
 GF_Err gf_m2ts_restamp(char *buffer, u32 size, s64 ts_shift, u8 *is_pes);
@@ -375,7 +375,7 @@ enum
 	GF_M2TS_TABLE_REPEAT	= 1<<4,
 };
 
-typedef void (*gf_m2ts_section_callback)(GF_M2TS_Demuxer *ts, GF_M2TS_SECTION_ES *es, GF_List *sections, u8 table_id, u16 ex_table_id, u8 version_number, u8 last_section_number, u32 status); 
+typedef void (*gf_m2ts_section_callback)(GF_M2TS_Demuxer *ts, GF_M2TS_SECTION_ES *es, GF_List *sections, u8 table_id, u16 ex_table_id, u8 version_number, u8 last_section_number, u32 status);
 
 typedef struct __m2ts_demux_section
 {
@@ -421,7 +421,7 @@ typedef struct GF_M2TS_SectionFilter
 
 	/*section->table aggregator*/
 	GF_M2TS_Table *table;
-	
+
 	/* indicates that the section and last_section_number do not need to be checked */
 	Bool process_individual;
 
@@ -432,22 +432,22 @@ typedef struct GF_M2TS_SectionFilter
 	/* this field is used for AIT sections, to link the AIT with the program */
 	u32 service_id;
 
-	gf_m2ts_section_callback process_section; 
+	gf_m2ts_section_callback process_section;
 } GF_M2TS_SectionFilter;
 
 
 
 /*MPEG-2 TS program object*/
-typedef struct 
+typedef struct
 {
 	GF_List *streams;
-	u32 pmt_pid;  
+	u32 pmt_pid;
 	u32 pcr_pid;
 	u32 number;
 
 	GF_InitialObjectDescriptor *pmt_iod;
 
-	/*list of additional ODs found per program !! used by media importer only , refine this !! 
+	/*list of additional ODs found per program !! used by media importer only , refine this !!
 		this list is only created when MPEG-4 over MPEG-2 is detected
 		the list AND the ODs contained in it are destroyed when destroying the demuxer
 	*/
@@ -458,7 +458,7 @@ typedef struct
 	/* Last PCR value received for this program and associated packet number */
 	u64 last_pcr_value;
 	u32 last_pcr_value_pck_number;
-	/* PCR value before the last received one for this program and associated packet number 
+	/* PCR value before the last received one for this program and associated packet number
 	used to compute PCR interpolation value*/
 	u64 before_last_pcr_value;
 	u32 before_last_pcr_value_pck_number;
@@ -487,7 +487,7 @@ enum
 	GF_M2TS_ES_IS_MPE = 1<<5,
 	/*stream is used to send PCR to upper layer*/
 	GF_M2TS_INHERIT_PCR = 1<<6,
-	
+
 	/*all flags above this mask are used by importers & co*/
 	GF_M2TS_ES_STATIC_FLAGS_MASK = 0x0000FFFF,
 
@@ -511,15 +511,15 @@ enum
 			s16 component_tag; \
 			void *user; \
 			u64 first_dts; \
-			u32 service_id; 
+			u32 service_id;
 
 struct tag_m2ts_es
 {
-	ABSTRACT_ES	
+	ABSTRACT_ES
 };
 
 
-typedef struct 
+typedef struct
 {
 	u8 id;
 	u16 pck_len;
@@ -532,7 +532,7 @@ struct tag_m2ts_section_es
 {
 	ABSTRACT_ES
 	GF_M2TS_SectionFilter *sec;
-};			
+};
 
 
 /*******************************************************************************/
@@ -588,7 +588,7 @@ typedef struct tag_m2ts_pes
 	/* Last PCR value received for this program and associated packet number */
 	u64 last_pcr_value;
 	u32 last_pcr_value_pck_number;
-	/* PCR value before the last received one for this program and associated packet number 
+	/* PCR value before the last received one for this program and associated packet number
 	used to compute PCR interpolation value*/
 	u64 before_last_pcr_value;
 	u32 before_last_pcr_value_pck_number;
@@ -706,7 +706,7 @@ typedef struct
 	GF_List *extended_events;
 	GF_List *components;
 	GF_List *contents;
-	GF_List *ratings;	
+	GF_List *ratings;
 } GF_M2TS_EIT_Event;
 
 typedef struct
@@ -742,7 +742,7 @@ typedef struct
 /*MPEG-2 TS demuxer*/
 struct tag_m2ts_demux
 {
-	/* From M2TSIn */	
+	/* From M2TSIn */
 	GF_List *requested_progs;
 	GF_List *requested_pids;
 
@@ -809,12 +809,12 @@ struct tag_m2ts_demux
 
 	Bool dvb_h_demux;
 	Bool notify_pes_timing;
-	
+
 	/*user callback - MUST NOT BE NULL*/
 	void (*on_mpe_event)(struct tag_m2ts_demux *ts, u32 evt_type, void *par);
 	/* Structure to hold all the INT tables if the TS contains IP streams */
 	struct __gf_dvb_mpe_ip_platform *ip_platform;
-	
+
 	u32 pck_number;
 
 	/*remote file handling - created and destroyed by user*/
@@ -834,7 +834,7 @@ struct tag_m2ts_demux
 	/*AIT*/
 	GF_List* ChannelAppList;
 
-	/*Carousel*/	
+	/*Carousel*/
 	Bool process_dmscc;
 	char* dsmcc_root_dir;
 	GF_List* dsmcc_controler;
@@ -883,7 +883,7 @@ typedef struct
 	u32 splicing_point_flag;
 	u32 transport_private_data_flag;
 	u32 adaptation_field_extension_flag;
-/*	
+/*
 	u32 splice_countdown;
 	u32 transport_private_data_length;
 	u32 adaptation_field_extension_length;
@@ -965,7 +965,7 @@ typedef struct __m2ts_mux_stream {
 
 	/*average stream bit-rate in bit/sec*/
 	u32 bit_rate;
-	
+
 	/*multiplexer time - NOT THE PCR*/
 	GF_M2TS_Time time;
 	/*for PCR strreams, set to 1 when PCR has to be sent, 0 otherwise*/
@@ -983,7 +983,7 @@ typedef struct __m2ts_mux_stream {
 	Bool table_needs_update;
 	Bool table_needs_send;
 
-	/*minimal amount of bytes we are allowed to copy frome next AU in the current PES. If no more than this 
+	/*minimal amount of bytes we are allowed to copy frome next AU in the current PES. If no more than this
 	is available in PES, don't copy from next*/
 	u32 min_bytes_copy_from_next;
 	/*process PES or table update/framing
@@ -1002,7 +1002,7 @@ typedef struct __m2ts_mux_stream {
 	u32 pes_data_len, pes_data_remain;
 	Bool force_new;
 	Bool discard_data;
-	
+
 	u32 next_pck_flags;
 	u64 next_pck_cts, next_pck_dts;
 
@@ -1039,7 +1039,7 @@ enum {
 	GF_M2TS_MPEG4_SIGNALING_SCENE
 };
 
-typedef struct __m2ts_base_descriptor 
+typedef struct __m2ts_base_descriptor
 {
 	u8 tag;
 	u8 data_len;
@@ -1112,11 +1112,11 @@ struct __m2ts_mux {
 
 	/*multiplexer time, incremented each time a packet is sent
       used to monitor the sending of muxer related data (PAT, ...) */
-	GF_M2TS_Time time; 
-    
+	GF_M2TS_Time time;
+
     /* Time of the muxer when the first call to process is made (first packet sent?) */
     GF_M2TS_Time init_ts_time;
-	
+
     /* System time when the muxer is started */
     u32 init_sys_time;
 
@@ -1155,7 +1155,7 @@ GF_M2TS_Mux *gf_m2ts_mux_new(u32 mux_rate, u32 pat_refresh_rate, Bool real_time)
 void gf_m2ts_mux_del(GF_M2TS_Mux *mux);
 GF_M2TS_Mux_Program *gf_m2ts_mux_program_add(GF_M2TS_Mux *muxer, u32 program_number, u32 pmt_pid, u32 pmt_refresh_rate, u32 pcr_offset, Bool mpeg4_signaling);
 GF_M2TS_Mux_Stream *gf_m2ts_program_stream_add(GF_M2TS_Mux_Program *program, GF_ESInterface *ifce, u32 pid, Bool is_pcr, Bool force_pes_mode);
-void gf_m2ts_mux_update_config(GF_M2TS_Mux *mux, Bool reset_time);	
+void gf_m2ts_mux_update_config(GF_M2TS_Mux *mux, Bool reset_time);
 void gf_m2ts_mux_update_bitrate(GF_M2TS_Mux *mux);
 
 const char *gf_m2ts_mux_process(GF_M2TS_Mux *muxer, u32 *status, u32 *usec_till_next);
@@ -1203,7 +1203,7 @@ struct __gf_dvb_tuner {
 
 
 // DVB buffer size 188x20
-#define DVB_BUFFER_SIZE 3760							
+#define DVB_BUFFER_SIZE 3760
 
 #endif //GPAC_HAS_LINUX_DVB
 

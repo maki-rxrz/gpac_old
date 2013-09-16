@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2005-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -213,10 +213,10 @@ void PrintUsage()
 		"\t-rgbds:         dumps the RGBDS pixel format texture\n"
 		"                   with -avi [times]: dumps an rgbds-format .avi\n"
 		"\t-rgbd:          dumps the RGBD pixel format texture\n"
-		"					with -avi [times]: dumps an rgbd-format .avi\n"		
+		"					with -avi [times]: dumps an rgbd-format .avi\n"
 		"\t-depth:         dumps depthmap (z-buffer) frames\n"
-		"                   with -avi [times]: dumps depthmap in grayscale .avi\n"		
-		"                   with -bmp: dumps depthmap in grayscale .bmp\n"		
+		"                   with -avi [times]: dumps depthmap in grayscale .avi\n"
+		"                   with -bmp: dumps depthmap in grayscale .bmp\n"
 		"\t-fps FPS:       specifies frame rate for AVI dumping (default: %f)\n"
 		"\t-scale s:       scales the visual size (default: 1)\n"
 		"\t-fill:          uses fill aspect ratio for dumping (default: none)\n"
@@ -227,7 +227,7 @@ void PrintUsage()
 		"MP4Client - GPAC command line player and dumper - version "GPAC_FULL_VERSION"\n"
 		"GPAC Written by Jean Le Feuvre (c) 2001-2005 - ENST (c) 2005-200X\n"
 		"GPAC Configuration: " GPAC_CONFIGURATION "\n"
-		"Features: %s\n", 
+		"Features: %s\n",
 		GF_IMPORT_DEFAULT_FPS,
 		gpac_features()
 		);
@@ -321,22 +321,22 @@ static void UpdateRTInfo(const char *legend)
 
 	/*refresh every second*/
 	if (!display_rti && !rti_logs) return;
-	if (!gf_sys_get_rti(rti_update_time_ms, &rti, 0) && !legend) 
+	if (!gf_sys_get_rti(rti_update_time_ms, &rti, 0) && !legend)
 		return;
 
 	if (display_rti) {
 		char szMsg[1024];
 
 		if (rti.total_cpu_usage) {
-			sprintf(szMsg, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB", 
+			sprintf(szMsg, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB",
 					gf_term_get_framerate(term, 1), rti.total_cpu_usage, rti.process_cpu_usage, (u32) (rti.gpac_memory / 1024) );
 		} else {
-			sprintf(szMsg, "FPS %02.2f - CPU %02d - Mem %d kB", 
+			sprintf(szMsg, "FPS %02.2f - CPU %02d - Mem %d kB",
 				gf_term_get_framerate(term, 0), rti.process_cpu_usage, (u32) (rti.gpac_memory / 1024) );
 		}
-		
+
 		if (display_rti==2) {
-			fprintf(stderr, "%s\r", szMsg); 
+			fprintf(stderr, "%s\r", szMsg);
 		} else {
 			GF_Event evt;
 			evt.type = GF_EVENT_SET_CAPTION;
@@ -345,12 +345,12 @@ static void UpdateRTInfo(const char *legend)
 		}
 	}
 	if (rti_logs) {
-		fprintf(rti_logs, "% 8d\t% 8d\t% 8d\t% 4d\t% 8d\t%s", 
+		fprintf(rti_logs, "% 8d\t% 8d\t% 8d\t% 4d\t% 8d\t%s",
 			gf_sys_clock(),
 			gf_term_get_time_in_ms(term),
 			rti.total_cpu_usage,
 			(u32) gf_term_get_framerate(term, 0),
-			(u32) (rti.gpac_memory / 1024), 
+			(u32) (rti.gpac_memory / 1024),
 			legend ? legend : ""
 			);
 		if (!legend) fprintf(rti_logs, "\n");
@@ -370,7 +370,7 @@ static void ResetCaption()
 		/*get any service info*/
 		if (!startup_file && gf_term_get_service_info(term, gf_term_get_root_object(term), &com) == GF_OK) {
 			strcpy(szName, "");
-			if (com.track_info) { 
+			if (com.track_info) {
 				char szBuf[10];
 				sprintf(szBuf, "%02d ", (u32) (com.track_info>>16) );
 				strcat(szName, szBuf);
@@ -378,7 +378,7 @@ static void ResetCaption()
 			if (com.artist) { strcat(szName, com.artist); strcat(szName, " "); }
 			if (com.name) { strcat(szName, com.name); strcat(szName, " "); }
 			if (com.album) { strcat(szName, "("); strcat(szName, com.album); strcat(szName, ")"); }
-			
+
 			if (strlen(szName)) event.caption.caption = szName;
 		}
 		if (!event.caption.caption) {
@@ -473,7 +473,7 @@ static const char * read_line_input(char * line, int maxSize, Bool showContent){
 Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 {
 	if (!term) return 0;
-	
+
 	if (gui_mode==1) {
 		if (evt->type==GF_EVENT_QUIT) Run = 0;
 		return 0;
@@ -505,7 +505,7 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 			} else {
 				GF_LOG(GF_LOG_ERROR, GF_LOG_CONSOLE, ("%s %s: %s\n", servName, evt->message.message, gf_error_to_string(evt->message.error)));
 			}
-		} else if (!be_quiet) 
+		} else if (!be_quiet)
 			GF_LOG(GF_LOG_INFO, GF_LOG_CONSOLE, ("%s %s\n", servName, evt->message.message));
 	}
 		break;
@@ -518,7 +518,7 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 		gf_set_progress(szTitle, evt->progress.done, evt->progress.total);
 	}
 		break;
-	
+
 
 	case GF_EVENT_DBLCLICK:
 		gf_term_set_option(term, GF_OPT_FULLSCREEN, !gf_term_get_option(term, GF_OPT_FULLSCREEN));
@@ -583,21 +583,21 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 		case GF_KEY_D:
 			if (evt->key.flags & GF_KEY_MOD_CTRL) gf_term_set_option(term, GF_OPT_DRAW_MODE, (gf_term_get_option(term, GF_OPT_DRAW_MODE)==GF_DRAW_MODE_DEFER) ? GF_DRAW_MODE_IMMEDIATE : GF_DRAW_MODE_DEFER );
 			break;
-		case GF_KEY_4: 
+		case GF_KEY_4:
 			if (evt->key.flags & GF_KEY_MOD_CTRL)
-				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_4_3); 
+				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_4_3);
 			break;
-		case GF_KEY_5: 
+		case GF_KEY_5:
 			if (evt->key.flags & GF_KEY_MOD_CTRL)
-				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_16_9); 
+				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_16_9);
 			break;
-		case GF_KEY_6: 
+		case GF_KEY_6:
 			if (evt->key.flags & GF_KEY_MOD_CTRL)
-				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_FILL_SCREEN); 
+				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_FILL_SCREEN);
 			break;
-		case GF_KEY_7: 
+		case GF_KEY_7:
 			if (evt->key.flags & GF_KEY_MOD_CTRL)
-				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_KEEP); 
+				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_KEEP);
 			break;
 		case GF_KEY_P:
 			if (evt->key.flags & GF_KEY_MOD_CTRL && is_connected) {
@@ -662,7 +662,7 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 			move.move.align_y = (align_mode>>8) & 0xFF;
 			move.move.relative = 2;
 			gf_term_user_event(term, &move);
-		} 
+		}
 		break;
 	case GF_EVENT_SCENE_SIZE:
 		if (forced_width && forced_height) {
@@ -695,7 +695,7 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 		i=0;
 		while (i<evt->open_file.nb_files) {
 			if (evt->open_file.files[i] != NULL) {
-				fprintf(playlist, "%s\n", evt->open_file.files[i]); 
+				fprintf(playlist, "%s\n", evt->open_file.files[i]);
 			}
 			i++;
 		}
@@ -901,7 +901,7 @@ void set_cfg_option(char *opt_string)
 	sep2[0] = 0;
 	strcpy(szKey, sep);
 	strcpy(szVal, sep2+1);
-	sep2[0] = '='; 
+	sep2[0] = '=';
 	if (!stricmp(szVal, "null")) szVal[0]=0;
 	gf_cfg_set_key(cfg_file, szSec, szKey, szVal[0] ? szVal : NULL);
 }
@@ -958,7 +958,7 @@ int main (int argc, char **argv)
 #ifdef GPAC_MEMORY_TRACKING
 			enable_mem_tracker = GF_TRUE;
 #else
-			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n"); 
+			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n");
 #endif
 		}
 		else if (!strcmp(arg, "-h") || !strcmp(arg, "-help")) {
@@ -1025,7 +1025,7 @@ int main (int argc, char **argv)
 			dump_mode=9;  /* rgbd texture directly*/
 			if (dump_mode==1) dump_mode = 10;    /* .avi rgbds dump*/
 		} else if (!strcmp(arg, "-depth")) {
-			depth_dump = 1;        
+			depth_dump = 1;
 			if (dump_mode==2) dump_mode=7; /* grayscale .bmp depth dump*/
 			else if (dump_mode==1) dump_mode=8; /* .avi depth dump*/
 			else dump_mode=4;   /*depth dump*/
@@ -1094,7 +1094,7 @@ int main (int argc, char **argv)
 #ifdef GPAC_MEMORY_TRACKING
 			enable_mem_tracker = 1;
 #else
-			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n"); 
+			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n");
 #endif
 		}
 		else if (!strcmp(arg, "-loop")) loop_at_end = 1;
@@ -1119,7 +1119,7 @@ int main (int argc, char **argv)
 		else if (!stricmp(arg, "-help")) {
 			PrintUsage();
 			return 1;
-		} else { 
+		} else {
 			fprintf(stderr, "Unrecognized option %s - skipping\n", arg);
 		}
 	}
@@ -1186,7 +1186,7 @@ int main (int argc, char **argv)
 
 	if (threading_flags & (GF_TERM_NO_DECODER_THREAD|GF_TERM_NO_COMPOSITOR_THREAD) ) term_step = 1;
 
-	fprintf(stderr, "Loading GPAC Terminal\n");	
+	fprintf(stderr, "Loading GPAC Terminal\n");
 	i = gf_sys_clock();
 	term = gf_term_new(&user);
 	if (!term) {
@@ -1252,7 +1252,7 @@ int main (int argc, char **argv)
 		if (ext && (!stricmp(ext, ".m3u") || !stricmp(ext, ".pls"))) {
 			GF_Err e = GF_OK;
 			fprintf(stderr, "Opening Playlist %s\n", the_url);
-	
+
 			strcpy(pl_path, the_url);
 			/*this is not clean, we need to have a plugin handle playlist for ourselves*/
 			if (!strncmp("http:", the_url, 5)) {
@@ -1263,7 +1263,7 @@ int main (int argc, char **argv)
 					gf_dm_sess_del(sess);
 				}
 			}
-			
+
 			playlist = e ? NULL : gf_f64_open(the_url, "rt");
 			readonly_playlist = 1;
 			if (playlist) {
@@ -1274,7 +1274,7 @@ int main (int argc, char **argv)
 				  gf_term_connect_with_path(term, the_url, pl_path);
 				}
 			} else {
-				if (e) 
+				if (e)
 					fprintf(stderr, "Failed to open playlist %s: %s\n", the_url, gf_error_to_string(e) );
 				fprintf(stderr, "Hit 'h' for help\n\n");
 			}
@@ -1305,7 +1305,7 @@ int main (int argc, char **argv)
 		gf_term_connect(term, szTemp);
 	}
 
-	while (Run) {		
+	while (Run) {
 		/*we don't want getchar to block*/
 		if (gui_mode || !gf_prompt_has_input()) {
 			if (reload) {
@@ -1327,12 +1327,12 @@ int main (int argc, char **argv)
 				gf_term_process_step(term);
 				if (auto_exit && gf_term_get_option(term, GF_OPT_IS_OVER)) {
 					Run = 0;
-				} 
+				}
 			} else {
 				gf_sleep(rti_update_time_ms);
 			}
 			/*sim time*/
-			if (simulation_time_in_ms 
+			if (simulation_time_in_ms
 				&& ( (gf_term_get_time_in_ms(term)>simulation_time_in_ms) || (!url_arg && gf_sys_clock()>simulation_time_in_ms))
 			) {
 				Run = 0;
@@ -1420,10 +1420,10 @@ force_input:
 			}
 			break;
 		case 'r':
-			if (is_connected) 
+			if (is_connected)
 				reload = 1;
 			break;
-		
+
 		case 'D':
 			if (is_connected) gf_term_disconnect(term);
 			break;
@@ -1457,7 +1457,7 @@ force_input:
 				if (c=='z') {
 					res *= 100; res /= (s64)Duration;
 					fprintf(stderr, " (current %.2f %%)\nEnter Seek percentage:\n", res);
-					if (scanf("%d", &seekTo) == 1) { 
+					if (scanf("%d", &seekTo) == 1) {
 						if (seekTo > 100) seekTo = 100;
 						res = (Double)(s64)Duration; res /= 100; res *= seekTo;
 						gf_term_play_from_time(term, (u64) (s64) res, 0);
@@ -1681,7 +1681,7 @@ force_input:
 
 		case 'H':
 		{
-			u32 http_bitrate = gf_term_get_option(term, GF_OPT_HTTP_MAX_RATE);	
+			u32 http_bitrate = gf_term_get_option(term, GF_OPT_HTTP_MAX_RATE);
 			do {
 				fprintf(stderr, "Enter new http bitrate in bps (0 for none) - current limit: %d\n", http_bitrate);
 			} while (1 > scanf("%ud", &http_bitrate));
@@ -1691,7 +1691,7 @@ force_input:
 			break;
 
 		case 'E':
-			gf_term_set_option(term, GF_OPT_RELOAD_CONFIG, 1); 
+			gf_term_set_option(term, GF_OPT_RELOAD_CONFIG, 1);
 			break;
 
 		case 'B':
@@ -1842,7 +1842,7 @@ void PrintODList(GF_Terminal *term, GF_ObjectManager *root_odm, u32 num, u32 ind
 	if (!root_odm) return;
 
 	count = gf_term_get_current_service_id(term);
-	if (count) 
+	if (count)
 		fprintf(stderr, "Current service ID %d\n", count);
 
 	if (gf_term_get_object_info(term, root_odm, &odi) != GF_OK) return;
@@ -1853,7 +1853,7 @@ void PrintODList(GF_Terminal *term, GF_ObjectManager *root_odm, u32 num, u32 ind
 
 	for (i=0;i<indent;i++) szIndent[i]=' ';
 	szIndent[indent]=0;
-	
+
 	fprintf(stderr, "%s", szIndent);
 	fprintf(stderr, "#%d %s - ", num, root_name);
 	if (odi.od->ServiceID) fprintf(stderr, "Service ID %d ", odi.od->ServiceID);
@@ -1933,7 +1933,7 @@ void ViewOD(GF_Terminal *term, u32 OD_ID, u32 number)
 	}
 	if (!odi.od) {
 		if (number == (u32)-1) fprintf(stderr, "Object %d not attached yet\n", OD_ID);
-		else fprintf(stderr, "Object #%d not attached yet\n", number);		
+		else fprintf(stderr, "Object #%d not attached yet\n", number);
 		return;
 	}
 
@@ -1944,7 +1944,7 @@ void ViewOD(GF_Terminal *term, u32 OD_ID, u32 number)
 
 	if (odi.od->tag==GF_ODF_IOD_TAG) {
 		fprintf(stderr, "InitialObjectDescriptor %d\n", odi.od->objectDescriptorID);
-		fprintf(stderr, "Profiles and Levels: Scene %x - Graphics %x - Visual %x - Audio %x - OD %x\n", 
+		fprintf(stderr, "Profiles and Levels: Scene %x - Graphics %x - Visual %x - Audio %x - OD %x\n",
 			odi.scene_pl, odi.graphics_pl, odi.visual_pl, odi.audio_pl, odi.OD_pl);
 		fprintf(stderr, "Inline Profile Flag %d\n", odi.inline_pl);
 	} else {
@@ -1962,7 +1962,7 @@ void ViewOD(GF_Terminal *term, u32 OD_ID, u32 number)
 	if (odi.owns_service) {
 		fprintf(stderr, "Service Handler: %s\n", odi.service_handler);
 		fprintf(stderr, "Service URL: %s\n", odi.service_url);
-	}		
+	}
 	if (odi.codec_name) {
 		Float avg_dec_time;
 		switch (odi.od_type) {
@@ -1993,13 +1993,13 @@ void ViewOD(GF_Terminal *term, u32 OD_ID, u32 number)
 			fprintf(stderr, "Text Codec %s\n", odi.codec_name);
 			break;
 		}
-	
+
 		avg_dec_time = 0;
-		if (odi.nb_dec_frames) { 
-			avg_dec_time = (Float) odi.total_dec_time; 
-			avg_dec_time /= odi.nb_dec_frames; 
+		if (odi.nb_dec_frames) {
+			avg_dec_time = (Float) odi.total_dec_time;
+			avg_dec_time /= odi.nb_dec_frames;
 		}
-		fprintf(stderr, "\tBitrate over last second: %d kbps\n\tMax bitrate over one second: %d kbps\n\tAverage Decoding Time %.2f ms (%d max)\n\tTotal decoded frames %d\n", 
+		fprintf(stderr, "\tBitrate over last second: %d kbps\n\tMax bitrate over one second: %d kbps\n\tAverage Decoding Time %.2f ms (%d max)\n\tTotal decoded frames %d\n",
 			(u32) odi.avg_bitrate/1024, odi.max_bitrate/1024, avg_dec_time, odi.max_dec_time, odi.nb_dec_frames);
 	}
 	if (odi.protection) fprintf(stderr, "Encrypted Media%s\n", (odi.protection==2) ? " NOT UNLOCKED" : "");
@@ -2223,7 +2223,7 @@ void PrintODBuffer(GF_Terminal *term, GF_ObjectManager *odm)
 	if (odi.buffer>=0) fprintf(stderr, " - Buffer: %d ms", odi.buffer);
 	if (odi.db_unit_count) fprintf(stderr, " - DB: %d AU", odi.db_unit_count);
 	if (odi.cb_max_count) fprintf(stderr, " - CB: %d/%d CUs", odi.cb_unit_count, odi.cb_max_count);
-	
+
 	fprintf(stderr, "\n * %d decoded frames - %d dropped frames\n", odi.nb_dec_frames, odi.nb_droped);
 	avg_dec_time = 0;
 	if (odi.nb_dec_frames) { avg_dec_time = (Float) odi.total_dec_time; avg_dec_time /= odi.nb_dec_frames; }

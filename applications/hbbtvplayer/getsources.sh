@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 WEBKIT=0
-GPAC=0  
+GPAC=0
 
 if [ -z $1 ] ; then
 	echo "\nDO NOT USE sudo FOR THIS SCRIPT"
@@ -13,20 +13,20 @@ if [ -z $1 ] ; then
 fi
 
 for i in $* ; do
-	if [ "$i" = "full" ] ; then 
-		echo -e "\033[31m Usage: $0 Full Building : Activated \033[0m" 
+	if [ "$i" = "full" ] ; then
+		echo -e "\033[31m Usage: $0 Full Building : Activated \033[0m"
 		WEBKIT=1
-		GPAC=1  
+		GPAC=1
 	fi
 
-	if [ "$i" = "webkit" ] ; then 
-		echo -e "\033[33m Usage: $0 Webkit Building : Activated \033[0m" 
-		WEBKIT=1 
+	if [ "$i" = "webkit" ] ; then
+		echo -e "\033[33m Usage: $0 Webkit Building : Activated \033[0m"
+		WEBKIT=1
 	fi
 
-	if [ "$i" = "gpac" ] ; then 
-		echo -e "\033[33m Usage: $0 gpac Building : Activated \033[0m" 
-		WEBKIT=1 
+	if [ "$i" = "gpac" ] ; then
+		echo -e "\033[33m Usage: $0 gpac Building : Activated \033[0m"
+		WEBKIT=1
 	fi
 done
 

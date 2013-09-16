@@ -5,24 +5,24 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *		Authors: Stanislas Selle - Jonathan Sillan		
- *				
+ *		Authors: Stanislas Selle - Jonathan Sillan
+ *
  */
 
 #ifndef __HBBTVTERMINAL__
 #define __HBBTVTERMINAL__
 
-#define _WIN32_WINNT 0x0510 
+#define _WIN32_WINNT 0x0510
 
 #ifdef __cplusplus
 extern "C" {
@@ -102,7 +102,7 @@ enum listHBBTVKeys{
 	HBBTV_VK_REWIND	= 412,
 	HBBTV_VK_STOP		= 413,
 	HBBTV_VK_PLAY		= 415,
-	HBBTV_VK_FAST_FWD	= 417,	
+	HBBTV_VK_FAST_FWD	= 417,
 	HBBTV_VK_TELETEXT = 459
 };
 
@@ -114,11 +114,11 @@ enum listRegisteredKeys {
 	RK_YELLOW =	 	 3,
 	RK_BLUE = 		 4,
 	RK_NAVIGATION =  5,
-	RK_VCR =		 6,	
+	RK_VCR =		 6,
 	RK_SCROLL =		 7,
 	RK_INFO = 		 8,
 	RK_NUMERIC =	 9,
-	RK_ALPHA = 		10	
+	RK_ALPHA = 		10
 };
 
 typedef struct PlayerInterface
@@ -214,7 +214,7 @@ private:
     Bool processed;
     u32 current_audio_index;
     u32 nb_chan_audio_stream;
-    GF_M2TS_CHANNEL_APPLICATION_INFO* ChannelApp; 
+    GF_M2TS_CHANNEL_APPLICATION_INFO* ChannelApp;
 
 };
 
@@ -236,7 +236,7 @@ public:
 	void Channel_check();
 	u32 Check_application_priority(Channel* chan, GF_M2TS_AIT* ait);
 	/* Getter */
-	GF_M2TS_Demuxer* Get_Ts();	
+	GF_M2TS_Demuxer* Get_Ts();
 	GF_List* Get_ChannelList();
 	GF_List* Get_AIT_To_Process_list();
 	char* Get_Input_data();
@@ -252,12 +252,12 @@ public:
 	GF_Err Get_application_info(GF_M2TS_CHANNEL_APPLICATION_INFO*app_info);
 	/* Setter */
 	void Set_Ts(GF_M2TS_Demuxer* ts);
-	void Set_ait_to_process(Bool on);	
+	void Set_ait_to_process(Bool on);
 
 private:
 	/* Fonction */
 
-	u32 GetDemuxStartFunction();	
+	u32 GetDemuxStartFunction();
 
 	/* Attribut */
 	GF_M2TS_Demuxer *Demuxts;

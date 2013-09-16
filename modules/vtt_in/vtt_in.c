@@ -1,7 +1,7 @@
 /*
  *					GPAC Multimedia Framework
  *
- *			Authors: Cyril Concolato 
+ *			Authors: Cyril Concolato
  *			Copyright (c) Telecom ParisTech 2013-
  *					All rights reserved
  *
@@ -158,7 +158,7 @@ static GF_Err VTT_CloseService(GF_InputService *plug)
 {
 	VTTIn *vttin;
 	if (!plug)	return GF_BAD_PARAM;
-	
+
 	vttin = (VTTIn *)plug->priv;
 	if (!vttin)	return GF_BAD_PARAM;
 
@@ -177,7 +177,7 @@ static GF_Err VTT_CloseService(GF_InputService *plug)
 		gf_term_on_disconnect(vttin->service, NULL, GF_OK);
 	}
 	vttin->service = NULL;
-	
+
 	return GF_OK;
 }
 
@@ -398,7 +398,7 @@ void ShutdownInterface(GF_BaseInterface *ifce)
 	case GF_NET_CLIENT_INTERFACE:
 		DeleteVTTInput(ifce);
 		break;
-	//case GF_JS_USER_EXT_INTERFACE: 
+	//case GF_JS_USER_EXT_INTERFACE:
 	//	DeleteVTTJS(ifce);
 	//	break;
 	}

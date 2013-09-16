@@ -1,4 +1,4 @@
-#include "safe_include.h" 
+#include "safe_include.h"
 
 // For compilers that supports precompilation , includes "wx/wx.h"
 #include "wx/wxprec.h"
@@ -37,10 +37,10 @@ END_EVENT_TABLE()
 GF_Err V4StudioTreeItemData::GetField(GF_FieldInfo *f)
 {
 	if (!f || fieldIndex < 0) return GF_BAD_PARAM;
-	return gf_node_get_field(parent, fieldIndex, f);	
+	return gf_node_get_field(parent, fieldIndex, f);
 }
 
-V4StudioTree::V4StudioTree(wxWindow *parent_, wxSize size,V4FieldList *fieldView) : 
+V4StudioTree::V4StudioTree(wxWindow *parent_, wxSize size,V4FieldList *fieldView) :
 	wxTreeCtrl(parent_, -1, wxDefaultPosition, size, wxTR_DEFAULT_STYLE)
 {
 	CreateImageList();
@@ -53,7 +53,7 @@ V4StudioTree::V4StudioTree(wxWindow *parent_, wxSize size,V4FieldList *fieldView
 
 
 // Refresh -- redraws the tree starting at the specified node
-void V4StudioTree::Refresh(GF_Node * node) 
+void V4StudioTree::Refresh(GF_Node * node)
 {
 
 	// check if we have to display the dictionnary or not
@@ -69,7 +69,7 @@ void V4StudioTree::Refresh(GF_Node * node)
 	}
 }
 
-void V4StudioTree::AddNodesToItem(wxTreeItemId parentItemId, GF_Node * node, s32 fieldIndex, s32 position) 
+void V4StudioTree::AddNodesToItem(wxTreeItemId parentItemId, GF_Node * node, s32 fieldIndex, s32 position)
 {
 	GF_FieldInfo field;
 	u32 count, i, j;
@@ -92,7 +92,7 @@ void V4StudioTree::AddNodesToItem(wxTreeItemId parentItemId, GF_Node * node, s32
   }
 
 	GF_Node * parent = NULL;
-	
+
 	V4StudioTreeItemData *parentItemData = (V4StudioTreeItemData *)GetItemData(parentItemId);
 	if (parentItemData != NULL) parent = parentItemData->GetNode();
 
@@ -105,7 +105,7 @@ void V4StudioTree::AddNodesToItem(wxTreeItemId parentItemId, GF_Node * node, s32
   name = NULL;
 
 	count = gf_node_get_field_count(node);
-	for (i=0;i<count; i++) {		
+	for (i=0;i<count; i++) {
 		gf_node_get_field(node, i, &field);
 		if (field.eventType == GF_SG_EVENT_IN || field.eventType == GF_SG_EVENT_OUT) continue;
 		switch (field.fieldType) {
@@ -120,7 +120,7 @@ void V4StudioTree::AddNodesToItem(wxTreeItemId parentItemId, GF_Node * node, s32
 				u32 nbNodes = gf_node_list_get_count(nodes);
 				u8 skipped = 0; // counts nodes not added
 
-				for (j=0; j< nbNodes; j++) {          
+				for (j=0; j< nbNodes; j++) {
 					// gets a pointer to the current child
 					GF_Node *child = (GF_Node *)gf_node_list_get_child(nodes, j);
 					// prevents the dictionnary from being added to the graph
@@ -167,7 +167,7 @@ void V4StudioTree::CreateImageList(int size)
     AssignImageList(images);
 }
 
-void V4StudioTree::OnSelChanged(wxTreeEvent& event) 
+void V4StudioTree::OnSelChanged(wxTreeEvent& event)
 {
 	wxKeyEvent kevt = event.GetKeyEvent();
 
@@ -210,13 +210,13 @@ void V4StudioTree::SetSelectedItem(GF_Node *node)
 	}
 }
 
-wxTreeItemId V4StudioTree::FindNodeItem(wxTreeItemId itemId, GF_Node *node) 
+wxTreeItemId V4StudioTree::FindNodeItem(wxTreeItemId itemId, GF_Node *node)
 {
 	void* cookie;
 	V4StudioTreeItemData *data = (V4StudioTreeItemData *)GetItemData(itemId);
 	if (data != NULL) {
 		if (data->GetNode() == node) return itemId;
-	} 
+	}
 	wxTreeItemId ret = (wxTreeItemId)0l;
 	wxTreeItemId child = GetFirstChild(itemId, cookie);
 	while (child.IsOk()) {
@@ -227,7 +227,7 @@ wxTreeItemId V4StudioTree::FindNodeItem(wxTreeItemId itemId, GF_Node *node)
 	return ret;
 }
 
-void V4StudioTree::OnItemRightClick(wxTreeEvent &event) 
+void V4StudioTree::OnItemRightClick(wxTreeEvent &event)
 {
 	wxTreeItemId itemId = event.GetItem();
 }
@@ -237,7 +237,7 @@ void V4StudioTree::OnBeginDrag(wxTreeEvent& event)
     // need to explicitly allow drag
     if ( event.GetItem() != GetRootItem() ){
         m_draggedItem = event.GetItem();
-		V4StudioTreeItemData *draggedData = (V4StudioTreeItemData *)GetItemData(m_draggedItem);		
+		V4StudioTreeItemData *draggedData = (V4StudioTreeItemData *)GetItemData(m_draggedItem);
         event.Allow();
     } else {
         wxLogMessage(wxT("OnBeginDrag: this item can't be dragged."));
@@ -288,7 +288,7 @@ void V4StudioTree::OnEndDrag(wxTreeEvent& event)
 	}
 
 	GF_Node *dstParentNode = dstData->GetNodeParent();
-	
+
 	Delete(itemSrc);
 	AddNodesToItem(dstParentItem, srcNode, dstData->GetFieldIndex(), dstData->GetPosition());
 	V4StudioFrame *mainFrame = (V4StudioFrame *)GetParent();
@@ -296,7 +296,7 @@ void V4StudioTree::OnEndDrag(wxTreeEvent& event)
 	mainFrame->Update();
 }
 
-GF_Node *V4StudioTree::FindTransformNode(wxTreeItemId itemId) 
+GF_Node *V4StudioTree::FindTransformNode(wxTreeItemId itemId)
 {
 	GF_Node *transformNode = NULL;
 	while (true) {
@@ -320,7 +320,7 @@ GF_Node *V4StudioTree::FindTransformNode(wxTreeItemId itemId)
 	return transformNode;
 }
 
-void V4StudioTree::Translate(int dX, int dY) 
+void V4StudioTree::Translate(int dX, int dY)
 {
 	if (m_transformNode) {
 		GF_FieldInfo field;
@@ -341,7 +341,7 @@ void V4StudioTree::Translate(int dX, int dY)
 	}
 }
 
-void V4StudioTree::Scale(int dX, int dY) 
+void V4StudioTree::Scale(int dX, int dY)
 {
 	if (m_transformNode && (dX || dY)) {
 		GF_FieldInfo field;
@@ -363,7 +363,7 @@ void V4StudioTree::Scale(int dX, int dY)
 }
 
 
-void V4StudioTree::Rotate(int dX, int dY) 
+void V4StudioTree::Rotate(int dX, int dY)
 {
 	/*quick and dirty of course...*/
 	dY *= -1;

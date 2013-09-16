@@ -36,21 +36,21 @@ extern "C" {
 #include <gpac/html5_media.h>
 #include <gpac/internal/smjs_api.h>
 
-typedef enum 
+typedef enum
 {
     MEDIA_SOURCE_CLOSED = 0,
     MEDIA_SOURCE_OPEN   = 1,
     MEDIA_SOURCE_ENDED  = 2,
 } GF_HTML_MediaSource_ReadyState;
 
-typedef enum 
+typedef enum
 {
     MEDIA_SOURCE_ABORT_MODE_NONE            = 0,
     MEDIA_SOURCE_ABORT_MODE_CONTINUATION    = 1,
     MEDIA_SOURCE_ABORT_MODE_OFFSET          = 2,
 } GF_HTML_MediaSource_AbortMode;
 
-typedef enum 
+typedef enum
 {
     MEDIA_SOURCE_APPEND_STATE_WAITING_FOR_SEGMENT   = 0,
     MEDIA_SOURCE_APPEND_STATE_PARSING_INIT_SEGMENT  = 1,
@@ -86,15 +86,15 @@ typedef struct
     double                  remove_end;
 
     /*
-	 * GPAC internal objects 
+	 * GPAC internal objects
 	 */
 
 	/* Media tracks associated to this source buffer */
     GF_List                 *tracks;
 	/* Buffers to parse */
 	GF_List					*input_buffer;
-	/* We can only delete a buffer when we know it has been parsed, 
-	   i.e. when the next buffer is asked for, 
+	/* We can only delete a buffer when we know it has been parsed,
+	   i.e. when the next buffer is asked for,
 	   so we need to keep the buffer in the meantime */
     void                    *prev_buffer;
 
@@ -102,7 +102,7 @@ typedef struct
     GF_InputService         *parser;
 
 	/* MPEG-4 Object descriptor as returned by the media parser */
-    GF_ObjectDescriptor     *service_desc;  
+    GF_ObjectDescriptor     *service_desc;
 
     /* Boolean indicating that the parser has parsed the initialisation segment */
 	Bool                    parser_connected;
@@ -150,9 +150,9 @@ typedef struct _html_mediasource
     /* URL created by the call to createObjectURL on this MediaSource*/
     char    *blobURI;
 
-    /* GPAC Terminal Service object 
+    /* GPAC Terminal Service object
        it is associated to this MediaSource when the Media element uses the blobURI of this MediaSource
-       should be NULL when the MediaSource is not open 
+       should be NULL when the MediaSource is not open
        we use only one service object for all sourceBuffers
        */
     GF_ClientService *service;
@@ -189,8 +189,8 @@ GF_Err gf_mse_proxy(GF_InputService *parser, GF_NetworkCommand *command);
 void gf_mse_packet_del(GF_MSE_Packet *packet);
 
 GF_Err gf_mse_track_buffer_get_next_packet(GF_HTML_Track *track,
-											char **out_data_ptr, u32 *out_data_size, 
-											GF_SLHeader *out_sl_hdr, Bool *sl_compressed, 
+											char **out_data_ptr, u32 *out_data_size,
+											GF_SLHeader *out_sl_hdr, Bool *sl_compressed,
 											GF_Err *out_reception_status, Bool *is_new_data);
 GF_Err gf_mse_track_buffer_release_packet(GF_HTML_Track *track);
 
@@ -198,5 +198,5 @@ GF_Err gf_mse_track_buffer_release_packet(GF_HTML_Track *track);
 }
 #endif
 
-#endif	
+#endif
 

@@ -172,7 +172,7 @@ typedef enum {
     char                    *label;\
     char                    *language;\
     char                    *mime; \
-    Bool                    enabled_or_selected; 
+    Bool                    enabled_or_selected;
 
 typedef struct
 {
@@ -241,7 +241,7 @@ typedef struct
     /* error state */
     GF_HTML_MediaError       error;
 
-    /* src: not stored in this structure, 
+    /* src: not stored in this structure,
             using the value stored in the node ( see HTML 5 "must reflect the content of the attribute")*/
     /* currentSrc: the actual source used for the video (src attribute on video, audio or source elements) */
     char                    *currentSrc;
@@ -280,7 +280,7 @@ typedef struct
     GF_HTML_TrackList        videoTracks;
     GF_HTML_TrackList        textTracks;
 } GF_HTML_MediaElement;
-typedef struct 
+typedef struct
 {
     /* JavaScript context used to create the JavaScript object below */
     JSContext               *c;

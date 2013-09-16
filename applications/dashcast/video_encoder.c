@@ -73,7 +73,7 @@ int dc_video_encoder_open(VideoOutputFile * p_voutf, VideoData * p_vdata) {
 	p_voutf->p_codec_ctx->width = p_vdata->i_width;
 	p_voutf->p_codec_ctx->height = p_vdata->i_height;
 	{
-		AVRational time_base; 
+		AVRational time_base;
 		time_base.num = 1;
 		time_base.den = p_vdata->i_framerate;
 		p_voutf->p_codec_ctx->time_base = time_base;

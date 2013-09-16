@@ -34,7 +34,7 @@
 
 #include <gpac/thread.h>
 
-/* 
+/*
  * Register all codecs and define
  * the lock manager on top of avlib
  */

@@ -201,7 +201,7 @@ int dc_audio_encoder_encode(AudioOutputFile * p_aout, AudioInputData * p_aind) {
 		p_aout->packet.data = NULL;
 		p_aout->packet.size = 0;
 
-		/* 
+		/*
 		 * Set PTS (method 1)
 		 */
 

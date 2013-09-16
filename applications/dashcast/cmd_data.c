@@ -58,7 +58,7 @@ int dc_str_to_resolution(char * psz_str, int * p_width, int * p_height) {
 #define DEFAULT_AUDIO_CODEC      "mp2"
 
 static void dc_create_configuration(CmdData * p_cmdd)
-{	
+{
 	GF_Config * p_conf = p_cmdd->p_conf;
 	u32 i_sec_count = gf_cfg_get_section_count(p_conf);
 	if (i_sec_count == 0) {
@@ -70,24 +70,24 @@ static void dc_create_configuration(CmdData * p_cmdd)
 			p_cmdd->vdata.i_bitrate = DEFAULT_VIDEO_BITRATE;
 		sprintf(value, "%d", p_cmdd->vdata.i_bitrate);
 		gf_cfg_set_key(p_conf, "v1", "bitrate", value);
-		
+
 		if (p_cmdd->vdata.i_framerate == -1)
 			p_cmdd->vdata.i_framerate = DEFAULT_VIDEO_FRAMERATE;
 		sprintf(value, "%d", p_cmdd->vdata.i_framerate);
 		gf_cfg_set_key(p_conf, "v1", "framerate", value);
-		
+
 		if (p_cmdd->vdata.i_width == -1)
 			p_cmdd->vdata.i_width = DEFAULT_VIDEO_WIDTH;
 		sprintf(value, "%d", p_cmdd->vdata.i_width);
 		gf_cfg_set_key(p_conf, "v1", "width", value);
-		
+
 		if (p_cmdd->vdata.i_height == -1)
 			p_cmdd->vdata.i_height = DEFAULT_VIDEO_HEIGHT;
 		sprintf(value, "%d", p_cmdd->vdata.i_height);
 		gf_cfg_set_key(p_conf, "v1", "height", value);
 
 		gf_cfg_set_key(p_conf, "v1", "codec", DEFAULT_VIDEO_CODEC);
-		
+
 		//audio
 		gf_cfg_set_key(p_conf, "a1", "type", "audio");
 
@@ -197,7 +197,7 @@ int dc_read_switch_config(CmdData * p_cmdd) {
 	struct tm end_tm  = *localtime(&now_t);
 
 	GF_Config * p_conf = p_cmdd->p_switch_conf;
-  
+
 	u32 i_sec_count = gf_cfg_get_section_count(p_conf);
 
 	dc_task_init(&p_cmdd->task_list);
@@ -725,7 +725,7 @@ int dc_parse_command(int i_argc, char ** p_argv, CmdData * p_cmdd) {
 			gf_sys_init(GF_TRUE);
 			gf_log_set_tool_level(GF_LOG_MEMORY, GF_LOG_INFO);
 #else
-			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n"); 
+			fprintf(stderr, "WARNING - GPAC not compiled with Memory Tracker - ignoring \"-mem-track\"\n");
 #endif
 		} else if (!strcmp(p_argv[i], "-lf") || !strcmp(p_argv[i], "-log-file")) {
 			i++;
@@ -819,8 +819,8 @@ int dc_parse_command(int i_argc, char ** p_argv, CmdData * p_cmdd) {
 	printf("\33[0m");
 	fflush(stdout);
 
-	
-	
+
+
 	if (!p_cmdd->p_conf) {
 		p_cmdd->p_conf = gf_cfg_force_new(NULL, "dashcast.conf");
 		dc_create_configuration(p_cmdd);

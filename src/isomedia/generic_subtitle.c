@@ -2,7 +2,7 @@
  *			GPAC - Multimedia Framework C SDK
  *
  *			Authors: Cyril Concolato
- *			Copyright (c) Telecom ParisTech 2012 
+ *			Copyright (c) Telecom ParisTech 2012
  *					All rights reserved
  *
  *  This file is part of GPAC / ISO Media File Format sub-project
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -30,9 +30,9 @@
 
 #ifndef GPAC_DISABLE_ISOM_WRITE
 
-GF_Err gf_isom_update_generic_subtitle_description( GF_ISOFile                          *movie, 
-                                                    u32                                 trackNumber, 
-                                                    u32                                 descriptionIndex, 
+GF_Err gf_isom_update_generic_subtitle_description( GF_ISOFile                          *movie,
+                                                    u32                                 trackNumber,
+                                                    u32                                 descriptionIndex,
                                                     GF_GenericSubtitleSampleDescriptor  *desc)
 {
 	GF_TrackBox *trak;
@@ -41,7 +41,7 @@ GF_Err gf_isom_update_generic_subtitle_description( GF_ISOFile                  
 	if (!descriptionIndex || !desc) return GF_BAD_PARAM;
 	e = CanAccessMovie(movie, GF_ISOM_OPEN_WRITE);
 	if (e) return e;
-	
+
 	trak = gf_isom_get_track_from_file(movie, trackNumber);
 	if (!trak || !trak->Media) return GF_BAD_PARAM;
 
@@ -68,12 +68,12 @@ GF_Err gf_isom_update_generic_subtitle_description( GF_ISOFile                  
 	return e;
 }
 
-GF_Err gf_isom_new_generic_subtitle_description(GF_ISOFile  *movie, 
-                                                u32         trackNumber, 
-                                                char        *content_encoding, 
-                                                char        *xml_schema_loc, 
-                                                char        *mime_type_or_namespace, 
-                                                Bool        is_xml, 
+GF_Err gf_isom_new_generic_subtitle_description(GF_ISOFile  *movie,
+                                                u32         trackNumber,
+                                                char        *content_encoding,
+                                                char        *xml_schema_loc,
+                                                char        *mime_type_or_namespace,
+                                                Bool        is_xml,
                                                 char        *URLname,
                                                 char        *URNname,
                                                 u32         *outDescriptionIndex)
@@ -85,7 +85,7 @@ GF_Err gf_isom_new_generic_subtitle_description(GF_ISOFile  *movie,
 
 	e = CanAccessMovie(movie, GF_ISOM_OPEN_WRITE);
 	if (e) return e;
-	
+
 	trak = gf_isom_get_track_from_file(movie, trackNumber);
 	if (!trak || !trak->Media) return GF_BAD_PARAM;
 
@@ -128,9 +128,9 @@ GF_Err gf_isom_generic_subtitle_sample_add_text(GF_GenericSubtitleSample *samp, 
 	return GF_OK;
 }
 
-/* 
- * Writing the generic sample structure into a sample buffer 
- * 2 options: 
+/*
+ * Writing the generic sample structure into a sample buffer
+ * 2 options:
  * - putting the text or XML in the sample directly
  * - or using a meta box to structure the sample data
 */
@@ -157,10 +157,10 @@ GF_ISOSample *gf_isom_generic_subtitle_to_sample(GF_GenericSubtitleSample *samp)
 	return res;
 }
 
-//GF_Err gf_isom_generic_subtitle_has_similar_description(GF_ISOFile                          *movie, 
-//                                                        u32                                 trackNumber, 
-//                                                        GF_GenericSubtitleSampleDescriptor  *desc, 
-//                                                        u32                                 *outDescIdx, 
+//GF_Err gf_isom_generic_subtitle_has_similar_description(GF_ISOFile                          *movie,
+//                                                        u32                                 trackNumber,
+//                                                        GF_GenericSubtitleSampleDescriptor  *desc,
+//                                                        u32                                 *outDescIdx,
 //                                                        Bool                                *same_box)
 //{
 //	GF_TrackBox             *trak;
@@ -176,7 +176,7 @@ GF_ISOSample *gf_isom_generic_subtitle_to_sample(GF_GenericSubtitleSample *samp)
 //	if (!desc) return GF_BAD_PARAM;
 //	e = CanAccessMovie(movie, GF_ISOM_OPEN_WRITE);
 //	if (e) return GF_BAD_PARAM;
-//	
+//
 //	trak = gf_isom_get_track_from_file(movie, trackNumber);
 //	if (!trak || !trak->Media) return GF_BAD_PARAM;
 //
@@ -220,16 +220,16 @@ GF_EXPORT
 GF_GenericSubtitleSample *gf_isom_parse_generic_subtitle_sample(GF_BitStream *bs)
 {
 	GF_GenericSubtitleSample *s = gf_isom_new_generic_subtitle_sample();
-	
+
 	/*empty sample*/
 	if (!bs || !gf_bs_available(bs)) return s;
 
 	s->len = gf_bs_read_u16(bs);
 	if (s->len) {
-		/*2 extra bytes for UTF-16 term char just in case (we don't know if a BOM marker is present or 
+		/*2 extra bytes for UTF-16 term char just in case (we don't know if a BOM marker is present or
 		not since this may be a sample carried over RTP*/
 		s->text = (char *) gf_malloc(sizeof(char)*(s->len+2) );
-		s->text[s->len] = 0; 
+		s->text[s->len] = 0;
         s->text[s->len+1] = 0;
 		gf_bs_read_data(bs, s->text, s->len);
 	}
@@ -244,7 +244,7 @@ GF_GenericSubtitleSample *gf_isom_parse_generic_subtitle_sample_from_data(char *
 	if (!data || !dataLength) {
 		return gf_isom_new_generic_subtitle_sample();
 	}
-	
+
 	bs = gf_bs_new(data, dataLength, GF_BITSTREAM_READ);
 	s = gf_isom_parse_generic_subtitle_sample(bs);
 	gf_bs_del(bs);
@@ -302,14 +302,14 @@ GF_Err gf_isom_rewrite_generic_subtitle_sample(GF_ISOSample *samp, u32 sampleDes
 //	GF_BitStream *bs;
 //	GF_TrackBox *trak;
 //	GF_Tx3gSampleEntryBox *a;
-//	
+//
 //	trak = gf_isom_get_track_from_file(file, track);
 //	if (!trak) return GF_BAD_PARAM;
 //
 //	a = (GF_Tx3gSampleEntryBox *) gf_list_get(trak->Media->information->sampleTable->SampleDescription->boxList, sidx-1);
 //	if (!a) return GF_BAD_PARAM;
 //	if ((a->type != GF_ISOM_BOX_TYPE_TX3G) && (a->type != GF_ISOM_BOX_TYPE_TEXT)) return GF_BAD_PARAM;
-//	
+//
 //	bs = gf_bs_new(NULL, 0, GF_BITSTREAM_WRITE);
 //	gf_isom_write_tx3g(a, bs, sidx, sidx_offset);
 //	*tx3g = NULL;

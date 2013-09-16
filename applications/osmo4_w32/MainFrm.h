@@ -54,10 +54,10 @@ protected:
 
 class CMainFrame : public CFrameWnd
 {
-	
+
 public:
 	CMainFrame();
-protected: 
+protected:
 	DECLARE_DYNAMIC(CMainFrame)
 
 // Attributes
@@ -85,7 +85,7 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-public:  
+public:
 	CStatusBar  m_wndStatusBar;
 	CToolBar    m_wndToolBar;
 	Sliders m_Sliders;
@@ -113,7 +113,7 @@ public:
 	void BuildViewList();
 	void BuildStreamList(Bool reset_ony);
 	void BuildChapterList(Bool reset_ony);
-	void SetProgTimer(Bool bOn);		
+	void SetProgTimer(Bool bOn);
 	void AddSubtitle(const char *fileName, Bool auto_play);
 
 private:

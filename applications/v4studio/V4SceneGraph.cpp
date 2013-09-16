@@ -33,12 +33,12 @@ void V4SceneGraph::SetSceneSize(int w, int h)
 	gf_sr_set_scene(m_pSr, m_pSg);
 }
 
-void V4SceneGraph::GetSceneSize(wxSize &size) 
+void V4SceneGraph::GetSceneSize(wxSize &size)
 {
-	gf_sg_get_scene_size_info(m_pSg, (u32 *)&(size.x), (u32 *)&(size.y));	
+	gf_sg_get_scene_size_info(m_pSg, (u32 *)&(size.x), (u32 *)&(size.y));
 }
 
-GF_Node *V4SceneGraph::SetTopNode(u32 tag) 
+GF_Node *V4SceneGraph::SetTopNode(u32 tag)
 {
 	GF_Node * root = NewNode(tag);
 	gf_sg_set_root_node(m_pSg, root);
@@ -54,7 +54,7 @@ GF_Node *V4SceneGraph::NewNode(u32 tag)
 	return n;
 }
 
-void V4SceneGraph::SaveFile(const char *path) 
+void V4SceneGraph::SaveFile(const char *path)
 {
 	char rad_name[5000];
 	strcpy(rad_name, "dump");
@@ -65,7 +65,7 @@ void V4SceneGraph::SaveFile(const char *path)
 	gf_isom_close(mp4);
 }
 
-void V4SceneGraph::LoadNew() 
+void V4SceneGraph::LoadNew()
 {
 	if (m_pSm) {
 		gf_sr_set_scene(m_pSr, NULL);
@@ -93,7 +93,7 @@ void V4SceneGraph::LoadNew()
 	frame->pools.Clear();
 }
 
-void V4SceneGraph::LoadFileOld(const char *path) 
+void V4SceneGraph::LoadFileOld(const char *path)
 {
 	m_pService = new V4Service(path);
 	gf_term_attach_service(m_term, m_pService->m_pNetClient);
@@ -105,7 +105,7 @@ void V4SceneGraph::LoadFileOld(const char *path)
 	CreateDictionnary();
 }
 
-void V4SceneGraph::LoadFile(const char *path) 
+void V4SceneGraph::LoadFile(const char *path)
 {
 	GF_SceneLoader load;
 	if (m_pSm) {
@@ -113,7 +113,7 @@ void V4SceneGraph::LoadFile(const char *path)
 		gf_sm_del(m_pSm);
 		gf_sg_del(m_pSg);
 	}
-	
+
 	// initializes a new scene
 	// We need an GF_InlineScene, a SceneManager and an GF_ObjectManager
 	m_pIs = gf_is_new(NULL);
@@ -127,7 +127,7 @@ void V4SceneGraph::LoadFile(const char *path)
 	m_pIs->root_od->term = m_term;
 
 	m_term->root_scene = m_pIs;
-	
+
 	// TODO : what's the use of this ?
 	if (m_pOriginal_mp4) gf_free(m_pOriginal_mp4);
 	m_pOriginal_mp4 = NULL;
@@ -158,7 +158,7 @@ void V4SceneGraph::LoadFile(const char *path)
 		    When ApplyCommand is made on a Scene Replace Command
 		    The command node is set to NULL
 		    When we save a BIFS stream whose first command is of this kind,
-		    the file saver thinks the bifs commands should come from an NHNT file 
+		    the file saver thinks the bifs commands should come from an NHNT file
 		   This is a temporary patch */
 		if (c->tag == GF_SG_SCENE_REPLACE) { c->node = m_pSg->RootNode; }
 	}
@@ -169,7 +169,7 @@ void V4SceneGraph::LoadFile(const char *path)
 	CreateDictionnary();
 }
 
-GF_Node *V4SceneGraph::CopyNode(GF_Node *node, GF_Node *parent, bool copy) 
+GF_Node *V4SceneGraph::CopyNode(GF_Node *node, GF_Node *parent, bool copy)
 {
 	if (copy) return CloneNodeForEditing(m_pSg, node);
 	u32 nodeID = gf_node_get_id(node);

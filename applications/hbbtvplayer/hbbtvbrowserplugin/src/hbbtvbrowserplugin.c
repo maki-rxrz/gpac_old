@@ -5,17 +5,17 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
- *		Authors:    Stanislas Selle		
- *				
+ *		Authors:    Stanislas Selle
+ *
  */
 /*
 ** HbbTV Plugin PC
@@ -130,7 +130,7 @@ NPError NP_Initialize(NPNetscapeFuncs* bFuncs, NPPluginFuncs* pFuncs)
 	TRACEINFO;
 
     sBrowserFuncs = bFuncs;
-    
+
 	fillPluginFunctionTable(pFuncs);
 
 	return NPERR_NO_ERROR;
@@ -176,45 +176,45 @@ NPError OIPF_NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode, int16_t
 {
 	TRACEINFO;
 	int i = 0;
-	
+
 	NPBool browserSupportsWindowless = false;
 	sBrowserFuncs->getvalue(instance, NPNVSupportsWindowless, &browserSupportsWindowless);
 	if (!browserSupportsWindowless)
-	{		
+	{
 		return NPERR_GENERIC_ERROR;
 	}
 	sBrowserFuncs->setvalue(instance, NPPVpluginWindowBool, (void*)false);
 	sBrowserFuncs->setvalue(instance, NPPVpluginTransparentBool, (void*)false);
-	
+
 
     NPObject* obj;
     for(i = 0 ; i<argc ; i++ ){
 		if((strcmp(argn[i],"type")) == 0){
 			instance->pdata = (HBBTVPluginData*)MEMALLOC(sizeof(HBBTVPluginData));
 			HBBTVPluginData* pdata = ((HBBTVPluginData*)instance->pdata);
-			
+
 			if (strcmp(argv[i], "application/oipfApplicationManager") == 0)
 			{
-				obj = sBrowserFuncs->createobject(instance, fillOAMpclass());				
+				obj = sBrowserFuncs->createobject(instance, fillOAMpclass());
 			}
 			else if (strcmp(argv[i], "application/oipfConfiguration") == 0)
 			{
-				obj = sBrowserFuncs->createobject(instance, fillOCFGpclass());				
+				obj = sBrowserFuncs->createobject(instance, fillOCFGpclass());
 			}
 			else if (strcmp(argv[i], "video/broadcast") == 0)
 			{
-				obj = sBrowserFuncs->createobject(instance, fillVIDBRCpclass());								
+				obj = sBrowserFuncs->createobject(instance, fillVIDBRCpclass());
 			}else{
-				
+
 				obj = NULL;
 			}
 			pdata->type = (char*)MEMALLOC(strlen(argv[i]));
 			strcpy(pdata->type, argv[i] );
 			pdata->obj = obj;
 			pdata->npp = instance;
-			
+
 		}else{
-			
+
 			obj = NULL;
 		}
 	}
@@ -227,7 +227,7 @@ NPError OIPF_NPP_Destroy(NPP instance, NPSavedData **save)
     TRACEINFO;
     HBBTVPluginData* pdata = (HBBTVPluginData*)instance->pdata;
     if (pdata)
-    {		
+    {
         sBrowserFuncs->releaseobject(pdata->obj);
         MEMFREE(pdata->type);
         MEMFREE(pdata);
@@ -239,9 +239,9 @@ NPError OIPF_NPP_Destroy(NPP instance, NPSavedData **save)
 NPError OIPF_NPP_SetWindow(NPP instance, NPWindow *window)
 {
 	TRACEINFO;
-	
-	
-	
+
+
+
 	HBBTVPluginData* pdata = (HBBTVPluginData*)instance->pdata;
 	if(pdata)
 	{
@@ -275,7 +275,7 @@ NPError OIPF_NPP_SetWindow(NPP instance, NPWindow *window)
 			pdata->window->width,
 			pdata->window->height);*/
 	}
-	
+
 	return NPERR_NO_ERROR;
 }
 
@@ -287,13 +287,13 @@ NPError OIPF_NPP_HandleEvent(NPP instance, void* event)
 	if (nativeEvent->type == GraphicsExpose)
 	{
 		XGraphicsExposeEvent *expose = &nativeEvent->xgraphicsexpose;
-		GC gc = XCreateGC(expose->display, expose->drawable, 0, 0);	
+		GC gc = XCreateGC(expose->display, expose->drawable, 0, 0);
 		XFillRectangle(expose->display, expose->drawable, gc, expose->x, expose->y,expose->width, expose->height);
 		XFreeGC(expose->display, gc);
 		return true;
 	}
 
-	
+
 	return false;
 }
 
@@ -304,15 +304,15 @@ NPError OIPF_NPP_GetValue(NPP instance, NPPVariable variable, void *value)
     TRACEINFO;
 
     if ( variable == NPPVpluginScriptableNPObject )
-    {			
-        void ** v = (void **)value;        
+    {
+        void ** v = (void **)value;
         if(instance->pdata)
         {
         NPObject* obj = ((HBBTVPluginData*)instance->pdata)->obj;
-		if(obj == NULL){			
-		}else{			
+		if(obj == NULL){
+		}else{
 			sBrowserFuncs->retainobject(obj);
-		}	
+		}
 		*v = obj;
 		}
     }

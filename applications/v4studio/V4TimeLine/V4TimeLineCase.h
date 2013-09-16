@@ -31,7 +31,7 @@ class V4TimeLineCell: public wxWindow {
   public:
     // Constructor
     V4TimeLineCell(V4TimeLineLine * parent, unsigned int num=0, unsigned int type=CELL_TYPE_NORMAL);
- 
+
     // Destructor
     virtual ~V4TimeLineCell();
 

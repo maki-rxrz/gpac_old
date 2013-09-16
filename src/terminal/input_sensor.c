@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -91,7 +91,7 @@ static void isdev_dispatch_frame(struct __input_device *dev, u8 *data, u32 data_
 	slh.accessUnitStartFlag = slh.accessUnitEndFlag = 1;
 	slh.compositionTimeStampFlag = 1;
 	/*note we could use an exact TS but it's not needed: since the input is generated locally
-	we want it to be decoded as soon as possible, thus using 0 emulates permanent seeking on 
+	we want it to be decoded as soon as possible, thus using 0 emulates permanent seeking on
 	InputSensor stream, hence forces input frame resync*/
 	slh.compositionTimeStamp = 0;
 
@@ -206,7 +206,7 @@ static GF_Err IS_SetCapabilities(GF_BaseDecoder *plug, const GF_CodecCapability 
 	return GF_OK;
 }
 
-static GF_Err IS_ProcessData(GF_SceneDecoder *plug, const char *inBuffer, u32 inBufferLength, 
+static GF_Err IS_ProcessData(GF_SceneDecoder *plug, const char *inBuffer, u32 inBufferLength,
 								u16 ES_ID, u32 AU_time, u32 mmlevel)
 {
 	u32 i, j, count;
@@ -367,7 +367,7 @@ GF_BaseDecoder *gf_isdec_new(GF_ESD *esd, u32 PL)
 {
 	ISPriv *priv;
 	GF_SceneDecoder *tmp;
-	
+
 	tmp = (GF_SceneDecoder*) gf_malloc(sizeof(GF_SceneDecoder));
 	if (!tmp) return NULL;
 	memset(tmp, 0, sizeof(GF_SceneDecoder));
@@ -402,7 +402,7 @@ static void IS_Unregister(GF_Node *node, ISStack *st)
 	ISPriv *is_dec;
 
 	gf_mo_unregister(node, st->mo);
-	
+
 	odm = st->mo->odm;
 	if (!odm) return;
 
@@ -501,7 +501,7 @@ void InputSensorModified(GF_Node *node)
 			if (st->mo) IS_Unregister(node, st);
 			st->mo = mo;
 		}
-		if (st->is->enabled) 
+		if (st->is->enabled)
 			IS_Register(node);
 		else
 			return;
@@ -588,7 +588,7 @@ void gf_term_mouse_input(GF_Terminal *term, GF_EventMouse *event)
 	slh.accessUnitStartFlag = slh.accessUnitEndFlag = 1;
 	slh.compositionTimeStampFlag = 1;
 	/*note we could use an exact TS but it's not needed: since the input is generated locally
-	we want it to be decoded as soon as possible, thus using 0 emulates permanent seeking on 
+	we want it to be decoded as soon as possible, thus using 0 emulates permanent seeking on
 	InputSensor stream, hence forces input frame resync*/
 	slh.compositionTimeStamp = 0;
 
@@ -669,35 +669,35 @@ Bool gf_term_keyboard_input(GF_Terminal *term, u32 key_code, u32 hw_code, Bool i
 	default: actionKey = 0; break;
 	}
 	if (actionKey) {
-		if (isKeyUp) 
+		if (isKeyUp)
 			actionKeyReleased = actionKey;
-		else 
+		else
 			actionKeyPressed = actionKey;
 	} else {
 		/*handle numeric pad*/
 		if ((key_code>=GF_KEY_0) && (key_code<=GF_KEY_9) ) {
 			key_code = key_code + 0x30 - GF_KEY_0;
-		} 
-		else 
+		}
+		else
 			key_code = hw_code;
 
 		if (isKeyUp) keyReleased = key_code;
 		else keyPressed = key_code;
 	}
 
-	gf_bs_write_int(bs, keyPressed ? 1 : 0, 1); 
+	gf_bs_write_int(bs, keyPressed ? 1 : 0, 1);
 	if (keyPressed) gf_bs_write_int(bs, keyPressed, 32);
-	gf_bs_write_int(bs, keyReleased ? 1 : 0, 1); 
+	gf_bs_write_int(bs, keyReleased ? 1 : 0, 1);
 	if (keyReleased) gf_bs_write_int(bs, keyReleased, 32);
-	gf_bs_write_int(bs, actionKeyPressed ? 1 : 0, 1); 
+	gf_bs_write_int(bs, actionKeyPressed ? 1 : 0, 1);
 	if (actionKeyPressed) gf_bs_write_int(bs, actionKeyPressed, 32);
-	gf_bs_write_int(bs, actionKeyReleased ? 1 : 0, 1); 
+	gf_bs_write_int(bs, actionKeyReleased ? 1 : 0, 1);
 	if (actionKeyReleased) gf_bs_write_int(bs, actionKeyReleased, 32);
-	gf_bs_write_int(bs, shiftKeyDown ? 1 : 0 , 1); 
+	gf_bs_write_int(bs, shiftKeyDown ? 1 : 0 , 1);
 	if (shiftKeyDown) gf_bs_write_int(bs, shiftKeyDown-1, 1);
-	gf_bs_write_int(bs, controlKeyDown ? 1 : 0 , 1); 
+	gf_bs_write_int(bs, controlKeyDown ? 1 : 0 , 1);
 	if (controlKeyDown) gf_bs_write_int(bs, controlKeyDown-1, 1);
-	gf_bs_write_int(bs, altKeyDown ? 1 : 0 , 1); 
+	gf_bs_write_int(bs, altKeyDown ? 1 : 0 , 1);
 	if (altKeyDown) gf_bs_write_int(bs, altKeyDown, 1);
 
 	gf_bs_align(bs);
@@ -716,7 +716,7 @@ Bool gf_term_keyboard_input(GF_Terminal *term, u32 key_code, u32 hw_code, Bool i
 		}
 	}
 	gf_free(buf);
-	
+
 #ifndef GPAC_DISABLE_X3D
 	i=0;
 	while ((n = (X_KeySensor*)gf_list_enum(term->x3d_sensors, &i))) {
@@ -820,10 +820,10 @@ void gf_term_string_input(GF_Terminal *term, u32 character)
 			gf_bs_align(bs);
 			gf_bs_get_content(bs, &buf, &buf_size);
 			gf_bs_del(bs);
-			
+
 //			gf_es_receive_sl_packet(ch->service, ch, buf, buf_size, &slh, GF_OK);
 			IS_ProcessData((GF_SceneDecoder*)cod->decio, buf, buf_size, 0, 0, 0);
-			
+
 			gf_free(buf);
 		}
 	}

@@ -58,7 +58,7 @@ int dc_video_decoder_open(VideoInputFile * p_vin, VideoData * p_vdata,
 		av_dict_set(&p_options, "input_format", p_vdata->psz_v4l2f, 0);
 	}
 #endif
-	
+
 	if (p_vdata->psz_format && strcmp(p_vdata->psz_format, "") != 0) {
 		p_in_fmt = av_find_input_format(p_vdata->psz_format);
 		if (p_in_fmt == NULL) {

@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -54,7 +54,7 @@ void write_var_size(GF_BitStream *bs, u32 size)
 	vals[3] = (unsigned char) (length & 0x7f); length >>= 7;
 	vals[2] = (unsigned char) ((length & 0x7f) | 0x80); length >>= 7;
 	vals[1] = (unsigned char) ((length & 0x7f) | 0x80); length >>= 7;
-	vals[0] = (unsigned char) ((length & 0x7f) | 0x80); 
+	vals[0] = (unsigned char) ((length & 0x7f) | 0x80);
 	if (size < 0x00000080) {
 		gf_bs_write_int(bs, vals[3], 8);
 	} else if (size < 0x00004000) {
@@ -69,7 +69,7 @@ void write_var_size(GF_BitStream *bs, u32 size)
 		gf_bs_write_int(bs, vals[1], 8);
 		gf_bs_write_int(bs, vals[2], 8);
 		gf_bs_write_int(bs, vals[3], 8);
-	} 
+	}
 }
 
 GF_IPMPX_ByteArray *GF_IPMPX_GetByteArray(GF_BitStream *bs)
@@ -385,7 +385,7 @@ static GF_Err ReadGF_IPMPX_MutualAuthentication(GF_BitStream *bs, GF_IPMPX_Data 
 	u32 i, count;
 	Bool requestNegotiation, successNegotiation, inclAuthenticationData, inclAuthCodes;
 	GF_IPMPX_MutualAuthentication *p = (GF_IPMPX_MutualAuthentication *)_p;
-	
+
 	requestNegotiation = gf_bs_read_int(bs, 1);
 	successNegotiation = gf_bs_read_int(bs, 1);
 	p->failedNegotiation =  gf_bs_read_int(bs, 1);
@@ -462,7 +462,7 @@ static u32 SizeGF_IPMPX_MutualAuthentication(GF_IPMPX_Data *_p)
 		}
 	}
 	if (p->AuthenticationData) size += GF_IPMPX_GetByteArraySize(p->AuthenticationData);
-	
+
 	count = gf_list_count(p->certificates);
 	if (count || p->opaque || p->publicKey) {
 		size += 1;
@@ -520,7 +520,7 @@ static GF_Err WriteGF_IPMPX_MutualAuthentication(GF_BitStream *bs, GF_IPMPX_Data
 		}
 	}
 	if (p->AuthenticationData) GF_IPMPX_WriteByteArray(bs, p->AuthenticationData);
-	
+
 	count = gf_list_count(p->certificates);
 	if (count || p->opaque || p->publicKey) {
 		/*type 1*/
@@ -1714,7 +1714,7 @@ GF_IPMPX_Data *gf_ipmpx_data_new(u8 tag)
 	case GF_IPMPX_CAN_PROCESS_TAG: return NewGF_IPMPX_CanProcess();
 	case GF_IPMPX_TRUST_SECURITY_METADATA_TAG: return NewGF_IPMPX_TrustSecurityMetadata();
 	case GF_IPMPX_ISMACRYP_TAG: return NewGF_IPMPX_ISMACryp();
-	case GF_IPMPX_GET_TOOLS_TAG: 
+	case GF_IPMPX_GET_TOOLS_TAG:
 	{
 		GF_IPMPX_Data *p;
 		GF_IPMPX_DATA_ALLOC(p, GF_IPMPX_Data, GF_IPMPX_GET_TOOLS_TAG);
@@ -1735,11 +1735,11 @@ GF_IPMPX_Data *gf_ipmpx_data_new(u8 tag)
 	}
 	case GF_IPMPX_TOOL_API_CONFIG_TAG: return NewGF_IPMPX_ToolAPI_Config();
 	case GF_IPMPX_SEL_DEC_INIT_TAG: return NewGF_IPMPX_SelectiveDecryptionInit();
-	case GF_IPMPX_AUDIO_WM_INIT_TAG: 
-	case GF_IPMPX_VIDEO_WM_INIT_TAG: 
+	case GF_IPMPX_AUDIO_WM_INIT_TAG:
+	case GF_IPMPX_VIDEO_WM_INIT_TAG:
 		return NewGF_IPMPX_WatermarkingInit(tag);
-	case GF_IPMPX_AUDIO_WM_SEND_TAG: 
-	case GF_IPMPX_VIDEO_WM_SEND_TAG: 
+	case GF_IPMPX_AUDIO_WM_SEND_TAG:
+	case GF_IPMPX_VIDEO_WM_SEND_TAG:
 		return NewGF_IPMPX_SendWatermark(tag);
 
 	case GF_IPMPX_ALGORITHM_DESCRIPTOR_TAG:
@@ -1784,7 +1784,7 @@ GF_IPMPX_Data *gf_ipmpx_data_new(u8 tag)
 		return (GF_IPMPX_Data *) p;
 	}
 
-/*	
+/*
 	case GF_IPMPX_USER_QUERY_TAG: return NewGF_IPMPX_UserQuery();
 	case GF_IPMPX_USER_RESPONSE_TAG: return NewGF_IPMPX_UserQueryResponse();
 */
@@ -1819,11 +1819,11 @@ void gf_ipmpx_data_del(GF_IPMPX_Data *_p)
 	case GF_IPMPX_TOOL_API_CONFIG_TAG: DelGF_IPMPX_ToolAPI_Config(_p); return;
 	case GF_IPMPX_ISMACRYP_TAG: DelGF_IPMPX_ISMACryp(_p); return;
 	case GF_IPMPX_SEL_DEC_INIT_TAG: DelGF_IPMPX_SelectiveDecryptionInit(_p); return;
-	case GF_IPMPX_AUDIO_WM_INIT_TAG: 
-	case GF_IPMPX_VIDEO_WM_INIT_TAG: 
+	case GF_IPMPX_AUDIO_WM_INIT_TAG:
+	case GF_IPMPX_VIDEO_WM_INIT_TAG:
 		DelGF_IPMPX_WatermarkingInit(_p); return;
-	case GF_IPMPX_AUDIO_WM_SEND_TAG: 
-	case GF_IPMPX_VIDEO_WM_SEND_TAG: 
+	case GF_IPMPX_AUDIO_WM_SEND_TAG:
+	case GF_IPMPX_VIDEO_WM_SEND_TAG:
 		DelGF_IPMPX_SendWatermark(_p); return;
 
 /*
@@ -1886,7 +1886,7 @@ void gf_ipmpx_data_del(GF_IPMPX_Data *_p)
 	}
 
 	case GF_IPMPX_GET_TOOLS_TAG:
-	default: 
+	default:
 		gf_free(_p);
 		return;
 	}
@@ -1917,11 +1917,11 @@ GF_Err GF_IPMPX_ReadData(GF_BitStream *bs, GF_IPMPX_Data *_p, u32 read)
 	case GF_IPMPX_TOOL_API_CONFIG_TAG: return ReadGF_IPMPX_ToolAPI_Config(bs, _p, read);
 	case GF_IPMPX_ISMACRYP_TAG: return ReadGF_IPMPX_ISMACryp(bs, _p, read);
 	case GF_IPMPX_SEL_DEC_INIT_TAG: return ReadGF_IPMPX_SelectiveDecryptionInit(bs, _p, read);
-	case GF_IPMPX_AUDIO_WM_INIT_TAG: 
-	case GF_IPMPX_VIDEO_WM_INIT_TAG: 
+	case GF_IPMPX_AUDIO_WM_INIT_TAG:
+	case GF_IPMPX_VIDEO_WM_INIT_TAG:
 		return ReadGF_IPMPX_WatermarkingInit(bs, _p, read);
-	case GF_IPMPX_AUDIO_WM_SEND_TAG: 
-	case GF_IPMPX_VIDEO_WM_SEND_TAG: 
+	case GF_IPMPX_AUDIO_WM_SEND_TAG:
+	case GF_IPMPX_VIDEO_WM_SEND_TAG:
 		return ReadGF_IPMPX_SendWatermark(bs, _p, read);
 
 /*
@@ -1958,11 +1958,11 @@ u32 gf_ipmpx_data_size(GF_IPMPX_Data *_p)
 	case GF_IPMPX_TOOL_API_CONFIG_TAG: return SizeGF_IPMPX_ToolAPI_Config(_p);
 	case GF_IPMPX_ISMACRYP_TAG: return SizeGF_IPMPX_ISMACryp(_p);
 	case GF_IPMPX_SEL_DEC_INIT_TAG: return SizeGF_IPMPX_SelectiveDecryptionInit(_p);
-	case GF_IPMPX_AUDIO_WM_INIT_TAG: 
-	case GF_IPMPX_VIDEO_WM_INIT_TAG: 
+	case GF_IPMPX_AUDIO_WM_INIT_TAG:
+	case GF_IPMPX_VIDEO_WM_INIT_TAG:
 		return SizeGF_IPMPX_WatermarkingInit(_p);
-	case GF_IPMPX_AUDIO_WM_SEND_TAG: 
-	case GF_IPMPX_VIDEO_WM_SEND_TAG: 
+	case GF_IPMPX_AUDIO_WM_SEND_TAG:
+	case GF_IPMPX_VIDEO_WM_SEND_TAG:
 		return SizeGF_IPMPX_SendWatermark(_p);
 
 /*
@@ -2003,11 +2003,11 @@ GF_Err gf_ipmpx_data_write(GF_BitStream *bs, GF_IPMPX_Data *_p)
 	case GF_IPMPX_TOOL_API_CONFIG_TAG: return WriteGF_IPMPX_ToolAPI_Config(bs, _p);
 	case GF_IPMPX_ISMACRYP_TAG: return WriteGF_IPMPX_ISMACryp(bs, _p);
 	case GF_IPMPX_SEL_DEC_INIT_TAG: return WriteGF_IPMPX_SelectiveDecryptionInit(bs, _p);
-	case GF_IPMPX_AUDIO_WM_INIT_TAG: 
-	case GF_IPMPX_VIDEO_WM_INIT_TAG: 
+	case GF_IPMPX_AUDIO_WM_INIT_TAG:
+	case GF_IPMPX_VIDEO_WM_INIT_TAG:
 		return WriteGF_IPMPX_WatermarkingInit(bs, _p);
-	case GF_IPMPX_AUDIO_WM_SEND_TAG: 
-	case GF_IPMPX_VIDEO_WM_SEND_TAG: 
+	case GF_IPMPX_AUDIO_WM_SEND_TAG:
+	case GF_IPMPX_VIDEO_WM_SEND_TAG:
 		return WriteGF_IPMPX_SendWatermark(bs, _p);
 
 /*

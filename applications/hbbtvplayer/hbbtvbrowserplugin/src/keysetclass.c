@@ -6,17 +6,17 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
- *		Authors:    Stanislas Selle		
- *				
+ *		Authors:    Stanislas Selle
+ *
  */#include "keysetclass.h"
 
 #define kKEYSET_ID_PROPERTY_VALUE					       	0
@@ -102,13 +102,13 @@ NPObject *          KEYSET_Allocate(NPP npp, NPClass *theClass)
 
     NPObject* result;
 
-    
+
     if (!v_bKEYSETIdentifiersInitialized)
     {
         v_bKEYSETIdentifiersInitialized = true;
         KEYSETinitializeIdentifiers();
     }
-	
+
 	NPObj_KeySet* newkeyset = (NPObj_KeySet *)MEMALLOC(sizeof(NPObj_KeySet));
 	newkeyset->npp = npp;
 	newkeyset->value = (double*)MEMALLOC(sizeof(double));
@@ -149,7 +149,7 @@ bool        KEYSET_HasMethod(NPObject* obj, NPIdentifier name)
         }
         i++;
     }
-    
+
     return result;
 }
 
@@ -163,7 +163,7 @@ bool        KEYSET_Invoke(NPObject* obj, NPIdentifier name, const NPVariant* arg
 		fctresult = true;
     }
     else
-    {    	
+    {
     	fctresult = false;
     }
     return fctresult;
@@ -191,7 +191,7 @@ bool        KEYSET_HasProperty(NPObject* obj, NPIdentifier name)
         i++;
     }
 
-    
+
     return result;
 }
 
@@ -200,7 +200,7 @@ bool        KEYSET_GetProperty(NPObject* obj, NPIdentifier name, NPVariant* resu
     TRACEINFO;
     bool fctresult = false;
     NPObj_KeySet* keysetobj = (NPObj_KeySet*)obj;
-    
+
     double 	KEYMASK_RED 		= 0x1;
 	double 	KEYMASK_GREEN 		= 0x2;
 	double 	KEYMASK_YELLOW 		= 0x4;
@@ -212,85 +212,85 @@ bool        KEYSET_GetProperty(NPObject* obj, NPIdentifier name, NPVariant* resu
 	double 	KEYMASK_NUMERIC 	= 0x100;
 	double 	KEYMASK_ALPHA 		= 0x200;
 	double 	KEYMASK_OTHER 		= 0x400;
-	
+
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_RED])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_RED, *result);
     	fctresult = true;
 	}
 	else
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_GREEN])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_GREEN, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_YELLOW])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_YELLOW, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_BLUE])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_BLUE, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_NAVIGATION])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_NAVIGATION, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_VCR])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_VCR, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_SCROLL])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_SCROLL, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_INFO])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_INFO, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_NUMERIC])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_NUMERIC, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_ALPHA])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_ALPHA, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_OTHER])
-	{    			
+	{
 		DOUBLE_TO_NPVARIANT(KEYMASK_OTHER, *result);
     	fctresult = true;
 	}
 	if (name == v_KEYSETPropertyIdentifiers[kKEYSET_ID_PROPERTY_VALUE])
-	{    			
+	{
 		double* value = keysetobj->value;
 		DOUBLE_TO_NPVARIANT(*value, *result);
     	fctresult = true;
 	}
-	
+
 	if (fctresult)
 	{
-							
+
 	}
-    
-		
-    
-    return fctresult;    
+
+
+
+    return fctresult;
 }
 
 bool        KEYSET_SetProperty(NPObject *obj, NPIdentifier name, const NPVariant *value)
 {
     TRACEINFO;
     bool fctresult = false;
-    
+
     return fctresult;
 }
 

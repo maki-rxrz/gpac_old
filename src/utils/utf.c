@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -31,9 +31,9 @@
 
 /*
  * Copyright 2001-2004 Unicode, Inc.
- * 
+ *
  * Disclaimer
- * 
+ *
  * This source code is provided as is by Unicode, Inc. No claims are
  * made as to fitness for any particular purpose. No warranties of any
  * kind are expressed or implied. The recipient agrees to determine
@@ -41,9 +41,9 @@
  * purchased on magnetic or optical media from Unicode, Inc., the
  * sole remedy for any claim will be exchange of defective media
  * within 90 days of receipt.
- * 
+ *
  * Limitations on Rights to Redistribute This Code
- * 
+ *
  * Unicode, Inc. hereby grants the right to freely use the information
  * supplied in this file in the creation of products supporting the
  * Unicode Standard, and to make copies of this file in any form
@@ -128,7 +128,7 @@ static const char trailingBytesForUTF8[256] = {
  * This table contains as many values as there might be trailing bytes
  * in a UTF-8 sequence.
  */
-static const UTF32 offsetsFromUTF8[6] = { 0x00000000UL, 0x00003080UL, 0x000E2080UL, 
+static const UTF32 offsetsFromUTF8[6] = { 0x00000000UL, 0x00003080UL, 0x000E2080UL,
 		     0x03C82080UL, 0xFA082080UL, 0x82082080UL };
 
 /*
@@ -153,7 +153,7 @@ static const UTF8 firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC 
 /* --------------------------------------------------------------------- */
 
 ConversionResult ConvertUTF16toUTF8 (
-	const UTF16** sourceStart, const UTF16* sourceEnd, 
+	const UTF16** sourceStart, const UTF16* sourceEnd,
 	UTF8** targetStart, UTF8* targetEnd, ConversionFlags flags) {
     ConversionResult result = conversionOK;
     const UTF16* source = *sourceStart;
@@ -162,7 +162,7 @@ ConversionResult ConvertUTF16toUTF8 (
 	UTF32 ch;
 	unsigned short bytesToWrite = 0;
 	const UTF32 byteMask = 0xBF;
-	const UTF32 byteMark = 0x80; 
+	const UTF32 byteMark = 0x80;
 	const UTF16* oldSource = source; /* In case we have to back up because of target overflow. */
 	ch = *source++;
 	/* If we have a surrogate pair, convert to UTF32 first. */
@@ -259,7 +259,7 @@ static Boolean isLegalUTF8(const UTF8 *source, int length) {
 /* --------------------------------------------------------------------- */
 
 ConversionResult ConvertUTF8toUTF16 (
-	const UTF8** sourceStart, const UTF8* sourceEnd, 
+	const UTF8** sourceStart, const UTF8* sourceEnd,
 	UTF16** targetStart, UTF16* targetEnd, ConversionFlags flags) {
     ConversionResult result = conversionOK;
     const UTF8* source = *sourceStart;
@@ -360,7 +360,7 @@ GF_EXPORT
 size_t gf_utf8_mbstowcs(unsigned short* dest, size_t len, const char** srcp)
 {
 	const UTF8** sourceStart = (const UTF8**) srcp;
-	const UTF8* sourceEnd = (const UTF8*) ( *srcp + strlen( *srcp) ); 
+	const UTF8* sourceEnd = (const UTF8*) ( *srcp + strlen( *srcp) );
 	UTF16* targetStart = (UTF16* ) dest;
 	UTF16* targetEnd = (UTF16* ) (dest + len);
 	ConversionFlags flags = strictConversion;
@@ -456,9 +456,9 @@ typedef struct
 {
 	u32 count : 16;   /* number of bytes remaining to be processed */
 	u32 value : 16;   /* if count > 0: partial wide character */
-/* 
+/*
    If WCHAR_T_BITS == 16, need 2 bits for count,
-   12 bits for value (10 for mbstowcs direction, 12 for wcstombs direction). 
+   12 bits for value (10 for mbstowcs direction, 12 for wcstombs direction).
 */
 } gf_utf8_mbstate_t;
 

@@ -470,7 +470,7 @@ DownloadedCacheEntry gf_cache_create_entry ( GF_DownloadManager * dm, const char
 
 	if (entry->memory_stored) {
 		sprintf(entry->cache_filename, "gmem://%d@%p", entry->contentLength, entry->mem_storage);
-		return entry;	
+		return entry;
 	}
 
 
@@ -640,7 +640,7 @@ GF_Err gf_cache_write_to_cache( const DownloadedCacheEntry entry, const GF_Downl
 		GF_LOG(GF_LOG_WARNING, GF_LOG_NETWORK, ("Incorrect parameter : data=%p, writeFilePtr=%p mem_storage=%p at "__FILE__"\n", data, entry->writeFilePtr, entry->mem_storage));
 		return GF_BAD_PARAM;
 	}
-		
+
 	if (entry->memory_stored) {
 		if (entry->written_in_cache + size > entry->mem_allocated) {
 			u32 new_size = entry->mem_allocated*2;
@@ -790,7 +790,7 @@ GF_Err gf_cache_delete_entry ( const DownloadedCacheEntry entry )
 		gf_free ( entry->mimeType );
 		entry->mimeType = NULL;
 	}
-	if (entry->mem_storage) { 
+	if (entry->mem_storage) {
 		gf_free(entry->mem_storage);
 	}
 
@@ -908,7 +908,7 @@ s32 gf_cache_add_session_to_cache_entry(DownloadedCacheEntry entry, GF_DownloadS
 	return count + 1;
 }
 
-FILE *gf_cache_get_file_pointer(const DownloadedCacheEntry entry) 
+FILE *gf_cache_get_file_pointer(const DownloadedCacheEntry entry)
 {
 	if (entry) return entry->writeFilePtr;
 	return NULL;
@@ -926,7 +926,7 @@ Bool gf_cache_is_in_progress(const DownloadedCacheEntry entry)
 {
 	if (!entry) return 0;
 	if (entry->writeFilePtr) return 1;
-	if (entry->mem_storage && entry->written_in_cache && entry->contentLength && (entry->written_in_cache<entry->contentLength) ) 
+	if (entry->mem_storage && entry->written_in_cache && entry->contentLength && (entry->written_in_cache<entry->contentLength) )
 		return 1;
 	return 0;
 }

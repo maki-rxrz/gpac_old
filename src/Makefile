@@ -15,13 +15,13 @@ LDFLAGS+=-pg
 endif
 
 ## libgpac objects gathering: src/utils
-LIBGPAC_UTILS=utils/os_divers.o utils/list.o utils/bitstream.o utils/error.o utils/alloc.o utils/url.o utils/configfile.o 
+LIBGPAC_UTILS=utils/os_divers.o utils/list.o utils/bitstream.o utils/error.o utils/alloc.o utils/url.o utils/configfile.o
 ifeq ($(DISABLE_CORE_TOOLS), no)
-LIBGPAC_UTILS+=utils/sha1.o  utils/base_encoding.o utils/os_net.o utils/os_thread.o utils/os_config_init.o utils/cache.o utils/downloader.o utils/xml_parser.o utils/utf.o utils/token.o 
+LIBGPAC_UTILS+=utils/sha1.o  utils/base_encoding.o utils/os_net.o utils/os_thread.o utils/os_config_init.o utils/cache.o utils/downloader.o utils/xml_parser.o utils/utf.o utils/token.o
 endif
 
 ifeq ($(DISABLE_PLAYER), no)
-LIBGPAC_UTILS+=utils/color.o utils/os_module.o utils/math.o utils/path2d.o utils/path2d_stroker.o utils/module.o utils/uni_bidi.o utils/ringbuffer.o utils/unicode.o utils/map.o 
+LIBGPAC_UTILS+=utils/color.o utils/os_module.o utils/math.o utils/path2d.o utils/path2d_stroker.o utils/module.o utils/uni_bidi.o utils/ringbuffer.o utils/unicode.o utils/map.o
 endif
 
 ## libgpac objects gathering: src/ietf
@@ -37,7 +37,7 @@ LIBGPAC_BIFS=bifs/arith_decoder.o bifs/bifs_codec.o bifs/bifs_node_tables.o bifs
 endif
 
 ## libgpac objects gathering: src/isomedia
-LIBGPAC_ISOM=isomedia/avc_ext.o isomedia/box_code_3gpp.o isomedia/box_code_apple.o isomedia/box_code_base.o isomedia/box_code_drm.o isomedia/box_code_meta.o isomedia/box_dump.o isomedia/box_funcs.o isomedia/data_map.o isomedia/drm_sample.o isomedia/isom_intern.o isomedia/isom_read.o isomedia/isom_store.o isomedia/isom_write.o isomedia/media.o isomedia/media_odf.o isomedia/meta.o isomedia/movie_fragments.o isomedia/sample_descs.o isomedia/stbl_read.o isomedia/stbl_write.o isomedia/track.o isomedia/tx3g.o isomedia/generic_subtitle.o 
+LIBGPAC_ISOM=isomedia/avc_ext.o isomedia/box_code_3gpp.o isomedia/box_code_apple.o isomedia/box_code_base.o isomedia/box_code_drm.o isomedia/box_code_meta.o isomedia/box_dump.o isomedia/box_funcs.o isomedia/data_map.o isomedia/drm_sample.o isomedia/isom_intern.o isomedia/isom_read.o isomedia/isom_store.o isomedia/isom_write.o isomedia/media.o isomedia/media_odf.o isomedia/meta.o isomedia/movie_fragments.o isomedia/sample_descs.o isomedia/stbl_read.o isomedia/stbl_write.o isomedia/track.o isomedia/tx3g.o isomedia/generic_subtitle.o
 ifeq ($(DISABLE_ISOFF_HINT), no)
 LIBGPAC_ISOM+=isomedia/hint_track.o isomedia/hinting.o
 endif
@@ -46,9 +46,9 @@ LIBGPAC_ISOM+=isomedia/box_code_adobe.o
 endif
 
 ## libgpac objects gathering: src/odf
-LIBGPAC_ODF=odf/desc_private.o odf/descriptors.o odf/odf_code.o odf/odf_codec.o odf/odf_command.o odf/qos.o odf/slc.o 
+LIBGPAC_ODF=odf/desc_private.o odf/descriptors.o odf/odf_code.o odf/odf_codec.o odf/odf_command.o odf/qos.o odf/slc.o
 ifeq ($(MINIMAL_OD), no)
-LIBGPAC_ODF+=odf/ipmpx_code.o odf/oci_codec.o 
+LIBGPAC_ODF+=odf/ipmpx_code.o odf/oci_codec.o
 
 ifeq ($(DISABLE_OD_DUMP), no)
 LIBGPAC_ODF+=odf/ipmpx_dump.o
@@ -73,7 +73,7 @@ LIBGPAC_SCENE=scenegraph/base_scenegraph.o scenegraph/mpeg4_animators.o scenegra
 ## libgpac objects gathering: src/mcrypt
 LIBGPAC_MCRYPT=
 ifeq ($(DISABLE_MCRYPT), no)
-LIBGPAC_MCRYPT+=mcrypt/cbc.o mcrypt/cfb.o mcrypt/ctr.o mcrypt/des.o mcrypt/ecb.o mcrypt/g_crypt.o mcrypt/ncfb.o mcrypt/nofb.o mcrypt/ofb.o mcrypt/rijndael-128.o mcrypt/rijndael-192.o mcrypt/rijndael-256.o mcrypt/stream.o mcrypt/tripledes.o 
+LIBGPAC_MCRYPT+=mcrypt/cbc.o mcrypt/cfb.o mcrypt/ctr.o mcrypt/des.o mcrypt/ecb.o mcrypt/g_crypt.o mcrypt/ncfb.o mcrypt/nofb.o mcrypt/ofb.o mcrypt/rijndael-128.o mcrypt/rijndael-192.o mcrypt/rijndael-256.o mcrypt/stream.o mcrypt/tripledes.o
 endif
 
 ## libgpac objects gathering: src/media tools
@@ -91,7 +91,7 @@ ifeq ($(DISABLE_MPD), no)
 LIBGPAC_MEDIATOOLS+=media_tools/m3u8.o media_tools/mpd.o
 endif
 ifeq ($(DISABLE_DASH_CLIENT), no)
-LIBGPAC_MEDIATOOLS+=media_tools/dash_client.o 
+LIBGPAC_MEDIATOOLS+=media_tools/dash_client.o
 endif
 ifeq ($(DISABLE_MEDIA_EXPORT), no)
 LIBGPAC_MEDIATOOLS+=media_tools/media_export.o
@@ -160,10 +160,10 @@ ifeq ($(DISABLE_LOADER_QTVR), no)
 LIBGPAC_SCENEMANAGER+=scene_manager/loader_qt.o
 endif
 ifeq ($(DISABLE_SVG), no)
-LIBGPAC_SCENEMANAGER+=scene_manager/loader_svg.o 
+LIBGPAC_SCENEMANAGER+=scene_manager/loader_svg.o
 endif
 ifeq ($(DISABLE_LOADER_SWF), no)
-LIBGPAC_SCENEMANAGER+=scene_manager/swf_parse.o scene_manager/swf_bifs.o scene_manager/swf_svg.o 
+LIBGPAC_SCENEMANAGER+=scene_manager/swf_parse.o scene_manager/swf_bifs.o scene_manager/swf_svg.o
 endif
 ifeq ($(DISABLE_SCENE_DUMP), no)
 LIBGPAC_SCENEMANAGER+=scene_manager/scene_dump.o
@@ -172,7 +172,7 @@ ifeq ($(DISABLE_SCENE_STATS), no)
 LIBGPAC_SCENEMANAGER+=scene_manager/scene_stats.o
 endif
 ifeq ($(DISABLE_SENG), no)
-LIBGPAC_SCENEMANAGER+=scene_manager/scene_engine.o 
+LIBGPAC_SCENEMANAGER+=scene_manager/scene_engine.o
 endif
 ifeq ($(DISABLE_SCENE_ENCODE), no)
 LIBGPAC_SCENEMANAGER+=scene_manager/encode_isom.o
@@ -200,7 +200,7 @@ ifeq ($(DISABLE_LASER), no)
 LIBGPAC_LASER=laser/lsr_enc.o laser/lsr_dec.o laser/lsr_tables.o
 endif
 
-## libgpac objects gathering: 
+## libgpac objects gathering:
 OBJS=$(LIBGPAC_UTILS) $(LIBGPAC_MCRYPT) $(LIBGPAC_SCENE) $(LIBGPAC_IETF) $(LIBGPAC_BIFS) $(LIBGPAC_ISOM) $(LIBGPAC_ODF) $(LIBGPAC_MEDIATOOLS) $(LIBGPAC_SCENEMANAGER) $(LIBGPAC_TERMINAL) $(LIBGPAC_COMPOSITOR) $(LIBGPAC_LASER)
 
 
@@ -276,13 +276,13 @@ CFLAGS+=-DGPAC_HAS_JP2
 endif
 
 ifneq ($(CONFIG_FT), no)
-OBJS+=../modules/ft_font/ft_font.o 
+OBJS+=../modules/ft_font/ft_font.o
 EXTRALIBS+= $(FT_LIBS)
 CFLAGS+=-DGPAC_HAS_FREETYPE $(FT_CFLAGS)
 endif
 
 ifeq ($(DISABLE_MEDIA_IMPORT), no)
-OBJS+=../modules/mpegts_in/mpegts_in.o 
+OBJS+=../modules/mpegts_in/mpegts_in.o
 endif
 
 ifeq ($(DISABLE_LOADER_BT), no)
@@ -296,14 +296,14 @@ OBJS+=../modules/ffmpeg_in/ffmpeg_decode.o ../modules/ffmpeg_in/ffmpeg_demux.o .
 CFLAGS+=-DGPAC_HAS_FFMPEG -Wno-deprecated-declarations -I"$(SRC_PATH)/include" $(ffmpeg_cflags)
 EXTRALIBS+= $(ffmpeg_lflags)
 #fix it first
-#OBJS+=../modules/redirect_av/redirect_av.o  
+#OBJS+=../modules/redirect_av/redirect_av.o
 endif
 endif
 
 ifneq ($(CONFIG_XVID), no)
 OBJS+=../modules/xvid_dec/xvid_dec.o
 CFLAGS+=-DGPAC_HAS_XVID
-EXTRALIBS+= -lxvidcore 
+EXTRALIBS+= -lxvidcore
 endif
 
 ifneq ($(CONFIG_OGG), no)
@@ -571,7 +571,7 @@ LD_SONAME="-Wl,-h,$(LIB)"
 LINKLIBS+= -lrt
 endif
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 all: lib
 
@@ -598,7 +598,7 @@ $(LIB): $(LIBGPAC_UTILS) $(LIBGPAC_IETF) $(LIBGPAC_BIFS) $(LIBGPAC_ODF) $(LIBGPA
 ifeq ($(CONFIG_DARWIN),yes)
 	$(LIBTOOL) -s -o ../bin/gcc/libgpac_static.a $(OBJS)
 	$(RANLIB) ../bin/gcc/libgpac_static.a
-	$(CC) $(SHFLAGS) $(LD_SONAME) $(LDFLAGS) -o ../bin/gcc/$@ $(OBJS) $(EXTRALIBS) 
+	$(CC) $(SHFLAGS) $(LD_SONAME) $(LDFLAGS) -o ../bin/gcc/$@ $(OBJS) $(EXTRALIBS)
 else
 	$(AR) cr ../bin/gcc/libgpac_static.a $(OBJS)
 	$(RANLIB) ../bin/gcc/libgpac_static.a
@@ -616,7 +616,7 @@ depend:
 	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
-clean: 
+clean:
 	rm -f $(OBJS) ../bin/gcc/$(LIB)
 	rm -rf ../bin/gcc/libgpac_static.a ../bin/gcc/libgpac.so \
 		../bin/gcc/libgpac.so.$(VERSION_MAJOR) \

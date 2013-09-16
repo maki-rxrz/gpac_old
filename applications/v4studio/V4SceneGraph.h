@@ -1,7 +1,7 @@
 #ifndef _V4SCENEGRAPH_H
 #define _V4SCENEGRAPH_H
 
-#include "safe_include.h" 
+#include "safe_include.h"
 #include <gpac/scene_manager.h>
 #include <gpac/compositor.h>
 #include <gpac/internal/terminal_dev.h> // MPEG4CLIENT
@@ -34,9 +34,9 @@ public:
 	/* file management functions */
 
 	void SaveFile(const char * path);
-	void LoadNew(); 
-	void LoadFile(const char *path); 
-	void LoadFileOld(const char *path); 
+	void LoadNew();
+	void LoadFile(const char *path);
+	void LoadFileOld(const char *path);
 
 
 	/* Node management functions */
@@ -85,7 +85,7 @@ protected:
 	GF_Compositor *m_pSr;
 	GF_Terminal *m_term;
 	V4StudioFrame * frame;
-	
+
 	char *m_pOriginal_mp4;
 	Bool m_bEncodeNames;
 	V4Service *m_pService;

@@ -105,7 +105,7 @@ static GF_Err avc_import_ffextradata(const u8 *extradata, const u64 extradata_si
 			gf_free(buffer);
 			return GF_BAD_PARAM;
 		}
-		
+
 		idx = gf_media_avc_read_pps(buffer, nal_size, &avc);
 		if (idx < 0) {
 			gf_bs_del(bs);
@@ -416,7 +416,7 @@ int dc_ffmpeg_video_muxer_open(VideoOutputFile * p_voutf, char * psz_name) {
 	p_video_stream->codec->width = p_video_codec_ctx->width; //p_voutf->p_vdata->i_width;
 	p_video_stream->codec->height = p_video_codec_ctx->height; //p_voutf->p_vdata->i_height;
 	{
-		AVRational time_base; 
+		AVRational time_base;
 		time_base.num = p_video_codec_ctx->time_base.num;
 		time_base.den = p_video_codec_ctx->time_base.den;
 		p_video_stream->codec->time_base = time_base;

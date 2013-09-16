@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #include "stdafx.h"
@@ -86,8 +86,8 @@ Bool CGPAXPlugin::EventProc(GF_Event *evt)
 		} else {
 			char *szTitle = "";
 			if (evt->progress.progress_type==0) szTitle = "Buffer ";
-			else 
-			if (evt->progress.progress_type==1) 
+			else
+			if (evt->progress.progress_type==1)
 			{
 				szTitle = "Download ";
 				m_iDownload_progress = (int)floor((100.0*evt->progress.done) / evt->progress.total);
@@ -134,7 +134,7 @@ Bool CGPAXPlugin::EventProc(GF_Event *evt)
 		if (gf_term_is_supported_url(m_term, evt->navigate.to_url, GF_TRUE, GF_TRUE)) {
 			gf_term_navigate_to(m_term, evt->navigate.to_url);
 			return GF_TRUE;
-		} 
+		}
 #ifndef _WIN32_WCE
 		else if (m_pBrowser) {
 			u32 i;
@@ -223,11 +223,11 @@ void CGPAXPlugin::LoadDATAUrl()
 	if (spColl->tags(CComVariant("OBJECT"), &spDispObjects) != S_OK)
 		return;
     CComPtr<IHTMLElementCollection> spObjs = CComQIPtr<IHTMLElementCollection>(spDispObjects);
-	
+
 	/*browse all objects and find us*/
 	long lCount = 0;
 	spObjs->get_length(&lCount);
-	for (long lCnt = 0; lCnt < lCount; lCnt++) {   
+	for (long lCnt = 0; lCnt < lCount; lCnt++) {
 		IDispatch *an_obj= NULL;
 		CComVariant varEmpty;
 		CComVariant varName;
@@ -333,16 +333,16 @@ LRESULT CGPAXPlugin::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 		goto err_exit;
 	}
 
-/*check log file*/	
+/*check log file*/
 	str = gf_cfg_get_key(m_user.config, "General", "LogFile");
 	if (str) {
 		m_pLogs = gf_f64_open(str, "wt");
 		if (m_pLogs) gf_log_set_callback(m_pLogs, gpax_do_log);
 	}
- 
+
 	/*if logs are specified, use them*/
 	gf_log_set_tools_levels( gf_cfg_get_key(m_user.config, "General", "Logs") );
-	
+
 
     str = gf_cfg_get_key(m_user.config, "General", "ModulesDirectory");
     m_user.modules = gf_modules_new(NULL, m_user.config);
@@ -356,9 +356,9 @@ LRESULT CGPAXPlugin::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
     m_term = gf_term_new(&m_user);
 
 	if (!m_term) goto err_exit;
-	
+
 	gf_term_set_option(m_term, GF_OPT_AUDIO_VOLUME, 100);
-    
+
 	LoadDATAUrl();
 
 	RECT rc;
@@ -389,7 +389,7 @@ void CGPAXPlugin::UnloadTerm()
 	}
 	if (m_user.modules) gf_modules_del(m_user.modules);
 	if (m_user.config) gf_cfg_del(m_user.config);
-	if (m_pLogs) 
+	if (m_pLogs)
 		fclose(m_pLogs);
 	m_pLogs = NULL;
 	gf_log_set_callback(NULL, NULL);
@@ -518,7 +518,7 @@ STDMETHODIMP CGPAXPlugin::Save(LPPROPERTYBAG pPropBag, BOOL fClearDirty, BOOL fS
     V_BSTR(&value) = SysAllocStringLen(NULL, len+1);
 	memcpy(V_BSTR(&value) , wurl, len*sizeof(u16));
 	V_BSTR(&value) [len] = 0;
-	
+
     pPropBag->Write(OLESTR("src"), &value);
     VariantClear(&value);
     return S_OK;
@@ -566,7 +566,7 @@ STDMETHODIMP CGPAXPlugin::Stop()
 
 STDMETHODIMP CGPAXPlugin::QualitySwitch(int switch_up)
 {
-	if (m_term) gf_term_switch_quality(m_term, switch_up ? GF_TRUE : GF_FALSE);     
+	if (m_term) gf_term_switch_quality(m_term, switch_up ? GF_TRUE : GF_FALSE);
     return S_OK;
 }
 
@@ -585,7 +585,7 @@ STDMETHODIMP CGPAXPlugin::SetURL(BSTR _url)
 			len = (u32) gf_utf8_wcstombs(url, len, (const u16 **)&srcp);
 			url[len] = 0;
 			strcpy(m_url, url);
-			gf_term_connect(m_term, url);     
+			gf_term_connect(m_term, url);
 			gf_free(url);
 		}
 	}
@@ -663,7 +663,7 @@ STDMETHODIMP CGPAXPlugin::put_DownloadProgress(INT dp)
 	return S_OK;
 }
 
-STDMETHODIMP CGPAXPlugin::GetInterfaceSafetyOptions(      
+STDMETHODIMP CGPAXPlugin::GetInterfaceSafetyOptions(
     REFIID riid,
     DWORD *pdwSupportedOptions,
     DWORD *pdwEnabledOptions
@@ -686,7 +686,7 @@ STDMETHODIMP CGPAXPlugin::GetInterfaceSafetyOptions(
     return E_NOINTERFACE;
 };
 
-STDMETHODIMP CGPAXPlugin::SetInterfaceSafetyOptions(      
+STDMETHODIMP CGPAXPlugin::SetInterfaceSafetyOptions(
     REFIID riid,
     DWORD dwOptionSetMask,
     DWORD dwEnabledOptions

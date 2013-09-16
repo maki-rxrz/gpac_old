@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -454,7 +454,7 @@ Bool gf_log_tool_level_on(u32 log_tool, u32 log_level);
  *	\brief Set log tools and levels
  *
  *	Set log tools and levels according to the log_tools_levels string. All previous log settings are discarded.
- *	\param log_tools_levels string specifying the tools and levels. It is formatted as logToolX@logLevelX:logToolZ@logLevelZ:... 
+ *	\param log_tools_levels string specifying the tools and levels. It is formatted as logToolX@logLevelX:logToolZ@logLevelZ:...
  *	\return GF_OK or GF_BAD_PARAM
 */
 GF_Err gf_log_set_tools_levels(const char *log_tools_levels);
@@ -463,7 +463,7 @@ GF_Err gf_log_set_tools_levels(const char *log_tools_levels);
  *	\brief Modify log tools and levels
  *
  *	Modify log tools and levels according to the log_tools_levels string. Previous log settings are kept.
- *	\param log_tools_levels string specifying the tools and levels. It is formatted as logToolX@logLevelX:logToolZ@logLevelZ:... 
+ *	\param log_tools_levels string specifying the tools and levels. It is formatted as logToolX@logLevelX:logToolZ@logLevelZ:...
  *	\return GF_OK or GF_BAD_PARAM
 */
 GF_Err gf_log_modify_tools_levels(const char *val);
@@ -714,7 +714,7 @@ u32 gf_crc_32(const char *data, u32 size);
 
 
 /*!
- *\brief gets UTC time in milliseconds 
+ *\brief gets UTC time in milliseconds
  *
  *Gets UTC clock in milliseconds
  \retrun UTC time in seconds
@@ -829,7 +829,7 @@ char * gf_get_default_cache_directory();
 GF_Err gf_gz_compress_payload(char **data, u32 data_len, u32 *out_size);
 
 /**
- * Decompresses a data buffer using zlib. 
+ * Decompresses a data buffer using zlib.
  * \param data data buffer to be decompressed
  * \param data_len length of the data buffer to be decompressed
  * \param uncompressed_data pointer to the uncompressed data buffer. It is the responsibility of the caller to free this buffer.

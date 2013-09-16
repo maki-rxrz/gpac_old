@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 
@@ -45,7 +45,7 @@ typedef HRESULT (WINAPI *DIRECTSOUNDCREATEPROC)(LPCGUID pcGuidDevice, LPDIRECTSO
 */
 #define MAX_NUM_BUFFERS		20
 
-typedef struct 
+typedef struct
 {
 	Bool force_config;
 	u32 cfg_num_buffers, cfg_duration;
@@ -56,7 +56,7 @@ typedef struct
 	IDirectSoundBuffer *pOutput;
 
 	u32 buffer_size, num_audio_buffer, total_audio_buffer_ms;
-	
+
 	/*notifs*/
 	Bool use_notif;
     u32 frame_state[MAX_NUM_BUFFERS];
@@ -92,7 +92,7 @@ static GF_Err DS_Setup(GF_AudioOutput *dr, void *os_handle, u32 num_buffers, u32
 	if ( FAILED( hr = ctx->DirectSoundCreate( NULL, &ctx->pDS, NULL ) ) ) return GF_IO_ERR;
 	flags = DSSCL_EXCLUSIVE;
 	if( FAILED( hr = ctx->pDS->lpVtbl->SetCooperativeLevel(ctx->pDS, ctx->hWnd, DSSCL_EXCLUSIVE) ) ) {
-		SAFE_DS_RELEASE( ctx->pDS ); 
+		SAFE_DS_RELEASE( ctx->pDS );
 		return GF_IO_ERR;
 	}
 	return GF_OK;
@@ -107,7 +107,7 @@ void DS_ResetBuffer(DSContext *ctx)
     if( FAILED(ctx->pOutput->lpVtbl->Lock(ctx->pOutput, 0, ctx->buffer_size*ctx->num_audio_buffer, &pLock, &size, NULL, NULL, 0 ) ) )
         return;
 	memset(pLock, 0, (size_t) size);
-	ctx->pOutput->lpVtbl->Unlock(ctx->pOutput, pLock, size, NULL, 0L); 
+	ctx->pOutput->lpVtbl->Unlock(ctx->pOutput, pLock, size, NULL, 0L);
 }
 
 void DS_ReleaseBuffer(GF_AudioOutput *dr)
@@ -118,7 +118,7 @@ void DS_ReleaseBuffer(GF_AudioOutput *dr)
 	/*stop playing and notif proc*/
 	if (ctx->pOutput) ctx->pOutput->lpVtbl->Stop(ctx->pOutput);
 	SAFE_DS_RELEASE(ctx->pOutput);
-	
+
 	/*use notif, shutdown notifier and event watcher*/
 	if (ctx->use_notif) {
 		for (i=0; i<ctx->num_audio_buffer; i++) CloseHandle(ctx->events[i]);
@@ -130,14 +130,14 @@ static void DS_Shutdown(GF_AudioOutput *dr)
 {
 	DSCONTEXT();
 	DS_ReleaseBuffer(dr);
-	SAFE_DS_RELEASE(ctx->pDS ); 
+	SAFE_DS_RELEASE(ctx->pDS );
 }
 
 /*we assume what was asked is what we got*/
 static GF_Err DS_ConfigureOutput(GF_AudioOutput *dr, u32 *SampleRate, u32 *NbChannels, u32 *nbBitsPerSample, u32 channel_cfg)
 {
     u32 i;
-	HRESULT hr; 
+	HRESULT hr;
 	const char *sOpt;
 	DSBUFFERDESC dsbBufferDesc;
 	IDirectSoundNotify *pNotify;
@@ -248,7 +248,7 @@ retry:
 	/*reset*/
 	DS_ResetBuffer(ctx);
 	/*play*/
-	ctx->pOutput->lpVtbl->Play(ctx->pOutput, 0, 0, DSBPLAY_LOOPING);	
+	ctx->pOutput->lpVtbl->Play(ctx->pOutput, 0, 0, DSBPLAY_LOOPING);
 	return GF_OK;
 }
 
@@ -267,7 +267,7 @@ static Bool DS_RestoreBuffer(LPDIRECTSOUNDBUFFER pDSBuffer)
 
 
 
-void DS_FillBuffer(GF_AudioOutput *dr, u32 buffer) 
+void DS_FillBuffer(GF_AudioOutput *dr, u32 buffer)
 {
 	HRESULT hr;
     VOID *pLock;
@@ -280,11 +280,11 @@ void DS_FillBuffer(GF_AudioOutput *dr, u32 buffer)
 		GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[DirectSound] restoring sound buffer\n"));
 		return;
 	}
-	
+
 	/*lock and fill from current pos*/
 	pos = buffer * ctx->buffer_size;
 	pLock = NULL;
-    if( FAILED( hr = ctx->pOutput->lpVtbl->Lock(ctx->pOutput, pos, ctx->buffer_size,  
+    if( FAILED( hr = ctx->pOutput->lpVtbl->Lock(ctx->pOutput, pos, ctx->buffer_size,
 			&pLock,  &size, NULL, NULL, 0L ) ) ) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_MMIO, ("[DirectSound] Error locking sound buffer\n"));
         return;
@@ -424,7 +424,7 @@ void *NewAudioOutput()
 
 	if( FAILED( hr = CoInitialize(NULL) ) ) return NULL;
 
-	
+
 	ctx = gf_malloc(sizeof(DSContext));
 	memset(ctx, 0, sizeof(DSContext));
 	ctx->hDSoundLib = LoadLibrary("dsound.dll");
@@ -464,7 +464,7 @@ void DeleteAudioOutput(void *ifce)
 	GF_AudioOutput *dr = (GF_AudioOutput *)ifce;
 	DSCONTEXT();
 
-	if (ctx->hDSoundLib) 
+	if (ctx->hDSoundLib)
 		FreeLibrary(ctx->hDSoundLib);
 	gf_free(ctx);
 	gf_free(ifce);

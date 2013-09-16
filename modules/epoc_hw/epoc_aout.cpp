@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 
@@ -90,7 +90,7 @@ GF_Err EPOCAudio::Open(u32 sample_rate, Bool stereo)
 	u32 count;
 	TMdaAudioDataSettings::TAudioCaps epoc_sr;
 
-	
+
 	switch (sample_rate) {
 	case 8000: epoc_sr = TMdaAudioDataSettings::ESampleRate8000Hz; break;
 	case 11025: epoc_sr = TMdaAudioDataSettings::ESampleRate11025Hz; break;
@@ -104,7 +104,7 @@ GF_Err EPOCAudio::Open(u32 sample_rate, Bool stereo)
 	default:
 		return GF_NOT_SUPPORTED;
 	}
-	
+
 	state = EPOC_AUDIO_INIT;
 
 	gf_sleep(10);
@@ -231,10 +231,10 @@ static GF_Err EAUD_ConfigureOutput(GF_AudioOutput *dr, u32 *SampleRate, u32 *NbC
 
 	e = ctx->Open(*SampleRate, (*NbChannels ==2) ? 1 : 0);
 	if (e) return e;
-	
+
 	snd_align = *NbChannels * 2;
 	bps = snd_align * *SampleRate;
-	
+
 	if (ctx->cfg_total_duration) {
 		ctx->num_buffers = ctx->cfg_num_buffers;
 		ctx->buffer_size = (bps*ctx->cfg_total_duration/1000) / ctx->num_buffers;

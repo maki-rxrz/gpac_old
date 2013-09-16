@@ -152,7 +152,7 @@ static void dc_write_mpd(CmdData *p_cmddata, const AudioData *p_adata, const Vid
 	int audio_frame_size = AUDIO_FRAME_SIZE;
 	FILE * p_f;
 	char psz_name[512];
-	
+
 	sprintf(psz_name, "%s/%s", p_cmddata->psz_out, p_cmddata->psz_mpd);
 
 	if (strcmp(p_cmddata->adata.psz_name, "") != 0) {
@@ -170,7 +170,7 @@ static void dc_write_mpd(CmdData *p_cmddata, const AudioData *p_adata, const Vid
 		video_frag_dur = (int)(p_vdata->i_framerate * (p_cmddata->i_frag_dur / 1000.0));
 		optimize_seg_frag_dur(&video_seg_dur, &video_frag_dur);
 	}
-	
+
 	p_f = fopen(psz_name, "w");
 
 	//	time_t t = time(NULL);
@@ -302,7 +302,7 @@ static u32 mpd_thread(void * p_params) {
 
 			//t += (1 * (p_cmddata->i_seg_dur / 1000.0));
 			//t += p_cmddata->i_ast_offset;
-			{	
+			{
 				struct tm ast_time = *gmtime(&t);
 				strftime(availability_start_time, 64, "%Y-%m-%dT%H:%M:%S", &ast_time);
 				sprintf(availability_start_time,"%s.%dZ", availability_start_time, ms);
@@ -907,7 +907,7 @@ u32 video_encoder_thread(void * p_params) {
 				dc_message_queue_put(p_mq, &t, sizeof(t));
 			}
 		}
-	
+
 		if (p_in_data->i_time_shift != -1) {
 			shift = 1000 * p_in_data->i_time_shift / p_in_data->i_seg_dur;
 			sprintf(name_to_delete, "%s/%s_%d_gpac.m4s", p_in_data->psz_out,
@@ -1151,7 +1151,7 @@ u32 audio_encoder_thread(void * p_params) {
 int dc_run_controler(CmdData * p_in_data) {
 
 	u32 i, j;
-	
+
 	ThreadParam keyboard_th_params;
 	ThreadParam mpd_th_params;
 	ThreadParam delete_seg_th_params;
@@ -1289,7 +1289,7 @@ int dc_run_controler(CmdData * p_in_data) {
 
 	/* Initialize keyboard controller thread */
 	keyboard_th_params.p_thread = gf_th_new("keyboard_thread");
-	
+
 	/* Create keyboard controller thread */
 	keyboard_th_params.p_in_data = p_in_data;
 	if (gf_th_run(keyboard_th_params.p_thread, keyboard_thread, (void *)&keyboard_th_params) != GF_OK) {
@@ -1312,12 +1312,12 @@ int dc_run_controler(CmdData * p_in_data) {
 		VideoData * p_tmp_vdata = gf_list_get(p_in_data->p_video_lst, i);
 		p_tmp_vdata->i_framerate = p_in_data->vdata.i_framerate;
 	}
-	
+
 	/******** MPD Thread ********/
 
 	/* Initialize MPD generator thread */
 	mpd_th_params.p_thread = gf_th_new("mpd_thread");
-	
+
 	/* Create MPD generator thread */
 	mpd_th_params.p_in_data = p_in_data;
 	mpd_th_params.p_mq = &mq;

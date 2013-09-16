@@ -124,7 +124,7 @@ unsigned int V4TimeLineCell::GetState() const {
 }
 
 
-// AddCommand -- 
+// AddCommand --
 void V4TimeLineCell::AddCommand(GF_Command *c) {
   gf_list_add(commands, c);
   SetState( GetState() | CELL_STATE_COMMAND );

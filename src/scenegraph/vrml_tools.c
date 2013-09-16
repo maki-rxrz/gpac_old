@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -47,12 +47,12 @@ Bool gf_node_in_table_by_tag(u32 tag, u32 NDTType)
 		}
 		return 0;
 #else
-		/*if BIFS is disabled, we don't have the NDTs - we therefore allow any node in any table otherwise we would reject 
+		/*if BIFS is disabled, we don't have the NDTs - we therefore allow any node in any table otherwise we would reject
 		them all*/
 		return 1;
 #endif
 
-	} 
+	}
 #ifndef GPAC_DISABLE_X3D
 	else if (tag<=GF_NODE_RANGE_LAST_X3D) {
 		return gf_x3d_get_node_type(NDTType, tag);
@@ -181,7 +181,7 @@ void gf_sg_set_proto_loader(GF_SceneGraph *scene, GF_SceneGraph *(*GetExternProt
 }
 
 
-u32 gf_sg_get_next_available_route_id(GF_SceneGraph *sg) 
+u32 gf_sg_get_next_available_route_id(GF_SceneGraph *sg)
 {
 	u32 i, count;
 	u32 ID = 0;
@@ -205,7 +205,7 @@ void gf_sg_set_max_defined_route_id(GF_SceneGraph *sg, u32 ID)
 	sg->max_defined_route_id = MAX(sg->max_defined_route_id, ID);
 }
 
-u32 gf_sg_get_next_available_proto_id(GF_SceneGraph *sg) 
+u32 gf_sg_get_next_available_proto_id(GF_SceneGraph *sg)
 {
 	u32 i, count;
 	u32 ID = 0;
@@ -236,7 +236,7 @@ GF_Err gf_node_insert_child(GF_Node *parent, GF_Node *new_child, s32 Position)
 }
 
 /*for V4Studio...*/
-GF_Err gf_node_remove_child(GF_Node *parent, GF_Node *toremove_child) 
+GF_Err gf_node_remove_child(GF_Node *parent, GF_Node *toremove_child)
 {
 	if (!gf_node_list_del_child(& ((GF_ParentNode *) parent)->children, toremove_child)) return GF_BAD_PARAM;
 	/*V4Studio doesn't handle DEF/USE properly yet...*/
@@ -476,7 +476,7 @@ static MFAttrRef *NewMFAttrRef()
 	return tmp;
 }
 
-void *gf_sg_vrml_field_pointer_new(u32 FieldType) 
+void *gf_sg_vrml_field_pointer_new(u32 FieldType)
 {
 	switch (FieldType) {
 	case GF_SG_VRML_SFBOOL: return NewSFBool();
@@ -514,14 +514,14 @@ void *gf_sg_vrml_field_pointer_new(u32 FieldType)
 	case GF_SG_VRML_SFCOMMANDBUFFER:
 		return NewSFCommandBuffer();
 
-	case GF_SG_VRML_SFURL: 
+	case GF_SG_VRML_SFURL:
 		return NewSFURL();
 	case GF_SG_VRML_MFURL:
 		return NewMFURL();
 
-	case GF_SG_VRML_SFSCRIPT: 
+	case GF_SG_VRML_SFSCRIPT:
 		return NewSFScript();
-	case GF_SG_VRML_MFSCRIPT: 
+	case GF_SG_VRML_MFSCRIPT:
 		return NewMFScript();
 	}
 	return NULL;
@@ -557,15 +557,15 @@ void gf_sg_sfcommand_del(SFCommandBuffer cb)
 	if (cb.buffer) gf_free(cb.buffer);
 }
 
-void gf_sg_vrml_field_pointer_del(void *field, u32 FieldType) 
+void gf_sg_vrml_field_pointer_del(void *field, u32 FieldType)
 {
 	GF_Node *node;
 
 	switch (FieldType) {
-	case GF_SG_VRML_SFBOOL: 
+	case GF_SG_VRML_SFBOOL:
 	case GF_SG_VRML_SFFLOAT:
 	case GF_SG_VRML_SFDOUBLE:
-	case GF_SG_VRML_SFTIME: 
+	case GF_SG_VRML_SFTIME:
 	case GF_SG_VRML_SFINT32:
 	case GF_SG_VRML_SFVEC3F:
 	case GF_SG_VRML_SFVEC3D:
@@ -583,24 +583,24 @@ void gf_sg_vrml_field_pointer_del(void *field, u32 FieldType)
 		gf_sg_sfimage_del(* ((SFImage *)field));
 		break;
 
-	case GF_SG_VRML_SFNODE: 
+	case GF_SG_VRML_SFNODE:
 		node = *(GF_Node **) field;
 		if (node) gf_node_del(node);
 		return;
 	case GF_SG_VRML_SFCOMMANDBUFFER:
 		gf_sg_sfcommand_del(*(SFCommandBuffer *)field);
 		break;
-	
+
 	case GF_SG_VRML_MFBOOL:
 		gf_sg_mfbool_del( * ((MFBool *) field));
 		break;
-	case GF_SG_VRML_MFFLOAT: 
+	case GF_SG_VRML_MFFLOAT:
 		gf_sg_mffloat_del( * ((MFFloat *) field));
 		break;
-	case GF_SG_VRML_MFDOUBLE: 
+	case GF_SG_VRML_MFDOUBLE:
 		gf_sg_mfdouble_del( * ((MFDouble *) field));
 		break;
-	case GF_SG_VRML_MFTIME: 
+	case GF_SG_VRML_MFTIME:
 		gf_sg_mftime_del( * ((MFTime *)field));
 		break;
 	case GF_SG_VRML_MFINT32:
@@ -636,17 +636,17 @@ void gf_sg_vrml_field_pointer_del(void *field, u32 FieldType)
 		break;
 	case GF_SG_VRML_MFURL:
 		gf_sg_mfurl_del( * ((MFURL *) field));
-		break;		
+		break;
 	case GF_SG_VRML_MFATTRREF:
 		gf_sg_mfattrref_del( * ((MFAttrRef *) field));
-		break;		
+		break;
 	//used only in proto since this field is created by default for regular nodes
-	case GF_SG_VRML_MFNODE: 
+	case GF_SG_VRML_MFNODE:
 		assert(0);
 		return;
 	case GF_SG_VRML_MFSCRIPT:
 		gf_sg_mfscript_del( * ((MFScript *) field));
-		break;		
+		break;
 
 	default:
 		assert(0);
@@ -934,7 +934,7 @@ u32 gf_sg_vrml_get_sf_type(u32 FieldType)
 }
 
 //
-//	Insert (+alloc) an MFField with a specified position for insertion and sets the ptr to the 
+//	Insert (+alloc) an MFField with a specified position for insertion and sets the ptr to the
 //	newly created slot
 //	!! Doesnt work for MFNodes
 //	InsertAt is the 0-based index for the new slot
@@ -948,10 +948,10 @@ GF_Err gf_sg_vrml_mf_insert(void *mf, u32 FieldType, void **new_ptr, u32 InsertA
 	if (FieldType == GF_SG_VRML_MFNODE) return GF_BAD_PARAM;
 
 	FieldSize = gf_sg_vrml_get_sf_size(FieldType);
-	
+
 	//field we can't copy
 	if (!FieldSize) return GF_BAD_PARAM;
-	
+
 	//first item ever
 	if (!mffield->count || !mffield->array) {
 		if (mffield->array) gf_free(mffield->array);
@@ -1035,7 +1035,7 @@ GF_Err gf_sg_vrml_mf_alloc(void *mf, u32 FieldType, u32 NbItems)
 	if (FieldType == GF_SG_VRML_MFNODE) return GF_BAD_PARAM;
 
 	FieldSize = gf_sg_vrml_get_sf_size(FieldType);
-	
+
 	//field we can't copy
 	if (!FieldSize) return GF_BAD_PARAM;
 	if (NbItems>MAX_MFFIELD_ALLOC) return GF_IO_ERR;
@@ -1061,7 +1061,7 @@ GF_Err gf_sg_vrml_mf_get_item(void *mf, u32 FieldType, void **new_ptr, u32 ItemP
 	if (FieldType == GF_SG_VRML_MFNODE) return GF_BAD_PARAM;
 
 	FieldSize = gf_sg_vrml_get_sf_size(FieldType);
-	
+
 	//field we can't copy
 	if (!FieldSize) return GF_BAD_PARAM;
 	if (ItemPos >= mffield->count) return GF_BAD_PARAM;
@@ -1086,7 +1086,7 @@ GF_Err gf_sg_vrml_mf_remove(void *mf, u32 FieldType, u32 RemoveFrom)
 	GenMFField *mffield = (GenMFField *)mf;
 
 	FieldSize = gf_sg_vrml_get_sf_size(FieldType);
-	
+
 	//field we can't copy
 	if (!FieldSize) return GF_BAD_PARAM;
 
@@ -1122,7 +1122,7 @@ void VRML_FieldCopyCast(void *dest, u32 dst_field_type, void *orig, u32 ori_fiel
 	u32 size, i, sf_type_ori, sf_type_dst;
 	void *dst_field, *orig_field;
 	if (!dest || !orig) return;
-	
+
 	switch (dst_field_type) {
 	case GF_SG_VRML_SFSTRING:
 		if (ori_field_type == GF_SG_VRML_SFURL) {
@@ -1147,9 +1147,9 @@ void VRML_FieldCopyCast(void *dest, u32 dst_field_type, void *orig, u32 ori_fiel
 		url = ((SFURL *)dest);
 		url->OD_ID = 0;
 		if (url->url) gf_free(url->url);
-		if ( ((SFString*)orig)->buffer) 
+		if ( ((SFString*)orig)->buffer)
 			url->url = gf_strdup(((SFString*)orig)->buffer);
-		else 
+		else
 			url->url = NULL;
 		return;
 	case GF_SG_VRML_MFSTRING:
@@ -1228,7 +1228,7 @@ void gf_sg_vrml_field_clone(void *dest, void *orig, u32 field_type, GF_SceneGrap
 	case GF_SG_VRML_SFURL:
 		if ( ((SFURL *)dest)->url ) gf_free( ((SFURL *)dest)->url );
 		((SFURL *)dest)->OD_ID = ((SFURL *)orig)->OD_ID;
-		if (((SFURL *)orig)->url) 
+		if (((SFURL *)orig)->url)
 			((SFURL *)dest)->url = gf_strdup(((SFURL *)orig)->url);
 		else
 			((SFURL *)dest)->url = NULL;
@@ -1268,7 +1268,7 @@ void gf_sg_vrml_field_clone(void *dest, void *orig, u32 field_type, GF_SceneGrap
 
 	/*simply copy text string*/
 	case GF_SG_VRML_SFSCRIPT:
-		if (((SFScript*)dest)->script_text) gf_free(((SFScript*)dest)->script_text);		
+		if (((SFScript*)dest)->script_text) gf_free(((SFScript*)dest)->script_text);
 		((SFScript*)dest)->script_text = NULL;
 		if ( ((SFScript*)orig)->script_text)
 			((SFScript *)dest)->script_text = (char *)gf_strdup( (char*) ((SFScript*)orig)->script_text );
@@ -1481,31 +1481,31 @@ void InitTimeTrigger(GF_Node *n);
 Bool gf_sg_vrml_node_init(GF_Node *node)
 {
 	switch (node->sgprivate->tag) {
-	case TAG_MPEG4_ColorInterpolator: 
+	case TAG_MPEG4_ColorInterpolator:
 #ifndef GPAC_DISABLE_X3D
 	case TAG_X3D_ColorInterpolator:
 #endif
 		return InitColorInterpolator((M_ColorInterpolator *)node);
-	case TAG_MPEG4_CoordinateInterpolator: 
+	case TAG_MPEG4_CoordinateInterpolator:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_CoordinateInterpolator: 
+	case TAG_X3D_CoordinateInterpolator:
 #endif
 		return InitCoordinateInterpolator((M_CoordinateInterpolator *)node);
-	case TAG_MPEG4_CoordinateInterpolator2D: 
+	case TAG_MPEG4_CoordinateInterpolator2D:
 		return InitCoordinateInterpolator2D((M_CoordinateInterpolator2D *)node);
-	case TAG_MPEG4_NormalInterpolator: 
+	case TAG_MPEG4_NormalInterpolator:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_NormalInterpolator: 
+	case TAG_X3D_NormalInterpolator:
 #endif
 		return InitNormalInterpolator((M_NormalInterpolator*)node);
-	case TAG_MPEG4_OrientationInterpolator: 
+	case TAG_MPEG4_OrientationInterpolator:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_OrientationInterpolator: 
+	case TAG_X3D_OrientationInterpolator:
 #endif
 		return InitOrientationInterpolator((M_OrientationInterpolator*)node);
-	case TAG_MPEG4_PositionInterpolator: 
+	case TAG_MPEG4_PositionInterpolator:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_PositionInterpolator: 
+	case TAG_X3D_PositionInterpolator:
 #endif
 		return InitPositionInterpolator((M_PositionInterpolator *)node);
 	case TAG_MPEG4_PositionInterpolator2D:
@@ -1513,26 +1513,26 @@ Bool gf_sg_vrml_node_init(GF_Node *node)
 	case TAG_X3D_PositionInterpolator2D:
 #endif
 		return InitPositionInterpolator2D((M_PositionInterpolator2D *)node);
-	case TAG_MPEG4_ScalarInterpolator: 
+	case TAG_MPEG4_ScalarInterpolator:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_ScalarInterpolator: 
+	case TAG_X3D_ScalarInterpolator:
 #endif
 		return InitScalarInterpolator((M_ScalarInterpolator *)node);
 	case TAG_MPEG4_Valuator:
 		return InitValuator((M_Valuator *)node);
-	case TAG_MPEG4_PositionAnimator: 
+	case TAG_MPEG4_PositionAnimator:
 		PA_Init(node); return 1;
-	case TAG_MPEG4_PositionAnimator2D: 
+	case TAG_MPEG4_PositionAnimator2D:
 		PA2D_Init(node); return 1;
-	case TAG_MPEG4_ScalarAnimator: 
+	case TAG_MPEG4_ScalarAnimator:
 		SA_Init(node); return 1;
-	case TAG_MPEG4_PositionInterpolator4D: 
+	case TAG_MPEG4_PositionInterpolator4D:
 		return InitPositionInterpolator4D((M_PositionInterpolator4D *)node);
-	case TAG_MPEG4_CoordinateInterpolator4D: 
+	case TAG_MPEG4_CoordinateInterpolator4D:
 		return InitCoordinateInterpolator4D((M_CoordinateInterpolator4D *)node);
-	case TAG_MPEG4_Script: 
+	case TAG_MPEG4_Script:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Script: 
+	case TAG_X3D_Script:
 #endif
 		return 1;
 
@@ -1555,25 +1555,25 @@ Bool gf_sg_vrml_node_changed(GF_Node *node, GF_FieldInfo *field)
 	case TAG_ProtoNode:
 		/*hardcoded protos need modification notifs*/
 		if (node->sgprivate->UserCallback) return 0;
-	case TAG_MPEG4_ColorInterpolator: 
-	case TAG_MPEG4_CoordinateInterpolator: 
-	case TAG_MPEG4_CoordinateInterpolator2D: 
-	case TAG_MPEG4_NormalInterpolator: 
-	case TAG_MPEG4_OrientationInterpolator: 
-	case TAG_MPEG4_PositionInterpolator: 
-	case TAG_MPEG4_PositionInterpolator2D: 
-	case TAG_MPEG4_ScalarInterpolator: 
+	case TAG_MPEG4_ColorInterpolator:
+	case TAG_MPEG4_CoordinateInterpolator:
+	case TAG_MPEG4_CoordinateInterpolator2D:
+	case TAG_MPEG4_NormalInterpolator:
+	case TAG_MPEG4_OrientationInterpolator:
+	case TAG_MPEG4_PositionInterpolator:
+	case TAG_MPEG4_PositionInterpolator2D:
+	case TAG_MPEG4_ScalarInterpolator:
 	case TAG_MPEG4_Valuator:
 	case TAG_MPEG4_PositionInterpolator4D:
 	case TAG_MPEG4_CoordinateInterpolator4D:
 	case TAG_MPEG4_Script:
 #ifndef GPAC_DISABLE_X3D
 	case TAG_X3D_ColorInterpolator:
-	case TAG_X3D_CoordinateInterpolator: 
-	case TAG_X3D_NormalInterpolator: 
-	case TAG_X3D_OrientationInterpolator: 
-	case TAG_X3D_PositionInterpolator: 
-	case TAG_X3D_ScalarInterpolator: 
+	case TAG_X3D_CoordinateInterpolator:
+	case TAG_X3D_NormalInterpolator:
+	case TAG_X3D_OrientationInterpolator:
+	case TAG_X3D_PositionInterpolator:
+	case TAG_X3D_ScalarInterpolator:
 	case TAG_X3D_Script:
 	case TAG_X3D_BooleanFilter:
 	case TAG_X3D_BooleanSequencer:
