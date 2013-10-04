@@ -1,7 +1,7 @@
 /*
  *					GPAC Multimedia Framework
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2005-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -39,7 +39,7 @@ static void X11_DestroyOverlay(XWindow *xwin)
 {
 	if (xwin->overlay) XFree(xwin->overlay);
 	xwin->overlay = NULL;
-	xwin->xv_pf_format = 0;	
+	xwin->xv_pf_format = 0;
 	if (xwin->xvport>=0) {
 		XvUngrabPort(xwin->display, xwin->xvport, CurrentTime );
 		xwin->xvport = -1;
@@ -145,11 +145,11 @@ static int X11_GetXVideoPort(GF_VideoOutput *vout, u32 pixel_format, Bool check_
 		}
 		if (selected_port == -1 )
 	                continue;
- 
+
        }
         if (formats != NULL) XFree(formats);
     }
-    if (nb_adaptors > 0) 
+    if (nb_adaptors > 0)
 	XvFreeAdaptorInfo(adaptors);
 
    return selected_port;
@@ -158,13 +158,13 @@ static GF_Err X11_InitOverlay(GF_VideoOutput *vout, u32 VideoWidth, u32 VideoHei
 {
 	XWindow *xwin = (XWindow *)vout->opaque;
 	if (xwin->overlay && (VideoWidth<=xwin->overlay->width) && (VideoHeight<=xwin->overlay->height)) {
-		return GF_OK;	
+		return GF_OK;
 	}
 
 	X11_DestroyOverlay(xwin);
 
 	xwin->xvport = X11_GetXVideoPort(vout, GF_PIXEL_I420, 0);
-	if (xwin->xvport<0) 
+	if (xwin->xvport<0)
 		xwin->xvport = X11_GetXVideoPort(vout, GF_PIXEL_YUY2, 0);
 
 	if (xwin->xvport<0) {
@@ -178,8 +178,8 @@ static GF_Err X11_InitOverlay(GF_VideoOutput *vout, u32 VideoWidth, u32 VideoHei
 		return GF_IO_ERR;
 	}
 
-	GF_LOG(GF_LOG_INFO, GF_LOG_MMIO, ("[X11] Overlay init %d x %d - pixel format %s - XV port %d\n", 
-			VideoWidth, VideoHeight, 
+	GF_LOG(GF_LOG_INFO, GF_LOG_MMIO, ("[X11] Overlay init %d x %d - pixel format %s - XV port %d\n",
+			VideoWidth, VideoHeight,
 			gf_4cc_to_str(vout->yuv_pixel_format), xwin->xvport ));
 
 	return GF_OK;
@@ -215,7 +215,7 @@ GF_Err X11_Blit(struct _video_out *vout, GF_VideoSurface *video_src, GF_Window *
 		if (!xwin->overlay) return GF_IO_ERR;
 	}
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_MMIO, ("[X11] Blit surface to dest %d x %d - overlay type %s\n", dest->w, dest->h,
-					(overlay_type==0)? "none" : ((overlay_type==1) ? "Top-Level" : "ColorKey") 
+					(overlay_type==0)? "none" : ((overlay_type==1) ? "Top-Level" : "ColorKey")
 	));
 
 	overlay = xwin->overlay;
@@ -238,7 +238,7 @@ GF_Err X11_Blit(struct _video_out *vout, GF_VideoSurface *video_src, GF_Window *
 		}
 		dst_dr = xwin->pixmap;
 	}
-     XvPutImage(xwin->display, xvport, dst_dr, xwin->the_gc, overlay, 
+     XvPutImage(xwin->display, xvport, dst_dr, xwin->the_gc, overlay,
 		src->x, src->y, src->w, src->h,
 		dest->x, dest->y, dest->w, dest->h);
 
@@ -304,16 +304,16 @@ static void x11_translate_key(u32 X11Key, GF_EventKey *evt)
 	case XK_Clear: evt->key_code = GF_KEY_CLEAR; break;
 
 	case XK_KP_Enter:
-		evt->flags = GF_KEY_EXT_NUMPAD; 
-	case XK_Return: 
-		evt->key_code = GF_KEY_ENTER; 
+		evt->flags = GF_KEY_EXT_NUMPAD;
+	case XK_Return:
+		evt->key_code = GF_KEY_ENTER;
 		break;
 	case XK_Pause: evt->key_code = GF_KEY_PAUSE; break;
 	case XK_Caps_Lock: evt->key_code = GF_KEY_CAPSLOCK; break;
 	case XK_Scroll_Lock: evt->key_code = GF_KEY_SCROLL; break;
 	case XK_Escape: evt->key_code = GF_KEY_ESCAPE; break;
-	case XK_Delete: 
-		evt->key_code = GF_KEY_DEL; 
+	case XK_Delete:
+		evt->key_code = GF_KEY_DEL;
 		break;
 
 	case XK_Kanji: evt->key_code = GF_KEY_KANJIMODE; break;
@@ -346,7 +346,7 @@ static void x11_translate_key(u32 X11Key, GF_EventKey *evt)
 	//case XK_Break: evt->key_code = GF_KEY_BREAK; break;
 	//case XK_Mode_switch: evt->key_code = GF_KEY_BEGIN; break;
 	case XK_Num_Lock: evt->key_code = GF_KEY_NUMLOCK; break;
-	
+
 	case XK_F1: evt->key_code = GF_KEY_F1; break;
 	case XK_F2: evt->key_code = GF_KEY_F2; break;
 	case XK_F3: evt->key_code = GF_KEY_F3; break;
@@ -372,40 +372,40 @@ static void x11_translate_key(u32 X11Key, GF_EventKey *evt)
 	case XK_F23: evt->key_code = GF_KEY_F23; break;
 	case XK_F24: evt->key_code = GF_KEY_F24; break;
 
-	case XK_KP_Delete: 
-	case XK_KP_Decimal: 
-		evt->flags = GF_KEY_EXT_NUMPAD; 
-		evt->key_code = GF_KEY_COMMA; 
+	case XK_KP_Delete:
+	case XK_KP_Decimal:
+		evt->flags = GF_KEY_EXT_NUMPAD;
+		evt->key_code = GF_KEY_COMMA;
 		break;
 
 	case XK_KP_Insert:
-	case XK_KP_0: 
+	case XK_KP_0:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_0; break;
 	case XK_KP_End:
-	case XK_KP_1: 
+	case XK_KP_1:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_1; break;
-	case XK_KP_Down: 
-	case XK_KP_2: 
+	case XK_KP_Down:
+	case XK_KP_2:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_2; break;
-	case XK_KP_Page_Down: 
+	case XK_KP_Page_Down:
 	case XK_KP_3:
 		 evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_3; break;
-	case XK_KP_Left: 
-	case XK_KP_4: 
+	case XK_KP_Left:
+	case XK_KP_4:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_4; break;
-	case XK_KP_Begin: 
+	case XK_KP_Begin:
 	case XK_KP_5:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_5; break;
-	case XK_KP_Right: 
+	case XK_KP_Right:
 	case XK_KP_6:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_6; break;
-	case XK_KP_Home: 
+	case XK_KP_Home:
 	case XK_KP_7:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_7; break;
-	case XK_KP_Up: 
+	case XK_KP_Up:
 	case XK_KP_8:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_8; break;
-	case XK_KP_Page_Up: 
+	case XK_KP_Page_Up:
 	case XK_KP_9:
 		evt->flags = GF_KEY_EXT_NUMPAD; evt->key_code = GF_KEY_9; break;
 	case XK_KP_Add:
@@ -421,22 +421,22 @@ static void x11_translate_key(u32 X11Key, GF_EventKey *evt)
 	case XK_Shift_R:
 		evt->flags = GF_KEY_EXT_RIGHT;
 	case XK_Shift_L:
-		evt->key_code = GF_KEY_SHIFT; 
+		evt->key_code = GF_KEY_SHIFT;
 		break;
 	case XK_Control_R:
 		evt->flags = GF_KEY_EXT_RIGHT;
 	case XK_Control_L:
-		evt->key_code = GF_KEY_CONTROL; 
+		evt->key_code = GF_KEY_CONTROL;
 		break;
 	case XK_Alt_R:
 		evt->flags = GF_KEY_EXT_RIGHT;
 	case XK_Alt_L:
-		evt->key_code = GF_KEY_ALT; 
+		evt->key_code = GF_KEY_ALT;
 		break;
 	case XK_Super_R:
 		evt->flags = GF_KEY_EXT_RIGHT;
 	case XK_Super_L:
-		evt->key_code = GF_KEY_WIN; 
+		evt->key_code = GF_KEY_WIN;
 		break;
 
 	case XK_Menu: evt->key_code = GF_KEY_META; break;
@@ -483,7 +483,7 @@ static void x11_translate_key(u32 X11Key, GF_EventKey *evt)
 			evt->hw_code = X11Key - 'a' + 'A';
 		}
 		else {
-			evt->key_code = 0; 
+			evt->key_code = 0;
 			GF_LOG(GF_LOG_WARNING, GF_LOG_MMIO, ("[X11] Unrecognized key %X\n", X11Key));
 		}
 		break;
@@ -493,7 +493,7 @@ static void x11_translate_key(u32 X11Key, GF_EventKey *evt)
 
 
 /* taken from SDL
- Ack!  XPending() actually performs a blocking read if no events available 
+ Ack!  XPending() actually performs a blocking read if no events available
 */
 static int X11_Pending(Display *display)
 {
@@ -563,7 +563,7 @@ static void X11_HandleEvents(GF_VideoOutput *vout)
 		    evt.type = GF_EVENT_REFRESH;
 		    vout->on_event (vout->evt_cbk_hdl, &evt);
 		    break;
-		    
+
 		    /* Have we been requested to quit (or another client message?) */
 		  case ClientMessage:
 		    if ( (xevent.xclient.format == 32) && (xevent.xclient.data.l[0] == xWindow->WM_DELETE_WINDOW) ) {
@@ -571,13 +571,13 @@ static void X11_HandleEvents(GF_VideoOutput *vout)
 		      vout->on_event(vout->evt_cbk_hdl, &evt);
 		    }
 		    break;
-		  	
+
 		      case KeyPress:
 		      case KeyRelease:
 		    x11_translate_key(XKeycodeToKeysym (xWindow->display, xevent.xkey.keycode, 0), &evt.key);
 			evt.type = (xevent.type ==KeyPress) ? GF_EVENT_KEYDOWN : GF_EVENT_KEYUP;
 			vout->on_event (vout->evt_cbk_hdl, &evt);
-		    
+
 			if (xevent.type ==KeyPress) {
 				s32 len;
 				len = XLookupString (&xevent.xkey, (char *) keybuf, sizeof(keybuf), NULL, &state);
@@ -588,7 +588,7 @@ static void X11_HandleEvents(GF_VideoOutput *vout)
 				}
 			}
 			break;
-		    
+
 		  case ButtonPress:
 			  if (!xWindow->fullscreen && !xWindow->has_focus) {
 				  xWindow->has_focus = 1;
@@ -599,7 +599,7 @@ static void X11_HandleEvents(GF_VideoOutput *vout)
 		    evt.mouse.x = xevent.xbutton.x;
 		    evt.mouse.y = xevent.xbutton.y;
 			evt.type = (xevent.type == ButtonRelease) ? GF_EVENT_MOUSEUP : GF_EVENT_MOUSEDOWN;
-		    
+
 		    switch (xevent.xbutton.button) {
 		    case Button1:
 		      evt.mouse.button = GF_MOUSE_LEFT;
@@ -624,10 +624,10 @@ static void X11_HandleEvents(GF_VideoOutput *vout)
 		      vout->on_event(vout->evt_cbk_hdl, &evt);
 		      break;
 		    }
-		    if (!xWindow->fullscreen && (xevent.type==ButtonPress) ) 
+		    if (!xWindow->fullscreen && (xevent.type==ButtonPress) )
 		      XSetInputFocus(xWindow->display, xWindow->wnd, RevertToNone, CurrentTime);
 		    break;
-		    
+
 		  case MotionNotify:
 		    evt.type = GF_EVENT_MOUSEMOVE;
 		    evt.mouse.x = xevent.xmotion.x;
@@ -650,12 +650,12 @@ static void X11_HandleEvents(GF_VideoOutput *vout)
 		  case FocusIn:
 			if (!xWindow->fullscreen) xWindow->has_focus = 1;
 		    break;
-		    
+
 		  case DestroyNotify:
 		      evt.type = GF_EVENT_QUIT;
 		      vout->on_event(vout->evt_cbk_hdl, &evt);
 		    break;
-		    
+
 		  default:
 		    break;
 		  }
@@ -722,10 +722,10 @@ static GF_Err X11_SetupGLPixmap(GF_VideoOutput *vout, u32 width, u32 height)
   GF_LOG(GF_LOG_INFO, GF_LOG_MMIO, ("[X11] Using offscreen GL context through glXPixmap\n"));
   xWin->gl_pixmap = XCreatePixmap(xWin->display, xWin->gl_wnd, width, height, xWin->depth);
   if (!xWin->gl_pixmap) return GF_IO_ERR;
- 
+
   xWin->gl_offscreen = glXCreateGLXPixmap(xWin->display, xWin->glx_visualinfo, xWin->gl_pixmap);
   if (!xWin->gl_offscreen) return GF_IO_ERR;
- 
+
   XSync(xWin->display, False);
   xWin->glx_context = glXCreateContext(xWin->display, xWin->glx_visualinfo, 0, GL_FALSE);
   XSync(xWin->display, False);
@@ -786,7 +786,7 @@ static void X11_ReleaseBackBuffer (GF_VideoOutput * vout)
 #ifdef GPAC_HAS_X11_XV
 	X11_DestroyOverlay(xWindow);
 #endif
-	
+
 }
 
 /*
@@ -807,7 +807,7 @@ GF_Err X11_InitBackBuffer (GF_VideoOutput * vout, u32 VideoWidth, u32 VideoHeigh
 
 	X11_ReleaseBackBuffer(vout);
 	/*WATCHOUT seems we need even width when using shared memory extensions*/
-	if (xWindow->use_shared_memory && (VideoWidth%2)) 
+	if (xWindow->use_shared_memory && (VideoWidth%2))
 	  VideoWidth++;
 
 	size = VideoWidth * VideoHeight * xWindow->bpp;
@@ -834,7 +834,7 @@ GF_Err X11_InitBackBuffer (GF_VideoOutput * vout, u32 VideoWidth, u32 VideoHeigh
 	} else if (xWindow->use_shared_memory) {
 		GF_SAFEALLOC(xWindow->shmseginfo, XShmSegmentInfo);
 		xWindow->surface = XShmCreateImage (xWindow->display, xWindow->visual,
-									 xWindow->depth, ZPixmap, NULL, xWindow->shmseginfo, 
+									 xWindow->depth, ZPixmap, NULL, xWindow->shmseginfo,
 									 VideoWidth, VideoHeight);
 		xWindow->shmseginfo->shmid = shmget(IPC_PRIVATE, xWindow->surface->bytes_per_line * xWindow->surface->height,
 									 IPC_CREAT | 0777);
@@ -897,7 +897,7 @@ GF_Err X11_ProcessEvent (struct _video_out * vout, GF_Event * evt)
 		/*if owning the window and not in fullscreen, resize it (initial scene size)*/
 	xWindow->w_width = evt->size.width;
 	xWindow->w_height = evt->size.height;
-        
+
 	  if (!xWindow->fullscreen) {
 	    if (xWindow->par_wnd) {
 	      XWindowAttributes pwa;
@@ -1074,7 +1074,7 @@ X11_SetupWindow (GF_VideoOutput * vout)
 		Float screenHeight = (Float)XHeightOfScreen(xWindow->screenptr);
 		Float screenHeightIn = (Float)XHeightMMOfScreen(xWindow->screenptr) / 25.4f;
 		vout->dpi_x = (u32)(screenWidth / screenWidthIn);
-		vout->dpi_y = (u32)(screenHeight / screenHeightIn);	
+		vout->dpi_y = (u32)(screenHeight / screenHeightIn);
 	}
 
 	switch (xWindow->depth) {
@@ -1239,7 +1239,7 @@ xWindow->screennum=0;
 			GF_LOG(GF_LOG_INFO, GF_LOG_MMIO, ("[X11] Using XV Offscreen YUV2RGB acceleration\n"));
 		}
 #endif
-	} 
+	}
 #endif
 
 	XSetWindowAttributes xsw;
@@ -1441,7 +1441,7 @@ DeleteX11VideoOutput (GF_VideoOutput * vout)
  * interface query
  */
 GPAC_MODULE_EXPORT
-const u32 *QueryInterfaces() 
+const u32 *QueryInterfaces()
 {
 	static u32 si [] = {
 		GF_VIDEO_OUTPUT_INTERFACE,

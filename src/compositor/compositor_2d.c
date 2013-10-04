@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -459,7 +459,7 @@ static Bool compositor_2d_draw_bitmap_ex(GF_VisualManager *visual, GF_TextureHan
 	}
 
 	if (!compositor_texture_rectangles(visual, txh, clip, unclip, &src_wnd, &dst_wnd, &use_blit, &has_scale)) return GF_TRUE;
-	
+
 	/*can we use hardware blitter ?*/
 	hw_caps = visual->compositor->video_out->hw_caps;
 	overlay_type = 0;
@@ -724,7 +724,7 @@ Bool compositor_2d_draw_bitmap(GF_VisualManager *visual, GF_TraverseState *tr_st
 	case GF_PIXEL_NV21:
 	case GF_PIXEL_YUVA:
 	case GF_PIXEL_RGBS:
-	case GF_PIXEL_RGBAS:		
+	case GF_PIXEL_RGBAS:
 		break;
 	case GF_PIXEL_YUVD:
 	case GF_PIXEL_RGBD:
@@ -910,7 +910,7 @@ GF_Err compositor_2d_set_aspect_ratio(GF_Compositor *compositor)
 	else if (old_vp_width != compositor->vp_width) changed=1;
 	else if (old_vp_height != compositor->vp_height) changed=1;
 	else if (compositor->was_opengl != evt.setup.opengl_mode) changed=1;
-	
+
 
 	if (changed) {
 		GF_LOG(GF_LOG_INFO, GF_LOG_COMPOSE, ("[Compositor2D] Reconfiguring display size %d x %d - opengl %s - use %s memory\n", evt.setup.width, evt.setup.height,
@@ -921,7 +921,7 @@ GF_Err compositor_2d_set_aspect_ratio(GF_Compositor *compositor)
 		if (e) return e;
 
 		compositor->was_opengl = evt.setup.opengl_mode;
-		compositor->was_system_memory = evt.setup.system_memory;		
+		compositor->was_system_memory = evt.setup.system_memory;
 	}
 	if (compositor->has_size_info) {
 		compositor->traverse_state->vp_size.x = INT2FIX(compositor->scene_width);

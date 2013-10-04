@@ -76,7 +76,7 @@
 
 #if (defined(WIN32) || defined(_WIN32_WCE)) && !defined(__GNUC__)
 
-#if defined(_WIN32_WCE) 
+#if defined(_WIN32_WCE)
 #pragma comment(lib, "toolhelp")
 #pragma comment(lib, "winsock")
 #endif
@@ -290,7 +290,7 @@ static u32 video_encoding_thread_run(void *param)
                       written = avcodec_encode_video2(ctx, &pkt, avr->YUVpicture, &got_packet);
                       if (written >= 0) {
                         written = pkt.size;
-                        if (got_packet) {	
+                        if (got_packet) {
                           ctx->coded_frame->pts = pkt.pts;
                           ctx->coded_frame->key_frame = !!(pkt.flags & AV_PKT_FLAG_KEY);
                         }

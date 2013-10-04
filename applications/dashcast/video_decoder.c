@@ -79,7 +79,7 @@ int dc_video_decoder_open(VideoInputFile * p_vin, VideoData * p_vdata,
 		}
 	}
 #endif
-	
+
 	if (p_vdata->psz_format && strcmp(p_vdata->psz_format, "") != 0) {
 		p_in_fmt = av_find_input_format(p_vdata->psz_format);
 		if (p_in_fmt == NULL) {
@@ -96,7 +96,7 @@ int dc_video_decoder_open(VideoInputFile * p_vin, VideoData * p_vdata,
 		fprintf(stderr, "Buggy screen capture input (open failed with code %d), retrying without specifying resolution\n", open_res);
 		av_dict_set(&p_options, "video_size", NULL, 0);
 		open_res = avformat_open_input(&p_vin->p_fmt_ctx, p_vdata->psz_name, p_in_fmt, p_options ? &p_options : NULL);
-		
+
 	}
 
 	if ( (open_res < 0) && p_options) {
@@ -158,7 +158,7 @@ int dc_video_decoder_open(VideoInputFile * p_vin, VideoData * p_vdata,
 	p_vin->i_pix_fmt = p_codec_ctx->pix_fmt;
 
 	p_vdata->i_framerate = p_codec_ctx->time_base.den / p_codec_ctx->time_base.num;
-	
+
 	if (p_vdata->i_framerate <= 1 || p_vdata->i_framerate > 1000) {
 
 		p_vdata->i_framerate =
@@ -306,10 +306,10 @@ int dc_video_decoder_read(VideoInputFile * p_in_ctx, VideoInputData * p_vd,
 						p_in_ctx->computed_pts = 0;
 						p_vd->frame_duration = p_codec_ctx->time_base.num;
 						p_in_ctx->sync_tolerance = 9*p_vd->frame_duration/5;
-						//TODO - check with audio if sync is OK 
-					} 
-					//perform FPS re-linearisation 
-					pts = packet.pts - p_in_ctx->first_pts;	
+						//TODO - check with audio if sync is OK
+					}
+					//perform FPS re-linearisation
+					pts = packet.pts - p_in_ctx->first_pts;
 					if (pts - p_in_ctx->prev_pts > p_in_ctx->sync_tolerance) {
 						u32 nb_lost=0;
 						while (pts > p_in_ctx->computed_pts) {

@@ -101,7 +101,7 @@ typedef struct  {
 } CmdData;
 /*
  * Initilize the command data structure
- * 
+ *
  * @param cmdd [out] structure to be initilize
  *
  */

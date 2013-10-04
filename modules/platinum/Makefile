@@ -18,7 +18,7 @@ LINKLIBS= -lgpac -lPlatinum -lPltMediaServer -lPltMediaConnect -lPltMediaRendere
 LOCAL_LIB=../../bin/gcc -L../../extra_lib/lib/gcc
 
 #common objects
-OBJS=GPACFileMediaServer.o GPACMediaController.o GPACMediaRenderer.o GenericDevice.o GPACPlatinum.o 
+OBJS=GPACFileMediaServer.o GPACMediaController.o GPACMediaRenderer.o GenericDevice.o GPACPlatinum.o
 
 ifeq ($(CONFIG_JS),no)
 else
@@ -30,11 +30,11 @@ endif
 LINKLIBS+= $(JS_LIBS)
 endif
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_platinum.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
-#LDFLAGS+=-export-symbols platinum.def 
+#LDFLAGS+=-export-symbols platinum.def
 endif
 
 
@@ -44,13 +44,13 @@ all: $(LIB)
 $(LIB): $(OBJS)
 	$(CXX) $(SHFLAGS) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) $(EXTRALIBS) -L$(LOCAL_LIB) $(LINKLIBS)
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CXX) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

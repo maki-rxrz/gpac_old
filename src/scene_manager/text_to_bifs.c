@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -262,7 +262,7 @@ static GF_Err gf_text_import_srt_bifs(GF_SceneManager *ctx, GF_ESD *src, GF_MuxI
 
 			au = gf_sm_stream_au_new(srt, start, 0, 1);
 			com = NULL;
-			state = 2;			
+			state = 2;
 			italic = underlined = bold = 0;
 			break;
 
@@ -311,7 +311,7 @@ static GF_Err gf_text_import_srt_bifs(GF_SceneManager *ctx, GF_ESD *src, GF_MuxI
 						szText[len] = 0xc0 | ( (ptr[i] >> 6) & 0x3 );
 						len++;
 						ptr[i] &= 0xbf;
-					} 
+					}
 					/*we only handle UTF8 chars on 2 bytes (eg first byte is 0b110xxxxx)*/
 					else if ((ptr[i] & 0xe0) == 0xc0) {
 						szText[len] = ptr[i];
@@ -424,7 +424,7 @@ static GF_Err gf_text_import_sub_bifs(GF_SceneManager *ctx, GF_ESD *src, GF_MuxI
 		REM_TRAIL_MARKS(szLine, "\r\n\t ")
 
 		line++;
-		len = (u32) strlen(szLine); 
+		len = (u32) strlen(szLine);
 		if (!len) continue;
 
 		i=0;

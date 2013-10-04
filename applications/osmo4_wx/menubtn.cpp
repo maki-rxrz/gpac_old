@@ -74,24 +74,24 @@ bool wxCustomButton::Create(wxWindow* parent, wxWindowID id,
 {
     if (!wxControl::Create(parent,id,pos,size,wxNO_BORDER|wxCLIP_CHILDREN,val,name))
         return FALSE;
-    
-    wxControl::SetLabel(label);    
+
+    wxControl::SetLabel(label);
     wxControl::SetBackgroundColour(parent->GetBackgroundColour());
     wxControl::SetForegroundColour(parent->GetForegroundColour());
     wxControl::SetFont(parent->GetFont());
 
     if (bitmap.Ok()) m_bmpLabel = bitmap;
-    
+
     if (!SetButtonStyle(style)) return FALSE;
 
     wxSize bestSize = DoGetBestSize();
     SetSize(wxSize(size.x<0 ? bestSize.x:size.x, size.y<0 ? bestSize.y:size.y));
-#if (wxMINOR_VERSION<8) 
+#if (wxMINOR_VERSION<8)
     SetBestSize(GetSize());
 #else
     SetInitialSize(GetSize());
 #endif
-    
+
     CalcLayout(TRUE);
     return TRUE;
 }
@@ -111,7 +111,7 @@ bool wxCustomButton::SetButtonStyle(long style)
     if ((style & wxCUSTBUT_TOP) != 0)    n_styles++;
     if ((style & wxCUSTBUT_BOTTOM) != 0) n_styles++;
     wxCHECK_MSG(n_styles < 2, FALSE, wxT("Only one wxCustomButton label position allowed"));
-    
+
     n_styles = 0;
     if ((style & wxCUSTBUT_NOTOGGLE) != 0)       n_styles++;
     if ((style & wxCUSTBUT_BUTTON) != 0)         n_styles++;
@@ -121,10 +121,10 @@ bool wxCustomButton::SetButtonStyle(long style)
     wxCHECK_MSG(n_styles < 2, FALSE, wxT("Only one wxCustomButton style allowed"));
 
     m_button_style = style;
-    
-    if ((m_button_style & wxCUSTBUT_BUTTON) != 0) 
+
+    if ((m_button_style & wxCUSTBUT_BUTTON) != 0)
         m_down = 0;
-    
+
     CalcLayout(TRUE);
     return TRUE;
 }
@@ -140,12 +140,12 @@ void wxCustomButton::SetLabel( const wxString &label )
 void wxCustomButton::OnMouseEvents(wxMouseEvent& event)
 {
     if (m_button_style & wxCUSTBUT_NOTOGGLE) return;
-    
+
     if (event.LeftDown() || event.RightDown())
     {
-        if (!HasCapture()) 
+        if (!HasCapture())
             CaptureMouse(); // keep depressed until up
-        
+
         m_down++;
         Redraw();
     }
@@ -156,12 +156,12 @@ void wxCustomButton::OnMouseEvents(wxMouseEvent& event)
     }
     else if (event.LeftUp())
     {
-        if (HasCapture()) 
+        if (HasCapture())
             ReleaseMouse();
-        
+
         m_eventType = wxEVT_LEFT_UP;
-        
-#if (wxMINOR_VERSION<8) 
+
+#if (wxMINOR_VERSION<8)
         if (wxRect(wxPoint(0,0), GetSize()).Inside(event.GetPosition()))
 #else
         if (wxRect(wxPoint(0,0), GetSize()).Contains(event.GetPosition()))
@@ -185,8 +185,8 @@ void wxCustomButton::OnMouseEvents(wxMouseEvent& event)
                 {
                     m_eventType = wxEVT_LEFT_DCLICK;
                 }
-                
-                if ((m_button_style & wxCUSTBUT_TOGGLE) && 
+
+                if ((m_button_style & wxCUSTBUT_TOGGLE) &&
                     (m_button_style & wxCUSTBUT_TOG_DCLICK_BUT)) m_down++;
             }
         }
@@ -195,12 +195,12 @@ void wxCustomButton::OnMouseEvents(wxMouseEvent& event)
     }
     else if (event.RightUp())
     {
-        if (HasCapture()) 
+        if (HasCapture())
             ReleaseMouse();
-        
+
         m_eventType = wxEVT_RIGHT_UP;
 
-#if (wxMINOR_VERSION<8) 
+#if (wxMINOR_VERSION<8)
         if (wxRect(wxPoint(0,0), GetSize()).Inside(event.GetPosition()))
 #else
         if (wxRect(wxPoint(0,0), GetSize()).Contains(event.GetPosition()))
@@ -216,7 +216,7 @@ void wxCustomButton::OnMouseEvents(wxMouseEvent& event)
             else
             {
                 m_down++;
-            
+
                 if (!m_timer)
                 {
                     m_timer = new wxTimer(this, m_down);
@@ -228,15 +228,15 @@ void wxCustomButton::OnMouseEvents(wxMouseEvent& event)
                 }
             }
         }
-        
+
         Redraw();
     }
     else if (event.Entering())
     {
         m_focused = TRUE;
-        if ((event.LeftIsDown() || event.RightIsDown()) && HasCapture()) 
+        if ((event.LeftIsDown() || event.RightIsDown()) && HasCapture())
             m_down++;
-        
+
         Redraw();
     }
     else if (event.Leaving())
@@ -244,7 +244,7 @@ void wxCustomButton::OnMouseEvents(wxMouseEvent& event)
         m_focused = FALSE;
         if ((event.LeftIsDown() || event.RightIsDown()) && HasCapture())
             m_down--;
-        
+
         Redraw();
     }
 }
@@ -253,7 +253,7 @@ void wxCustomButton::OnMouseEvents(wxMouseEvent& event)
 
 void wxCustomButton::SendEvent()
 {
-    if (((m_button_style & wxCUSTBUT_TOGGLE) && (m_eventType == wxEVT_LEFT_UP)) || 
+    if (((m_button_style & wxCUSTBUT_TOGGLE) && (m_eventType == wxEVT_LEFT_UP)) ||
         ((m_button_style & wxCUSTBUT_BUT_DCLICK_TOG) && (m_eventType == wxEVT_LEFT_DCLICK)) ||
         ((m_button_style & wxCUSTBUT_TOG_DCLICK_BUT) && (m_eventType == wxEVT_LEFT_UP)))
     {
@@ -274,13 +274,13 @@ void wxCustomButton::SendEvent()
 }
 
 wxBitmap wxCustomButton::CreateBitmapDisabled(const wxBitmap &bitmap) const
-{    
+{
     wxCHECK_MSG(bitmap.Ok(), wxNullBitmap, wxT("invalid bitmap"));
-    
+
     unsigned char br = GetBackgroundColour().Red();
     unsigned char bg = GetBackgroundColour().Green();
     unsigned char bb = GetBackgroundColour().Blue();
-        
+
     wxImage image = bitmap.ConvertToImage();
     int pos, width = image.GetWidth(), height = image.GetHeight();
     unsigned char *img_data = image.GetData();
@@ -288,21 +288,21 @@ wxBitmap wxCustomButton::CreateBitmapDisabled(const wxBitmap &bitmap) const
     for (int j=0; j<height; j++)
     {
         for (int i=j%2; i<width; i+=2)
-        {   
+        {
             pos = (j*width+i)*3;
-            img_data[pos  ] = br; 
-            img_data[pos+1] = bg; 
-            img_data[pos+2] = bb; 
+            img_data[pos  ] = br;
+            img_data[pos+1] = bg;
+            img_data[pos+2] = bb;
         }
     }
-        
+
     return wxBitmap(image);
 }
 
 void wxCustomButton::SetBitmapLabel(const wxBitmap& bitmap)
-{ 
-    m_bmpLabel = bitmap; 
-    CalcLayout(TRUE); 
+{
+    m_bmpLabel = bitmap;
+    CalcLayout(TRUE);
 }
 
 void wxCustomButton::OnPaint(wxPaintEvent& WXUNUSED(event))
@@ -319,13 +319,13 @@ void wxCustomButton::Redraw()
 
 void wxCustomButton::Paint( wxDC &dc )
 {
-#if (wxMINOR_VERSION<8) 
+#if (wxMINOR_VERSION<8)
     dc.BeginDrawing();
 #endif
 
     int w, h;
     GetSize(&w,&h);
- 
+
     wxColour foreColour = GetForegroundColour();
     wxColour backColour = GetBackgroundColour();
 
@@ -337,14 +337,14 @@ void wxCustomButton::Paint( wxDC &dc )
     }
 
     wxBitmap bitmap;
-    
+
     if (IsEnabled())
     {
-        if (GetValue() && m_bmpSelected.Ok()) 
+        if (GetValue() && m_bmpSelected.Ok())
             bitmap = m_bmpSelected;
-        else if (m_focused && m_bmpFocus.Ok()) 
+        else if (m_focused && m_bmpFocus.Ok())
             bitmap = m_bmpFocus;
-        else if (m_bmpLabel.Ok())  
+        else if (m_bmpLabel.Ok())
             bitmap = m_bmpLabel;
     }
     else
@@ -355,7 +355,7 @@ void wxCustomButton::Paint( wxDC &dc )
 
         if (m_bmpDisabled.Ok())
             bitmap = m_bmpDisabled;
-        else if (m_bmpLabel.Ok()) 
+        else if (m_bmpLabel.Ok())
             bitmap = m_bmpLabel;
 
         foreColour = wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
@@ -368,7 +368,7 @@ void wxCustomButton::Paint( wxDC &dc )
 
     dc.DrawRectangle(0, 0, w, h);
 
-    if (bitmap.Ok()) 
+    if (bitmap.Ok())
         dc.DrawBitmap(bitmap, m_bitmapPos.x, m_bitmapPos.y, TRUE );
 
     if (!GetLabel().IsEmpty())
@@ -378,7 +378,7 @@ void wxCustomButton::Paint( wxDC &dc )
         dc.SetTextForeground(foreColour);
         dc.DrawText(GetLabel(), m_labelPos.x, m_labelPos.y);
     }
-    
+
     if (GetValue())                                        // draw sunken border
     {
         dc.SetPen(*wxGREY_PEN);
@@ -401,7 +401,7 @@ void wxCustomButton::Paint( wxDC &dc )
     dc.SetBackground(wxNullBrush);
     dc.SetBrush(wxNullBrush);
     dc.SetPen(wxNullPen);
-#if (wxMINOR_VERSION<8) 
+#if (wxMINOR_VERSION<8)
     dc.EndDrawing();
 #endif
 }
@@ -413,22 +413,22 @@ void wxCustomButton::OnSize( wxSizeEvent &event )
 }
 
 void wxCustomButton::SetMargins(const wxSize &margin, bool fit)
-{ 
-    m_labelMargin = margin; 
-    m_bitmapMargin = margin; 
-    CalcLayout(TRUE); 
+{
+    m_labelMargin = margin;
+    m_bitmapMargin = margin;
+    CalcLayout(TRUE);
     if (fit) SetSize(DoGetBestSize());
 }
-void wxCustomButton::SetLabelMargin(const wxSize &margin, bool fit) 
-{ 
-    m_labelMargin = margin; 
-    CalcLayout(TRUE); 
+void wxCustomButton::SetLabelMargin(const wxSize &margin, bool fit)
+{
+    m_labelMargin = margin;
+    CalcLayout(TRUE);
     if (fit) SetSize(DoGetBestSize());
 }
-void wxCustomButton::SetBitmapMargin(const wxSize &margin, bool fit) 
-{ 
-    m_bitmapMargin = margin; 
-    CalcLayout(TRUE); 
+void wxCustomButton::SetBitmapMargin(const wxSize &margin, bool fit)
+{
+    m_bitmapMargin = margin;
+    CalcLayout(TRUE);
     if (fit) SetSize(DoGetBestSize());
 }
 
@@ -438,7 +438,7 @@ wxSize wxCustomButton::DoGetBestSize() const
     int bw=0, bh=0;
     bool has_bitmap = FALSE;
     bool has_label = FALSE;
-    
+
     if (!GetLabel().IsEmpty())
     {
         GetTextExtent(GetLabel(), &lw, &lh);
@@ -483,7 +483,7 @@ void wxCustomButton::CalcLayout(bool refresh)
     {
         GetTextExtent(label, &lw, &lh);
     }
-    
+
     // Center the label or bitmap if only one or the other
     if (!m_bmpLabel.Ok())
     {
@@ -519,7 +519,7 @@ void wxCustomButton::CalcLayout(bool refresh)
         m_bitmapPos = wxPoint((w - bw)/2, (h - (bh+lh+m_labelMargin.y+m_bitmapMargin.y+mid_margin))/2 + m_bitmapMargin.y);
         m_labelPos  = wxPoint((w - lw)/2, m_bitmapPos.y + bh + mid_margin);
     }
-    
+
     if (refresh) Refresh(FALSE);
 }
 
@@ -559,40 +559,40 @@ public:
     {
         if (!s_dropdownBitmap.Ok())
             s_dropdownBitmap = wxBitmap(down_arrow_xpm_data);
-        
-        Create( parent, id, wxEmptyString, s_dropdownBitmap, wxDefaultPosition, 
-                wxSize(wxMENUBUTTON_DROP_WIDTH, wxMENUBUTTON_DROP_HEIGHT), style);    
+
+        Create( parent, id, wxEmptyString, s_dropdownBitmap, wxDefaultPosition,
+                wxSize(wxMENUBUTTON_DROP_WIDTH, wxMENUBUTTON_DROP_HEIGHT), style);
     }
-    
+
     virtual void Paint( wxDC &dc )
     {
         wxCustomButton *labelBut = ((wxMenuButton*)GetParent())->GetLabelButton();
-        
+
         // pretend that both buttons have focus (for flat style)
         if (labelBut)
         {
             wxPoint p = GetParent()->ScreenToClient(wxGetMousePosition());
-        
-#if (wxMINOR_VERSION<8) 
+
+#if (wxMINOR_VERSION<8)
             if (GetRect().Inside(p) || labelBut->GetRect().Inside(p))
 #else
             if (GetRect().Contains(p) || labelBut->GetRect().Contains(p))
 #endif
             {
                 m_focused = TRUE;
-                
+
                 if (!labelBut->GetFocused())
                     labelBut->SetFocused(TRUE);
             }
             else
             {
                 m_focused = FALSE;
-                
+
                 if (labelBut->GetFocused())
                     labelBut->SetFocused(FALSE);
             }
         }
-        
+
         wxCustomButton::Paint(dc);
     }
 };
@@ -604,38 +604,38 @@ public:
 class MenuLabelButton : public wxCustomButton
 {
 public:
-    MenuLabelButton( wxWindow* parent, wxWindowID id, 
-                     const wxString &label, 
+    MenuLabelButton( wxWindow* parent, wxWindowID id,
+                     const wxString &label,
                      const wxBitmap &bitmap,
                      long style ) : wxCustomButton()
     {
-        Create(parent, id, label, bitmap, wxDefaultPosition, wxDefaultSize, style);    
+        Create(parent, id, label, bitmap, wxDefaultPosition, wxDefaultSize, style);
     }
-    
+
     virtual void Paint( wxDC &dc )
     {
         wxCustomButton *dropBut = ((wxMenuButton*)GetParent())->GetDropDownButton();
 
         // pretend that both buttons have focus (for flat style)
-        if (dropBut) 
+        if (dropBut)
         {
             wxPoint p = GetParent()->ScreenToClient(wxGetMousePosition());
-        
-#if (wxMINOR_VERSION<8) 
+
+#if (wxMINOR_VERSION<8)
             if (GetRect().Inside(p) || dropBut->GetRect().Inside(p))
 #else
             if (GetRect().Contains(p) || dropBut->GetRect().Contains(p))
 #endif
             {
                 m_focused = TRUE;
-                
+
                 if (!dropBut->GetFocused())
                     dropBut->SetFocused(TRUE);
             }
             else
             {
                 m_focused = FALSE;
-                
+
                 if (dropBut->GetFocused())
                     dropBut->SetFocused(FALSE);
             }
@@ -674,18 +674,18 @@ void wxMenuButton::Init()
 }
 
 bool wxMenuButton::Create( wxWindow* parent, wxWindowID id,
-                           const wxString &label, 
+                           const wxString &label,
                            const wxBitmap &bitmap,
-                           const wxPoint& pos, 
+                           const wxPoint& pos,
                            const wxSize& size,
-                           long style, 
+                           long style,
                            const wxValidator& val,
                            const wxString& name)
 {
     m_style = style;
-    
+
     long flat = style & wxMENUBUT_FLAT;
-    
+
     wxControl::Create(parent,id,pos,size,wxNO_BORDER|wxCLIP_CHILDREN,val,name);
     wxControl::SetLabel(label);
     SetBackgroundColour(parent->GetBackgroundColour());
@@ -694,35 +694,35 @@ bool wxMenuButton::Create( wxWindow* parent, wxWindowID id,
 
     m_labelButton = new MenuLabelButton(this, id, label, bitmap, wxCUSTBUT_BUTTON|flat);
     m_dropdownButton = new MenuDropButton(this, IDD_DROPDOWN_BUTTON, wxCUSTBUT_BUTTON|flat);
-    
+
     wxSize bestSize = DoGetBestSize();
-    SetSize( wxSize(size.x < 0 ? bestSize.x : size.x, 
+    SetSize( wxSize(size.x < 0 ? bestSize.x : size.x,
                     size.y < 0 ? bestSize.y : size.y) );
-   
-#if (wxMINOR_VERSION<8) 
+
+#if (wxMINOR_VERSION<8)
     SetBestSize(GetSize());
 #else
     SetInitialSize(GetSize());
 #endif
-    
+
     return TRUE;
 }
 
 #ifdef __WXMSW__
 // FIXME - I think there was a patch to fix this
-void wxMenuButton::OnMenu( wxCommandEvent &event ) 
+void wxMenuButton::OnMenu( wxCommandEvent &event )
 {
-    event.Skip();    
+    event.Skip();
     wxMenuItem *mi = m_menu->FindItem(event.GetId());
     if (mi && (mi->GetKind() == wxITEM_RADIO))
-        m_menu->Check(event.GetId(), TRUE);    
+        m_menu->Check(event.GetId(), TRUE);
 }
 #endif // __WXMSW__
 
 void wxMenuButton::OnButton( wxCommandEvent &event)
 {
     int win_id = event.GetId();
-    
+
     if (win_id == IDD_DROPDOWN_BUTTON)
     {
         wxNotifyEvent mevent(wxEVT_MENUBUTTON_OPEN, GetId());
@@ -730,11 +730,11 @@ void wxMenuButton::OnButton( wxCommandEvent &event)
         if (GetEventHandler()->ProcessEvent(mevent) && !mevent.IsAllowed())
             return;
 
-        if (!m_menu) 
+        if (!m_menu)
             return;
-        
+
         PopupMenu(m_menu, wxPoint(0, GetSize().y));
-        
+
         m_labelButton->Refresh(FALSE);
         m_dropdownButton->Refresh(FALSE);
     }
@@ -747,39 +747,39 @@ void wxMenuButton::OnButton( wxCommandEvent &event)
 		GetParent()->GetEventHandler()->ProcessEvent(cevent);
 
         if (!m_menu) return;
-        
+
         const wxMenuItemList &items = m_menu->GetMenuItems();
         int first_radio_id = -1;
         int checked_id = -1;
         bool check_next = FALSE;
-        
+
         // find the next available radio item to check
         for (wxMenuItemList::Node *node = items.GetFirst(); node; node = node->GetNext())
         {
             wxMenuItem *mi = (wxMenuItem*)node->GetData();
             if (mi && (mi->GetKind() == wxITEM_RADIO))
             {
-                if (first_radio_id == -1) 
+                if (first_radio_id == -1)
                     first_radio_id = mi->GetId();
-                
-                if (check_next) 
+
+                if (check_next)
                 {
                     check_next = FALSE;
                     checked_id = mi->GetId();
                     break;
                 }
-                else if (mi->IsChecked()) 
+                else if (mi->IsChecked())
                     check_next = TRUE;
             }
         }
         // the last item was checked, go back to the first
         if (check_next && (first_radio_id != -1))
             checked_id = first_radio_id;
-        
+
         if (checked_id != -1)
         {
             m_menu->Check(checked_id, TRUE);
-            
+
             wxCommandEvent mevent( wxEVT_COMMAND_MENU_SELECTED, checked_id);
             mevent.SetEventObject( m_menu );
             mevent.SetInt(1);
@@ -791,9 +791,9 @@ void wxMenuButton::OnButton( wxCommandEvent &event)
 int wxMenuButton::GetSelection() const
 {
     wxCHECK_MSG(m_menu != NULL, wxNOT_FOUND, wxT("No attached menu in wxMenuButton::GetSelection"));
-        
+
     const wxMenuItemList &items = m_menu->GetMenuItems();
-        
+
     for (wxMenuItemList::Node *node = items.GetFirst(); node; node = node->GetNext())
     {
         wxMenuItem *mi = (wxMenuItem*)node->GetData();
@@ -803,29 +803,29 @@ int wxMenuButton::GetSelection() const
                 return mi->GetId();
         }
     }
-    
-    return wxNOT_FOUND;    
+
+    return wxNOT_FOUND;
 }
 
 void wxMenuButton::AssignMenu(wxMenu *menu, bool static_menu)
 {
-    if (!m_menu_static && m_menu) 
+    if (!m_menu_static && m_menu)
         delete m_menu;
-    
+
     m_menu = menu;
     m_menu_static = static_menu;
 }
 
-void wxMenuButton::SetToolTip(const wxString &tip) 
-{ 
+void wxMenuButton::SetToolTip(const wxString &tip)
+{
     wxWindow::SetToolTip(tip);
-    ((wxWindow*)m_labelButton)->SetToolTip(tip); 
+    ((wxWindow*)m_labelButton)->SetToolTip(tip);
     ((wxWindow*)m_dropdownButton)->SetToolTip(tip);
 }
-void wxMenuButton::SetToolTip(wxToolTip *tip) 
-{ 
+void wxMenuButton::SetToolTip(wxToolTip *tip)
+{
     wxWindow::SetToolTip(tip);
-    ((wxWindow*)m_labelButton)->SetToolTip(tip); 
+    ((wxWindow*)m_labelButton)->SetToolTip(tip);
     ((wxWindow*)m_dropdownButton)->SetToolTip(tip);
 }
 
@@ -836,25 +836,25 @@ void wxMenuButton::DoSetSize(int x, int y, int width, int height, int sizeFlags)
 
     if (width == -1)
         width = curSize.GetWidth();
-    if (width < 10) 
+    if (width < 10)
         width = bestSize.GetWidth();
 
     if (height == -1)
         height = curSize.GetHeight();
-    if (height < 5) 
+    if (height < 5)
         height = bestSize.GetHeight();
-    
-    wxWindow::DoSetSize(x, y, width, height, sizeFlags);    
+
+    wxWindow::DoSetSize(x, y, width, height, sizeFlags);
 
     if (m_labelButton)
         m_labelButton->SetSize(0, 0, width - wxMENUBUTTON_DROP_WIDTH, height);
     if (m_dropdownButton)
-        m_dropdownButton->SetSize(width-wxMENUBUTTON_DROP_WIDTH, 0, wxMENUBUTTON_DROP_WIDTH, height);    
+        m_dropdownButton->SetSize(width-wxMENUBUTTON_DROP_WIDTH, 0, wxMENUBUTTON_DROP_WIDTH, height);
 }
 
 wxSize wxMenuButton::DoGetBestSize()
 {
-    if (!m_labelButton || !m_dropdownButton) 
+    if (!m_labelButton || !m_dropdownButton)
         return wxSize(wxMENUBUTTON_DROP_WIDTH+wxMENUBUTTON_DROP_HEIGHT, wxMENUBUTTON_DROP_HEIGHT);
 
     wxSize size = m_labelButton->GetBestSize();

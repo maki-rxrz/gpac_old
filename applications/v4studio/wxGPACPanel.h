@@ -2,7 +2,7 @@
 #define _GPACPANEL_H
 
 
-#include "safe_include.h" 
+#include "safe_include.h"
 #include <gpac/scenegraph.h>
 #include <gpac/compositor.h>
 /*for service connection...*/
@@ -11,7 +11,7 @@
 class V4SceneManager;
 class V4Service;
 
-class wxGPACPanel 
+class wxGPACPanel
 {
 
 public :
@@ -20,10 +20,10 @@ public :
 	~wxGPACPanel();
 
 	 // Access to private members
-	GF_Terminal *GetMPEG4Terminal() { return m_term; }	
-	GF_Compositor *GetSceneCompositor() { return m_term->compositor; }	
+	GF_Terminal *GetMPEG4Terminal() { return m_term; }
+	GF_Compositor *GetSceneCompositor() { return m_term->compositor; }
 	V4SceneManager *GetV4SceneManager() { return parent; }
-	// 
+	//
 	void Update();
 
 	// Variables used for drag, drop, move, ... picking ...

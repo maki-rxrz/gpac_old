@@ -39,7 +39,7 @@ static void load_all_modules(GF_ModuleManager *mgr)
 	} else {\
 		gf_list_add(mgr->plugin_registry, pr);	\
 	}	\
-	}	
+	}
 
 #ifdef GPAC_STATIC_MODULES
 	GF_InterfaceRegister *pr;
@@ -51,7 +51,7 @@ static void load_all_modules(GF_ModuleManager *mgr)
 #endif
     LOAD_PLUGIN(audio_filter);
 	LOAD_PLUGIN(bifs);
-#ifndef GPAC_DISABLE_SMGR	
+#ifndef GPAC_DISABLE_SMGR
 	LOAD_PLUGIN(ctx_load);
 #endif
 #ifdef GPAC_HAS_DIRECTFB
@@ -81,7 +81,7 @@ static void load_all_modules(GF_ModuleManager *mgr)
 #endif
 #ifndef GPAC_DISABLE_SVG
 	LOAD_PLUGIN(laser);
-#endif	
+#endif
 	LOAD_PLUGIN(mp3_in);
     LOAD_PLUGIN(mpd_in);
 #ifndef GPAC_DISABLE_MEDIA_IMPORT
@@ -89,7 +89,7 @@ static void load_all_modules(GF_ModuleManager *mgr)
 #endif
 #ifdef GPAC_HAS_SPIDERMONKEY
     LOAD_PLUGIN(mse_in);
-#endif	
+#endif
 	LOAD_PLUGIN(odf_dec);
 #ifdef GPAC_HAS_OGG
     LOAD_PLUGIN(ogg_in);
@@ -109,9 +109,9 @@ static void load_all_modules(GF_ModuleManager *mgr)
 #ifdef GPAC_HAS_PULSEAUDIO
 	LOAD_PLUGIN(pulseaudio);
 #endif
-	LOAD_PLUGIN(raw_out);	
+	LOAD_PLUGIN(raw_out);
 #ifdef GPAC_HAS_FFMPEG
-	//    LOAD_PLUGIN(redirect_av);    
+	//    LOAD_PLUGIN(redirect_av);
 #endif
 	LOAD_PLUGIN(rtp_in);
     LOAD_PLUGIN(saf_in);
@@ -119,10 +119,10 @@ static void load_all_modules(GF_ModuleManager *mgr)
     LOAD_PLUGIN(sdl_out);
 #endif
 	LOAD_PLUGIN(soft_raster);
-#if !defined(GPAC_DISABLE_SMGR) && !defined(GPAC_DISABLE_SVG)	
+#if !defined(GPAC_DISABLE_SMGR) && !defined(GPAC_DISABLE_SVG)
 	LOAD_PLUGIN(svg_in);
-#endif		
-	LOAD_PLUGIN(timedtext);			
+#endif
+	LOAD_PLUGIN(timedtext);
     LOAD_PLUGIN(validator);
 #ifdef GPAC_HAS_WAVEOUT
 	LOAD_PLUGIN(wave_out);
@@ -136,11 +136,12 @@ static void load_all_modules(GF_ModuleManager *mgr)
 #ifdef GPAC_HAS_XVID
     LOAD_PLUGIN(xvid);
 #endif
-	
+
     LOAD_PLUGIN(ffmpeg);
 
 
-				
+
+
 	//todo fix project for iOS
 #ifdef GPAC_IPHONE
 //    LOAD_PLUGIN(ios_cam);
@@ -151,7 +152,7 @@ static void load_all_modules(GF_ModuleManager *mgr)
 #endif //GPAC_STATIC_MODULES
 
 #undef LOAD_PLUGIN
-	
+
 }
 
 
@@ -248,7 +249,7 @@ const char **gf_modules_get_module_directories(GF_ModuleManager *pm, u32* num_di
 		return pm->dirs;
 	}
 	if (!pm->cfg) return NULL;
-	
+
 	/* Get directory from config file */
 	directories = (char*)gf_cfg_get_key(pm->cfg, "General", "ModulesDirectory");
 	if (! directories) {

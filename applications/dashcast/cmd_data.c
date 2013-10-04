@@ -58,7 +58,7 @@ int dc_str_to_resolution(char * psz_str, int * p_width, int * p_height) {
 #define DEFAULT_AUDIO_CODEC      "mp2"
 
 static void dc_create_configuration(CmdData * p_cmdd)
-{	
+{
 	u32 i;
 	GF_Config * p_conf = p_cmdd->p_conf;
 	u32 i_sec_count = gf_cfg_get_section_count(p_conf);
@@ -68,7 +68,7 @@ static void dc_create_configuration(CmdData * p_cmdd)
 		i_sec_count = gf_cfg_get_section_count(p_conf);
 	}
 	for (i=0; i<i_sec_count; i++) {
-		char value[GF_MAX_PATH];		
+		char value[GF_MAX_PATH];
 		const char * psz_sec_name = gf_cfg_get_section_name(p_conf, i);
 		const char * psz_type = gf_cfg_get_key(p_conf, psz_sec_name, "type");
 
@@ -79,32 +79,32 @@ static void dc_create_configuration(CmdData * p_cmdd)
 				sprintf(value, "%d", p_cmdd->vdata.i_bitrate);
 				gf_cfg_set_key(p_conf, psz_sec_name, "bitrate", value);
 			}
-		
+
 			if (!gf_cfg_get_key(p_conf, psz_sec_name, "framerate")) {
 				if (p_cmdd->vdata.i_framerate == -1)
 					p_cmdd->vdata.i_framerate = DEFAULT_VIDEO_FRAMERATE;
 				sprintf(value, "%d", p_cmdd->vdata.i_framerate);
 				gf_cfg_set_key(p_conf, psz_sec_name, "framerate", value);
 			}
-		
+
 			if (!gf_cfg_get_key(p_conf, psz_sec_name, "width")) {
 				if (p_cmdd->vdata.i_width == -1)
 					p_cmdd->vdata.i_width = DEFAULT_VIDEO_WIDTH;
 				sprintf(value, "%d", p_cmdd->vdata.i_width);
 				gf_cfg_set_key(p_conf, psz_sec_name, "width", value);
 			}
-		
+
 			if (!gf_cfg_get_key(p_conf, psz_sec_name, "height")) {
 				if (p_cmdd->vdata.i_height == -1)
 					p_cmdd->vdata.i_height = DEFAULT_VIDEO_HEIGHT;
 				sprintf(value, "%d", p_cmdd->vdata.i_height);
 				gf_cfg_set_key(p_conf, psz_sec_name, "height", value);
 			}
-			
+
 			if (!gf_cfg_get_key(p_conf, psz_sec_name, "codec"))
 				gf_cfg_set_key(p_conf, psz_sec_name, "codec", DEFAULT_VIDEO_CODEC);
 		}
-		
+
 		if (strcmp(psz_type, "audio") == 0) {
 			if (!gf_cfg_get_key(p_conf, psz_sec_name, "bitrate")) {
 				if (p_cmdd->adata.i_bitrate == -1)
@@ -112,21 +112,21 @@ static void dc_create_configuration(CmdData * p_cmdd)
 				sprintf(value, "%d", p_cmdd->adata.i_bitrate);
 				gf_cfg_set_key(p_conf, psz_sec_name, "bitrate", value);
 			}
-			
+
 			if (!gf_cfg_get_key(p_conf, psz_sec_name, "samplerate")) {
 				if (p_cmdd->adata.i_samplerate == -1)
 					p_cmdd->adata.i_samplerate = DEFAULT_AUDIO_SAMPLERATE;
 				sprintf(value, "%d", p_cmdd->adata.i_samplerate);
 				gf_cfg_set_key(p_conf, psz_sec_name, "samplerate", value);
 			}
-			
+
 			if (!gf_cfg_get_key(p_conf, psz_sec_name, "channels")) {
 				if (p_cmdd->adata.i_channels == -1)
 					p_cmdd->adata.i_channels = DEFAULT_AUDIO_CHANNELS;
 				sprintf(value, "%d", p_cmdd->adata.i_channels);
 				gf_cfg_set_key(p_conf, psz_sec_name, "channels", value);
 			}
-			
+
 			if (!gf_cfg_get_key(p_conf, psz_sec_name, "codec"))
 				gf_cfg_set_key(p_conf, psz_sec_name, "codec", DEFAULT_AUDIO_CODEC);
 		}
@@ -232,7 +232,7 @@ int dc_read_switch_config(CmdData * p_cmdd) {
 	struct tm end_tm  = *localtime(&now_t);
 
 	GF_Config * p_conf = p_cmdd->p_switch_conf;
-  
+
 	u32 i_sec_count = gf_cfg_get_section_count(p_conf);
 
 	dc_task_init(&p_cmdd->task_list);
@@ -894,8 +894,8 @@ int dc_parse_command(int i_argc, char ** p_argv, CmdData * p_cmdd) {
 	printf("\33[0m");
 //	fflush(stdout);
 
-	
-	
+
+
 	if (!p_cmdd->p_conf) {
 		p_cmdd->p_conf = gf_cfg_force_new(NULL, "dashcast.conf");
 		dc_create_configuration(p_cmdd);

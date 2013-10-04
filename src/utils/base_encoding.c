@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -35,7 +35,7 @@ u32 gf_base64_encode(char *_in, u32 inSize, char *_out, u32 outSize)
 	u32 i = 0, j = 0;
 	unsigned char *in = (unsigned char *)_in;
 	unsigned char *out = (unsigned char *)_out;
-	
+
 	if (outSize < (inSize * 4 / 3)) return 0;
 
 	while (i < inSize) {
@@ -76,9 +76,9 @@ static const unsigned char index_64[128] = {
 #define char64(c)  ((c > 127) ? (char) 0xff : index_64[(c)])
 
 /*denoise input*/
-u32 load_block(char *in, u32 size, u32 pos, char *out) 
-{ 
-	u32 i, len; 
+u32 load_block(char *in, u32 size, u32 pos, char *out)
+{
+	u32 i, len;
 	u8 c;
 	len = i = 0;
 	while ((len<4) && ((pos+i)<size)) {
@@ -108,13 +108,13 @@ u32 gf_base64_decode(char *in_buf, u32 inSize, char *out, u32 outSize)
 	while ((i + 3) < inSize) {
 		padding = 0;
 		i = load_block(in_buf, inSize, i, (char*)in);
-		c[0] = char64(in[0]); 
+		c[0] = char64(in[0]);
 		padding += (c[0] == 0xff);
 		c[1] = char64(in[1]);
 		padding += (c[1] == 0xff);
 		c[2] = char64(in[2]);
 		padding += (c[2] == 0xff);
-		c[3] = char64(in[3]); 
+		c[3] = char64(in[3]);
 		padding += (c[3] == 0xff);
 		if (padding == 2) {
 			out[j++] = (c[0] << 2) | ((c[1] & 0x30) >> 4);
@@ -146,10 +146,10 @@ u32 gf_base16_encode(char *_in, u32 inSize, char *_out, u32 outSize)
 
 	for (i=0;i<inSize;i++) {
 		out[2*i] = base_16[((in[i] & 0xf0) >> 4)];
-		out[2*i+1] = base_16[(in[i] & 0x0f)];	
+		out[2*i+1] = base_16[(in[i] & 0x0f)];
 	}
 	out[(inSize * 2)] = 0;
-	
+
 	return i;
 }
 
@@ -163,14 +163,14 @@ u32 gf_base16_decode(char *in, u32 inSize, char *out, u32 outSize)
 
 	if (outSize < (inSize / 2)) return 0;
 	if ((inSize % 2) != 0) return 0;
-	
+
 	for (j=0;j<inSize/2;j++) {
 		c[0] = char16(in[2*j]);
 		c[1] = char16(in[2*j+1]);
 		out[j] = ((c[0] << 4)&0xf0) | (c[1]&0x0f);
 	}
 	out[inSize/2] = 0;
-	
+
 	return j;
 }
 
@@ -214,7 +214,7 @@ GF_Err gf_gz_compress_payload(char **data, u32 data_len, u32 *max_size)
     if (*max_size < stream.total_out) {
 		*max_size = data_len*ZLIB_COMPRESS_SAFE;
 		*data = gf_realloc(*data, *max_size * sizeof(char));
-    } 
+    }
 
     memcpy((*data) , dest, sizeof(char)*stream.total_out);
     *max_size = stream.total_out;

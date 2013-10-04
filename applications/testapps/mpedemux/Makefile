@@ -40,23 +40,23 @@ LINKFLAGS+=-lgpac_static $(EXTRALIBS) $(GPAC_SH_FLAGS) -lz
 endif
 
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 all: LIBGPAC $(PROG)
 
-LIBGPAC: 
+LIBGPAC:
 	$(MAKE) -C ../../../src
 
 $(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) -o ../../../bin/gcc/$@ $(OBJS) $(LINKFLAGS)
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../../bin/gcc/$(PROG)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

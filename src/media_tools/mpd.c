@@ -113,7 +113,7 @@ static u64 gf_mpd_parse_date(char *attr)
 	h = m = 0;
 	s = 0;
 	oh = om = 0;
-	if (sscanf(attr, "%d-%d-%dT%d:%d:%gZ", &year, &month, &day, &h, &m, &s) == 6) 
+	if (sscanf(attr, "%d-%d-%dT%d:%d:%gZ", &year, &month, &day, &h, &m, &s) == 6)
 		ok = 1;
 	else if (sscanf(attr, "%d-%d-%dT%d:%d:%g-%d:%d", &year, &month, &day, &h, &m, &s, &oh, &om) == 8) {
 		neg_time_zone = 1;
@@ -141,7 +141,7 @@ static u64 gf_mpd_parse_date(char *attr)
 
 	res = (u64) ((*(LONGLONG *) &filet - TIMESPEC_TO_FILETIME_OFFSET) / 10000000);
 
-#undef TIMESPEC_TO_FILETIME_OFFSET 
+#undef TIMESPEC_TO_FILETIME_OFFSET
 
 
 #else
@@ -162,7 +162,7 @@ static u64 gf_mpd_parse_date(char *attr)
 	t_time = time(NULL);
 	t_gmt = *gmtime(&t_time);
 	t_local = *localtime(&t_time);
-	
+
 	t_timezone = (t_gmt.tm_hour - t_local.tm_hour) * 3600;
 	res = mktime(&_t) - t_timezone;
 	}
@@ -261,7 +261,7 @@ GF_Err gf_mpd_parse_base_url(GF_List *container, GF_XMLNode *node)
 	u32 i;
 	GF_Err e;
 	GF_XMLAttribute *att;
-	GF_MPD_BaseURL *url; 
+	GF_MPD_BaseURL *url;
 	GF_SAFEALLOC(url, GF_MPD_BaseURL);
 	if (! url) return GF_OUT_OF_MEM;
 	e = gf_list_add(container, url);
@@ -361,7 +361,7 @@ static void gf_mpd_parse_segment_base_generic(GF_MPD *mpd, GF_MPD_SegmentBase *s
 		else if (!strcmp(att->name, "timeShiftBufferDepth")) seg->time_shift_buffer_depth = gf_mpd_parse_duration(att->value);
 	}
 
-	if (mpd->type == GF_MPD_TYPE_STATIC) 
+	if (mpd->type == GF_MPD_TYPE_STATIC)
 		seg->time_shift_buffer_depth = 0;
 
 	i = 0;
@@ -392,11 +392,11 @@ static GF_MPD_SegmentTimeline *gf_mpd_parse_segment_timeline(GF_MPD *mpd, GF_XML
 
 			j = 0;
 			while ( (att = gf_list_enum(child->attributes, &j)) ) {
-				if (!strcmp(att->name, "t")) 
+				if (!strcmp(att->name, "t"))
 					segent->start_time = gf_mpd_parse_long_int(att->value);
-				else if (!strcmp(att->name, "d")) 
+				else if (!strcmp(att->name, "d"))
 					segent->duration = gf_mpd_parse_int(att->value);
-				else if (!strcmp(att->name, "r")) 
+				else if (!strcmp(att->name, "r"))
 					segent->repeat_count = gf_mpd_parse_int(att->value);
 			}
 		}
@@ -525,7 +525,7 @@ static void gf_mpd_parse_common_representation(GF_MPD *mpd, GF_MPD_CommonAttribu
 	GF_XMLNode *child;
 	u32 i = 0;
 
-	/*setup some default*/	
+	/*setup some default*/
 	com->max_playout_rate = 1.0;
 
 	while ( (att = gf_list_enum(root->attributes, &i)) ) {
@@ -1015,8 +1015,8 @@ GF_Err gf_mpd_init_from_dom(GF_XMLNode *root, GF_MPD *mpd, const char *default_b
 		att = gf_list_get(root->attributes, att_index);
 		if (!att) {
 			continue;
-		} 
-		
+		}
+
 		if (!strcmp(att->name, "id")) {
 			mpd->ID = gf_mpd_parse_string(att->value);
 		} else if (!strcmp(att->name, "profiles")) {
@@ -1044,7 +1044,7 @@ GF_Err gf_mpd_init_from_dom(GF_XMLNode *root, GF_MPD *mpd, const char *default_b
 			mpd->max_subsegment_duration = gf_mpd_parse_duration(att->value);
 		}
 	}
-	if (mpd->type == GF_MPD_TYPE_STATIC) 
+	if (mpd->type == GF_MPD_TYPE_STATIC)
 		mpd->minimum_update_period = mpd->time_shift_buffer_depth = 0;
 
 	child_index = 0;
@@ -1116,7 +1116,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 			u32 k;
 			char *suburl;
 
-			if (!pe->url ) 
+			if (!pe->url )
 				continue;
 
 			/*filter out duplicated entries (seen on M6 m3u8)*/
@@ -1133,7 +1133,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 			suburl = NULL;
 
 			/*not HLS*/
-			if ( !strstr(pe->url, ".m3u8")) 
+			if ( !strstr(pe->url, ".m3u8"))
 				continue;
 
 			if (strcmp(base_url, pe->url))
@@ -1257,7 +1257,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 		count2 = gf_list_count(prog->bitrates);
 		for (j = 0; j<count2; j++) {
 			pe = gf_list_get(prog->bitrates, j);
-			if (pe->elementType != TYPE_PLAYLIST) 
+			if (pe->elementType != TYPE_PLAYLIST)
 				continue;
 
 			count3 = gf_list_count(pe->element.playlist.elements);
@@ -1299,7 +1299,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 				for (k=0; k<count3; k++) {
 					char szURL[GF_MAX_PATH], *sub_url;
 					elt = gf_list_get(pe->element.playlist.elements, k);
-					
+
 					if (template_width==2) sprintf(szURL, "%s%02d%s", template_base, template_idx_start + k, template_ext);
 					else if (template_width==3) sprintf(szURL, "%s%03d%s", template_base, template_idx_start + k, template_ext);
 					else if (template_width==4) sprintf(szURL, "%s%04d%s", template_base, template_idx_start + k, template_ext);
@@ -1364,7 +1364,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 		if (import.nb_tracks>1) {
 			for (k=0; k<import.nb_tracks; k++) {
 				fprintf(fmpd, "   <ContentComponent id=\"%d\"", import.tk_info[k].track_num);
-				if (import.tk_info[k].lang) 
+				if (import.tk_info[k].lang)
 					fprintf(fmpd, " lang=\"%s\"", gf_4cc_to_str(import.tk_info[k].lang));
 				switch (import.tk_info[k].type) {
 				case GF_ISOM_MEDIA_VISUAL:
@@ -1399,7 +1399,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 			Bool is_aac = 0;
 			char *byte_range_media_file = NULL;
 			pe = gf_list_get(prog->bitrates, j);
-			
+
 			if (pe->elementType == TYPE_STREAM) {
 				GF_LOG(GF_LOG_WARNING, GF_LOG_DASH, ("[MPD] NOT SUPPORTED: M3U8 Stream\n"));
 			} else if (pe->elementType != TYPE_PLAYLIST) {
@@ -1428,7 +1428,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 			if (elt && strstr(elt->url, ".aac"))
 				is_aac = 1;
 
-			if (is_aac) 
+			if (is_aac)
 				fprintf(fmpd, "<!-- \n");
 
 			width = pe->width;
@@ -1518,7 +1518,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 			}
 			if (samplerate)
 				fprintf(fmpd, " audioSamplingRate=\"%d\"", samplerate);
-			
+
 
 			if (use_template) {
 				if (sep) {
@@ -1528,7 +1528,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 				} else
 					fprintf(fmpd, "/>\n");
 
-				if (is_aac) 
+				if (is_aac)
 					fprintf(fmpd, " -->");
 				continue;
 			}
@@ -1575,7 +1575,7 @@ GF_Err gf_m3u8_to_mpd(const char *m3u8_file, const char *base_url,
 			fprintf(fmpd, "   </Representation>\n");
 			gf_free(base_url);
 
-			if (is_aac) 
+			if (is_aac)
 				fprintf(fmpd, " -->\n");
 		}
 	}

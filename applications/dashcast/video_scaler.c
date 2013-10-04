@@ -203,7 +203,7 @@ int dc_video_scaler_scale(VideoInputData * p_vin, VideoScaledData * p_vsd) {
 			p_vdn->p_vframe->linesize, 0,
 			p_vin->p_vprop[index].i_height/*p_vin->i_height*/,
 			p_vsdn->p_vframe->data, p_vsdn->p_vframe->linesize);
-	
+
 	p_vsdn->p_vframe->pts = p_vdn->p_vframe->pts;
 
 	if (p_vdn->is_raw_data) {

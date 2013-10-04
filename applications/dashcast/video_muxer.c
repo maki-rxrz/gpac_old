@@ -111,7 +111,7 @@ static GF_Err avc_import_ffextradata(const u8 *extradata, const u64 extradata_si
 			gf_free(buffer);
 			return GF_BAD_PARAM;
 		}
-		
+
 		idx = gf_media_avc_read_pps(buffer, nal_size, &avc);
 		if (idx < 0) {
 			gf_bs_del(bs);
@@ -176,7 +176,7 @@ int dc_gpac_video_moov_create(VideoOutputFile * p_voutf, char * psz_name) {
 	track = gf_isom_new_track(p_voutf->p_isof, 1, GF_ISOM_MEDIA_VISUAL, p_video_codec_ctx->time_base.den);
 
 	p_voutf->timescale = p_video_codec_ctx->time_base.den;
-	if (!p_voutf->frame_dur) 
+	if (!p_voutf->frame_dur)
 		p_voutf->frame_dur = p_video_codec_ctx->time_base.num;
 
 	if (!track) {
@@ -431,7 +431,7 @@ int dc_ffmpeg_video_muxer_open(VideoOutputFile * p_voutf, char * psz_name) {
 	p_video_stream->codec->height = p_video_codec_ctx->height; //p_voutf->p_vdata->i_height;
 
 	p_video_stream->codec->time_base = p_video_codec_ctx->time_base;
-	
+
 	p_video_stream->codec->pix_fmt = PIX_FMT_YUV420P;
 	p_video_stream->codec->gop_size = p_video_codec_ctx->time_base.den; //p_voutf->p_vdata->i_framerate;
 
@@ -637,7 +637,7 @@ int dc_video_muxer_write(VideoOutputFile * p_voutf, int i_frame_nb) {
 			return 1;
 		}
 		return 0;
-	} 
+	}
 		if (i_frame_nb % p_voutf->frame_per_fragment == 0) {
 			gf_isom_start_fragment(p_voutf->p_isof, 1);
 

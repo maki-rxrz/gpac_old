@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -48,14 +48,14 @@ GF_M2TS_ES *gf_ait_section_new(u32 service_id)
 }
 
 
-void on_ait_section(GF_M2TS_Demuxer *ts, u32 evt_type, void *par) 
+void on_ait_section(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 {
 	GF_M2TS_SL_PCK *pck = (GF_M2TS_SL_PCK *)par;
 	char *data;
 	u32 u32_data_size;
 	u32 u32_table_id;
 
-	
+
 
 	if (evt_type == GF_M2TS_EVT_AIT_FOUND) {
 		GF_M2TS_AIT* ait;
@@ -63,9 +63,9 @@ void on_ait_section(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 		data = pck->data;
 
 		if(!check_ait_already_received(ts->ChannelAppList,ait_carry->pid,data)){
-			GF_SAFEALLOC(ait, GF_M2TS_AIT);			
+			GF_SAFEALLOC(ait, GF_M2TS_AIT);
 			u32_data_size = pck->data_len;
-			u32_table_id = data[0];		
+			u32_table_id = data[0];
 			ait->pid = ait_carry->pid;
 			ait->service_id = ait_carry->service_id;
 			gf_m2ts_decode_ait(ait, data, u32_data_size, u32_table_id);
@@ -73,7 +73,7 @@ void on_ait_section(GF_M2TS_Demuxer *ts, u32 evt_type, void *par)
 			gf_ait_destroy(ait);
 			if (ts->on_event) ts->on_event(ts, GF_M2TS_EVT_AIT_FOUND, pck->stream);
 		}
-		
+
 	}
 }
 
@@ -101,10 +101,10 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 		return GF_CORRUPTED_DATA;
 	}
 
-	ait->table_id = gf_bs_read_int(bs,8);	
+	ait->table_id = gf_bs_read_int(bs,8);
 	ait->section_syntax_indicator = gf_bs_read_int(bs,1);
 	gf_bs_read_int(bs,3);
-	ait->section_length = gf_bs_read_int(bs,12);	
+	ait->section_length = gf_bs_read_int(bs,12);
 	if( (data[1] & 0x0C) != 0){
 		GF_LOG(GF_LOG_INFO, GF_LOG_CONTAINER, ("[Process AIT] section length is not correct abroding \n"));
 	}else if( ait->section_length > AIT_SECTION_LENGTH_MAX){
@@ -115,7 +115,7 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 		GF_LOG(GF_LOG_INFO, GF_LOG_CONTAINER, ("[Process AIT] test application flag is at 1. API transmitted for testing, abording processing \n"));
 		return GF_CORRUPTED_DATA;
 	}
-	ait->application_type = gf_bs_read_int(bs,15);	
+	ait->application_type = gf_bs_read_int(bs,15);
 	if(ait->application_type != APPLICATION_TYPE_HTTP_APPLICATION){
 		GF_LOG(GF_LOG_INFO, GF_LOG_CONTAINER, ("[Process AIT] application type should 0x10. Wrong section, abording processing \n"));
 		return GF_CORRUPTED_DATA;
@@ -123,17 +123,17 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 	gf_bs_read_int(bs,2);
 	ait->version_number = gf_bs_read_int(bs,5);
 
-	ait->current_next_indicator = gf_bs_read_int(bs,1);	
+	ait->current_next_indicator = gf_bs_read_int(bs,1);
 	if(!ait->current_next_indicator){
 		GF_LOG(GF_LOG_INFO, GF_LOG_CONTAINER, ("[Process AIT] current next indicator should be at 1 \n"));
 		return GF_CORRUPTED_DATA;
 	}
 	ait->section_number = gf_bs_read_int(bs,8);
-	ait->last_section_number = gf_bs_read_int(bs,8);	
+	ait->last_section_number = gf_bs_read_int(bs,8);
 	gf_bs_read_int(bs,4);/* bit shifting */
-	ait->common_descriptors_length = gf_bs_read_int(bs,12);	
+	ait->common_descriptors_length = gf_bs_read_int(bs,12);
 	gf_bs_read_int(bs,(unsigned int)ait->common_descriptors_length/8);
-	gf_bs_read_int(bs,4);/* bit shifting */	
+	gf_bs_read_int(bs,4);/* bit shifting */
 	ait->application_loop_length = gf_bs_read_int(bs,12);
 
 	data_shift = (u32)(gf_bs_get_position(bs)) + ait->common_descriptors_length/8;
@@ -146,11 +146,11 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 		application->index_app_desc_id = 0;
 
 		/* application loop */
-		application->organisation_id = gf_bs_read_int(bs,32);	
+		application->organisation_id = gf_bs_read_int(bs,32);
 		application->application_id= gf_bs_read_int(bs,16);
 		application->application_control_code= gf_bs_read_int(bs,8);
 		gf_bs_read_int(bs,4);/* bit shifting */
-		application->application_descriptors_loop_length= gf_bs_read_int(bs,12);		
+		application->application_descriptors_loop_length= gf_bs_read_int(bs,12);
 
 		ait_app_data_shift += 9;
 		app_desc_data_shift = 0;
@@ -180,7 +180,7 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 						gf_bs_read_int(bs,5); /*bit shift*/
 						application_descriptor->application_priority = gf_bs_read_int(bs,8);
 						if (nb_of_protocol > 0) {
-							for (i=0; i<nb_of_protocol; i++) {						
+							for (i=0; i<nb_of_protocol; i++) {
 								application_descriptor->transport_protocol_label[i] = gf_bs_read_int(bs,8);
 							}
 						} else {
@@ -250,10 +250,10 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 						break;
 					}
 				case TRANSPORT_HTTP:
-					{					
-						u32 i;								
+					{
+						u32 i;
 						GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE* Transport_http_selector_byte;
-						GF_SAFEALLOC(Transport_http_selector_byte, GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE);					
+						GF_SAFEALLOC(Transport_http_selector_byte, GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE);
 						Transport_http_selector_byte->URL_base_length = gf_bs_read_int(bs,8);
 						//fprintf(stderr, "Transport_http_selector_byte->URL_base_length %d \n",Transport_http_selector_byte->URL_base_length);
 						Transport_http_selector_byte->URL_base_byte = (char*)gf_calloc(Transport_http_selector_byte->URL_base_length+1,sizeof(char));
@@ -279,28 +279,28 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 						}
 						if (pre_processing_pos+protocol_descriptor->descriptor_length != gf_bs_get_position(bs)) {
 							GF_LOG(GF_LOG_INFO, GF_LOG_CONTAINER, ("[Process AIT] Descriptor data processed length error. Difference between byte shifting %d and descriptor length %d \n",(gf_bs_get_position(bs) -  pre_processing_pos),protocol_descriptor->descriptor_length));
-							if (protocol_descriptor->protocol_id == CAROUSEL) {						
-								GF_M2TS_OBJECT_CAROUSEL_SELECTOR_BYTE* Carousel_selector_byte = (GF_M2TS_OBJECT_CAROUSEL_SELECTOR_BYTE*) protocol_descriptor->selector_byte;								
-								gf_free(Carousel_selector_byte);								
+							if (protocol_descriptor->protocol_id == CAROUSEL) {
+								GF_M2TS_OBJECT_CAROUSEL_SELECTOR_BYTE* Carousel_selector_byte = (GF_M2TS_OBJECT_CAROUSEL_SELECTOR_BYTE*) protocol_descriptor->selector_byte;
+								gf_free(Carousel_selector_byte);
 							} else if(protocol_descriptor->protocol_id ==TRANSPORT_HTTP) {
 								u32 i;
-								GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE* Transport_http_selector_byte = (GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE*) protocol_descriptor->selector_byte;								
+								GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE* Transport_http_selector_byte = (GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE*) protocol_descriptor->selector_byte;
 								gf_free(Transport_http_selector_byte->URL_base_byte);
-								for(i = 0; i < Transport_http_selector_byte->URL_extension_count;i++){										
+								for(i = 0; i < Transport_http_selector_byte->URL_extension_count;i++){
 									gf_free(Transport_http_selector_byte->URL_extentions[i].URL_extension_byte);
 								}
-								gf_free(Transport_http_selector_byte);						
+								gf_free(Transport_http_selector_byte);
 							}
 							gf_free(protocol_descriptor);
 							return GF_CORRUPTED_DATA;
 						}
-						gf_list_add(application->application_descriptors,protocol_descriptor);					
+						gf_list_add(application->application_descriptors,protocol_descriptor);
 						app_desc_data_shift += (2+ protocol_descriptor->descriptor_length);
 						break;
 					}
 				case SIMPLE_APPLICATION_LOCATION_DESCRIPTOR:
 					{
-						u64 pre_processing_pos;					
+						u64 pre_processing_pos;
 						GF_M2TS_SIMPLE_APPLICATION_LOCATION* Simple_application_location;
 						GF_SAFEALLOC(Simple_application_location, GF_M2TS_SIMPLE_APPLICATION_LOCATION);
 						application->application_descriptors_id[application->index_app_desc_id] = temp_descriptor_tag;
@@ -380,7 +380,7 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 						}
 						gf_list_add(application->application_descriptors,boundary_descriptor);
 						app_desc_data_shift += (2+ boundary_descriptor->descriptor_length);
-						break;					
+						break;
 					}
 				default:
 					{
@@ -389,14 +389,14 @@ static GF_Err gf_m2ts_decode_ait(GF_M2TS_AIT *ait, char  *data, u32 data_size, u
 						/* get descriptor's length */
 						length = gf_bs_read_int(bs,8);
 						/* bit shifting (eq descriptor's length)*/
-						gf_bs_read_int(bs,8*length);					
+						gf_bs_read_int(bs,8*length);
 					}
 
 			}
 
 		}
-		ait_app_data_shift += application->application_descriptors_loop_length; 
-		gf_list_add(ait->application_decoded,application);		
+		ait_app_data_shift += application->application_descriptors_loop_length;
+		gf_list_add(ait->application_decoded,application);
 	}
 
 	data_shift +=ait->application_loop_length;
@@ -424,7 +424,7 @@ static void gf_m2ts_process_ait(GF_M2TS_Demuxer *ts, GF_M2TS_AIT* ait){
 	j=0;
 
 	/* Link the AIT and the channel */
-	ChanAppInfo = gf_m2ts_get_channel_application_info(ts->ChannelAppList,ait->service_id);	
+	ChanAppInfo = gf_m2ts_get_channel_application_info(ts->ChannelAppList,ait->service_id);
 
 	if(!ChanAppInfo){
 		GF_SAFEALLOC(ChanAppInfo,GF_M2TS_CHANNEL_APPLICATION_INFO);
@@ -437,12 +437,12 @@ static void gf_m2ts_process_ait(GF_M2TS_Demuxer *ts, GF_M2TS_AIT* ait){
 	ChanAppInfo->nb_application = nb_of_app;
 
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_CONTAINER, ("[DSMCC] ChanAppInfo->nb_application %d \n",ChanAppInfo->nb_application));
-	
+
 	for(j=0 ; j<nb_of_app ; j++){
 		GF_M2TS_AIT_APPLICATION* Application;
 		GF_M2TS_AIT_APPLICATION_DECODE* application_decoded;
 		GF_SAFEALLOC(Application,GF_M2TS_AIT_APPLICATION);
-		gf_list_add(ChanAppInfo->Application,Application);			
+		gf_list_add(ChanAppInfo->Application,Application);
 		Application->http_url = NULL;
 		Application->carousel_url = NULL;
 
@@ -453,7 +453,7 @@ static void gf_m2ts_process_ait(GF_M2TS_Demuxer *ts, GF_M2TS_AIT* ait){
 		Application->broadband = 0;
 		Application->broadcast = 0;
 		ChanAppInfo->version_number = ait->version_number;
-		
+
 		k=0;
 		for(k=0 ; k<nb_app_desc ; k++){
 			desc_id = application_decoded->application_descriptors_id[k];
@@ -478,15 +478,15 @@ static void gf_m2ts_process_ait(GF_M2TS_Demuxer *ts, GF_M2TS_AIT* ait){
 
 									switch(protocol_descriptor->protocol_id){
 										case CAROUSEL:
-											{									
-												GF_Err e;												
+											{
+												GF_Err e;
 												GF_M2TS_OBJECT_CAROUSEL_SELECTOR_BYTE* Carousel_selector_byte = (GF_M2TS_OBJECT_CAROUSEL_SELECTOR_BYTE*)protocol_descriptor->selector_byte;
 												if(ts->process_dmscc){
 													GF_M2TS_DSMCC_OVERLORD* dsmcc_overlord = gf_m2ts_get_dmscc_overlord(ts->dsmcc_controler,ait->service_id);
 													Application->broadcast = 1;
 													if(!dsmcc_overlord){
 														char app_url[1024], char_service_id[128];
-														
+
 														memset(&app_url,0,1024*sizeof(char));
 														memset(&char_service_id,0,128*sizeof(char));
 
@@ -496,14 +496,14 @@ static void gf_m2ts_process_ait(GF_M2TS_Demuxer *ts, GF_M2TS_AIT* ait){
 														dsmcc_overlord->root_dir = (char*)gf_calloc(strlen(ts->dsmcc_root_dir)+2+strlen(char_service_id),sizeof(char));
 														sprintf(dsmcc_overlord->root_dir,"%s%c%s",ts->dsmcc_root_dir,GF_PATH_SEPARATOR,char_service_id);
 														e = gf_mkdir(dsmcc_overlord->root_dir);
-														if(e){															
+														if(e){
 															GF_LOG(GF_LOG_INFO, GF_LOG_CONTAINER, ("[Process DSMCC] Error during the creation of the directory %s \n",dsmcc_overlord->root_dir));
 															if(e == GF_BAD_PARAM){
 																gf_cleanup_dir(dsmcc_overlord->root_dir);
 															}
 														}
 														sprintf(app_url,"%s%cindex.html",dsmcc_overlord->root_dir,GF_PATH_SEPARATOR);
-														Application->carousel_url = gf_strdup(app_url);											
+														Application->carousel_url = gf_strdup(app_url);
 														gf_list_add(ts->dsmcc_controler,dsmcc_overlord);
 													}
 												}
@@ -558,9 +558,9 @@ static void gf_m2ts_process_ait(GF_M2TS_Demuxer *ts, GF_M2TS_AIT* ait){
 	if(ts->process_dmscc){
 		GF_M2TS_DSMCC_OVERLORD* dsmcc_overlord = gf_m2ts_get_dmscc_overlord(ts->dsmcc_controler,ait->service_id);
 
-		if(dsmcc_overlord && !gf_m2ts_is_dmscc_app(ChanAppInfo)){			
+		if(dsmcc_overlord && !gf_m2ts_is_dmscc_app(ChanAppInfo)){
 			gf_cleanup_dir(dsmcc_overlord->root_dir);
-			gf_rmdir(dsmcc_overlord->root_dir);	
+			gf_rmdir(dsmcc_overlord->root_dir);
 			gf_m2ts_delete_dsmcc_overlord(dsmcc_overlord);
 
 		}
@@ -568,7 +568,7 @@ static void gf_m2ts_process_ait(GF_M2TS_Demuxer *ts, GF_M2TS_AIT* ait){
 }
 
 static Bool gf_m2ts_is_dmscc_app(GF_M2TS_CHANNEL_APPLICATION_INFO* ChanAppInfo){
-	
+
 	u32 nb_app,i;
 
 	nb_app = gf_list_count(ChanAppInfo->Application);
@@ -586,7 +586,7 @@ GF_M2TS_CHANNEL_APPLICATION_INFO* gf_m2ts_get_channel_application_info(GF_List* 
 
 	nb_chanapp = gf_list_count(ChannelAppList);
 
-	for(i = 0; i < nb_chanapp; i++){	
+	for(i = 0; i < nb_chanapp; i++){
 		GF_M2TS_CHANNEL_APPLICATION_INFO* ChanAppInfo = (GF_M2TS_CHANNEL_APPLICATION_INFO*)gf_list_get(ChannelAppList,i);
 		if(ChanAppInfo->service_id == ait_service_id){
 			return ChanAppInfo;
@@ -614,9 +614,9 @@ static Bool check_ait_already_received(GF_List* ChannelAppList,u32 pid,char* dat
 				version_number = (data[5] &0x3E)>>1;
 				GF_LOG(GF_LOG_DEBUG, GF_LOG_MODULE, ("[Process AIT] AIT ait_list_version number %d, ait->version_number %d \n",ChanAppInfo->version_number,version_number));
 				if(ChanAppInfo->version_number >= version_number){
-					GF_LOG(GF_LOG_DEBUG, GF_LOG_MODULE, ("[Process AIT] AIT already received, abording processing \n"));	
+					GF_LOG(GF_LOG_DEBUG, GF_LOG_MODULE, ("[Process AIT] AIT already received, abording processing \n"));
 					return 1;
-				}else{				
+				}else{
 					while(ChanAppInfo->nb_application != 0){
 						GF_M2TS_AIT_APPLICATION* Application = gf_list_get(ChanAppInfo->Application,0);
 						gf_m2ts_free_ait_application(Application);
@@ -639,11 +639,11 @@ static void gf_ait_destroy(GF_M2TS_AIT* ait)
 {
 	u32 common_descr_numb, app_numb;
 
-	/* delete de Elementary Stream part of the AIT structure */ 	
+	/* delete de Elementary Stream part of the AIT structure */
 	common_descr_numb = 0;
 	app_numb = 0;
 
-	/* delete the common descriptors */ 
+	/* delete the common descriptors */
 	common_descr_numb = gf_list_count(ait->common_descriptors);
 	while(common_descr_numb != 0){
 		//TODO
@@ -667,7 +667,7 @@ static void gf_ait_application_decode_destroy(GF_M2TS_AIT_APPLICATION_DECODE* ap
 
 	u32 app_desc_num,i,app_descr_index;
 
-	app_desc_num = app_descr_index = i = 0; 
+	app_desc_num = app_descr_index = i = 0;
 	app_desc_num = gf_list_count(application_decode->application_descriptors);
 
 	while (app_desc_num != 0) {
@@ -678,7 +678,7 @@ static void gf_ait_application_decode_destroy(GF_M2TS_AIT_APPLICATION_DECODE* ap
 			case APPLICATION_DESCRIPTOR:
 				{
 					GF_M2TS_APPLICATION_DESCRIPTOR* application_descriptor = (GF_M2TS_APPLICATION_DESCRIPTOR*)gf_list_get(application_decode->application_descriptors,0);
-					gf_free(application_descriptor);  
+					gf_free(application_descriptor);
 					break;
 				}
 			case APPLICATION_NAME_DESCRIPTOR:
@@ -690,7 +690,7 @@ static void gf_ait_application_decode_destroy(GF_M2TS_AIT_APPLICATION_DECODE* ap
 				}
 			case TRANSPORT_PROTOCOL_DESCRIPTOR:
 				{
-					GF_M2TS_TRANSPORT_PROTOCOL_DESCRIPTOR* protocol_descriptor = (GF_M2TS_TRANSPORT_PROTOCOL_DESCRIPTOR*)gf_list_get(application_decode->application_descriptors,0);  					
+					GF_M2TS_TRANSPORT_PROTOCOL_DESCRIPTOR* protocol_descriptor = (GF_M2TS_TRANSPORT_PROTOCOL_DESCRIPTOR*)gf_list_get(application_decode->application_descriptors,0);
 					switch (protocol_descriptor->protocol_id) {
 			case CAROUSEL:
 				{
@@ -699,12 +699,12 @@ static void gf_ait_application_decode_destroy(GF_M2TS_AIT_APPLICATION_DECODE* ap
 					break;
 				}
 			case TRANSPORT_HTTP:
-				{					
-					u32 i;								
+				{
+					u32 i;
 					GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE* Transport_http_selector_byte = (GF_M2TS_TRANSPORT_HTTP_SELECTOR_BYTE*)protocol_descriptor->selector_byte;
 					gf_free(Transport_http_selector_byte->URL_base_byte);
 					if (Transport_http_selector_byte->URL_extension_count) {
-						for (i=0; i < Transport_http_selector_byte->URL_extension_count;i++) { 										
+						for (i=0; i < Transport_http_selector_byte->URL_extension_count;i++) {
 							gf_free(Transport_http_selector_byte->URL_extentions[i].URL_extension_byte);
 						}
 						gf_free(Transport_http_selector_byte->URL_extentions);
@@ -716,12 +716,12 @@ static void gf_ait_application_decode_destroy(GF_M2TS_AIT_APPLICATION_DECODE* ap
 				{
 					GF_LOG(GF_LOG_INFO, GF_LOG_CONTAINER, ("[Process AIT] Protocol ID %d unsupported, ignoring the selector byte \n",protocol_descriptor->protocol_id));
 				}
-					}					
-					gf_free(protocol_descriptor);					
+					}
+					gf_free(protocol_descriptor);
 					break;
 				}
 			case SIMPLE_APPLICATION_LOCATION_DESCRIPTOR:
-				{			
+				{
 					GF_M2TS_SIMPLE_APPLICATION_LOCATION* Simple_application_location = (GF_M2TS_SIMPLE_APPLICATION_LOCATION*)gf_list_get(application_decode->application_descriptors,0);
 					gf_free(Simple_application_location->initial_path_bytes);
 					gf_free(Simple_application_location);
@@ -741,12 +741,12 @@ static void gf_ait_application_decode_destroy(GF_M2TS_AIT_APPLICATION_DECODE* ap
 						for (i=0; i<boundary_descriptor->boundary_extension_count; i++) {
 							if (boundary_descriptor->boundary_extension_info[i].boundary_extension_length > 0) {
 								gf_free(boundary_descriptor->boundary_extension_info[i].boundary_extension_byte);
-							}							
+							}
 						}
 						gf_free(boundary_descriptor->boundary_extension_info);
 					}
 					gf_free(boundary_descriptor);
-					break;					
+					break;
 				}
 			default:
 				{

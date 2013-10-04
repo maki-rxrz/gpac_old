@@ -15,13 +15,13 @@ LDFLAGS+=-pg
 endif
 
 #common obj
-OBJS= ft_font.o 
+OBJS= ft_font.o
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_ft_font.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
-#LDFLAGS+=-export-symbols ft_font.def 
+#LDFLAGS+=-export-symbols ft_font.def
 endif
 
 
@@ -42,13 +42,13 @@ ifeq ($(STATICBUILD),yes)
 endif
 
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

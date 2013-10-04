@@ -186,8 +186,8 @@ int dc_video_encoder_encode(VideoOutputFile * p_voutf, VideoScaledData * p_vsd) 
 	if (! p_voutf->use_source_timing) {
 		p_vn->p_vframe->pts = p_video_codec_ctx->frame_number;
 	}
-	
-	
+
+
 	/* Encoding video */
 	{
 		int got_packet = 0;
@@ -203,7 +203,7 @@ int dc_video_encoder_encode(VideoOutputFile * p_voutf, VideoScaledData * p_vsd) 
 #endif
 		if (p_voutf->i_encoded_frame_size >= 0) {
 			p_voutf->i_encoded_frame_size = pkt.size;
-			if (got_packet) {	
+			if (got_packet) {
 				p_video_codec_ctx->coded_frame->pts = pkt.pts;
 				p_video_codec_ctx->coded_frame->pkt_dts = pkt.dts;
 				p_video_codec_ctx->coded_frame->key_frame = !!(pkt.flags & AV_PKT_FLAG_KEY);

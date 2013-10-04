@@ -40,7 +40,7 @@ static void switch_menu_pl()
 	DeleteMenu(g_hMenuView, IDM_OF_PL_UP, MF_BYCOMMAND);
 	DeleteMenu(g_hMenuView, IDM_OF_PL_DOWN, MF_BYCOMMAND);
 	DeleteMenu(g_hMenuView, IDM_OF_PL_CLEAR, MF_BYCOMMAND);
-	
+
 	if (playlist_mode) {
 		InsertMenu(g_hMenuView, 0, MF_BYPOSITION, IDM_OF_PL_CLEAR, _T("Clear"));
 		InsertMenu(g_hMenuView, 0, MF_BYPOSITION, IDM_OF_PL_DOWN, _T("Move Down") );
@@ -48,11 +48,11 @@ static void switch_menu_pl()
 	} else {
 		InsertMenu(g_hMenuView, 0, MF_BYPOSITION, IDM_OF_VIEW_ALL, _T("All Unknown Files") );
 	}
-	TBBUTTONINFO tbbi; 
-	tbbi.cbSize = sizeof(tbbi); 
-	tbbi.dwMask = TBIF_TEXT; 
-	tbbi.pszText = playlist_mode ? _T("Remove") : _T("Add"); 
-	SendMessage(g_hWndMenuBar, TB_SETBUTTONINFO, IDM_OF_PL_ACT, (LPARAM)&tbbi); 
+	TBBUTTONINFO tbbi;
+	tbbi.cbSize = sizeof(tbbi);
+	tbbi.dwMask = TBIF_TEXT;
+	tbbi.pszText = playlist_mode ? _T("Remove") : _T("Add");
+	SendMessage(g_hWndMenuBar, TB_SETBUTTONINFO, IDM_OF_PL_ACT, (LPARAM)&tbbi);
 	refresh_menu_states();
 }
 
@@ -165,12 +165,12 @@ void playlist_act(u32 act_type)
 		if (idx+1==count) idx--;
 		break;
 	/*up*/
-	case 1: 
+	case 1:
 		gf_cfg_insert_key(cfg, "Playlist", entry, "", idx-1);
 		idx--;
 		break;
 	/*down*/
-	case 2: 
+	case 2:
 		gf_cfg_insert_key(cfg, "Playlist", entry, "", idx+1);
 		idx++;
 		break;
@@ -272,7 +272,7 @@ BOOL InitFileDialog(const HWND hWnd)
         return FALSE;
     }
     g_hWndMenuBar = mbi.hwndMB;
-    
+
     ShowWindow(g_hWndMenuBar, SW_SHOW);
 
 	the_wnd = hWnd;
@@ -286,7 +286,7 @@ BOOL InitFileDialog(const HWND hWnd)
 	u32 caption_h = GetSystemMetrics(SM_CYCAPTION) - 3;
 	MoveWindow(hDirTxt, 0, 0, rc.right - rc.left, caption_h, 1);
 	MoveWindow(hList, 0, caption_h, rc.right - rc.left, rc.bottom - rc.top - caption_h, 1);
-	
+
 	if (playlist_mode) {
 		refresh_playlist();
 	} else {
@@ -300,7 +300,7 @@ BOOL InitFileDialog(const HWND hWnd)
 	return TRUE;
 }
 
-BOOL CALLBACK FileDialogProc(const HWND hWnd, const UINT Msg, const WPARAM wParam, const LPARAM lParam) 
+BOOL CALLBACK FileDialogProc(const HWND hWnd, const UINT Msg, const WPARAM wParam, const LPARAM lParam)
 {
 	BOOL bProcessedMsg = TRUE;
 
@@ -368,13 +368,13 @@ BOOL CALLBACK FileDialogProc(const HWND hWnd, const UINT Msg, const WPARAM wPara
         break;
 	case WM_KEYDOWN:
 		switch (wParam) {
-		case VK_LEFT: 
-		case '1': 
-			playlist_act(1); 
+		case VK_LEFT:
+		case '1':
+			playlist_act(1);
 			break;
-		case VK_RIGHT: 
-		case '2': 
-			playlist_act(2); 
+		case VK_RIGHT:
+		case '2':
+			playlist_act(2);
 			break;
 		default:
             bProcessedMsg = FALSE;
@@ -385,7 +385,7 @@ BOOL CALLBACK FileDialogProc(const HWND hWnd, const UINT Msg, const WPARAM wPara
     default:
         bProcessedMsg = FALSE;
     }
-    
+
     return bProcessedMsg;
 }
 

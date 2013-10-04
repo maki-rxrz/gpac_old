@@ -162,10 +162,10 @@ JNIEnv* GetEnv()
 void JNI_OnUnload(JavaVM *vm, void *reserved)
 {
 	JNIEnv* env = 0;
-  	
+
 	if ( (*vm)->GetEnv(vm, (void**)&env, JNI_VERSION_1_2) != JNI_OK )
 		return;
-	
+
 	(*env)->DeleteGlobalRef(env, camCtrlClass);
 }
 //----------------------------------------------------------------------
@@ -268,7 +268,7 @@ void loadCameraControler(ISOMReader *read)
 		read->isAttached = 1;
 		//(*rc->env)->PushLocalFrame(rc->env, 2);
 	}
-	else 
+	else
 		if ( res == JNI_EVERSION )
 		{
 			GF_LOG(GF_LOG_ERROR, GF_LOG_CORE, ("[ANDROID_CAMERA] The specified version is not supported\n"));
@@ -330,7 +330,7 @@ GF_Err CAM_CloseService(GF_InputService *plug)
 
 	reply = GF_OK;
 
-	(*GetEnv())->DeleteLocalRef( GetEnv(), read->camCtrlObj ); 
+	(*GetEnv())->DeleteLocalRef( GetEnv(), read->camCtrlObj );
 	read->camCtrlObj = NULL;
 
 	//unloadCameraControler(read);
@@ -367,7 +367,7 @@ static GF_Descriptor *CAM_GetServiceDesc(GF_InputService *plug, u32 expect_type,
 		esd->decoderConfig->streamType = GF_STREAM_VISUAL;
 		esd->ESID = 1;
 		esd->decoderConfig->objectTypeIndication = GPAC_OTI_RAW_MEDIA_STREAM;
-		
+
 		bs = gf_bs_new(NULL, 0, GF_BITSTREAM_WRITE);
 
 		read->width = getWidth(read);
@@ -513,7 +513,7 @@ void Java_com_gpac_Osmo4_Preview_processFrameBuf( JNIEnv* env, jobject thiz, jby
 		hdr.compositionTimeStampFlag = 1;
 		hdr.compositionTimeStamp = cts;
 		gf_term_on_sl_packet(ctx->service, ctx->channel, (void*)data, datasize, &hdr, GF_OK);
-		
+
 		//gf_free(data);
 
 		(*env)->ReleaseByteArrayElements(env,arr,jdata,JNI_ABORT);
@@ -545,7 +545,7 @@ void CallCamMethod(ISOMReader *read, jmethodID methodID)
 	(*env)->CallNonvirtualVoidMethod(env, read->camCtrlObj, read->camCtrlClass, methodID);
 
 	if (isAttached)
-	{	
+	{
 		(*GetJavaVM())->DetachCurrentThread(GetJavaVM());
 	}
 }

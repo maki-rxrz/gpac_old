@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -29,7 +29,6 @@
 #include <gpac/constants.h>
 #include <gpac/options.h>
 #include <gpac/modules/service.h>
-
 
 #ifndef WIN32
 #include <pwd.h>
@@ -43,13 +42,13 @@
 #define SHGFP_TYPE_CURRENT 0 /*needed for MinGW*/
 #endif
 
-#ifdef _MSC_VER 
+#ifdef _MSC_VER
 /*get rid of console*/
 #if 0
 #pragma comment(linker,"/SUBSYSTEM:WINDOWS")
 #pragma comment(linker,"/ENTRY:main")
 #else
-#pragma comment(linker,"/SUBSYSTEM:CONSOLE") 
+#pragma comment(linker,"/SUBSYSTEM:CONSOLE")
 #endif
 
 #endif // _MSC_VER
@@ -158,10 +157,10 @@ void PrintUsage()
 		"\t-rgbds:         dumps the RGBDS pixel format texture\n"
 		"                   with -avi [times]: dumps an rgbds-format .avi\n"
 		"\t-rgbd:          dumps the RGBD pixel format texture\n"
-		"					with -avi [times]: dumps an rgbd-format .avi\n"		
+		"					with -avi [times]: dumps an rgbd-format .avi\n"
 		"\t-depth:         dumps depthmap (z-buffer) frames\n"
-		"                   with -avi [times]: dumps depthmap in grayscale .avi\n"		
-		"                   with -bmp: dumps depthmap in grayscale .bmp\n"		
+		"                   with -avi [times]: dumps depthmap in grayscale .avi\n"
+		"                   with -bmp: dumps depthmap in grayscale .bmp\n"
 		"\t-fps FPS:       specifies frame rate for AVI dumping (default: 25.0)\n"
 		"\t-2d:            uses 2D compositor\n"
 		"\t-3d:            uses 3D compositor\n"
@@ -196,7 +195,7 @@ static void UpdateRTInfo(const char *legend)
 
 	/*refresh every second*/
 	if (!display_rti && !rti_logs) return;
-	if (!gf_sys_get_rti(rti_update_time_ms, &rti, 0) && !legend) 
+	if (!gf_sys_get_rti(rti_update_time_ms, &rti, 0) && !legend)
 		return;
 
 	if (display_rti) {
@@ -204,13 +203,13 @@ static void UpdateRTInfo(const char *legend)
 		if (!rti.gpac_memory) rti.gpac_memory = (u32) (memory_at_gpac_startup-rti.physical_memory_avail);
 
 		if (display_rti==2) {
-			fprintf(stdout, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB\r", 
+			fprintf(stdout, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB\r",
 				gf_term_get_framerate(term, 0), rti.total_cpu_usage, rti.process_cpu_usage, (u32) (rti.gpac_memory / 1024) );
 		} else {
 			char szMsg[1024];
 			GF_Event evt;
 
-			sprintf(szMsg, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB", 
+			sprintf(szMsg, "FPS %02.2f - CPU %02d (%02d) - Mem %d kB",
 				gf_term_get_framerate(term, 0), rti.total_cpu_usage, rti.process_cpu_usage, (u32) (rti.gpac_memory / 1024) );
 			evt.type = GF_EVENT_SET_CAPTION;
 			evt.caption.caption = szMsg;
@@ -218,12 +217,12 @@ static void UpdateRTInfo(const char *legend)
 		}
 	}
 	if (rti_logs) {
-		fprintf(rti_logs, "% 8d\t% 8d\t% 8d\t% 4d\t% 8d\t%s", 
+		fprintf(rti_logs, "% 8d\t% 8d\t% 8d\t% 4d\t% 8d\t%s",
 			gf_sys_clock(),
 			gf_term_get_time_in_ms(term),
 			rti.total_cpu_usage,
 			(u32) gf_term_get_framerate(term, 0),
-			(u32) (rti.gpac_memory / 1024), 
+			(u32) (rti.gpac_memory / 1024),
 			legend ? legend : ""
 			);
 		if (!legend) fprintf(rti_logs, "\n");
@@ -243,7 +242,7 @@ static void ResetCaption()
 		/*get any service info*/
 		if (!startup_file && gf_term_get_service_info(term, gf_term_get_root_object(term), &com) == GF_OK) {
 			strcpy(szName, "");
-			if (com.track_info) { 
+			if (com.track_info) {
 				char szBuf[10];
 				sprintf(szBuf, "%02d ", (u32) (com.track_info>>16) );
 				strcat(szName, szBuf);
@@ -251,7 +250,7 @@ static void ResetCaption()
 			if (com.artist) { strcat(szName, com.artist); strcat(szName, " "); }
 			if (com.name) { strcat(szName, com.name); strcat(szName, " "); }
 			if (com.album) { strcat(szName, "("); strcat(szName, com.album); strcat(szName, ")"); }
-			
+
 			if (strlen(szName)) event.caption.caption = szName;
 		}
 		if (!event.caption.caption) {
@@ -311,7 +310,7 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 		if (evt->message.error) {
 			if (!is_connected) last_error = evt->message.error;
 			fprintf(stderr, "%s (%s): %s\n", evt->message.message, servName, gf_error_to_string(evt->message.error));
-		} else if (!be_quiet) 
+		} else if (!be_quiet)
 			fprintf(stderr, "(%s) %s\r", servName, evt->message.message);
 	}
 		break;
@@ -324,7 +323,7 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 		gf_set_progress(szTitle, evt->progress.done, evt->progress.total);
 	}
 		break;
-	
+
 
 	case GF_EVENT_DBLCLICK:
 		gf_term_set_option(term, GF_OPT_FULLSCREEN, !gf_term_get_option(term, GF_OPT_FULLSCREEN));
@@ -389,21 +388,21 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 		case GF_KEY_D:
 			if (evt->key.flags & GF_KEY_MOD_CTRL) gf_term_set_option(term, GF_OPT_DRAW_MODE, (gf_term_get_option(term, GF_OPT_DRAW_MODE)==GF_DRAW_MODE_DEFER) ? GF_DRAW_MODE_IMMEDIATE : GF_DRAW_MODE_DEFER );
 			break;
-		case GF_KEY_4: 
+		case GF_KEY_4:
 			if (evt->key.flags & GF_KEY_MOD_CTRL)
-				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_4_3); 
+				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_4_3);
 			break;
-		case GF_KEY_5: 
+		case GF_KEY_5:
 			if (evt->key.flags & GF_KEY_MOD_CTRL)
-				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_16_9); 
+				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_16_9);
 			break;
-		case GF_KEY_6: 
+		case GF_KEY_6:
 			if (evt->key.flags & GF_KEY_MOD_CTRL)
-				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_FILL_SCREEN); 
+				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_FILL_SCREEN);
 			break;
-		case GF_KEY_7: 
+		case GF_KEY_7:
 			if (evt->key.flags & GF_KEY_MOD_CTRL)
-				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_KEEP); 
+				gf_term_set_option(term, GF_OPT_ASPECT_RATIO, GF_ASPECT_RATIO_KEEP);
 			break;
 		case GF_KEY_P:
 			if (evt->key.flags & GF_KEY_MOD_CTRL && is_connected) {
@@ -456,7 +455,7 @@ Bool GPAC_EventProc(void *ptr, GF_Event *evt)
 			move.move.align_y = (align_mode>>8) & 0xFF;
 			move.move.relative = 2;
 			gf_term_user_event(term, &move);
-		} 
+		}
 		break;
 	case GF_EVENT_SCENE_SIZE:
 		if (forced_width && forced_height) {
@@ -703,7 +702,7 @@ int main (int argc, char *argv[])
 	FILE *playlist = NULL;
 	FILE *logfile = NULL;
 	Float scale = 1;
-    
+
     /*by default use current dir*/
 	strcpy(the_url, ".");
 
@@ -726,7 +725,7 @@ int main (int argc, char *argv[])
 	}
 
 	gf_sys_init(enable_mem_tracker);
-	
+
 	cfg_file = gf_cfg_init(the_cfg, NULL);
 	if (!cfg_file) {
 		fprintf(stdout, "Error: Configuration File \"GPAC.cfg\" not found\n");
@@ -770,7 +769,7 @@ int main (int argc, char *argv[])
 			dump_mode=9;  /* rgbd texture directly*/
 			if (dump_mode==1) dump_mode = 10;    /* .avi rgbds dump*/
 		} else if (!strcmp(arg, "-depth")) {
-			depth_dump = 1;        
+			depth_dump = 1;
 			if (dump_mode==2) dump_mode=7; /* grayscale .bmp depth dump*/
 			else if (dump_mode==1) dump_mode=8; /* .avi depth dump*/
 			else dump_mode=4;   /*depth dump*/
@@ -836,7 +835,7 @@ int main (int argc, char *argv[])
 					sep2[0] = 0;
 					strcpy(szKey, sep);
 					strcpy(szVal, sep2+1);
-					sep2[0] = '='; 
+					sep2[0] = '=';
 					if (!stricmp(szVal, "null")) szVal[0]=0;
 					gf_cfg_set_key(cfg_file, szSec, szKey, szVal[0] ? szVal : NULL);
 				}
@@ -853,11 +852,11 @@ int main (int argc, char *argv[])
 		const char *opt = gf_cfg_get_key(cfg_file, "General", "LogFile");
 		if (opt) {
 			logfile = gf_f64_open(opt, "wt");
-			if (logfile) 
+			if (logfile)
 				gf_log_set_callback(logfile, on_gpac_log);
 		}
 	}
-		
+
 	if (dump_mode && !url_arg) {
 		fprintf(stdout, "Missing argument for dump\n");
 		PrintUsage();
@@ -893,7 +892,7 @@ int main (int argc, char *argv[])
 		return 1;
 	}
 	fprintf(stderr, "Modules Loaded (%d found in %s)\n", i, str);
-	
+
 	user.config = cfg_file;
 	user.EventProc = GPAC_EventProc;
 	/*dummy in this case (global vars) but MUST be non-NULL*/
@@ -902,7 +901,7 @@ int main (int argc, char *argv[])
 	if (no_audio) user.init_flags |= GF_TERM_NO_AUDIO;
 	if (no_regulation) user.init_flags |= GF_TERM_NO_REGULATION;
 
-	fprintf(stderr, "Loading GPAC Terminal\n");	
+	fprintf(stderr, "Loading GPAC Terminal\n");
 	term = gf_term_new(&user);
 	if (!term) {
 		fprintf(stderr, "\nInit error - check you have at least one video out and one rasterizer...\nFound modules:\n");
@@ -990,7 +989,7 @@ int main (int argc, char *argv[])
 		}
 	}
 	/*force fullscreen*/
-	if (0 && start_fs) 
+	if (0 && start_fs)
 		gf_term_set_option(term, GF_OPT_FULLSCREEN, 1);
 
 	while (Run) {
@@ -1003,7 +1002,7 @@ int main (int argc, char *argv[])
 			request_next_playlist_item = 0;
 			if (playlist) {
 				gf_term_disconnect(term);
-				
+
 				if (fscanf(playlist, "%s", the_url) == EOF) {
 					fprintf(stdout, "No more items - exiting\n");
 					Run = 0;
@@ -1019,7 +1018,7 @@ int main (int argc, char *argv[])
 			gf_term_process_step(term);
 			if (auto_exit && gf_term_get_option(term, GF_OPT_IS_OVER)) {
 				Run = 0;
-			} 
+			}
 		} else {
 			gf_sleep(rti_update_time_ms);
 		}

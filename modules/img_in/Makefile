@@ -46,12 +46,12 @@ endif
 
 
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_img_in.$(DYN_LIB_SUFFIX)
 ifeq ($(CONFIG_WIN32),yes)
 LINKLIBS+=-lwinmm
-#LDFLAGS+=-export-symbols img_in.def 
+#LDFLAGS+=-export-symbols img_in.def
 endif
 
 all: $(LIB)
@@ -63,13 +63,13 @@ ifeq ($(STATICBUILD),yes)
 	$(CC) $(SHFLAGS) $(LDFLAGS) -o ../../bin/gcc/gm_img_in-static.$(DYN_LIB_SUFFIX) $(OBJS) $(EXTRALIBS) -L$(LOCAL_LIB) $(LINKLIBS)
 endif
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

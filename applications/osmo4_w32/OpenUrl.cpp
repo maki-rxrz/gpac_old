@@ -59,7 +59,7 @@ void UpdateLastFiles(GF_Config *cfg, const char *URL)
 /////////////////////////////////////////////////////////////////////////////
 // COpenUrl message handlers
 
-void COpenUrl::OnButgo() 
+void COpenUrl::OnButgo()
 {
 	CString URL;
 	int sel = m_URLs.GetCurSel();
@@ -80,10 +80,10 @@ void COpenUrl::OnButgo()
 	EndDialog(IDOK);
 }
 
-BOOL COpenUrl::OnInitDialog() 
+BOOL COpenUrl::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	Osmo4 *gpac = GetApp();
 	u32 i=0;
 

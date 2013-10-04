@@ -1,7 +1,7 @@
 /*
  *					GPAC Multimedia Framework
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2005-2012
  *					All rights reserved
  *
@@ -344,7 +344,7 @@ static u32 SVG_CanHandleStream(GF_BaseDecoder *ifce, u32 StreamType, GF_ESD *esd
 	if (StreamType==GF_STREAM_PRIVATE_SCENE) {
 		/*media type query*/
 		if (!esd) return GF_CODEC_STREAM_TYPE_SUPPORTED;
-		
+
 		if (esd->decoderConfig->objectTypeIndication == GPAC_OTI_PRIVATE_SCENE_SVG) return GF_CODEC_SUPPORTED;
 		return GF_CODEC_NOT_SUPPORTED;
 	} else if (StreamType==GF_STREAM_SCENE) {
@@ -356,7 +356,7 @@ static u32 SVG_CanHandleStream(GF_BaseDecoder *ifce, u32 StreamType, GF_ESD *esd
 		case GPAC_OTI_SCENE_SVG_GZ:
 		case GPAC_OTI_SCENE_DIMS:
 			return GF_CODEC_SUPPORTED;
-		default:	
+		default:
 			return GF_CODEC_NOT_SUPPORTED;
 		}
 	}

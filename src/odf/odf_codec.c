@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -37,7 +37,7 @@ GF_ODCodec *gf_odf_codec_new()
 
 	comList = gf_list_new();
 	if (!comList) return NULL;
-	
+
 	codec = (GF_ODCodec *) gf_malloc(sizeof(GF_ODCodec));
 	if (!codec) {
 		gf_list_del(comList);
@@ -84,7 +84,7 @@ GF_Err gf_odf_codec_encode(GF_ODCodec *codec, u32 cleanup_type)
 	u32 i;
 
 	if (!codec) return GF_BAD_PARAM;
-	
+
 	//check our bitstream: if existing, this means the previous encoded AU was not retrieved
 	//we DON'T allow that
 	if (codec->bs) return GF_BAD_PARAM;
@@ -145,10 +145,10 @@ GF_Err gf_odf_codec_set_au(GF_ODCodec *codec, const char *au, u32 au_length)
 
 	//the bitStream should not be here
 	if (codec->bs) return GF_BAD_PARAM;
-	
+
 	codec->bs = gf_bs_new(au, (u64) au_length, (unsigned char)GF_BITSTREAM_READ);
 	if (!codec->bs) return GF_OUT_OF_MEM;
-	return GF_OK;	
+	return GF_OK;
 }
 
 
@@ -346,7 +346,7 @@ u32 gf_odf_desc_size(GF_Descriptor *desc)
 {
 	u32 descSize;
 	GF_Err e;
-	
+
 	if (!desc) return GF_BAD_PARAM;
 	//get the descriptor length
 	e = gf_odf_size_descriptor(desc, &descSize);
@@ -357,14 +357,14 @@ u32 gf_odf_desc_size(GF_Descriptor *desc)
 
 }
 
-//this is usefull to duplicate on the fly a descriptor (mainly for authoring purposes) 
+//this is usefull to duplicate on the fly a descriptor (mainly for authoring purposes)
 GF_EXPORT
 GF_Err gf_odf_desc_copy(GF_Descriptor *inDesc, GF_Descriptor **outDesc)
 {
 	GF_Err e;
 	char *desc;
 	u32 size;
-	
+
 	//warning: here we get some data allocated
 	e = gf_odf_desc_write(inDesc, &desc, &size);
 	if (e) return e;
@@ -391,7 +391,7 @@ GF_Err gf_odf_desc_add_desc(GF_Descriptor *parentDesc, GF_Descriptor *newDesc)
 	GF_Err AddDescriptorToESD(GF_ESD *esd, GF_Descriptor *desc);
 	GF_Err AddDescriptorToIsomIOD(GF_IsomInitialObjectDescriptor *iod, GF_Descriptor *desc);
 	GF_Err AddDescriptorToIsomOD(GF_IsomObjectDescriptor *od, GF_Descriptor *desc);
-	
+
 	if (!parentDesc || !newDesc) return GF_BAD_PARAM;
 
 	switch (parentDesc->tag) {
@@ -404,7 +404,7 @@ GF_Err gf_odf_desc_add_desc(GF_Descriptor *parentDesc, GF_Descriptor *newDesc)
 		return AddDescriptorToESD((GF_ESD *)parentDesc, newDesc);
 	case GF_ODF_DCD_TAG:
 		dcd = (GF_DecoderConfig *)parentDesc;
-		if ((newDesc->tag == GF_ODF_DSI_TAG) 
+		if ((newDesc->tag == GF_ODF_DSI_TAG)
 			|| (newDesc->tag == GF_ODF_BIFS_CFG_TAG)
 			|| (newDesc->tag == GF_ODF_UI_CFG_TAG)
 			|| (newDesc->tag == GF_ODF_TEXT_CFG_TAG)
@@ -449,9 +449,9 @@ GF_Err gf_odf_desc_add_desc(GF_Descriptor *parentDesc, GF_Descriptor *newDesc)
 
 
 /*****************************************************************************************
-		Since IPMP V2, we introduce a new set of functions to read / write a list of 
+		Since IPMP V2, we introduce a new set of functions to read / write a list of
 	descriptors that have no containers (a bit like an OD command, but for descriptors)
-		This is usefull for IPMPv2 DecoderSpecificInfo which contains a set of 
+		This is usefull for IPMPv2 DecoderSpecificInfo which contains a set of
 	IPMP_Declarators.
 		As it could be used for other purposes we keep it generic
 	You must create the list yourself, the functions just encode/decode from/to the list
@@ -472,7 +472,7 @@ GF_Err gf_odf_desc_list_read(char *raw_list, u32 raw_size, GF_List *descList)
 
 	size = 0;
 	while (size < raw_size) {
-		e =	gf_odf_parse_descriptor(bs, &desc, &desc_size); 
+		e =	gf_odf_parse_descriptor(bs, &desc, &desc_size);
 		if (e) goto exit;
 		gf_list_add(descList, desc);
 		size += desc_size + gf_odf_size_field_size(desc_size);
@@ -591,7 +591,7 @@ GF_Err gf_odf_codec_apply_com(GF_ODCodec *codec, GF_ODCom *command)
 			for (j=0; j<count2; j++) {
 				GF_ObjectDescriptor *od2 = (GF_ObjectDescriptor *)gf_list_get(odU_o->objectDescriptors, j);
 				if (od2->objectDescriptorID==od->objectDescriptorID) {
-					found = 1; 
+					found = 1;
 					break;
 				}
 			}

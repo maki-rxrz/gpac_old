@@ -27,7 +27,7 @@
 #include <gpac/internal/terminal_dev.h>
 #include <gpac/html5_mse.h>
 
-typedef struct __mse_module 
+typedef struct __mse_module
 {
     GF_HTML_MediaSource *mediasource;
     GF_InputService *plug;
@@ -62,7 +62,7 @@ static GF_HTML_SourceBuffer *MSE_GetSourceBufferForChannel(GF_HTML_MediaSource *
     return NULL;
 }
 
-/* For a given source buffer, returns the media track associated with the terminal channel object 
+/* For a given source buffer, returns the media track associated with the terminal channel object
    Association is saved during the ConnectChannel operation */
 static GF_HTML_Track *MSE_GetTrackForChannel(GF_HTML_SourceBuffer *sb, LPNETCHANNEL channel)
 {
@@ -191,7 +191,7 @@ static GF_Err MSE_CloseService(GF_InputService *plug)
     return GF_OK;
 }
 
-/* Forward all the commands received from the the terminal 
+/* Forward all the commands received from the the terminal
    to the parser associated with the channel on which the command is received */
 static GF_Err MSE_ServiceCommand(GF_InputService *plug, GF_NetworkCommand *com)
 {
@@ -236,7 +236,7 @@ static GF_Err MSE_ServiceCommand(GF_InputService *plug, GF_NetworkCommand *com)
         return sb->parser->ServiceCommand(sb->parser, com);
 
     case GF_NET_CHAN_DURATION:
-        /* Ignore the duration given by the input service and 
+        /* Ignore the duration given by the input service and
            Note: the duration of the initial segment will be 0 anyway (in MP4).*/
         com->duration.duration = 0;
         return GF_OK;
@@ -270,7 +270,7 @@ static GF_Err MSE_ServiceCommand(GF_InputService *plug, GF_NetworkCommand *com)
 }
 
 /* Forward the request for a new packet to the track (ask the parser to parse a new buffer or use already parsed AU) */
-static GF_Err MSE_ChannelGetSLP(GF_InputService *plug, LPNETCHANNEL channel, char **out_data_ptr, u32 *out_data_size, 
+static GF_Err MSE_ChannelGetSLP(GF_InputService *plug, LPNETCHANNEL channel, char **out_data_ptr, u32 *out_data_size,
 								GF_SLHeader *out_sl_hdr, Bool *sl_compressed, GF_Err *out_reception_status, Bool *is_new_data)
 {
     GF_MSE_In *msein = (GF_MSE_In*) plug->priv;

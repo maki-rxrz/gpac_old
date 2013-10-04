@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -88,7 +88,7 @@ GF_Err GetESD(GF_MovieBox *moov, u32 trackID, u32 StreamDescIndex, GF_ESD **outE
 	if (e) return e;
 	//set the ID
 	esd->ESID = trackID;
-	
+
 	//find stream dependencies
 	e = Track_FindRef(trak, GF_ISOM_BOX_TYPE_DPND , &dpnd);
 	if (e) return e;
@@ -239,7 +239,7 @@ default_sync:
 		return GF_OK;
 	}
 	//otherwise use the regular mapping
-	
+
 	//this is a desc for a media in the file, let's rewrite some param
 	esd->slConfig->timestampLength = 32;
 	esd->slConfig->timestampResolution = trak->Media->mediaHeader->timeScale;
@@ -249,7 +249,7 @@ default_sync:
 //	if (OCRTrack) esd->slConfig->OCRResolution = OCRTrack->Media->mediaHeader->timeScale;
 
 	stbl = trak->Media->information->sampleTable;
-	// a little optimization here: if all our samples are sync, 
+	// a little optimization here: if all our samples are sync,
 	//set the RAPOnly to true... for external users...
 	if (! stbl->SyncSample) {
 		if (moov->mvex && (esd->decoderConfig->streamType==GF_STREAM_VISUAL)) {
@@ -304,7 +304,7 @@ GF_Err GetESDForTime(GF_MovieBox *moov, u32 trackID, u64 CTS, GF_ESD **outESD)
 
 	trak = gf_isom_get_track(moov, gf_isom_get_tracknum_from_id(moov, trackID));
 	if (!trak) return GF_ISOM_INVALID_FILE;
-	
+
 	e = Media_GetSampleDescIndex(trak->Media, CTS, &sampleDescIndex );
 	if (e) return e;
 	return GetESD(moov, trackID, sampleDescIndex, outESD);
@@ -330,7 +330,7 @@ GF_Err Track_FindRef(GF_TrackBox *trak, u32 ReferenceType, GF_TrackReferenceType
 		}
 	}
 	*dpnd = NULL;
-	return GF_OK;	
+	return GF_OK;
 }
 
 Bool Track_IsMPEG4Stream(u32 HandlerType)
@@ -374,7 +374,7 @@ GF_Err SetTrackDuration(GF_TrackBox *trak)
 	if (!trak->moov->mvhd->timeScale || !trak->Media->mediaHeader->timeScale) return GF_ISOM_INVALID_FILE;
 	trackDuration = (trak->Media->mediaHeader->duration * trak->moov->mvhd->timeScale) / trak->Media->mediaHeader->timeScale;
 
-	//if we have an edit list, the duration is the sum of all the editList 
+	//if we have an edit list, the duration is the sum of all the editList
 	//entries' duration (always expressed in MovieTimeScale)
 	if (trak->editBox && trak->editBox->editList) {
 		trackDuration = 0;
@@ -453,7 +453,7 @@ GF_Err MergeTrack(GF_TrackBox *trak, GF_TrackFragmentBox *traf, u64 moof_offset,
 			size = def_size;
 			duration = def_duration;
 			flags = def_flags;
-			
+
 			if (ent) {
 				if (trun->flags & GF_ISOM_TRUN_DURATION) duration = ent->Duration;
 				if (trun->flags & GF_ISOM_TRUN_SIZE) size = ent->size;
@@ -471,7 +471,7 @@ GF_Err MergeTrack(GF_TrackBox *trak, GF_TrackFragmentBox *traf, u64 moof_offset,
 			if (!j) {
 				data_offset = base_offset;
 				//aggregated offset if base-data-offset-present is not set AND if default-base-is-moof is not set
-				if (!(traf->tfhd->flags & GF_ISOM_TRAF_BASE_OFFSET) && !(traf->tfhd->flags & GF_ISOM_MOOF_BASE_OFFSET) ) 
+				if (!(traf->tfhd->flags & GF_ISOM_TRAF_BASE_OFFSET) && !(traf->tfhd->flags & GF_ISOM_MOOF_BASE_OFFSET) )
 					data_offset += chunk_size;
 
 				if (trun->flags & GF_ISOM_TRUN_DATA_OFFSET) {
@@ -486,16 +486,16 @@ GF_Err MergeTrack(GF_TrackBox *trak, GF_TrackFragmentBox *traf, u64 moof_offset,
 				}
 				stbl_AppendChunk(trak->Media->information->sampleTable, data_offset);
 				//then sampleToChunk
-				stbl_AppendSampleToChunk(trak->Media->information->sampleTable, 
+				stbl_AppendSampleToChunk(trak->Media->information->sampleTable,
 					DescIndex, trun->sample_count);
 			}
 			chunk_size += size;
-			
+
 
 			//CTS
 			cts_offset = (trun->flags & GF_ISOM_TRUN_CTS_OFFSET) ? ent->CTS_Offset : 0;
 			stbl_AppendCTSOffset(trak->Media->information->sampleTable, cts_offset);
-			
+
 			//flags
 			sync = GF_ISOM_GET_FRAG_SYNC(flags);
 			stbl_AppendRAP(trak->Media->information->sampleTable, sync);
@@ -546,7 +546,7 @@ GF_Err MergeTrack(GF_TrackBox *trak, GF_TrackFragmentBox *traf, u64 moof_offset,
 
 		groups = trak->Media->information->sampleTable->sampleGroups;
 		for (i=0; i<gf_list_count(traf->sampleGroups); i++) {
-			GF_SampleGroupBox *stbl_group = NULL; 
+			GF_SampleGroupBox *stbl_group = NULL;
 			GF_SampleGroupBox *frag_group = gf_list_get(traf->sampleGroups, i);
 
 
@@ -563,8 +563,8 @@ GF_Err MergeTrack(GF_TrackBox *trak, GF_TrackFragmentBox *traf, u64 moof_offset,
 				stbl_group->version = frag_group->version;
 				gf_list_add(groups, stbl_group);
 			}
-			if (frag_group->entry_count && stbl_group->entry_count && 
-				(frag_group->sample_entries[0].group_description_index==stbl_group->sample_entries[stbl_group->entry_count-1].group_description_index) 
+			if (frag_group->entry_count && stbl_group->entry_count &&
+				(frag_group->sample_entries[0].group_description_index==stbl_group->sample_entries[stbl_group->entry_count-1].group_description_index)
 			) {
 				stbl_group->sample_entries[stbl_group->entry_count - 1].sample_count += frag_group->sample_entries[0].sample_count;
 				if (frag_group->entry_count>1) {
@@ -619,7 +619,7 @@ GF_Err Track_RemoveRef(GF_TrackBox *trak, u32 ReferenceType)
 			return GF_OK;
 		}
 	}
-	return GF_OK;	
+	return GF_OK;
 }
 
 GF_Err NewMedia(GF_MediaBox **mdia, u32 MediaType, u32 TimeScale)
@@ -769,7 +769,7 @@ GF_Err Track_SetStreamDescriptor(GF_TrackBox *trak, u32 StreamDescriptionIndex, 
 	if (!trak || !esd || (!outStreamIndex && !DataReferenceIndex) ) return GF_BAD_PARAM;
 	if (!Track_IsMPEG4Stream(trak->Media->handler->handlerType)) return GF_ISOM_INVALID_MEDIA;
 
-	
+
 	esd->ESID = 0;
 	//set SL to predefined if no url
 	if (esd->URLString == NULL) {
@@ -886,8 +886,8 @@ GF_Err Track_SetStreamDescriptor(GF_TrackBox *trak, u32 StreamDescriptionIndex, 
 		case GF_ISOM_BOX_TYPE_AVC3:
 		case GF_ISOM_BOX_TYPE_AVC4:
 		case GF_ISOM_BOX_TYPE_SVC1:
-		case GF_ISOM_BOX_TYPE_HVC1: 
-		case GF_ISOM_BOX_TYPE_HEV1: 
+		case GF_ISOM_BOX_TYPE_HVC1:
+		case GF_ISOM_BOX_TYPE_HEV1:
 			e = AVC_HEVC_UpdateESD((GF_MPEGVisualSampleEntryBox*)entry, esd);
 			if (e) return e;
 			break;
@@ -899,7 +899,7 @@ GF_Err Track_SetStreamDescriptor(GF_TrackBox *trak, u32 StreamDescriptionIndex, 
             /* TODO */
             assert(0);
 			break;
-			
+
 		default:
 			//gf_odf_desc_del((GF_Descriptor *) esd);
 			break;
@@ -924,7 +924,7 @@ GF_Err Track_SetStreamDescriptor(GF_TrackBox *trak, u32 StreamDescriptionIndex, 
 				entry_v = (GF_MPEGVisualSampleEntryBox *) gf_isom_box_new(GF_ISOM_BOX_TYPE_HVC1);
 				if (!entry_v) return GF_OUT_OF_MEM;
 				e = AVC_HEVC_UpdateESD((GF_MPEGVisualSampleEntryBox*)entry_v, esd);
-				
+
 			} else {
 				entry_v = (GF_MPEGVisualSampleEntryBox *) gf_isom_box_new(GF_ISOM_BOX_TYPE_MP4V);
 				if (!entry_v) return GF_OUT_OF_MEM;

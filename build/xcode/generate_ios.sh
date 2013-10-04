@@ -57,7 +57,7 @@ cp ../../gui/gwlib.js osmo4ios.app/gui/
 cp ../../gui/mpegu-core.js osmo4ios.app/gui/
 cp -r ../../gui/icons osmo4ios.app/gui/
 cp -r ../../gui/extensions osmo4ios.app/gui/
-find osmo4ios.app | fgrep .svn | fgrep -v svn/ | xargs rm -rf 
+find osmo4ios.app | fgrep .svn | fgrep -v svn/ | xargs rm -rf
 tar -czf "osmo4ios-$full_version.tar.gz" osmo4ios.app/
 rm -rf osmo4ios.app
 svn up -r $rev
