@@ -1,4 +1,4 @@
-#include "safe_include.h" 
+#include "safe_include.h"
 #include <gpac/terminal.h>
 #include <gpac/options.h>
 
@@ -16,14 +16,14 @@
 
 bool GPACInit(void *application, GF_Terminal **term, GF_User *user, bool quiet);
 
-wxGPACPanel::wxGPACPanel(V4SceneManager *parent, const char *path) 
+wxGPACPanel::wxGPACPanel(V4SceneManager *parent, const char *path)
 {
 	this->parent = parent;
 	m_term = NULL;
 	m_pService = NULL;
 
 	// Initializes the MPEG-4 terminal
-	GPACInit(this, &m_term, &m_user, true);			
+	GPACInit(this, &m_term, &m_user, true);
 	if (!m_term) return;
 
 	// Setting all the variables needed for picking of objects.
@@ -66,7 +66,7 @@ Bool V4S_EventProc(void *par, GF_Event *evt)
 			panel->picked = gf_sc_pick_node(panel->GetSceneCompositor(), evt->mouse.x, evt->mouse.y);
 			panel->m_iDragging ++;
 			if (panel->picked) {
-				panel->GetV4SceneManager()->GetV4StudioFrame()->GetTreeView()->SetSelectedItem(panel->picked);	
+				panel->GetV4SceneManager()->GetV4StudioFrame()->GetTreeView()->SetSelectedItem(panel->picked);
 				panel->dragX = evt->mouse.x;
 				panel->dragY = evt->mouse.y;
 				panel->m_transformMode = 0;
@@ -76,7 +76,7 @@ Bool V4S_EventProc(void *par, GF_Event *evt)
 			panel->m_iDragging ++;
 			panel->picked = gf_sc_pick_node(panel->GetSceneCompositor(), evt->mouse.x, evt->mouse.y);
 			if (panel->picked) {
-				panel->GetV4SceneManager()->GetV4StudioFrame()->GetTreeView()->SetSelectedItem(panel->picked);	
+				panel->GetV4SceneManager()->GetV4StudioFrame()->GetTreeView()->SetSelectedItem(panel->picked);
 				panel->dragX = evt->mouse.x;
 				panel->dragY = evt->mouse.y;
 				panel->m_transformMode = 2;
@@ -86,7 +86,7 @@ Bool V4S_EventProc(void *par, GF_Event *evt)
 			panel->m_iDragging ++;
 			panel->picked = gf_sc_pick_node(panel->GetSceneCompositor(), evt->mouse.x, evt->mouse.y);
 			if (panel->picked) {
-				panel->GetV4SceneManager()->GetV4StudioFrame()->GetTreeView()->SetSelectedItem(panel->picked);	
+				panel->GetV4SceneManager()->GetV4StudioFrame()->GetTreeView()->SetSelectedItem(panel->picked);
 				panel->dragX = evt->mouse.x;
 				panel->dragY = evt->mouse.y;
 				panel->m_transformMode = 1;
@@ -158,7 +158,7 @@ Bool V4S_EventProc(void *par, GF_Event *evt)
 			case 1:
 				panel->GetV4SceneManager()->GetV4StudioFrame()->GetTreeView()->Scale(dX,dY);
 				break;
-			case 2:			
+			case 2:
 				panel->GetV4SceneManager()->GetV4StudioFrame()->GetTreeView()->Rotate(dX,dY);
 				break;
 			}
@@ -177,7 +177,7 @@ Bool V4S_EventProc(void *par, GF_Event *evt)
 	return 0;
 }
 
-void wxGPACPanel::Update() 
+void wxGPACPanel::Update()
 {
 	if (m_term) {
 		//gf_term_set_option(m_term, GF_OPT_PLAY_STATE, GF_STATE_STEP_PAUSE);
@@ -186,7 +186,7 @@ void wxGPACPanel::Update()
 	}
 }
 
-bool GPACInit(void *application, GF_Terminal **term, GF_User *user, bool quiet) 
+bool GPACInit(void *application, GF_Terminal **term, GF_User *user, bool quiet)
 {
 	memset(user, 0, sizeof(GF_User));
 

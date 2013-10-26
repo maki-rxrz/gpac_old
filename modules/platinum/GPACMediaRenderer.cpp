@@ -1,25 +1,25 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2009-2012
  *			All rights reserved
  *
- *  This file is part of GPAC / Platinum UPnP module 
+ *  This file is part of GPAC / Platinum UPnP module
  *
  *  GPAC is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
  *	----------------------------------------------------------------------------------
@@ -46,10 +46,10 @@ void format_time_string(char *str, Double dur)
 	sprintf(str, "%02d:%02d:%02d", h, m, s);
 }
 
-GPAC_MediaRenderer::GPAC_MediaRenderer(GF_UPnP *upnp, const char*  friendly_name, 
-                                     bool         show_ip, 
-                                     const char*  uuid, 
-                                     unsigned int port) :	
+GPAC_MediaRenderer::GPAC_MediaRenderer(GF_UPnP *upnp, const char*  friendly_name,
+                                     bool         show_ip,
+                                     const char*  uuid,
+                                     unsigned int port) :
     PLT_DeviceHost("/", uuid, "urn:schemas-upnp-org:device:MediaRenderer:1", friendly_name, show_ip, port)
 {
 	m_mediaHistoryList = gf_list_new();
@@ -80,7 +80,7 @@ GPAC_MediaRenderer::SetupServices(PLT_DeviceData& data)
         /* AVTransport */
         m_pAVService = new PLT_Service(
             &data,
-            "urn:schemas-upnp-org:service:AVTransport:1", 
+            "urn:schemas-upnp-org:service:AVTransport:1",
             "urn:upnp-org:serviceId:AVT_1-0",
             "urn:schemas-upnp-org:metadata-1-0/AVT/");
         NPT_CHECK_FATAL(m_pAVService->SetSCPDXML((const char*) RDR_AVTransportSCPD));
@@ -88,7 +88,7 @@ GPAC_MediaRenderer::SetupServices(PLT_DeviceData& data)
         NPT_CHECK_FATAL(data.AddService(m_pAVService));
 
         m_pAVService->SetStateVariableRate("LastChange", NPT_TimeInterval(0.2f));
-        m_pAVService->SetStateVariable("A_ARG_TYPE_InstanceID", "0"); 
+        m_pAVService->SetStateVariable("A_ARG_TYPE_InstanceID", "0");
 
         // GetCurrentTransportActions
         m_pAVService->SetStateVariable("CurrentTransportActions", "Play,Pause,Stop,Seek,Next,Previous");
@@ -114,23 +114,23 @@ GPAC_MediaRenderer::SetupServices(PLT_DeviceData& data)
         m_pAVService->SetStateVariable("CurrentTrackDuration", "00:00:00");
         m_pAVService->SetStateVariable("CurrentTrackMetadata", "");
         m_pAVService->SetStateVariable("CurrentTrackURI", "");
-        m_pAVService->SetStateVariable("RelativeTimePosition", "00:00:00"); 
+        m_pAVService->SetStateVariable("RelativeTimePosition", "00:00:00");
         m_pAVService->SetStateVariable("AbsoluteTimePosition", "00:00:00");
         m_pAVService->SetStateVariable("RelativeCounterPosition", "2147483647"); // means NOT_IMPLEMENTED
         m_pAVService->SetStateVariable("AbsoluteCounterPosition", "2147483647"); // means NOT_IMPLEMENTED
 
         // disable indirect eventing for certain state variables
         //PLT_StateVariable* var;
-        //var = 
+        //var =
 			m_pAVService->FindStateVariable("RelativeTimePosition");
         //if (var) var->DisableIndirectEventing();
-        //var = 
+        //var =
 			m_pAVService->FindStateVariable("AbsoluteTimePosition");
         //if (var) var->DisableIndirectEventing();
-        //var = 
+        //var =
 			m_pAVService->FindStateVariable("RelativeCounterPosition");
         //if (var) var->DisableIndirectEventing();
-        //var = 
+        //var =
 			m_pAVService->FindStateVariable("AbsoluteCounterPosition");
         //if (var) var->DisableIndirectEventing();
 
@@ -148,7 +148,7 @@ GPAC_MediaRenderer::SetupServices(PLT_DeviceData& data)
         /* ConnectionManager */
         service = new PLT_Service(
             &data,
-            "urn:schemas-upnp-org:service:ConnectionManager:1", 
+            "urn:schemas-upnp-org:service:ConnectionManager:1",
             "urn:upnp-org:serviceId:CMGR_1-0");
         NPT_CHECK_FATAL(service->SetSCPDXML((const char*) RDR_ConnectionManagerSCPD));
         NPT_CHECK_FATAL(service->InitURLs("ConnectionManager", data.GetUUID()));
@@ -165,7 +165,7 @@ GPAC_MediaRenderer::SetupServices(PLT_DeviceData& data)
         /* RenderingControl */
         service = new PLT_Service(
             &data,
-            "urn:schemas-upnp-org:service:RenderingControl:1", 
+            "urn:schemas-upnp-org:service:RenderingControl:1",
             "urn:upnp-org:serviceId:RCS_1-0",
             "urn:schemas-upnp-org:metadata-1-0/RCS/");
         NPT_CHECK_FATAL(service->SetSCPDXML((const char*) RDR_RenderingControlSCPD));
@@ -227,7 +227,7 @@ static NPT_UInt8 MIGRATION_SCPDXML[] = "<scpd xmlns=\"urn:schemas-upnp-org:servi
 
         /* MigrationService */
         m_pMigrationService = new PLT_Service(&data, "urn:intermedia:service:migration:1", "urn:intermedia:service:migration.001");
-		
+
 		NPT_CHECK_FATAL(m_pMigrationService->SetSCPDXML((const char*) MIGRATION_SCPDXML));
         NPT_CHECK_FATAL(m_pMigrationService->InitURLs("SessionMigration", data.GetUUID()));
         NPT_CHECK_FATAL(data.AddService(m_pMigrationService));
@@ -240,7 +240,7 @@ static NPT_UInt8 MIGRATION_SCPDXML[] = "<scpd xmlns=\"urn:schemas-upnp-org:servi
 }
 
 NPT_Result
-GPAC_MediaRenderer::OnAction(PLT_ActionReference&          action, 
+GPAC_MediaRenderer::OnAction(PLT_ActionReference&          action,
                             const PLT_HttpRequestContext& context)
 {
     NPT_COMPILER_UNUSED(context);
@@ -262,10 +262,10 @@ GPAC_MediaRenderer::OnAction(PLT_ActionReference&          action,
             return NPT_FAILURE;
         }
         return NPT_SUCCESS;
-    }    
+    }
     if (name.Compare("GetCurrentConnectionInfo", true) == 0) {
         return OnGetCurrentConnectionInfo(action);
-    }  
+    }
     if (name.Compare("StopForMigration", true) == 0) {
 		NPT_String res = m_pUPnP->OnMigrate();
         m_pMigrationService->SetStateVariable("MigrationStatus", "OK");
@@ -275,7 +275,7 @@ GPAC_MediaRenderer::OnAction(PLT_ActionReference&          action,
             return NPT_FAILURE;
         }
         return NPT_SUCCESS;
-    }  
+    }
 
     /* Is it a AVTransport Service Action ? */
 
@@ -318,7 +318,7 @@ GPAC_MediaRenderer::OnAction(PLT_ActionReference&          action,
 			m_pAVService->SetStateVariable("CurrentTrackMetadata", "");
 			m_pAVService->SetStateVariable("CurrentTrackURI", "");
 			format_time_string(szVal, m_Time);
-			m_pAVService->SetStateVariable("RelativeTimePosition", szVal); 
+			m_pAVService->SetStateVariable("RelativeTimePosition", szVal);
 			m_pAVService->SetStateVariable("AbsoluteTimePosition", szVal);
 			m_pAVService->SetStateVariable("RelativeCounterPosition", "2147483647"); // means NOT_IMPLEMENTED
 			m_pAVService->SetStateVariable("AbsoluteCounterPosition", "2147483647"); // means NOT_IMPLEMENTED

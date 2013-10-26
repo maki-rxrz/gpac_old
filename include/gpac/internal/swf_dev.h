@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -75,13 +75,13 @@ struct SWFReader
 	Bool has_interact, no_as;
 	Bool empty_frame;
 
-	/*copy of the swf import flags*/	
+	/*copy of the swf import flags*/
 	u32 flags;
 
 	/*bit reader*/
 	GF_BitStream *bs;
-	GF_Err ioerr;	
-	
+	GF_Err ioerr;
+
 	u32 current_frame;
 
 	/*current tag*/
@@ -99,7 +99,7 @@ struct SWFReader
 	/*the one and only sound stream for current timeline*/
 	SWFSound *sound_stream;
 
-	/*when creating sprites: 
+	/*when creating sprites:
 		1- all BIFS AUs in sprites are random access
 		2- depth is ignored in Sprites
 	*/
@@ -120,7 +120,7 @@ struct SWFReader
 	GF_Err (*show_frame)(SWFReader *read);
 
 	/*checks if display list is large enough - returns 1 if yes, 0 otherwise (and allocate space)*/
-	Bool (*allocate_depth)(SWFReader *read, u32 depth); 
+	Bool (*allocate_depth)(SWFReader *read, u32 depth);
 	GF_Err (*place_obj)(SWFReader *read, u32 depth, u32 ID, u32 prev_id, u32 type, GF_Matrix2D *mat, GF_ColorMatrix *cmat, GF_Matrix2D *prev_mat, GF_ColorMatrix *prev_cmat);
 	GF_Err (*remove_obj)(SWFReader *read, u32 depth, u32 ID);
 
@@ -128,12 +128,12 @@ struct SWFReader
 	GF_Err (*define_sprite)(SWFReader *read, u32 nb_frames);
 	GF_Err (*define_text)(SWFReader *read, SWFText *text);
 	GF_Err (*define_edit_text)(SWFReader *read, SWFEditText *text);
-	/*@button is NULL to signal end of button declaration, non-null otherwise. "action" callback will be 
+	/*@button is NULL to signal end of button declaration, non-null otherwise. "action" callback will be
 	called inbetween*/
 	GF_Err (*define_button)(SWFReader *read, SWF_Button *button);
 
 	GF_Err (*setup_image)(SWFReader *read, u32 ID, char *fileName);
-	/*called whenever a sound is found. For soundstreams, called twice, once on the header (declaration), 
+	/*called whenever a sound is found. For soundstreams, called twice, once on the header (declaration),
 	and one on the first soundstream block for offset signaling*/
 	GF_Err (*setup_sound)(SWFReader *read, SWFSound *snd, Bool soundstream_first_block);
 	GF_Err (*start_sound)(SWFReader *read, SWFSound *snd, Bool stop);
@@ -201,7 +201,7 @@ SWFReader *gf_swf_reader_new(const char *path, const char *filename);
 GF_Err gf_swf_read_header(SWFReader *read);
 void gf_swf_reader_del(SWFReader *read);
 
-GF_Err gf_swf_reader_set_user_mode(SWFReader *read, void *user, 
+GF_Err gf_swf_reader_set_user_mode(SWFReader *read, void *user,
 								  GF_Err (*add_sample)(void *user, const char *data, u32 length, u64 timestamp, Bool isRap),
 								  GF_Err (*add_header)(void *user, const char *data, u32 length));
 
@@ -237,7 +237,7 @@ typedef struct
 	SWFPath *path;
 } SWFShapeRec;
 
-struct SWFShape 
+struct SWFShape
 {
 	GF_List *fill_left, *fill_right, *lines;
 	u32 ID;
@@ -291,7 +291,7 @@ struct SWFText
 	GF_List *text;
 };
 
-struct SWFEditText 
+struct SWFEditText
 {
 	u32 ID;
 	char *init_value;
@@ -332,7 +332,7 @@ struct SWFSound
 	Bool is_setup;
 };
 
-typedef struct 
+typedef struct
 {
 	/*interaction states*/
 	Bool hitTest, down, over, up;
@@ -344,7 +344,7 @@ typedef struct
 } SWF_ButtonRecord;
 
 
-struct SWF_Button 
+struct SWF_Button
 {
 	u32 count;
 	SWF_ButtonRecord buttons[40];

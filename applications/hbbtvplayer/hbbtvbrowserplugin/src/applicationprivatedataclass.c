@@ -5,17 +5,17 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
- *		Authors:    Stanislas Selle		
- *				
+ *		Authors:    Stanislas Selle
+ *
  */
 #include "applicationprivatedataclass.h"
 
@@ -80,17 +80,17 @@ NPObject *          APPPRIVDATA_Allocate(NPP npp, NPClass *theClass)
 
     NPObject* result;
 
-    
+
     if (!v_bAPPPRIVDATAIdentifiersInitialized)
     {
         v_bAPPPRIVDATAIdentifiersInitialized = true;
         APPPRIVDATAinitializeIdentifiers();
     }
-		
-	NPObj_AppPrivData* newappprivdata = (NPObj_AppPrivData*)MEMALLOC(sizeof(NPObj_AppPrivData));    
-	fprintf(stderr, "\t%s : Allocation at \x1b[%i;3%im%p\n\x1b[0m",__FUNCTION__, 1, 1, newappprivdata);    
+
+	NPObj_AppPrivData* newappprivdata = (NPObj_AppPrivData*)MEMALLOC(sizeof(NPObj_AppPrivData));
+	fprintf(stderr, "\t%s : Allocation at \x1b[%i;3%im%p\n\x1b[0m",__FUNCTION__, 1, 1, newappprivdata);
     newappprivdata->npp = npp;
-    newappprivdata->keyset = sBrowserFuncs->createobject(npp, fillKEYSETpclass());    
+    newappprivdata->keyset = sBrowserFuncs->createobject(npp, fillKEYSETpclass());
     fprintf(stderr, "\t%s : Create keyset property at \x1b[%i;3%im%p\n\x1b[0m",__FUNCTION__, 1, 1, newappprivdata->keyset );
     result = (NPObject*)newappprivdata;
     return result;
@@ -126,7 +126,7 @@ bool        APPPRIVDATA_HasMethod(NPObject* obj, NPIdentifier name)
         }
         i++;
     }
-    
+
     return result;
 }
 
@@ -140,7 +140,7 @@ bool        APPPRIVDATA_Invoke(NPObject* obj, NPIdentifier name, const NPVariant
 		fctresult = true;
     }
     else
-    {    	
+    {
     	fctresult = false;
     }
     return fctresult;
@@ -168,25 +168,25 @@ bool        APPPRIVDATA_HasProperty(NPObject* obj, NPIdentifier name)
         i++;
     }
 
-   
+
     return result;
 }
 
 bool        APPPRIVDATA_GetProperty(NPObject* obj, NPIdentifier name, NPVariant* result)
 {
     TRACEINFO;
-   
+
     bool fctresult = false;
 	NPObj_AppPrivData* AppPrivDataObj = (NPObj_AppPrivData*)obj;
-	if (!strcmp(sBrowserFuncs->utf8fromidentifier(name), v_APPPRIVDATAPropertyNames[kAPPPRIVDATA_ID_PROPERTY_KEYSET]))    
-    {    	
+	if (!strcmp(sBrowserFuncs->utf8fromidentifier(name), v_APPPRIVDATAPropertyNames[kAPPPRIVDATA_ID_PROPERTY_KEYSET]))
+    {
 		sBrowserFuncs->retainobject(AppPrivDataObj->keyset);
 		OBJECT_TO_NPVARIANT(AppPrivDataObj->keyset, *result);
-		
+
     	fctresult = true;
     }
     else
-		
+
     return fctresult;
 }
 

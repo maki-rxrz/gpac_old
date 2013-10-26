@@ -68,7 +68,7 @@ void dc_register_libav()
 	av_lockmgr_register(&lock_call_back);
 }
 
-void dc_unregister_libav() 
+void dc_unregister_libav()
 {
 	av_lockmgr_register(NULL);
 

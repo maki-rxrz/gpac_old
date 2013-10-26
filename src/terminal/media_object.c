@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -59,13 +59,13 @@ static GF_MediaObject *get_sync_reference(GF_Scene *scene, XMLRI *iri, u32 o_typ
 
 			switch (ref->sgprivate->tag) {
 			case TAG_SVG_audio:
-				o_type = GF_MEDIA_OBJECT_AUDIO; 
+				o_type = GF_MEDIA_OBJECT_AUDIO;
 				if (gf_node_get_attribute_by_tag(ref, TAG_XLINK_ATT_href, GF_FALSE, GF_FALSE, &info)==GF_OK) {
 					return get_sync_reference(scene, (XMLRI *)info.far_ptr, o_type, orig_ref ? orig_ref : ref, post_pone);
 				}
 				return NULL;
 			case TAG_SVG_video:
-				o_type = GF_MEDIA_OBJECT_VIDEO; 
+				o_type = GF_MEDIA_OBJECT_VIDEO;
 				if (gf_node_get_attribute_by_tag(ref, TAG_XLINK_ATT_href, GF_FALSE, GF_FALSE, &info)==GF_OK) {
 					return get_sync_reference(scene, (XMLRI *)info.far_ptr, o_type, orig_ref ? orig_ref : ref, post_pone);
 				}
@@ -109,70 +109,70 @@ GF_MediaObject *gf_mo_register(GF_Node *node, MFURL *url, Bool lock_timelines, B
 	switch (gf_node_get_tag(node)) {
 #ifndef GPAC_DISABLE_VRML
 	/*MPEG-4 / VRML / X3D only*/
-	case TAG_MPEG4_AudioClip: 
-	case TAG_MPEG4_AudioSource: 
+	case TAG_MPEG4_AudioClip:
+	case TAG_MPEG4_AudioSource:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_AudioClip: 
+	case TAG_X3D_AudioClip:
 #endif
-		obj_type = GF_MEDIA_OBJECT_AUDIO; 
+		obj_type = GF_MEDIA_OBJECT_AUDIO;
 		break;
-	case TAG_MPEG4_SBVCAnimation: 
-	case TAG_MPEG4_AnimationStream: 
-		obj_type = GF_MEDIA_OBJECT_UPDATES; 
+	case TAG_MPEG4_SBVCAnimation:
+	case TAG_MPEG4_AnimationStream:
+		obj_type = GF_MEDIA_OBJECT_UPDATES;
 		break;
 	case TAG_MPEG4_BitWrapper:
 		obj_type = GF_MEDIA_OBJECT_SCENE;
 		break;
-	case TAG_MPEG4_InputSensor: 
-		obj_type = GF_MEDIA_OBJECT_INTERACT; 
+	case TAG_MPEG4_InputSensor:
+		obj_type = GF_MEDIA_OBJECT_INTERACT;
 		break;
-	case TAG_MPEG4_Background2D: 
-	case TAG_MPEG4_Background: 
+	case TAG_MPEG4_Background2D:
+	case TAG_MPEG4_Background:
 	case TAG_MPEG4_ImageTexture:
 	case TAG_MPEG4_CacheTexture:
-	case TAG_MPEG4_MovieTexture: 
+	case TAG_MPEG4_MovieTexture:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Background: 
+	case TAG_X3D_Background:
 	case TAG_X3D_ImageTexture:
 	case TAG_X3D_MovieTexture:
 #endif
-		obj_type = GF_MEDIA_OBJECT_VIDEO; 
+		obj_type = GF_MEDIA_OBJECT_VIDEO;
 		break;
-	case TAG_MPEG4_Inline: 
+	case TAG_MPEG4_Inline:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Inline: 
+	case TAG_X3D_Inline:
 #endif
-		obj_type = GF_MEDIA_OBJECT_SCENE; 
+		obj_type = GF_MEDIA_OBJECT_SCENE;
 		break;
 #endif /*GPAC_DISABLE_VRML*/
 
 	/*SVG*/
 #ifndef GPAC_DISABLE_SVG
-	case TAG_SVG_audio: 
-		obj_type = GF_MEDIA_OBJECT_AUDIO; 
+	case TAG_SVG_audio:
+		obj_type = GF_MEDIA_OBJECT_AUDIO;
 		if (gf_node_get_attribute_by_tag(node, TAG_SVG_ATT_syncReference, GF_FALSE, GF_FALSE, &info)==GF_OK) {
 			syncRef = get_sync_reference(scene, (XMLRI *)info.far_ptr, GF_MEDIA_OBJECT_UNDEF, node, &post_pone);
 			/*syncRef is specified but doesn't exist yet, post-pone*/
 			if (post_pone) return NULL;
 		}
 		break;
-	case TAG_SVG_video: 
-		obj_type = GF_MEDIA_OBJECT_VIDEO; 
+	case TAG_SVG_video:
+		obj_type = GF_MEDIA_OBJECT_VIDEO;
 		if (gf_node_get_attribute_by_tag(node, TAG_SVG_ATT_syncReference, GF_FALSE, GF_FALSE, &info)==GF_OK) {
 			syncRef = get_sync_reference(scene, (XMLRI *)info.far_ptr, GF_MEDIA_OBJECT_UNDEF, node, &post_pone);
 			/*syncRef is specified but doesn't exist yet, post-pone*/
 			if (post_pone) return NULL;
 		}
 		break;
-	case TAG_SVG_image: 
-		obj_type = GF_MEDIA_OBJECT_VIDEO; 
+	case TAG_SVG_image:
+		obj_type = GF_MEDIA_OBJECT_VIDEO;
 		break;
-	case TAG_SVG_foreignObject: 
-	case TAG_SVG_animation: 
-		obj_type = GF_MEDIA_OBJECT_SCENE; 
+	case TAG_SVG_foreignObject:
+	case TAG_SVG_animation:
+		obj_type = GF_MEDIA_OBJECT_SCENE;
 		break;
-	case TAG_LSR_updates: 
-		obj_type = GF_MEDIA_OBJECT_UPDATES; 
+	case TAG_LSR_updates:
+		obj_type = GF_MEDIA_OBJECT_UPDATES;
 		break;
 #endif
 
@@ -225,7 +225,7 @@ Bool gf_mo_get_visual_info(GF_MediaObject *mo, u32 *width, u32 *height, u32 *str
 		*height = cap.cap.valueInt;
 	}
 	if (mo->type==GF_MEDIA_OBJECT_TEXT) return GF_TRUE;
-    
+
     if (is_flipped) {
         cap.CapCode = GF_CODEC_FLIP;
         cap.cap.valueInt = 0;
@@ -370,7 +370,7 @@ char *gf_mo_fetch_data(GF_MediaObject *mo, Bool resync, Bool *eos, u32 *timestam
 	if (ms_until_pres) *ms_until_pres = mo->ms_until_pres;
 	if (ms_until_next) *ms_until_next = mo->ms_until_next;
 
-	if (!gf_odm_lock_mo(mo)) 
+	if (!gf_odm_lock_mo(mo))
 		return NULL;
 
 	if (!mo->odm->codec || !mo->odm->codec->CB) {
@@ -468,7 +468,7 @@ char *gf_mo_fetch_data(GF_MediaObject *mo, Bool resync, Bool *eos, u32 *timestam
 						gf_term_lock_codec(codec, GF_FALSE, GF_TRUE);
 					}
 					gf_odm_lock(mo->odm, 1);
-					if (!CU->next->dataLength) 
+					if (!CU->next->dataLength)
 						break;
 				} else {
 					break;
@@ -492,7 +492,7 @@ char *gf_mo_fetch_data(GF_MediaObject *mo, Bool resync, Bool *eos, u32 *timestam
 			CU = gf_cm_get_output(codec->CB);
 			*eos = gf_cm_is_eos(codec->CB);
 		}
-	}	
+	}
 
 	mo->framesize = CU->dataLength - CU->RenderedLength;
 	mo->frame = CU->data + CU->RenderedLength;
@@ -510,7 +510,7 @@ char *gf_mo_fetch_data(GF_MediaObject *mo, Bool resync, Bool *eos, u32 *timestam
 #ifndef GPAC_DISABLE_VRML
 		mediasensor_update_timing(mo->odm, codec->CB->HasSeenEOS);
 #endif
-	
+
 		if (mo->odm->parentscene->is_dynamic_scene)
 			mo->odm->parentscene->root_od->current_time = mo->odm->current_time;
 
@@ -528,7 +528,7 @@ char *gf_mo_fetch_data(GF_MediaObject *mo, Bool resync, Bool *eos, u32 *timestam
 //		mo->timestamp = gf_clock_time(codec->ck);
 		mo->ms_until_pres = -1;
 		mo->ms_until_next = 1;
-	} 
+	}
 
 
 	mo->nb_fetch ++;
@@ -572,7 +572,7 @@ void gf_mo_release_data(GF_MediaObject *mo, u32 nb_bytes, s32 forceDrop)
 	if (mo->odm->codec->CB->no_allocation)
 		forceDrop = 1;
 
-	/*perform a sanity check on TS since the CB may have changed status - this may happen in 
+	/*perform a sanity check on TS since the CB may have changed status - this may happen in
 	temporal scalability only*/
 	if (mo->odm->codec->CB->output->dataLength ) {
 		if (nb_bytes==0xFFFFFFFF) {
@@ -602,7 +602,7 @@ void gf_mo_release_data(GF_MediaObject *mo, u32 nb_bytes, s32 forceDrop)
 				/*we cannot drop since we don't know the speed of the playback (which can even be frame by frame)*/
 #if 0
 				obj_time = gf_clock_time(mo->odm->codec->ck);
-				if (mo->odm->codec->CB->output->next->dataLength) { 
+				if (mo->odm->codec->CB->output->next->dataLength) {
 					if (2*obj_time < mo->timestamp + mo->odm->codec->CB->output->next->TS ) {
 						mo->odm->codec->CB->output->RenderedLength = 0;
 					} else {
@@ -628,7 +628,7 @@ void gf_mo_get_object_time(GF_MediaObject *mo, u32 *obj_time)
 	/*regular media codec...*/
 	if (mo->odm->codec) {
 		/*get absolute clock (without drift) for audio*/
-		if (mo->odm->codec->type==GF_STREAM_AUDIO)  
+		if (mo->odm->codec->type==GF_STREAM_AUDIO)
 			*obj_time = gf_clock_real_time(mo->odm->codec->ck);
 		else
 			*obj_time = gf_clock_time(mo->odm->codec->ck);
@@ -636,7 +636,7 @@ void gf_mo_get_object_time(GF_MediaObject *mo, u32 *obj_time)
 	/*BIFS object */
 	else if (mo->odm->subscene && mo->odm->subscene->scene_codec) {
 		*obj_time = gf_clock_time(mo->odm->subscene->scene_codec->ck);
-	} 
+	}
 	/*unknown / unsupported object*/
 	else {
 		*obj_time = 0;
@@ -722,13 +722,13 @@ Bool gf_mo_stop(GF_MediaObject *mo)
 		if (gf_list_find(mo->odm->term->media_queue, mo->odm)<0) {
 			gf_list_add(mo->odm->term->media_queue, mo->odm);
 		}
-		
+
 		/*signal STOP request*/
 		if ((mo->OD_ID==GF_MEDIA_EXTERNAL_ID) || (mo->odm && mo->odm->OD && (mo->odm->OD->objectDescriptorID==GF_MEDIA_EXTERNAL_ID))) {
 			mo->odm->action_type = GF_ODM_ACTION_DELETE;
 			ret = GF_TRUE;
 		}
-		else 
+		else
 			mo->odm->action_type = GF_ODM_ACTION_STOP;
 
 		gf_term_lock_media_queue(mo->odm->term, GF_FALSE);
@@ -769,7 +769,7 @@ u32 gf_mo_get_od_id(MFURL *url)
 	u32 id = 0;
 
 	if (!url) return 0;
-	
+
 	for (i=0; i<url->count; i++) {
 		if (url->vals[i].OD_ID) {
 			/*works because OD ID 0 is forbidden in MPEG4*/
@@ -858,7 +858,7 @@ Bool gf_mo_is_same_url(GF_MediaObject *obj, MFURL *an_url, Bool *keep_fragment, 
 					/*if the fragment is a node which can be found, this is the same resource*/
 					if (obj->odm->subscene && (gf_sg_find_node_by_name(obj->odm->subscene->graph, frag+1)!=NULL) )
 						return GF_TRUE;
-				
+
 					/*if the expected type is an existing segment (undefined media type), this is the same resource*/
 					if (!obj_hint_type && gf_odm_find_segment(obj->odm, frag+1))
 						return GF_TRUE;
@@ -991,7 +991,7 @@ Bool gf_mo_get_loop(GF_MediaObject *mo, Bool in_loop)
 	MediaControlStack *ctrl;
 #endif
 	if (!gf_odm_lock_mo(mo)) return in_loop;
-	
+
 	/*get control*/
 #ifndef GPAC_DISABLE_VRML
 	ctrl = gf_odm_get_mediacontrol(mo->odm);
@@ -1032,7 +1032,7 @@ Bool gf_mo_should_deactivate(GF_MediaObject *mo)
 #endif
 
 	if (!gf_odm_lock_mo(mo)) return GF_FALSE;
-	
+
 	if (!mo->odm->state) {
 		gf_odm_lock(mo->odm, 0);
 		return GF_FALSE;
@@ -1046,8 +1046,8 @@ Bool gf_mo_should_deactivate(GF_MediaObject *mo)
 	else if (ctrl->stream->odm != mo->odm) res = GF_FALSE;
 	/*this is currently under discussion in MPEG. for now we deny deactivation as soon as a mediaControl is here*/
 	else if (ctrl->stream->odm->state) res = GF_FALSE;
-	/*otherwise allow*/	
-	else 
+	/*otherwise allow*/
+	else
 #endif
 		res = GF_TRUE;
 
@@ -1118,7 +1118,7 @@ GF_EXPORT
 void gf_mo_set_flag(GF_MediaObject *mo, u32 flag, Bool set_on)
 {
 	if (mo) {
-		if (set_on) 
+		if (set_on)
 			mo->flags |= flag;
 		else
 			mo->flags &= ~flag;
@@ -1182,7 +1182,7 @@ u32 gf_mo_has_audio(GF_MediaObject *mo)
 			ext = odm->mo->URLs.count ? odm->mo->URLs.vals[0].url : NULL;
 			if (ext) ext = strchr(ext, '#');
 			if (!ext || strcmp(sub_url, ext)) continue;
-		} 
+		}
 		/*there is already an audio object in this service, do not recreate one*/
 		if (odm->mo->type == GF_MEDIA_OBJECT_AUDIO) return 0;
 	}

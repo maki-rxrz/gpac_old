@@ -451,7 +451,7 @@ static void merge_row_bgr_24(u8 *src, u32 src_w, u8 *dst, u32 dst_w, s32 h_inc, 
 		if (a && alpha) {
 			_b = dst[0];
 			_g = dst[1];
-			_r = dst[2]; 
+			_r = dst[2];
 			a = mul255(a, alpha);
 			dst[0] = mul255(a, b - _b) + _b;
 			dst[1] = mul255(a, g - _g) + _g;
@@ -485,7 +485,7 @@ static void merge_row_bgrx(u8 *src, u32 src_w, u8 *dst, u32 dst_w, s32 h_inc, s3
 			_r = mul255(a, r - _r) + _r;
 			_g = mul255(a, g - _g) + _g;
 			_b = mul255(a, b - _b) + _b;
-			
+
 			dst[0] = _b;
 			dst[1] = _g;
 			dst[2] = _r;

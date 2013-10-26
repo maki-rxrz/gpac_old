@@ -80,7 +80,7 @@ int dc_video_decoder_open(VideoInputFile *video_input_data, VideoDataConf *video
 		}
 	}
 #endif
-	
+
 	if (video_data_conf->format && strcmp(video_data_conf->format, "") != 0) {
 		in_fmt = av_find_input_format(video_data_conf->format);
 		if (in_fmt == NULL) {
@@ -156,7 +156,7 @@ int dc_video_decoder_open(VideoInputFile *video_input_data, VideoDataConf *video
 	video_input_data->width = codec_ctx->width;
 	video_input_data->height = codec_ctx->height;
 	video_input_data->pix_fmt = codec_ctx->pix_fmt;
-	video_data_conf->framerate = codec_ctx->time_base.den / codec_ctx->time_base.num;	
+	video_data_conf->framerate = codec_ctx->time_base.den / codec_ctx->time_base.num;
 	if (video_data_conf->framerate <= 1 || video_data_conf->framerate > 1000) {
 		const int num = video_input_data->fmt_ctx->streams[video_input_data->vstream_idx]->avg_frame_rate.num;
 		const int den = video_input_data->fmt_ctx->streams[video_input_data->vstream_idx]->avg_frame_rate.den == 0 ? 1 : video_input_data->fmt_ctx->streams[video_input_data->vstream_idx]->avg_frame_rate.den;
@@ -281,10 +281,10 @@ int dc_video_decoder_read(VideoInputFile *video_input_file, VideoInputData *vide
 						video_input_file->computed_pts = 0;
 						video_input_data->frame_duration = codec_ctx->time_base.num;
 						video_input_file->sync_tolerance = 9*video_input_data->frame_duration/5;
-						//TODO - check with audio if sync is OK 
-					} 
-					//perform FPS re-linearisation 
-					pts = packet.pts - video_input_file->first_pts;	
+						//TODO - check with audio if sync is OK
+					}
+					//perform FPS re-linearisation
+					pts = packet.pts - video_input_file->first_pts;
 					if (pts - video_input_file->prev_pts > video_input_file->sync_tolerance) {
 						u32 nb_lost=0;
 						while (pts > video_input_file->computed_pts) {

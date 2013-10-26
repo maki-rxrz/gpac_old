@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -43,11 +43,11 @@ GF_Err gf_sc_get_viewpoint(GF_Compositor *compositor, u32 viewpoint_idx, const c
 	n = (GF_Node*)gf_list_get(compositor->visual->view_stack, viewpoint_idx-1);
 	switch (gf_node_get_tag(n)) {
 	case TAG_MPEG4_Viewport: *outName = ((M_Viewport*)n)->description.buffer; *is_bound = ((M_Viewport*)n)->isBound;return GF_OK;
-	case TAG_MPEG4_Viewpoint: 
+	case TAG_MPEG4_Viewpoint:
 #ifndef GPAC_DISABLE_X3D
-	case TAG_X3D_Viewpoint: 
+	case TAG_X3D_Viewpoint:
 #endif
-		*outName = ((M_Viewpoint*)n)->description.buffer; *is_bound = ((M_Viewpoint*)n)->isBound; 
+		*outName = ((M_Viewpoint*)n)->description.buffer; *is_bound = ((M_Viewpoint*)n)->isBound;
 		return GF_OK;
 	default: *outName = NULL; return GF_OK;
 	}
@@ -77,15 +77,15 @@ GF_Err gf_sc_set_viewpoint(GF_Compositor *compositor, u32 viewpoint_idx, const c
 		char *name = NULL;
 		n = (GF_Node*)gf_list_get(compositor->visual->view_stack, viewpoint_idx-1);
 		switch (gf_node_get_tag(n)) {
-		case TAG_MPEG4_Viewport: 
-			name = ((M_Viewport*)n)->description.buffer; 
+		case TAG_MPEG4_Viewport:
+			name = ((M_Viewport*)n)->description.buffer;
 			break;
-		case TAG_MPEG4_Viewpoint: 
-			name = ((M_Viewpoint*)n)->description.buffer; 
+		case TAG_MPEG4_Viewpoint:
+			name = ((M_Viewpoint*)n)->description.buffer;
 			break;
 #ifndef GPAC_DISABLE_X3D
-		case TAG_X3D_Viewpoint: 
-			name = ((M_Viewpoint*)n)->description.buffer; 
+		case TAG_X3D_Viewpoint:
+			name = ((M_Viewpoint*)n)->description.buffer;
 			break;
 #endif
 		default: break;
@@ -142,7 +142,7 @@ static void TraverseViewport(GF_Node *node, void *rs, Bool is_destroy)
 	ViewStack *st = (ViewStack *) gf_node_get_private(node);
 	M_Viewport *vp = (M_Viewport *) node;
 	GF_TraverseState *tr_state = (GF_TraverseState *)rs;
-	
+
 	if (is_destroy) {
 		DestroyViewStack(node);
 		return;
@@ -172,14 +172,14 @@ static void TraverseViewport(GF_Node *node, void *rs, Bool is_destroy)
 	if (tr_state->traversing_mode != TRAVERSE_BINDABLE) return;
 	if (!vp->isBound) return;
 
-	if (gf_list_get(tr_state->viewpoints, 0) != vp) 
+	if (gf_list_get(tr_state->viewpoints, 0) != vp)
 		return;
 
 #ifndef GPAC_DISABLE_3D
 	if (tr_state->visual->type_3d) {
 		w = tr_state->bbox.max_edge.x - tr_state->bbox.min_edge.x;
 		h = tr_state->bbox.max_edge.y - tr_state->bbox.min_edge.y;
-	} else 
+	} else
 #endif
 	{
 		w = tr_state->bounds.width;
@@ -256,7 +256,7 @@ static void TraverseViewport(GF_Node *node, void *rs, Bool is_destroy)
 			else if (vp->alignment.vals[1]==1) ty = h/2 - rc.height/2;
 		}
 	}
-	
+
 	gf_mx2d_init(mat);
 	if (tr_state->pixel_metrics) {
 		gf_mx2d_add_scale(&mat, sx, sy);
@@ -279,7 +279,7 @@ static void TraverseViewport(GF_Node *node, void *rs, Bool is_destroy)
 		if (tr_state->is_layer) {
 			gf_mx_from_mx2d(&mx, &mat);
 			gf_mx_add_matrix(&tr_state->model_matrix, &mx);
-		} 
+		}
 		/*otherwise add to camera viewport matrix*/
 		else {
 			gf_mx_from_mx2d(&tr_state->camera->viewport, &mat);
@@ -310,7 +310,7 @@ static void viewpoint_set_bind(GF_Node *node, GF_Route *route)
 	GF_Compositor *rend = gf_sc_get_compositor(node);
 	ViewStack *st = (ViewStack *) gf_node_get_private(node);
 
-	if (!((M_Viewpoint*)node)->isBound ) 
+	if (!((M_Viewpoint*)node)->isBound )
 		st->prev_was_bound = 0;
 	Bindable_OnSetBind(node, st->reg_stacks, NULL);
 	gf_sc_invalidate(rend, NULL);
@@ -356,7 +356,7 @@ static void TraverseViewpoint(GF_Node *node, void *rs, Bool is_destroy)
 	/*not evaluating vp, return*/
 	if (tr_state->traversing_mode != TRAVERSE_BINDABLE) {
 		/*store model matrix if changed - NOTE: we always have a 1-frame delay between VP used and real world...
-		we could remove this by pre-traversing the scene before applying vp, but that would mean 2 scene 
+		we could remove this by pre-traversing the scene before applying vp, but that would mean 2 scene
 		traversals*/
 		if ((tr_state->traversing_mode==TRAVERSE_SORT) || (tr_state->traversing_mode==TRAVERSE_GET_BOUNDS) ) {
 			if (!gf_mx_equal(&st->world_view_mx, &tr_state->model_matrix)) {
@@ -562,7 +562,7 @@ static void TraverseFog(GF_Node *node, void *rs, Bool is_destroy)
 	}
 	/*not evaluating, return*/
 	if (tr_state->traversing_mode != TRAVERSE_BINDABLE) {
-		if ((tr_state->traversing_mode==TRAVERSE_SORT) || (tr_state->traversing_mode==TRAVERSE_GET_BOUNDS) ) 
+		if ((tr_state->traversing_mode==TRAVERSE_SORT) || (tr_state->traversing_mode==TRAVERSE_GET_BOUNDS) )
 			gf_mx_copy(st->world_view_mx, tr_state->model_matrix);
 		return;
 	}

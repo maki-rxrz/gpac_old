@@ -180,7 +180,7 @@ int dc_video_scaler_scale(VideoInputData *video_input_data, VideoScaledData *vid
 			video_data_node->vframe->linesize, 0,
 			video_input_data->vprop[index].height/*video_input_data->height*/,
 			video_scaled_data_node->vframe->data, video_scaled_data_node->vframe->linesize);
-	
+
 	video_scaled_data_node->vframe->pts = video_data_node->vframe->pts;
 
 	if (video_data_node->is_raw_data) {

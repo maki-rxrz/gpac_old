@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -161,7 +161,7 @@ extern "C" {
     /*!session download flags*/
     enum
     {
-        /*!session is not threaded, the user must explicitely fetch the data , either with the function gf_dm_sess_fetch_data 
+        /*!session is not threaded, the user must explicitely fetch the data , either with the function gf_dm_sess_fetch_data
 		or the function gf_dm_sess_process- if the session is threaded, the user must call gf_dm_sess_process to start the session*/
         GF_NETIO_SESSION_NOT_THREADED	=	1,
         /*! session data is live, e.g. data will be sent to the user if threaded mode (live streams like radios & co)
@@ -321,8 +321,8 @@ extern "C" {
      *
      *Sets the session byte range. This shll be called before processing the session.
      *\param sess the download session
-     *\param start_range HTTP download start range in byte 
-     *\param end_range HTTP download end range in byte 
+     *\param start_range HTTP download start range in byte
+     *\param end_range HTTP download end range in byte
      *\param discontinue If set, forces a new cache entry if byte range are not continuous. Otherwise a single cache entry is used to reconstruct the file
      *\note this can only be used when the session is not threaded
      */
@@ -410,7 +410,7 @@ extern "C" {
      *\return the associated URL
      */
     const char *gf_dm_sess_get_original_resource_name(GF_DownloadSession *dnload);
-	
+
 
     /*!
      * \brief Download a file over the network using a download manager
@@ -447,7 +447,7 @@ extern "C" {
      * \return a pointer to the entry of session refreshed
      */
     DownloadedCacheEntry gf_dm_refresh_cache_entry(GF_DownloadSession *sess);
-    
+
     /*!
      * Tells whether session can be cached on disk.
      * Typically, when request has no content length, it deserves being streamed an cannot be cached
@@ -472,7 +472,7 @@ extern "C" {
      * Re-setup an existing, completed session to download a new URL. If same server/port/protocol is used, the same socket will be reused if the session
 	 has the @GF_NETIO_SESSION_PERSISTENT flag set. This is only possible if the session is not threaded.
 	 * \param sess The session
-	 * \param url The new url for the session 
+	 * \param url The new url for the session
      * \return GF_OK or error
      */
 	GF_Err gf_dm_sess_setup_from_url(GF_DownloadSession *sess, const char *url);
@@ -490,7 +490,7 @@ extern "C" {
     /*
      *\brief sets download manager max rate per session
      *
-     *Sets the maximum rate (per session only at the current time). 
+     *Sets the maximum rate (per session only at the current time).
      *\param dm the download manager object
      *\param rate_in_bits_per_sec the new rate in bits per sec. If 0, HTTP rate will not be limited
      */
@@ -499,7 +499,7 @@ extern "C" {
     /*
      *\brief gets download manager max rate per session
      *
-     *Sets the maximum rate (per session only at the current time). 
+     *Sets the maximum rate (per session only at the current time).
      *\param dm the download manager object
      *\return the rate in bits per sec. If 0, HTTP rate is not limited
      */
@@ -509,8 +509,8 @@ extern "C" {
     /*
      *\brief fetches remote file in memory
      *
-     *Fetches remote file in memory . 
-     *\param url the data to fetch 
+     *Fetches remote file in memory .
+     *\param url the data to fetch
      *\param out_data output data (allocated by function)
      *\param out_size output data size
      *\param out_mime if not NULL, pointer will contain the mime type (allocated by function)

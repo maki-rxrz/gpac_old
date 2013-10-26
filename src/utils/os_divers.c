@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -156,7 +156,7 @@ GF_Err gf_rmdir(char *DirPathName)
 	}
 #endif
 	return GF_OK;
-}   
+}
 
 GF_EXPORT
 GF_Err gf_mkdir(char* DirPathName)
@@ -170,15 +170,15 @@ GF_Err gf_mkdir(char* DirPathName)
 		int err = GetLastError();
 		GF_LOG(GF_LOG_ERROR, GF_LOG_CORE, ("Cannot create directory %s: last error %d\n", DirPathName, err ));
 	}
-#elif defined (WIN32) 
+#elif defined (WIN32)
 	int res = mkdir(DirPathName);
 	if (res==-1) {
 		int err = GetLastError();
 		GF_LOG(GF_LOG_ERROR, GF_LOG_CORE, ("Cannot create directory %s: last error %d\n", DirPathName, err ));
 	}
-#else	
+#else
     int res = mkdir(DirPathName, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-	if (res==-1) {		
+	if (res==-1) {
 		if(errno == 17){
 			GF_LOG(GF_LOG_ERROR, GF_LOG_CORE, ("Cannot create directory %s, it already exists: last error %d \n", DirPathName, errno ));
 			return GF_BAD_PARAM;
@@ -197,10 +197,10 @@ static Bool delete_carousel_data(void *cbck, char *item_name, char *item_path)
 
 	if(directory_clean_mode){
 		 gf_cleanup_dir(item_path);
-		 gf_rmdir(item_path);		
+		 gf_rmdir(item_path);
 	}else{
-		gf_delete_file(item_path);		
-	}	
+		gf_delete_file(item_path);
+	}
 	return GF_OK;
 }
 
@@ -209,7 +209,7 @@ GF_Err gf_cleanup_dir(char* DirPathName)
 	Bool directory_clean_mode;
 
 	directory_clean_mode = 1;
-	gf_enum_directory(DirPathName, 1, delete_carousel_data, &directory_clean_mode, NULL);														
+	gf_enum_directory(DirPathName, 1, delete_carousel_data, &directory_clean_mode, NULL);
 	directory_clean_mode = 0;
 	gf_enum_directory(DirPathName, 0, delete_carousel_data, &directory_clean_mode, NULL);
 
@@ -289,7 +289,7 @@ int gettimeofday(struct timeval *tp, struct timezone *tzp)
     }
 
     if (NULL != tzp)
-    {   
+    {
         GetTimeZoneInformation(&tzi);
 
         tzp->tz_minuteswest = tzi.Bias;
@@ -314,7 +314,7 @@ int gettimeofday(struct timeval *tp, struct timezone *tzp)
 
 #if _GPAC_UNUSED
 /*
-	time between jan 1, 1601 and jan 1, 1970 in units of 100 nanoseconds 
+	time between jan 1, 1601 and jan 1, 1970 in units of 100 nanoseconds
 	FILETIME in Win32 is from jan 1, 1601
 */
 #define TIMESPEC_TO_FILETIME_OFFSET (((LONGLONG)27111902 << 32) + (LONGLONG)3577643008)
@@ -341,7 +341,7 @@ s32 __gettimeofday(struct timeval *tp, void *tz)
 
 s32 gettimeofday(struct timeval *tp, void *tz)
 {
-	struct _timeb timebuffer;   
+	struct _timeb timebuffer;
 
 	_ftime( &timebuffer );
 	tp->tv_sec  = (long) (timebuffer.time);
@@ -442,8 +442,8 @@ u32 gf_rand()
 GF_EXPORT
 u64 gf_file_modification_time(const char *filename)
 {
-#if defined(_WIN32_WCE) 
-	WCHAR _file[GF_MAX_PATH]; 
+#if defined(_WIN32_WCE)
+	WCHAR _file[GF_MAX_PATH];
 	WIN32_FIND_DATA FindData;
 	HANDLE fh;
 	ULARGE_INTEGER uli;
@@ -496,13 +496,13 @@ FILE *gf_temp_file_new()
 		GF_LOG(GF_LOG_INFO, GF_LOG_CORE, ("[Win32] system failure for tmpfile(): 0x%08x\n", err));
 	}
 	/*tmpfile() may fail under vista ...*/
-	if (!GetEnvironmentVariable("TEMP",tmp,MAX_PATH)) 
+	if (!GetEnvironmentVariable("TEMP",tmp,MAX_PATH))
 		return NULL;
 	sprintf(t_file, "\\gpac_%08x.tmp", (u32) tmp);
 	strcat(tmp, t_file);
 	return gf_f64_open(tmp, "w+b");
 #else
-	return tmpfile(); 
+	return tmpfile();
 #endif
 }
 
@@ -564,7 +564,7 @@ GF_Err gf_enum_directory(const char *dir, Bool enum_directory, gf_enum_dir_item 
 #ifdef WIN32
 	WIN32_FIND_DATA FindData;
 	HANDLE SearchH;
-#else	
+#else
 	DIR *the_dir;
 	struct dirent* the_file;
 	struct stat st;
@@ -716,7 +716,7 @@ GF_Err gf_enum_directory(const char *dir, Bool enum_directory, gf_enum_dir_item 
 		strcpy(item_path, path);
 		strcat(item_path, the_file->d_name);
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_CORE, ("[Core] Checking file %s for enum\n", item_path));
-		
+
 		if (stat( item_path, &st ) != 0) goto next;
 		if (enum_directory && ( (st.st_mode & S_IFMT) != S_IFDIR)) goto next;
 		if (!enum_directory && ((st.st_mode & S_IFMT) == S_IFDIR)) goto next;
@@ -837,7 +837,7 @@ FILE *gf_f64_open(const char *file_name, const char *mode)
 #endif
 
 GF_EXPORT
-size_t gf_fwrite(const void *ptr, size_t size, size_t nmemb, 
+size_t gf_fwrite(const void *ptr, size_t size, size_t nmemb,
                        FILE *stream)
 {
 	size_t result = fwrite(ptr, size, nmemb, stream);
@@ -897,7 +897,7 @@ char gf_prompt_get_char()
 	return getchar();
 }
 
-void gf_prompt_set_echo_off(Bool echo_off) 
+void gf_prompt_set_echo_off(Bool echo_off)
 {
 	DWORD flags;
 	HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
@@ -935,8 +935,8 @@ static void close_keyboard(Bool new_line)
 	if (new_line) fprintf(stderr, "\n");
 }
 
-void gf_prompt_set_echo_off(Bool echo_off) 
-{ 
+void gf_prompt_set_echo_off(Bool echo_off)
+{
 	init_keyboard();
 	if (echo_off) t_orig.c_lflag &= ~ECHO;
 	else t_orig.c_lflag |= ECHO;
@@ -1018,8 +1018,8 @@ typedef int(WINAPI* NTQuerySystemInfo)(ULONG,PVOID,ULONG,PULONG);
 NTQuerySystemInfo MyQuerySystemInfo = NULL;
 
 #ifndef PROCESS_MEMORY_COUNTERS
-typedef struct _PROCESS_MEMORY_COUNTERS 
-{  
+typedef struct _PROCESS_MEMORY_COUNTERS
+{
 	DWORD cb;
 	DWORD PageFaultCount;
 	SIZE_T PeakWorkingSetSize;
@@ -1034,7 +1034,7 @@ typedef struct _PROCESS_MEMORY_COUNTERS
 #endif
 
 #ifndef SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION
-typedef struct _SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION 
+typedef struct _SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION
 {
 	LARGE_INTEGER IdleTime;
 	LARGE_INTEGER KernelTime;
@@ -1046,7 +1046,7 @@ typedef struct _SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION
 
 
 #else
-	
+
 static u64 last_cpu_u_k_time = 0;
 static u64 last_cpu_idle_time = 0;
 static u64 mem_at_startup = 0;
@@ -1073,8 +1073,8 @@ static u32 OS_GetSysClockHIGHRES()
 	return (u32) ((now.QuadPart * 1000) / frequency.QuadPart);
 }
 
-static u32 OS_GetSysClockNORMAL() 
-{ 
+static u32 OS_GetSysClockNORMAL()
+{
 #ifdef _WIN32_WCE
 	return GetTickCount();
 #else
@@ -1084,7 +1084,7 @@ static u32 OS_GetSysClockNORMAL()
 
 #endif /* WIN32 */
 
-#if defined(__sh__) 
+#if defined(__sh__)
 /* Avoid exception for denormalized floating point values */
 static int
 sh4_get_fpscr()
@@ -1126,7 +1126,7 @@ sh4_change_fpscr(int off, int on)
    __fpscr_values[1] |= on;
 }
 
-#endif 
+#endif
 
 #ifdef GPAC_MEMORY_TRACKING
 void gf_mem_enable_tracker();
@@ -1223,7 +1223,7 @@ void gf_sys_init(Bool enable_memory_tracker)
 #ifdef GPAC_CONFIG_FREEBSD
 		{
 			s32 flags[4];
-			size_t len = sizeof(u32); 
+			size_t len = sizeof(u32);
 			flags[0] = CTL_HW;
 			flags[1] = HW_AVAILCPU;
 			sysctl(flags, 2, &the_rti.nb_cores, &len, NULL, 0);
@@ -1242,7 +1242,7 @@ void gf_sys_init(Bool enable_memory_tracker)
 		GF_LOG(GF_LOG_INFO, GF_LOG_CORE, ("[core] process id %d\n", the_rti.pid));
 
 #ifndef _WIN32_WCE
-		setlocale( LC_NUMERIC, "C" ); 
+		setlocale( LC_NUMERIC, "C" );
 #endif
 	}
 	sys_init += 1;
@@ -1268,7 +1268,7 @@ void gf_sys_close()
 
 #if defined(WIN32) && !defined(_WIN32_WCE)
 		timeEndPeriod(1);
-		
+
 		MyGetSystemTimes = NULL;
 		MyGetProcessMemoryInfo = NULL;
 		MyQuerySystemInfo = NULL;
@@ -1295,7 +1295,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 #if defined(_WIN32_WCE)
 	THREADENTRY32 tentry;
 	u64 total_cpu_time, process_cpu_time;
-	DWORD orig_perm;	
+	DWORD orig_perm;
 #endif
 	MEMORYSTATUS ms;
 	u64 creation, exit, kernel, user, process_k_u_time, proc_idle_time, proc_k_u_time;
@@ -1334,9 +1334,9 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 	/*get a snapshot of all running threads*/
 	orig_perm = GetCurrentPermissions();
 	SetProcPermissions(0xFFFFFFFF);
-	hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0); 
+	hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
 	if (hSnapShot) {
-		tentry.dwSize = sizeof(THREADENTRY32); 
+		tentry.dwSize = sizeof(THREADENTRY32);
 		the_rti.thread_count = 0;
 		/*note we always act as if GF_RTI_ALL_PROCESSES_TIMES flag is set, since there is no other way
 		to enumerate threads from a process, and GetProcessTimes doesn't exist on CE*/
@@ -1352,15 +1352,15 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 				}
 			} while (Thread32Next(hSnapShot, &tentry));
 		}
-		CloseToolhelp32Snapshot(hSnapShot); 
+		CloseToolhelp32Snapshot(hSnapShot);
 	}
 
 	if (flags & GF_RTI_PROCESS_MEMORY) {
 		HEAPLIST32 hlentry;
 		HEAPENTRY32 hentry;
 		the_rti.process_memory = 0;
-		hlentry.dwSize = sizeof(HEAPLIST32); 
-		hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPHEAPLIST, the_rti.pid); 
+		hlentry.dwSize = sizeof(HEAPLIST32);
+		hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPHEAPLIST, the_rti.pid);
 		if (hSnapShot && Heap32ListFirst(hSnapShot, &hlentry)) {
 			do {
 				hentry.dwSize = sizeof(hentry);
@@ -1371,7 +1371,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 				}
 			} while (Heap32ListNext(hSnapShot, &hlentry));
 		}
-		CloseToolhelp32Snapshot(hSnapShot); 
+		CloseToolhelp32Snapshot(hSnapShot);
 	}
 	SetProcPermissions(orig_perm);
 	total_cpu_time /= 10;
@@ -1391,7 +1391,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 	else if (MyQuerySystemInfo) {
 		DWORD ret;
 		SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION info;
-		MyQuerySystemInfo(0x8 /*SystemProcessorPerformanceInformation*/, &info, sizeof(info), &ret); 
+		MyQuerySystemInfo(0x8 /*SystemProcessorPerformanceInformation*/, &info, sizeof(info), &ret);
 		if (ret && (ret<=sizeof(info))) {
 			proc_idle_time = info.IdleTime.QuadPart / 10;
 			proc_k_u_time = (info.KernelTime.QuadPart + info.UserTime.QuadPart) / 10;
@@ -1399,11 +1399,11 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 	}
 	/*no special API available, ONLY FETCH TIMES if requested (may eat up some time)*/
 	else if (flags & GF_RTI_ALL_PROCESSES_TIMES) {
-		PROCESSENTRY32 pentry; 
+		PROCESSENTRY32 pentry;
 		/*get a snapshot of all running threads*/
-		hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0); 
+		hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 		if (!hSnapShot) return 0;
-		pentry.dwSize = sizeof(PROCESSENTRY32); 
+		pentry.dwSize = sizeof(PROCESSENTRY32);
 		if (Process32First(hSnapShot, &pentry)) {
 			do {
 				HANDLE procH = NULL;
@@ -1419,9 +1419,9 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 				if (procH) CloseHandle(procH);
 			} while (Process32Next(hSnapShot, &pentry));
 		}
-		CloseHandle(hSnapShot); 
+		CloseHandle(hSnapShot);
 		proc_k_u_time /= 10;
-	} 
+	}
 
 
 	if (!process_k_u_time) {
@@ -1447,8 +1447,8 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 		HEAPLIST32 hlentry;
 		HEAPENTRY32 hentry;
 		the_rti.process_memory = 0;
-		hlentry.dwSize = sizeof(HEAPLIST32); 
-		hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPHEAPLIST, the_rti.pid); 
+		hlentry.dwSize = sizeof(HEAPLIST32);
+		hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPHEAPLIST, the_rti.pid);
 		if (hSnapShot && Heap32ListFirst(hSnapShot, &hlentry)) {
 			do {
 				hentry.dwSize = sizeof(hentry);
@@ -1459,7 +1459,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 				}
 			} while (Heap32ListNext(hSnapShot, &hlentry));
 		}
-		CloseHandle(hSnapShot); 
+		CloseHandle(hSnapShot);
 	}
 #endif
 
@@ -1472,9 +1472,9 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 #if defined(_WIN32_WCE)
 		the_rti.total_cpu_time_diff = (u32) ((total_cpu_time - last_total_k_u_time)/1000);
 		/*we're not that accurate....*/
-		if (the_rti.total_cpu_time_diff > the_rti.sampling_period_duration) 
+		if (the_rti.total_cpu_time_diff > the_rti.sampling_period_duration)
 			the_rti.sampling_period_duration = the_rti.total_cpu_time_diff;
-	
+
 		/*rough values*/
 		the_rti.cpu_idle_time = the_rti.sampling_period_duration - the_rti.total_cpu_time_diff;
 		the_rti.total_cpu_usage = (u32) (100 * the_rti.total_cpu_time_diff / the_rti.sampling_period_duration);
@@ -1497,9 +1497,9 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 			if (the_rti.total_cpu_time_diff > the_rti.sampling_period_duration) {
 				the_rti.sampling_period_duration = the_rti.total_cpu_time_diff;
 			}
-			
-			if (!proc_idle_time) 
-				proc_idle_time = last_proc_idle_time + (the_rti.sampling_period_duration - the_rti.total_cpu_time_diff); 
+
+			if (!proc_idle_time)
+				proc_idle_time = last_proc_idle_time + (the_rti.sampling_period_duration - the_rti.total_cpu_time_diff);
 
 			samp_sys_time = proc_k_u_time - last_proc_k_u_time;
 			idle = proc_idle_time - last_proc_idle_time;
@@ -1521,7 +1521,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 #endif
 	the_rti.physical_memory_avail = ms.dwAvailPhys;
 
-#if defined(_WIN32_WCE)	
+#if defined(_WIN32_WCE)
 	last_total_k_u_time = total_cpu_time;
 	if (!the_rti.process_memory) the_rti.process_memory = mem_usage_at_startup - ms.dwAvailPhys;
 #else
@@ -1535,7 +1535,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 	return 1;
 }
 
-	
+
 #elif defined(GPAC_CONFIG_DARWIN) && !defined(GPAC_IPHONE)
 
 #include <sys/types.h>
@@ -1608,7 +1608,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 		}
 	}
 	the_rti.physical_memory = total_physical_memory;
-	
+
 	error = task_for_pid(mach_task_self(), the_rti.pid, &task);
  	if (error) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_CORE, ("[RTI] Cannot get process task for PID %d: error %d\n", the_rti.pid, error));
@@ -1620,7 +1620,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 		GF_LOG(GF_LOG_ERROR, GF_LOG_CORE, ("[RTI] Cannot get process task info (PID %d): error %d\n", the_rti.pid, error));
 		return 0;
 	}
-	
+
 	percent = 0;
 	utime = ti.user_time.seconds + ti.user_time.microseconds * 1e-6;
 	stime = ti.system_time.seconds + ti.system_time.microseconds * 1e-6;
@@ -1646,15 +1646,15 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 	}
 	error = vm_deallocate(mach_task_self(), (vm_offset_t)thread_table, table_size * sizeof(thread_array_t));
 	mach_port_deallocate(mach_task_self(), task);
-	
+
 	process_u_k_time = utime + stime;
-	
+
 	the_rti.sampling_instant = last_update_time;
-	
+
 	if (last_update_time) {
 		the_rti.sampling_period_duration = (entry_time - last_update_time);
 		the_rti.process_cpu_time_diff = (process_u_k_time - last_process_k_u_time) * 10;
-		
+
 		the_rti.total_cpu_time_diff = the_rti.sampling_period_duration;
 		/*TODO*/
 		the_rti.cpu_idle_time = 0;
@@ -1670,7 +1670,7 @@ Bool gf_sys_get_rti_os(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 #ifdef GPAC_MEMORY_TRACKING
 	the_rti.gpac_memory = gpac_allocated_memory;
 #endif
-	
+
 	last_process_k_u_time = process_u_k_time;
 	last_cpu_idle_time = 0;
 	last_update_time = entry_time;
@@ -1853,7 +1853,7 @@ Bool gf_sys_get_rti(u32 refresh_time_ms, GF_SystemRTInfo *rti, u32 flags)
 }
 
 
-char * gf_get_default_cache_directory(){  
+char * gf_get_default_cache_directory(){
 #ifdef _WIN32_WCE
 	return gf_strdup( "\\windows\\temp" );
 #elif defined(WIN32)
@@ -1868,7 +1868,7 @@ char * gf_get_default_cache_directory(){
 
 
 GF_EXPORT
-Bool gf_sys_get_battery_state(Bool *onBattery, u32 *onCharge, u32*level, u32 *batteryLifeTime, u32 *batteryFullLifeTime) 
+Bool gf_sys_get_battery_state(Bool *onBattery, u32 *onCharge, u32*level, u32 *batteryLifeTime, u32 *batteryFullLifeTime)
 {
 #if defined(_WIN32_WCE)
 	SYSTEM_POWER_STATUS_EX sps;
@@ -2134,7 +2134,7 @@ u64 gf_net_get_utc()
 	t_time = time(NULL);
 	t_gmt = *gmtime(&t_time);
 	t_local = *localtime(&t_time);
-	
+
 	t_timezone = (t_gmt.tm_hour - t_local.tm_hour) * 3600;
 	current_time = mktime(&_t) - t_timezone;
 	}
@@ -2156,7 +2156,7 @@ u64 gf_net_get_utc()
 
 	current_time = (u64) ((*(LONGLONG *) &filet - TIMESPEC_TO_FILETIME_OFFSET) / 10000000);
 
-#undef TIMESPEC_TO_FILETIME_OFFSET 
+#undef TIMESPEC_TO_FILETIME_OFFSET
 	}
 
 #endif

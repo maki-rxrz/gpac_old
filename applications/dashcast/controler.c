@@ -158,7 +158,7 @@ static void dc_write_mpd(CmdData *cmddata, const AudioDataConf *audio_data_conf,
 		video_frag_dur = (int)(video_data_conf->framerate * (cmddata->frag_dur / 1000.0));
 		optimize_seg_frag_dur(&video_seg_dur, &video_frag_dur);
 	}
-	
+
 	f = fopen(name, "w");
 	//TODO: if (!f) ...
 
@@ -285,7 +285,7 @@ static u32 mpd_thread(void *params)
 
 			//t += (1 * (cmddata->seg_dur / 1000.0));
 			//t += cmddata->ast_offset;
-			{	
+			{
 				struct tm ast_time = *gmtime(&t);
 				strftime(availability_start_time, 64, "%Y-%m-%dT%H:%M:%S", &ast_time);
 				snprintf(availability_start_time, sizeof(availability_start_time),"%s.%dZ", availability_start_time, ms);
@@ -875,14 +875,14 @@ u32 video_encoder_thread(void *params)
 					loss_state = 1;
 				}
 				fprintf(stderr, "UTC diff %d - cumulated segment duration %d\n", diff, (seg_nb+1) * in_data->seg_dur);
-				
+
 				t.segnum = seg_nb;
 				t.time = gf_net_get_utc();
 				//time_t t = time(NULL);
 				dc_message_queue_put(mq, &t, sizeof(t));
 			}
 		}
-	
+
 		if (in_data->time_shift != -1) {
 			shift = 1000 * in_data->time_shift / in_data->seg_dur;
 			snprintf(name_to_delete, sizeof(name_to_delete), "%s/%s_%d_gpac.m4s", in_data->out_dir, video_data_conf->filename, (seg_nb - shift));
@@ -1052,7 +1052,7 @@ u32 audio_encoder_thread(void *params)
 		if (in_data->mode == LIVE_CAMERA || in_data->mode == LIVE_MEDIA) {
 			if (thread_params->audio_conf_idx == 0) {
 				segtime t;
-				
+
 				//check we don't loose sync
 				int diff;
 				seg_utc = gf_net_get_utc();
@@ -1112,7 +1112,7 @@ int dc_run_controler(CmdData *in_data)
 {
 	int ret = 0;
 	u32 i, j;
-	
+
 	ThreadParam keyboard_th_params;
 	ThreadParam mpd_th_params;
 	ThreadParam delete_seg_th_params;
@@ -1248,7 +1248,7 @@ int dc_run_controler(CmdData *in_data)
 
 	/* Initialize keyboard controller thread */
 	keyboard_th_params.thread = gf_th_new("keyboard_thread");
-	
+
 	/* Create keyboard controller thread */
 	keyboard_th_params.in_data = in_data;
 	if (gf_th_run(keyboard_th_params.thread, keyboard_thread, (void *)&keyboard_th_params) != GF_OK) {
@@ -1272,12 +1272,12 @@ int dc_run_controler(CmdData *in_data)
 			tmvdata->time_base = in_data->video_data_conf.time_base;
 		}
 	}
-	
+
 	/******** MPD Thread ********/
 
 	/* Initialize MPD generator thread */
 	mpd_th_params.thread = gf_th_new("mpd_thread");
-	
+
 	/* Create MPD generator thread */
 	mpd_th_params.in_data = in_data;
 	mpd_th_params.mq = &mq;
@@ -1488,7 +1488,7 @@ int dc_run_controler(CmdData *in_data)
 		dasher_thread((void*) &dasher_th_params);
 	}
 #endif
-	
+
 exit:
 	if (strcmp(in_data->audio_data_conf.filename, "") != 0) {
 		/* Destroy audio input data */
@@ -1523,7 +1523,7 @@ exit:
 	dc_message_queue_free(&mq);
 	dc_message_queue_free(&delete_seg_mq);
 	dc_message_queue_free(&send_frag_mq);
-	
+
 	dc_unregister_libav();
 
 	return ret;

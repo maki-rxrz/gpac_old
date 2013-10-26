@@ -5,7 +5,7 @@
  *			Copyright (c) Telecom ParisTech 2013-
  *					All rights reserved
  *
- *  This file is part of GPAC / WebVTT header 
+ *  This file is part of GPAC / WebVTT header
  *
  *  GPAC is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -67,9 +67,9 @@ GF_Err gf_webvtt_dump_header_boxed(FILE *dump, const char *data, u32 dataLength,
 #ifdef GPAC_HAS_SPIDERMONKEY
 #include <gpac/internal/scenegraph_dev.h>
 
-GF_Err gf_webvtt_js_addCue(GF_Node *node, const char *id, 
+GF_Err gf_webvtt_js_addCue(GF_Node *node, const char *id,
 										  const char *start, const char *end,
-										  const char *settings, 
+										  const char *settings,
 										  const char *payload);
 GF_Err gf_webvtt_js_removeCues(GF_Node *node);
 #endif

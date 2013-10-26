@@ -54,7 +54,7 @@ int dc_audio_encoder_open(AudioOutputFile *audio_output_file, AudioDataConf *aud
 //		fprintf(stderr, "Cannot create output video stream\n");
 //		return -1;
 //	}
-	
+
 	audio_output_file->codec_ctx->codec_id = audio_output_file->codec->id;
 	audio_output_file->codec_ctx->codec_type = AVMEDIA_TYPE_AUDIO;
 	audio_output_file->codec_ctx->bit_rate = audio_data_conf->bitrate;
@@ -71,7 +71,7 @@ int dc_audio_encoder_open(AudioOutputFile *audio_output_file, AudioDataConf *aud
 
 //	if (audio_output_file->fmt->oformat->flags & AVFMT_GLOBALHEADER)
 //		audio_output_file->codec_ctx->flags |= CODEC_FLAG_GLOBAL_HEADER;
-	
+
 //	audio_stream->codec->codec_id = audio_codec->id;
 //	audio_stream->codec->codec_type = AVMEDIA_TYPE_AUDIO;
 //	audio_stream->codec->bit_rate = audio_output_file->audio_data_conf->bitrate;
@@ -192,7 +192,7 @@ int dc_audio_encoder_encode(AudioOutputFile *audio_output_file, AudioInputData *
 		audio_output_file->packet.data = NULL;
 		audio_output_file->packet.size = 0;
 
-		/* 
+		/*
 		 * Set PTS (method 1)
 		 */
 		//audio_output_file->aframe->pts = audio_input_data->next_pts;

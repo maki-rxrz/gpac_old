@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -140,7 +140,7 @@ enum
     GF_M4A_AAC_SBR = 5,
     GF_M4A_AAC_SCALABLE = 6,
     GF_M4A_TWINVQ = 7,
-    GF_M4A_CELP = 8, 
+    GF_M4A_CELP = 8,
     GF_M4A_HVXC = 9,
     GF_M4A_TTSI = 12,
     GF_M4A_MAIN_SYNTHETIC = 13,
@@ -170,7 +170,7 @@ enum
 
 static const u32 GF_M4ASampleRates[] =
 {
-    96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050, 
+    96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050,
 	16000, 12000, 11025, 8000, 7350, 0, 0, 0
 };
 
@@ -228,7 +228,7 @@ GF_Err gf_hevc_get_sps_info(char *sps_data, u32 sps_size, u32 *sps_id, u32 *widt
 
 
 
-/*gets image size (bs must contain the whole image) 
+/*gets image size (bs must contain the whole image)
 @OTI: image type (JPEG=0x6C, PNG=0x6D)
 @width, height: image resolution - for jpeg max size if thumbnail included*/
 void gf_img_parse(GF_BitStream *bs, u8 *OTI, u32 *mtype, u32 *width, u32 *height, char **dsi, u32 *dsi_len);

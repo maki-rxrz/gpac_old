@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,16 +11,16 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
- *		
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
  */
 
 #include <gpac/internal/ietf_dev.h>
@@ -87,7 +87,7 @@ static void gf_rtp_parse_mpeg4(GF_RTPDepacketizer *rtp, GF_RTPHeader *hdr, char 
 		au_size = rtp->sl_map.ConstantSize;
 		/*not signaled, assume max one AU per packet*/
 		if (!au_size) au_size = size - pay_start;
-		
+
 		if ((!num_au && rtp->sl_map.auh_first_min_len) || (num_au && rtp->sl_map.auh_min_len)) {
 			/*ISMACryp*/
 			if (rtp->flags & GF_RTP_HAS_ISMACRYP) {
@@ -98,7 +98,7 @@ static void gf_rtp_parse_mpeg4(GF_RTPDepacketizer *rtp, GF_RTPHeader *hdr, char 
 					gf_bs_read_int(hdr_bs, 7);
 					au_hdr_size -= 8;
 				}
-				/*Note: ISMACryp ALWAYS indicates IV (BSO) and KEYIDX, even when sample is not encrypted. 
+				/*Note: ISMACryp ALWAYS indicates IV (BSO) and KEYIDX, even when sample is not encrypted.
 				This is quite a waste when using selective encryption....*/
 				if (!num_au) {
 					nbbits = 8*rtp->sl_map.IV_length;
@@ -197,7 +197,7 @@ static void gf_rtp_parse_mpeg4(GF_RTPDepacketizer *rtp, GF_RTPHeader *hdr, char 
 		rtp->sl_hdr.packetSequenceNumber += 1;
 
 		/*force indication of CTS whenever we have a new AU*/
-		
+
 		rtp->sl_hdr.compositionTimeStampFlag = (rtp->flags & GF_RTP_NEW_AU) ? 1 : 0;
 
 		/*locate VOP start code*/
@@ -219,7 +219,7 @@ static void gf_rtp_parse_mpeg4(GF_RTPDepacketizer *rtp, GF_RTPHeader *hdr, char 
 		rtp->on_sl_packet(rtp->udta, payload + pay_start, (u32) au_size, &rtp->sl_hdr, GF_OK);
 
 		rtp->sl_hdr.compositionTimeStampFlag = 0;
-		
+
 		if (rtp->flags & GF_RTP_HAS_ISMACRYP) rtp->sl_hdr.isma_BSO += au_size;
 
 		if (au_hdr_size < rtp->sl_map.auh_min_len) break;
@@ -285,7 +285,7 @@ static void gf_rtp_parse_mpeg12_audio(GF_RTPDepacketizer *rtp, GF_RTPHeader *hdr
 		payload += rtp->sl_hdr.accessUnitLength;
 		size -= rtp->sl_hdr.accessUnitLength;
 		rtp->sl_hdr.accessUnitLength = 0;
-		
+
 		/*if fragmented there shall not be other frames in the packet*/
 		if (!rtp->sl_hdr.accessUnitStartFlag) return;
 		if (!size) break;
@@ -494,7 +494,7 @@ static void gf_rtp_parse_ttxt(GF_RTPDepacketizer *rtp, GF_RTPHeader *hdr, char *
 		if (type==1) {
 			/*flush any existing packet*/
 			gf_rtp_ttxt_flush(rtp, (u32) rtp->sl_hdr.compositionTimeStamp);
-			
+
 			/*bad ttu(1)*/
 			if (ttu_len<8) break;
 			rtp->sl_hdr.compositionTimeStamp = ts;
@@ -523,9 +523,9 @@ static void gf_rtp_parse_ttxt(GF_RTPDepacketizer *rtp, GF_RTPHeader *hdr, char *
 			sidx = gf_bs_read_u8(bs);
 			gf_bs_read_u16(bs);/*complete text sample size, ignored*/
 			txt_size = size - 10;
-			
-			/*init - 3GPP/MPEG-4 spliting is IMHO stupid: 
-				- nb frag & cur frags are not needed: rtp reordering insures packet are in order, and 
+
+			/*init - 3GPP/MPEG-4 spliting is IMHO stupid:
+				- nb frag & cur frags are not needed: rtp reordering insures packet are in order, and
 			!!!we assume fragments are sent in order!!!
 				- any other TTU suffices to indicate end of text string (modifiers or != RTP TS)
 				- replacing these 8bits field with a 16 bit absolute character offset would add error recovery
@@ -670,7 +670,7 @@ void gf_rtp_parse_h264(GF_RTPDepacketizer *rtp, GF_RTPHeader *hdr, char *payload
 		u32 offset = 1;
 		while (offset<size) {
 			Bool send = 1;
-			u32 nal_size = (u8) payload[offset]; nal_size<<=8; nal_size |= (u8) payload[offset+1]; 
+			u32 nal_size = (u8) payload[offset]; nal_size<<=8; nal_size |= (u8) payload[offset+1];
 			offset += 2;
 			if ((payload[offset] & 0x1F) == 5) {
 				rtp->sl_hdr.randomAccessPointFlag = 1;
@@ -956,7 +956,7 @@ static GF_Err payt_set_param(GF_RTPDepacketizer *rtp, char *param_name, char *pa
 		gf_bs_del(bs);
 	}
 	/*mpeg4-generic payload type items required*/
-	
+
 	/*constant size (size of all AUs) */
 	else if (!stricmp(param_name, "ConstantSize")) {
 		rtp->sl_map.ConstantSize = atoi(param_val);
@@ -969,7 +969,7 @@ static GF_Err payt_set_param(GF_RTPDepacketizer *rtp, char *param_name, char *pa
 	else if (!stricmp(param_name, "ObjectType")) {
 		rtp->sl_map.ObjectTypeIndication = atoi(param_val);
 	}
-	else if (!stricmp(param_name, "StreamType")) 
+	else if (!stricmp(param_name, "StreamType"))
 		rtp->sl_map.StreamType = atoi(param_val);
 	else if (!stricmp(param_name, "mode")) {
 		strcpy(rtp->sl_map.mode, param_val);
@@ -995,17 +995,17 @@ static GF_Err payt_set_param(GF_RTPDepacketizer *rtp, char *param_name, char *pa
 	else if (!stricmp(param_name, "AuxiliaryDataSizeLength")) rtp->sl_map.AuxiliaryDataSizeLength = atoi(param_val);
 
 	/*H264/AVC config - we only handle mode 0 and 1*/
-	else if (!stricmp(param_name, "packetization-mode")) 
+	else if (!stricmp(param_name, "packetization-mode"))
 		rtp->h264_pck_mode = 1;
 	/*AMR config*/
 	else if (!stricmp(param_name, "octet-align")) {
-		if (!stricmp(param_val, "1")) 
+		if (!stricmp(param_val, "1"))
 			rtp->flags |= GF_RTP_AMR_ALIGN;
 	} /*ISMACryp config*/
 	else if (!stricmp(param_name, "ISMACrypCryptoSuite")) {
-		if (!stricmp(param_val, "AES_CTR_128")) 
+		if (!stricmp(param_val, "AES_CTR_128"))
 			rtp->isma_scheme = GF_4CC('i','A','E','C');
-		else 
+		else
 			rtp->isma_scheme = 0;
 	}
 	else if (!stricmp(param_name, "ISMACrypSelectiveEncryption")) {
@@ -1014,16 +1014,16 @@ static GF_Err payt_set_param(GF_RTPDepacketizer *rtp, char *param_name, char *pa
 		else
 			rtp->flags &= ~GF_RTP_ISMA_SEL_ENC;
 	}
-	else if (!stricmp(param_name, "ISMACrypIVLength")) 
+	else if (!stricmp(param_name, "ISMACrypIVLength"))
 		rtp->sl_map.IV_length = atoi(param_val);
-	else if (!stricmp(param_name, "ISMACrypDeltaIVLength")) 
+	else if (!stricmp(param_name, "ISMACrypDeltaIVLength"))
 		rtp->sl_map.IV_delta_length = atoi(param_val);
-	else if (!stricmp(param_name, "ISMACrypKeyIndicatorLength")) 
+	else if (!stricmp(param_name, "ISMACrypKeyIndicatorLength"))
 		rtp->sl_map.KI_length = atoi(param_val);
 	else if (!stricmp(param_name, "ISMACrypKeyIndicatorPerAU")) {
 		if (!stricmp(param_val, "1") || !stricmp(param_val, "true"))
 			rtp->flags |= GF_RTP_ISMA_HAS_KEY_IDX;
-		else 
+		else
 			rtp->flags &= ~GF_RTP_ISMA_HAS_KEY_IDX;
 	} else if (!stricmp(param_name, "ISMACrypKey")) {
 		rtp->key = gf_strdup(param_val);
@@ -1038,7 +1038,7 @@ static GF_Err gf_rtp_payt_setup(GF_RTPDepacketizer *rtp, GF_RTPMap *map, GF_SDPM
 
 	/*reset sl map*/
 	memset(&rtp->sl_map, 0, sizeof(GP_RTPSLMap));
-	
+
 	if (!stricmp(map->payload_name, "enc-mpeg4-generic")) rtp->flags |= GF_RTP_HAS_ISMACRYP;
 
 
@@ -1360,7 +1360,7 @@ static GF_Err gf_rtp_payt_setup(GF_RTPDepacketizer *rtp, GF_RTPMap *map, GF_SDPM
 
 					b64size = (u32) strlen(nal_ptr);
 					b64_d = (char*)gf_malloc(sizeof(char)*b64size);
-					ret = gf_base64_decode(nal_ptr, b64size, b64_d, b64size); 
+					ret = gf_base64_decode(nal_ptr, b64size, b64_d, b64size);
 					b64_d[ret] = 0;
 
 					nalt = b64_d[0] & 0x1F;
@@ -1374,7 +1374,7 @@ static GF_Err gf_rtp_payt_setup(GF_RTPDepacketizer *rtp, GF_RTPMap *map, GF_SDPM
 						} else {
 							gf_list_add(avcc->pictureParameterSets, sl);
 						}
-					} 
+					}
 					gf_free(b64_d);
 
 					if (sep) {

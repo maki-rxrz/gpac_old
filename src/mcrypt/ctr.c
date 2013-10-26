@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2002 Nikos Mavroyanopoulos
- * 
- * This library is free software; you can redistribute it and/or modify it 
- * under the terms of the GNU Library General Public License as published 
- * by the Free Software Foundation; either version 2 of the License, or 
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Library General Public License as published
+ * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
@@ -66,7 +66,7 @@ GF_Err _init_mcrypt( void *buf, void *key, int lenofkey, void *IV, int size)
 
 	((CTR_BUFFER* )buf)->enc_counter = (u8 *)gf_malloc(size);
     if (((CTR_BUFFER* )buf)->enc_counter==NULL) goto freeall;
-    
+
     if (IV!=NULL) {
 	memcpy(((CTR_BUFFER* )buf)->enc_counter, IV, size);
 	memcpy(((CTR_BUFFER* )buf)->c_counter, IV, size);
@@ -112,7 +112,7 @@ void _end_mcrypt(void *buf) {
 }
 
 static GFINLINE
-void xor_stuff( CTR_BUFFER *buf, void* akey, void (*func)(void*,void*), u8* plain,  int blocksize, int xor_size) 
+void xor_stuff( CTR_BUFFER *buf, void* akey, void (*func)(void*,void*), u8* plain,  int blocksize, int xor_size)
 {
 	void (*_mcrypt_block_encrypt) (void *, void *);
 
@@ -134,7 +134,7 @@ void xor_stuff( CTR_BUFFER *buf, void* akey, void (*func)(void*,void*), u8* plai
 
 			memxor( plain, &((CTR_BUFFER* )buf)->enc_counter[((CTR_BUFFER* )buf)->c_counter_pos],
 				size);
-		
+
 			increase_counter( ((CTR_BUFFER* )buf)->c_counter, blocksize);
 
 			memcpy( ((CTR_BUFFER* )buf)->enc_counter, ((CTR_BUFFER* )buf)->c_counter, blocksize);
@@ -158,7 +158,7 @@ void xor_stuff( CTR_BUFFER *buf, void* akey, void (*func)(void*,void*), u8* plai
 			int min_size =  size < xor_size ? size: xor_size;
 
 			memxor( plain, &((CTR_BUFFER* )buf)->enc_counter[((CTR_BUFFER* )buf)->c_counter_pos],
-				min_size); 
+				min_size);
 
 			((CTR_BUFFER* )buf)->c_counter_pos += min_size;
 
@@ -176,7 +176,7 @@ void xor_stuff( CTR_BUFFER *buf, void* akey, void (*func)(void*,void*), u8* plai
 			((CTR_BUFFER* )buf)->c_counter_pos = xor_size - min_size;
 
 		}
-	
+
 	}
 	return;
 }
@@ -208,7 +208,7 @@ GF_Err _mcrypt(void * buf,void *plaintext, int len, int blocksize, void* akey, v
 		xor_stuff( (CTR_BUFFER*)buf, akey, func, plain, blocksize, modlen);
 
 	}
-	
+
 	return GF_OK;
 }
 

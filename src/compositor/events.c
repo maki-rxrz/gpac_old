@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -74,7 +74,7 @@ static void flush_text_node_edit(GF_Compositor *compositor, Bool final_flush)
 	size_t len;
 	if (!compositor->edited_text) return;
 
-    /* if this is the final editing and there is text, 
+    /* if this is the final editing and there is text,
     we need to remove the caret from the text selection buffer */
 	if (final_flush && compositor->sel_buffer_len) {
 		memmove(&compositor->sel_buffer[compositor->caret_pos], &compositor->sel_buffer[compositor->caret_pos+1], sizeof(u16)*(compositor->sel_buffer_len-compositor->caret_pos));
@@ -108,7 +108,7 @@ static void flush_text_node_edit(GF_Compositor *compositor, Bool final_flush)
 
 	gf_node_set_private(compositor->focus_highlight->node, NULL);
 
-    /* if this is the final flush, we free the selection buffer and edited text buffer 
+    /* if this is the final flush, we free the selection buffer and edited text buffer
     and signal a text content change in the focus node */
 	if (final_flush) {
 		GF_FieldInfo info;
@@ -730,7 +730,7 @@ static Bool exec_event_dom(GF_Compositor *compositor, GF_Event *event)
 TODO quick- fix for iPhone as well
 TODO clean: figure out whether we use a mouse or a touch device - if touch device, remove this test
 */
-#if !defined(_WIN32_WCE) || !defined(GPAC_ANDROID) 
+#if !defined(_WIN32_WCE) || !defined(GPAC_ANDROID)
 				if ((compositor->grab_x == X) && (compositor->grab_y == Y))
 #endif
 				{
@@ -794,7 +794,7 @@ TODO clean: figure out whether we use a mouse or a touch device - if touch devic
 		evt.detail = event->key.key_code;
 		evt.key_hw_code = event->key.hw_code;
 		target = compositor->focus_node;
-		
+
 		/*dirty hack to simulate browserback*/
 		if (event->key.key_code==GF_KEY_BACKSPACE && (event->key.flags & GF_KEY_MOD_CTRL)) {
 			event->key.key_code = GF_KEY_BROWSERBACK;
@@ -903,12 +903,12 @@ Bool gf_sc_exec_event_vrml(GF_Compositor *compositor, GF_Event *ev)
 		keynav = gf_scene_get_keynav(gf_node_get_graph(hs->sensor), hs->sensor);
 		if (keynav) gf_sc_change_key_navigator(compositor, keynav);
 
-		/*call the sensor LAST, as this may triger a destroy of the scene the sensor is in 
+		/*call the sensor LAST, as this may triger a destroy of the scene the sensor is in
 		this is only true for anchors, as other other sensors output events are queued as routes untill next pass*/
 		res += hs->OnUserEvent(hs, 1, 0, ev, compositor);
 		if ((stype == TAG_MPEG4_Anchor)
 #ifndef GPAC_DISABLE_X3D
-						|| (stype == TAG_X3D_Anchor) 
+						|| (stype == TAG_X3D_Anchor)
 #endif
 		) {
 			/*subscene with active sensor has been deleted, we cannot continue process the sensors stack*/

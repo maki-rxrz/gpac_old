@@ -41,7 +41,7 @@ LINKLIBS=-L../../bin/gcc -lgpac
 
 OBJS=osmozilla.o osmo_npapi.o
 
-SRCS := $(OBJS:.o=.cpp) 
+SRCS := $(OBJS:.o=.cpp)
 
 
 LIB=nposmozilla.$(DYN_LIB_SUFFIX)
@@ -59,7 +59,7 @@ ifeq ($(CONFIG_WIN32),yes)
 	cp "$(SRC_PATH)/applications/osmozilla/nsIOsmozilla.xpt_w32" ../../bin/gcc/nposmozilla.xpt
 	chmod +w ../../bin/gcc/nposmozilla.xpt
 else
-	$(CXX) $(SHFLAGS) $(LDFLAGS) $(OBJS) $(LINKLIBS) -o ../../bin/gcc/$@ 
+	$(CXX) $(SHFLAGS) $(LDFLAGS) $(OBJS) $(LINKLIBS) -o ../../bin/gcc/$@
 	cp "$(SRC_PATH)/applications/osmozilla/nsIOsmozilla.xpt_linux" ../../bin/gcc/nposmozilla.xpt
 	chmod +w ../../bin/gcc/nposmozilla.xpt
 endif
@@ -71,7 +71,7 @@ ifeq ($(CONFIG_WIN32),yes)
 	rm -f osmoz.o
 endif
 
-install: 
+install:
 ifeq ($(MOZILLA_DIR), local)
 ifeq ($(USER_NAME), root)
 	@echo "*** Root cannot install local mozilla plugins! ***"
@@ -101,7 +101,7 @@ endif
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

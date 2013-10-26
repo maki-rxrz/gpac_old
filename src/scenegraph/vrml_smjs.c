@@ -110,7 +110,7 @@ JSObject *gf_sg_js_global_object(JSContext *cx, GF_JSClass *__class)
 # endif
 #endif
 
-/*define this macro to force Garbage Collection after each input to JS (script initialize/shutdown and all eventIn) 
+/*define this macro to force Garbage Collection after each input to JS (script initialize/shutdown and all eventIn)
 on latest SM, GC will crash if called from a different thread than the thread creating the contex, no clue why
 
 for iOS don't force GC (better performances according to Ivica)
@@ -213,21 +213,21 @@ Bool gf_js_remove_root(JSContext *cx, void *rp, u32 type)
 	case GF_JSGC_STRING:
 #ifdef USE_FFDEV_15
 		if (!cx) JS_RemoveStringRootRT(js_rt->js_runtime, rp);
-		else 
+		else
 #endif
 			JS_RemoveStringRoot(cx, rp);
 		break;
 	case GF_JSGC_OBJECT:
 #ifdef USE_FFDEV_15
 		if (!cx) JS_RemoveObjectRootRT(js_rt->js_runtime, rp);
-		else 
+		else
 #endif
 			JS_RemoveObjectRoot(cx, rp);
 		break;
 	case GF_JSGC_VAL:
 #ifdef USE_FFDEV_15
 		if (!cx) JS_RemoveValueRootRT(js_rt->js_runtime, rp);
-		else 
+		else
 #endif
 			JS_RemoveValueRoot(cx, rp);
 		break;
@@ -372,7 +372,7 @@ void gf_sg_ecmascript_del(JSContext *ctx)
 #if (JS_VERSION>=185)
 	assert(js_rt);
 	JS_SetRuntimeThread(js_rt->js_runtime);
-	JS_SetContextThread(ctx); 
+	JS_SetContextThread(ctx);
 #endif
 #endif
 
@@ -454,10 +454,10 @@ void gf_sg_js_call_gc(JSContext *c)
 }
 
 #ifdef FORCE_GC
-void MyJSGC(JSContext *c) 
+void MyJSGC(JSContext *c)
 {
 	gf_sg_js_call_gc(c);
-  
+
 }
 #endif
 
@@ -544,7 +544,7 @@ static void script_error(JSContext *c, const char *msg, JSErrorReport *jserr)
 
 static JSBool SMJS_FUNCTION(JSPrint)
 {
-	SMJS_ARGS	
+	SMJS_ARGS
 	if (JSVAL_IS_STRING(argv[0])) {
 		char *str = SMJS_CHARS(c, argv[0]);
 		_ScriptMessage(c, str);
@@ -865,7 +865,7 @@ static JSBool SMJS_FUNCTION(addRoute)
 			f_id2 = atoi(f2+6);
 			e = gf_node_get_field(n2, f_id2, &info);
 		} else {
-			if ((n2->sgprivate->tag==TAG_MPEG4_Script) 
+			if ((n2->sgprivate->tag==TAG_MPEG4_Script)
 #ifndef GPAC_DISABLE_X3D
 				|| (n2->sgprivate->tag==TAG_X3D_Script)
 #endif
@@ -894,7 +894,7 @@ static JSBool SMJS_FUNCTION(addRoute)
 		fun_name = JS_GetFunctionName( JS_ValueToFunction(c, argv[3] ) );
 		if (fun_name && n1->sgprivate->interact && n1->sgprivate->interact->routes ) {
 			while ( (r = (GF_RouteToFunction*)gf_list_enum(n1->sgprivate->interact->routes, &i) )) {
-				if ( (r->FromNode == n1) 
+				if ( (r->FromNode == n1)
 				&& (r->FromField.fieldIndex == f_id1)
 				&& (r->ToNode == (GF_Node*)JS_GetScript(c))
 				&& !stricmp(r->ToField.name, fun_name)
@@ -950,7 +950,7 @@ static JSBool SMJS_FUNCTION(deleteRoute)
 	if (argc!=4) return JS_FALSE;
 
 	if (!JSVAL_IS_OBJECT(argv[0]) || !GF_JS_InstanceOf(c, JSVAL_TO_OBJECT(argv[0]), &js_rt->SFNodeClass, NULL) ) return JS_FALSE;
-	
+
 	if (JSVAL_IS_STRING(argv[1]) && JSVAL_IS_NULL(argv[2]) && JSVAL_IS_NULL(argv[3])) {
 		ptr = (GF_JSField *) SMJS_GET_PRIVATE(c, JSVAL_TO_OBJECT(argv[0]));
 		assert(ptr->field.fieldType==GF_SG_VRML_SFNODE);
@@ -1183,9 +1183,9 @@ void Script_FieldChanged(JSContext *c, GF_Node *parent, GF_JSField *parent_owner
 	if (!parent) return;
 
 	script_field = 0;
-	if ((parent->sgprivate->tag == TAG_MPEG4_Script) 
+	if ((parent->sgprivate->tag == TAG_MPEG4_Script)
 #ifndef GPAC_DISABLE_X3D
-		|| (parent->sgprivate->tag == TAG_X3D_Script) 
+		|| (parent->sgprivate->tag == TAG_X3D_Script)
 #endif
 		) {
 		script_field = 1;
@@ -1492,7 +1492,7 @@ locate_proto:
 		}
 		gf_node_init(new_node);
 	}
-	
+
 	SMJS_FREE(c, node_name);
 
 	obj = node_get_binding(priv, new_node, 1);
@@ -2433,8 +2433,8 @@ static JSBool SMJS_FUNCTION(rot_setAxis)
 
 	v = *(SFVec3f *) ((GF_JSField *) SMJS_GET_PRIVATE(c, JSVAL_TO_OBJECT(argv[0])))->field.far_ptr;
 
-	r->x = v.x; 	 
-	r->y = v.y; 	 
+	r->x = v.x;
+	r->y = v.y;
 	r->z = v.z;
 	Script_FieldChanged(c, NULL, ptr, NULL);
 	return JS_TRUE;
@@ -3016,8 +3016,8 @@ static JSBool SMJS_FUNCTION(MFVec3fConstructor)
 	u32 i;
 	SMJS_ARGS
 	GF_JSField *ptr;
-	SMJS_OBJ_CONSTRUCTOR(&js_rt->MFVec3fClass)	
-	
+	SMJS_OBJ_CONSTRUCTOR(&js_rt->MFVec3fClass)
+
 	ptr = NewJSField(c);
 	ptr->field.fieldType = GF_SG_VRML_MFVEC3F;
 	setup_js_array(c, obj, ptr, 0, 0);
@@ -3045,8 +3045,8 @@ static JSBool SMJS_FUNCTION(MFRotationConstructor)
 	u32 i;
 	SMJS_ARGS
 	GF_JSField *ptr;
-	SMJS_OBJ_CONSTRUCTOR(&js_rt->MFRotationClass)	
-	
+	SMJS_OBJ_CONSTRUCTOR(&js_rt->MFRotationClass)
+
 	ptr = NewJSField(c);
 	ptr->field.fieldType = GF_SG_VRML_MFROTATION;
 	setup_js_array(c, obj, ptr, 0, 0);
@@ -3825,7 +3825,7 @@ static void gf_sg_script_update_cached_object(GF_ScriptPriv *priv, JSObject *obj
 			/*1: find all existing objs for each node*/
 			JS_GetArrayLength(priv->js_ctx, jsf->js_list, &count);
 
-			/*this may introduce bugs when a child is being replaced through an update command, but it is way 
+			/*this may introduce bugs when a child is being replaced through an update command, but it is way
 			too costly to handle in script*/
 			if (gf_node_list_get_count(f)==count) return;
 
@@ -4263,7 +4263,7 @@ static void JS_PreDestroy(GF_Node *node)
 
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_SCRIPT, ("[Script] Destroying script node %s", gf_node_get_log_name(node) ));
 
-	/*"shutdown" is no longer supported, as it is typically called when one of a parent node is destroyed through 
+	/*"shutdown" is no longer supported, as it is typically called when one of a parent node is destroyed through
 	a GC call. Calling JS_LookupProperty or JS_CallFunctionValue when GC is running will crash SpiderMonkey*/
 #if 0
 	if (JS_LookupProperty(priv->js_ctx, priv->js_obj, "shutdown", &fval))
@@ -4272,7 +4272,7 @@ static void JS_PreDestroy(GF_Node *node)
 #endif
 
 	gf_sg_lock_javascript(priv->js_ctx, 1);
-	
+
 	if (priv->event) gf_js_remove_root(priv->js_ctx, &priv->event, GF_JSGC_OBJECT);
 
 	/*unprotect all cached objects from GC*/
@@ -4451,7 +4451,7 @@ static Bool vrml_js_load_script(M_Script *script, char *file, Bool primary_scrip
 	if (success && primary_script
 		&& JS_LookupProperty(priv->js_ctx, priv->js_obj, "initialize", &fval) && !JSVAL_IS_VOID(fval)
 		&& JS_GetPropertyAttributes(priv->js_ctx, priv->js_obj, "initialize", &attr, &found) && found == JS_TRUE) {
-		
+
 			JS_CallFunctionValue(priv->js_ctx, priv->js_obj, fval, 0, NULL, &rval);
 			gf_js_vrml_flush_event_out((GF_Node *)script, priv);
 	}
@@ -4605,7 +4605,7 @@ static void JSScript_LoadVRML(GF_Node *node)
 		/*call initialize if present*/
 		if (JS_LookupProperty(priv->js_ctx, priv->js_obj, "initialize", &fval) && !JSVAL_IS_VOID(fval)
 			&& JS_GetPropertyAttributes(priv->js_ctx, priv->js_obj, "initialize", &attr, &found) && found == JS_TRUE)
-			
+
 			JS_CallFunctionValue(priv->js_ctx, priv->js_obj, fval, 0, NULL, &rval);
 			gf_js_vrml_flush_event_out(node, priv);
 	}
@@ -4666,16 +4666,16 @@ static void JSScript_NodeModified(GF_SceneGraph *sg, GF_Node *node, GF_FieldInfo
 
 	if (!info) {
 		/*handle DOM case*/
-		if ((node->sgprivate->tag>=GF_NODE_FIRST_PARENT_NODE_TAG) 
-			&& node->sgprivate->interact 
-			&& node->sgprivate->interact->js_binding 
+		if ((node->sgprivate->tag>=GF_NODE_FIRST_PARENT_NODE_TAG)
+			&& node->sgprivate->interact
+			&& node->sgprivate->interact->js_binding
 			&& node->sgprivate->interact->js_binding->node)
 		{
 
 			if (gf_list_del_item(sg->objects, node->sgprivate->interact->js_binding->node)>=0) {
 #ifndef GPAC_DISABLE_SVG
 				gf_js_remove_root(sg->svg_js->js_ctx, &(node->sgprivate->interact->js_binding->node), GF_JSGC_OBJECT);
-				if (sg->svg_js->in_script) 
+				if (sg->svg_js->in_script)
 					sg->svg_js->force_gc = 1;
 				else
 				{

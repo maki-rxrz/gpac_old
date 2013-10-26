@@ -114,7 +114,7 @@ static GF_Err avc_import_ffextradata(const u8 *extradata, const u64 extradata_si
 			gf_free(buffer);
 			return GF_BAD_PARAM;
 		}
-		
+
 		idx = gf_media_avc_read_pps(buffer, nal_size, &avc);
 		if (idx < 0) {
 			gf_bs_del(bs);
@@ -176,7 +176,7 @@ int dc_gpac_video_moov_create(VideoOutputFile *video_output_file, char *filename
 	track = gf_isom_new_track(video_output_file->isof, 1, GF_ISOM_MEDIA_VISUAL, video_codec_ctx->time_base.den);
 
 	video_output_file->timescale = video_codec_ctx->time_base.den;
-	if (!video_output_file->frame_dur) 
+	if (!video_output_file->frame_dur)
 		video_output_file->frame_dur = video_codec_ctx->time_base.num;
 
 	if (!track) {
@@ -413,7 +413,7 @@ int dc_ffmpeg_video_muxer_open(VideoOutputFile *video_output_file, char *filenam
 	video_stream->codec->height = video_codec_ctx->height; //video_output_file->video_data_conf->height;
 
 	video_stream->codec->time_base = video_codec_ctx->time_base;
-	
+
 	video_stream->codec->pix_fmt = PIX_FMT_YUV420P;
 	video_stream->codec->gop_size = video_codec_ctx->time_base.den; //video_output_file->video_data_conf->framerate;
 

@@ -1,4 +1,4 @@
-@echo off 
+@echo off
 set OLDDIR=%CD%
 cd /d %~dp0
 REM ============================================
@@ -17,11 +17,11 @@ echo:
 REM ============================================
 echo Check NSIS is in your PATH
 REM ============================================
-if "%PROCESSOR_ARCHITECTURE%" == "AMD64" ( 
-    SET "PRGROOT=%programfiles(x86)%" 
-) 
-if "%PROCESSOR_ARCHITECTURE%" == "x86" ( 
-    SET PRGROOT=%programfiles% 
+if "%PROCESSOR_ARCHITECTURE%" == "AMD64" (
+    SET "PRGROOT=%programfiles(x86)%"
+)
+if "%PROCESSOR_ARCHITECTURE%" == "x86" (
+    SET PRGROOT=%programfiles%
 )
 
 set NSIS_EXEC="%PRGROOT%\NSIS\makensis.exe"
@@ -87,7 +87,7 @@ echo   SVN revision "%VarRevisionSVN%" is not a simple number, you may have loca
 echo:
 echo  *** ABORTING: CHECK ERROR MESSAGES ABOVE ***
 
-REM LeaveBatchError 
+REM LeaveBatchError
 set VarRevisionSVN=
 set VarRevisionBuild=
 cd /d %OLDDIR%

@@ -1,7 +1,7 @@
 #ifndef _V4STUDIO_TREE_H
 #define _V4STUDIO_TREE_H
 
-#include "safe_include.h" 
+#include "safe_include.h"
 #include <gpac/scenegraph.h>
 #include "V4FieldList.h"
 
@@ -50,8 +50,8 @@ public:
 	V4StudioTree(wxWindow *parent, wxSize size, V4FieldList *fieldView);
 
 	void CreateImageList(int size = 16);
-	
-	void Refresh(GF_Node * node); 
+
+	void Refresh(GF_Node * node);
 
 	void OnSelChanged(wxTreeEvent& event);
 	void OnItemRightClick(wxTreeEvent &event);

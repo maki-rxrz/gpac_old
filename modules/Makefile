@@ -12,7 +12,7 @@ endif
 endif
 
 ifeq ($(DISABLE_MEDIA_IMPORT), no)
-PLUGDIRS+=mpegts_in 
+PLUGDIRS+=mpegts_in
 endif
 
 ifeq ($(DISABLE_SMGR), no)
@@ -154,14 +154,14 @@ endif
 
 all: plugs
 
-plugs:	
-	set -e; for i in $(PLUGDIRS) ; do $(MAKE) -C $$i all; done 
+plugs:
+	set -e; for i in $(PLUGDIRS) ; do $(MAKE) -C $$i all; done
 
 dep:
-	set -e; for i in $(PLUGDIRS) ; do $(MAKE) -C $$i dep; done 
+	set -e; for i in $(PLUGDIRS) ; do $(MAKE) -C $$i dep; done
 
 clean:
-	set -e; for i in $(PLUGDIRS) ; do $(MAKE) -C $$i clean; done 
+	set -e; for i in $(PLUGDIRS) ; do $(MAKE) -C $$i clean; done
 
-distclean:	
-	set -e; for i in $(PLUGDIRS) ; do $(MAKE) -C $$i distclean; done 
+distclean:
+	set -e; for i in $(PLUGDIRS) ; do $(MAKE) -C $$i distclean; done

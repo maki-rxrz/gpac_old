@@ -47,7 +47,7 @@ class V4NodePools {
 
     // tells if nodes as field of the given type
     bool NodeHasField(GF_Node * node, u32 fieldType);
-    
+
     // returns the total number of nodes created for that type of node
     u32 GetCount(const u32 tag);
 

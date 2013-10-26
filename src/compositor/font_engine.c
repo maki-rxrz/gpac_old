@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
- *			
- *			Authors: Jean Le Feuvre 
+ *
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -167,7 +167,7 @@ GF_Err gf_font_manager_register_font(GF_FontManager *fm, GF_Font *font)
 GF_Err gf_font_manager_unregister_font(GF_FontManager *fm, GF_Font *font)
 {
 	GF_Font *prev_font, *a_font;
-	
+
 	prev_font = NULL;
 	a_font = fm->font;
 	while (a_font) {
@@ -219,7 +219,7 @@ GF_Font *gf_font_manager_set_font_ex(GF_FontManager *fm, char **alt_fonts, u32 n
 			if (fm->wait_font_load && font->not_loaded && !check_only && !stricmp(font->name, font_name)) {
 				GF_Font *a_font = NULL;
 				if (font->get_alias) a_font = font->get_alias(font->udta);
-				if (!a_font || a_font->not_loaded) 
+				if (!a_font || a_font->not_loaded)
 					return font;
 			}
 			if ((check_only || !font->not_loaded) && font->name && !stricmp(font->name, font_name)) {
@@ -230,7 +230,7 @@ GF_Font *gf_font_manager_set_font_ex(GF_FontManager *fm, char **alt_fonts, u32 n
 				Bool ft_has_weight;
 
 				if (check_only) return font;
-				
+
 				ft_has_weight = (font->styles & GF_FONT_WEIGHT_MASK) ? 1 : 0;
 				if (font->styles == styles) {
 					the_font = font;
@@ -288,7 +288,7 @@ GF_Font *gf_font_manager_set_font_ex(GF_FontManager *fm, char **alt_fonts, u32 n
 				fm->reader->get_font_info(fm->reader, &the_font->name, &the_font->em_size, &the_font->ascent, &the_font->descent, &the_font->underline, &the_font->line_spacing, &the_font->max_advance_h, &the_font->max_advance_v);
 				the_font->styles = styles;
 				if (!the_font->name) the_font->name = gf_strdup(font_name);
-			
+
 				if (fm->font) {
 					font = fm->font;
 					while (font->next) font = font->next;
@@ -317,7 +317,7 @@ GF_Font *gf_font_manager_set_font_ex(GF_FontManager *fm, char **alt_fonts, u32 n
 		the_font = fm->default_font;
 	}
 	/*embeded font*/
-	if (the_font && !the_font->get_glyphs) 
+	if (the_font && !the_font->get_glyphs)
 		fm->reader->set_font(fm->reader, the_font->name, the_font->styles);
 
 	return the_font;
@@ -405,7 +405,7 @@ GF_TextSpan *gf_font_manager_create_span(GF_FontManager *fm, GF_Font *font, char
 		fm->id_buffer_size = len;
 		fm->id_buffer = gf_realloc(fm->id_buffer, sizeof(u32) * len);
 		if (!fm->id_buffer) return NULL;
-	
+
 		if (font->get_glyphs)
 			e = font->get_glyphs(font->udta, text, fm->id_buffer, &len, xml_lang, &is_rtl);
 		else
@@ -416,7 +416,7 @@ GF_TextSpan *gf_font_manager_create_span(GF_FontManager *fm, GF_Font *font, char
 	GF_SAFEALLOC(span, GF_TextSpan);
 	span->font = font;
 	span->font_size = font_size;
-	if (font->em_size) 
+	if (font->em_size)
 		span->font_scale = font_size / font->em_size;
 	span->x_scale = span->y_scale = FIX_ONE;
 //	span->lang = xml_lang;
@@ -436,12 +436,12 @@ GF_TextSpan *gf_font_manager_create_span(GF_FontManager *fm, GF_Font *font, char
 		span->rot = gf_malloc(sizeof(Fixed)*len);
 		memset(span->rot, 0, sizeof(Fixed)*len);
 	}
-	
+
 	for (i=0; i<len; i++) {
 		span->glyphs[i] = gf_font_get_glyph(fm, font, fm->id_buffer[i]);
 	}
 	span->user = user;
-	if (span->font->spans) 
+	if (span->font->spans)
 		gf_list_add(font->spans, span);
 	if (is_rtl) span->flags |= GF_TEXT_SPAN_RIGHT_TO_LEFT;
 	return span;
@@ -449,7 +449,7 @@ GF_TextSpan *gf_font_manager_create_span(GF_FontManager *fm, GF_Font *font, char
 
 
 
-typedef struct _span_internal 
+typedef struct _span_internal
 {
 	/*zoom when texture was computed*/
 	Fixed last_zoom;
@@ -542,7 +542,7 @@ void gf_font_manager_refresh_span_bounds(GF_TextSpan *span)
 		if (span->dy) {
 			if (span->dy[i] - descent < min_y) min_y = span->dy[i] - descent;
 			if (span->dy[i] + ascent > max_y) max_y = span->dy[i] + ascent;
-		} 
+		}
 		else if (span->glyphs[i]) {
 			Fixed size = span->glyphs[i]->height * span->font_scale;
 			if (size > max_y-min_y) max_y = size + min_y;
@@ -694,7 +694,7 @@ static Bool span_setup_texture(GF_Compositor *compositor, GF_TextSpan *span, Boo
 	}
 	if ((gf_mulfix(scale, bounds.width)>max) || (gf_mulfix(scale, bounds.height)>max)) {
 		scale = MIN(gf_divfix(max, bounds.width), gf_divfix(max, bounds.height));
-	} 
+	}
 	else if ((gf_mulfix(scale, bounds.width)<min) || (gf_mulfix(scale, bounds.height)<min)) {
 		scale = MAX(gf_divfix(min, bounds.width), gf_divfix(min, bounds.height));
 	}
@@ -759,7 +759,7 @@ static Bool span_setup_texture(GF_Compositor *compositor, GF_TextSpan *span, Boo
 	brush = raster->stencil_new(raster, GF_STENCIL_SOLID);
 	raster->stencil_set_brush_color(brush, 0xFF000000);
 
-	cx = bounds.x + bounds.width/2; 
+	cx = bounds.x + bounds.width/2;
 	cy = bounds.y - bounds.height/2;
 
 	gf_mx2d_init(mx);
@@ -865,7 +865,7 @@ void gf_font_spans_draw_3d(GF_List *spans, GF_TraverseState *tr_state, DrawAspec
 
 	if (text_hl && (fill_2d || !asp) ) {
 		/*reverse video: highlighting uses the text color, and text color is inverted (except alpha channel)
-		the ideal impl would be to use the background color for the text, but since the text may be 
+		the ideal impl would be to use the background color for the text, but since the text may be
 		displayed over anything non uniform this would require clipping the highlight rect with the text
 		which is too onerous (and not supported anyway) */
 		if (text_hl == 0x00FFFFFF) {
@@ -883,7 +883,7 @@ void gf_font_spans_draw_3d(GF_List *spans, GF_TraverseState *tr_state, DrawAspec
 					((M_Material *) ((M_Appearance *)  tr_state->appear)->material)->diffuseColor = rc;
 					visual_3d_setup_appearance(tr_state);
 					((M_Material *) ((M_Appearance *)  tr_state->appear)->material)->diffuseColor = c;
-				} else 
+				} else
 #endif /*GPAC_DISABLE_VRML*/
 				{
 					hl_color.red = hl_color.green = hl_color.blue = 0;
@@ -932,7 +932,7 @@ void gf_font_spans_draw_3d(GF_List *spans, GF_TraverseState *tr_state, DrawAspec
 		while ((span = (GF_TextSpan *)gf_list_enum(spans, &i))) {
 			if (text_hl) {
 				visual_3d_fill_rect(tr_state->visual, span->bounds, hl_color);
-				if (fill_2d) 
+				if (fill_2d)
 					visual_3d_set_material_2d_argb(tr_state->visual, asp->fill_color);
 				else
 					visual_3d_setup_appearance(tr_state);
@@ -1068,7 +1068,7 @@ void gf_font_underline_span(GF_TraverseState *tr_state, GF_TextSpan *span, Drawa
 	gf_mx2d_copy(mx, ctx->transform);
 	sx = gf_mulfix(span->font_scale, span->x_scale);
 	diff = span->font_scale * span->font->underline;
-	if (span->flags & GF_TEXT_SPAN_FLIP) 
+	if (span->flags & GF_TEXT_SPAN_FLIP)
 		diff = sx * (span->font->descent - span->font->underline);
 	else
 		diff = sx * (- span->font->ascent + span->font->underline);
@@ -1092,7 +1092,7 @@ void gf_font_underline_span(GF_TraverseState *tr_state, GF_TextSpan *span, Drawa
 }
 
 #if 0
-static u32 col_reverse_video(u32 col) 
+static u32 col_reverse_video(u32 col)
 {
 	u32 a, r, g, b;
 	a = GF_COL_A(col);
@@ -1108,7 +1108,7 @@ static GF_Rect font_get_sel_rect(GF_TraverseState *tr_state)
 	GF_Vec s, e;
 	GF_Rect rc;
 	GF_Compositor *compositor = tr_state->visual->compositor;
-	
+
 	e.x = compositor->end_sel.x;
 	e.y = compositor->end_sel.y;
 	e.z = 0;
@@ -1172,7 +1172,7 @@ static void gf_font_spans_select(GF_TextSpan *span, GF_TraverseState *tr_state, 
 	}
 
 	color = compositor->text_sel_color;
-	
+
 	for (i=0; i<span->nb_glyphs; i++) {
 		GF_Rect g_rc;
 		Bool end_of_line = 0;
@@ -1184,7 +1184,7 @@ static void gf_font_spans_select(GF_TextSpan *span, GF_TraverseState *tr_state, 
 		if (dx + advance/2 < rc->x) {
 			dx += advance;
 			continue;
-		} 
+		}
 
 		g_rc.height = ascent-descent;
 
@@ -1231,8 +1231,8 @@ static void gf_font_spans_select(GF_TextSpan *span, GF_TraverseState *tr_state, 
 		if (dy < rc.y-rc.height) {
 			if (!span->dx) break;
 			continue;
-		} 
-*/				
+		}
+*/
 		has_selection = 1;
 		if (ctx) {
 			g_rc.width+=2;
@@ -1287,7 +1287,7 @@ void gf_font_spans_draw_2d(GF_List *spans, GF_TraverseState *tr_state, u32 hl_co
 	GF_TextSpan *span;
 	DrawableContext *ctx = tr_state->ctx;
 	GF_Rect rc;
-	
+
 	use_texture_text = 0;
 	if (force_texture_text || (compositor->texture_text_mode==GF_TEXTURE_TEXT_ALWAYS) ) {
 		use_texture_text = !ctx->aspect.fill_texture && !ctx->aspect.pen_props.width;
@@ -1296,13 +1296,13 @@ void gf_font_spans_draw_2d(GF_List *spans, GF_TraverseState *tr_state, u32 hl_co
 	is_rv = 0;
 	if (hl_color) {
 		/*reverse video: highlighting uses the text color, and text color is inverted (except alpha channel)
-		the ideal impl would be to use the background color for the text, but since the text may be 
+		the ideal impl would be to use the background color for the text, but since the text may be
 		displayed over anything non uniform this would require clipping the highlight rect with the text
 		which is too onerous (and not supported anyway) */
 		if (hl_color==0x00FFFFFF) {
 			u32 a, r, g, b;
 			hl_color = tr_state->ctx->aspect.fill_color;
-			
+
 			a = GF_COL_A(tr_state->ctx->aspect.fill_color);
 			if (a) {
 				r = GF_COL_R(tr_state->ctx->aspect.fill_color);
@@ -1321,7 +1321,7 @@ void gf_font_spans_draw_2d(GF_List *spans, GF_TraverseState *tr_state, u32 hl_co
 		span = (GF_TextSpan *)gf_list_get(spans, i);
 		if (compositor->text_selection)
 			gf_font_spans_select(span, tr_state, ctx, (i+1<count) ? 1 : 0, (i==0)?1:0, &rc);
-		else if (hl_color) 
+		else if (hl_color)
 			visual_2d_fill_rect(tr_state->visual, ctx, &span->bounds, hl_color, 0, tr_state);
 
 		if (use_texture_text && span_setup_texture(compositor, span, 0, tr_state)) {
@@ -1352,7 +1352,7 @@ void gf_font_spans_pick(GF_Node *node, GF_List *spans, GF_TraverseState *tr_stat
 		if (compositor->text_selection != tr_state->text_parent) return;
 		if (compositor->store_text_state==GF_SC_TSEL_FROZEN) return;
 	}
-	
+
 	/*TODO: pick the real glyph and not just the bounds of the text span*/
 	count = gf_list_count(spans);
 
@@ -1370,7 +1370,7 @@ void gf_font_spans_pick(GF_Node *node, GF_List *spans, GF_TraverseState *tr_stat
 
 		x = local_pt.x;
 		y = local_pt.y;
-	} else 
+	} else
 #endif
 	{
 		gf_mx2d_copy(inv_2d, tr_state->transform);
@@ -1392,8 +1392,8 @@ void gf_font_spans_pick(GF_Node *node, GF_List *spans, GF_TraverseState *tr_stat
 		span = (GF_TextSpan*)gf_list_get(spans, i);
 
 		if ((x>=span->bounds.x)
-			&& (y<=span->bounds.y) 
-			&& (x<=span->bounds.x+span->bounds.width) 
+			&& (y<=span->bounds.y)
+			&& (x<=span->bounds.x+span->bounds.width)
 			&& (y>=span->bounds.y-span->bounds.height)) {
 		} else {
 			continue;
@@ -1461,7 +1461,7 @@ picked:
 	if (tr_state->visual->type_3d) {
 		gf_mx_copy(compositor->hit_world_to_local, tr_state->model_matrix);
 		gf_mx_copy(compositor->hit_local_to_world, inv_mx);
-	} else 
+	} else
 #endif
 	{
 		gf_mx_from_mx2d(&compositor->hit_world_to_local, &tr_state->transform);
@@ -1492,7 +1492,7 @@ picked:
 #ifndef GPAC_DISABLE_VRML
 	if (compositor_is_composite_texture(tr_state->appear)) {
 		compositor->hit_appear = tr_state->appear;
-	} else 
+	} else
 #endif /*GPAC_DISABLE_VRML*/
 	{
 		compositor->hit_appear = NULL;

@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -135,23 +135,23 @@ enum {
 	GF_EVENT_MEDIA_SETUP_DONE,	/*not HTML5 but should be :)*/
 	GF_EVENT_MEDIA_LOAD_START,
 	GF_EVENT_MEDIA_LOAD_DONE,	/*not HTML5 but should be :)*/
-	GF_EVENT_MEDIA_PROGRESS, 
-	GF_EVENT_MEDIA_SUSPEND, 
-	GF_EVENT_MEDIA_EMPTIED, 
-	GF_EVENT_MEDIA_STALLED, 
-	GF_EVENT_MEDIA_LOADED_METADATA, 
-	GF_EVENT_MEDIA_LODADED_DATA, 
-	GF_EVENT_MEDIA_CANPLAY, 
-	GF_EVENT_MEDIA_CANPLAYTHROUGH, 
-	GF_EVENT_MEDIA_PLAYING, 
-	GF_EVENT_MEDIA_WAITING, 
-	GF_EVENT_MEDIA_SEEKING, 
-	GF_EVENT_MEDIA_SEEKED, 
-	GF_EVENT_MEDIA_ENDED, 
-	GF_EVENT_MEDIA_DURATION_CHANGED, 
-	GF_EVENT_MEDIA_TIME_UPDATE, 
-	GF_EVENT_MEDIA_RATECHANGE, 
-	GF_EVENT_MEDIA_VOLUME_CHANGED, 
+	GF_EVENT_MEDIA_PROGRESS,
+	GF_EVENT_MEDIA_SUSPEND,
+	GF_EVENT_MEDIA_EMPTIED,
+	GF_EVENT_MEDIA_STALLED,
+	GF_EVENT_MEDIA_LOADED_METADATA,
+	GF_EVENT_MEDIA_LODADED_DATA,
+	GF_EVENT_MEDIA_CANPLAY,
+	GF_EVENT_MEDIA_CANPLAYTHROUGH,
+	GF_EVENT_MEDIA_PLAYING,
+	GF_EVENT_MEDIA_WAITING,
+	GF_EVENT_MEDIA_SEEKING,
+	GF_EVENT_MEDIA_SEEKED,
+	GF_EVENT_MEDIA_ENDED,
+	GF_EVENT_MEDIA_DURATION_CHANGED,
+	GF_EVENT_MEDIA_TIME_UPDATE,
+	GF_EVENT_MEDIA_RATECHANGE,
+	GF_EVENT_MEDIA_VOLUME_CHANGED,
 
 	GF_EVENT_HTML_MSE_SOURCE_OPEN,
 	GF_EVENT_HTML_MSE_SOURCE_ENDED,
@@ -425,7 +425,7 @@ enum {
 	GF_KEY_PIPE, /*"U+007C"    The Vertical Line (Vertical Bar, Pipe) key (|).*/
 	GF_KEY_RIGHTCURLYBRACKET, /*"U+007D"    The Right Curly Bracket (Closing Curly Bracket, Closing Brace, Brace Right) key (}).*/
 	GF_KEY_DEL, /*"U+007F"    The Delete (Del) Key.*/
-	GF_KEY_INVERTEXCLAMATION, /*"U+00A1"    The Inverted Exclamation Mark key (ÔøΩ).*/
+	GF_KEY_INVERTEXCLAMATION, /*"U+00A1"    The Inverted Exclamation Mark key (ÅEΩ).*/
 	GF_KEY_DEADGRAVE, /*"U+0300"    The Combining Grave Accent (Greek Varia, Dead Grave) key.*/
 	GF_KEY_DEADEACUTE, /*"U+0301"    The Combining Acute Accent (Stress Mark, Greek Oxia, Tonos, Dead Eacute) key.*/
 	GF_KEY_DEADCIRCUM, /*"U+0302"    The Combining Circumflex Accent (Hat, Dead Circumflex) key.*/
@@ -440,7 +440,7 @@ enum {
 	GF_KEY_DEADCEDILLA, /*"U+0327"    The Combining Cedilla (Dead Cedilla) key.*/
 	GF_KEY_DEADOGONEK, /*"U+0328"    The Combining Ogonek (Nasal Hook, Dead Ogonek) key.*/
 	GF_KEY_DEADIOTA, /*"U+0345"    The Combining Greek Ypogegrammeni (Greek Non-Spacing Iota Below, Iota Subscript, Dead Iota) key.*/
-	GF_KEY_EURO, /*"U+20AC"    The Euro Currency Sign key (ÔøΩ).*/
+	GF_KEY_EURO, /*"U+20AC"    The Euro Currency Sign key (ÅEΩ).*/
 	GF_KEY_DEADVOICESOUND, /*"U+3099"    The Combining Katakana-Hiragana Voiced Sound Mark (Dead Voiced Sound) key.*/
 	GF_KEY_DEADSEMIVOICESOUND, /*"U+309A"    The Combining Katakana-Hiragana Semi-Voiced Sound Mark (Dead Semivoiced Sound) key. */
 	/* STB */

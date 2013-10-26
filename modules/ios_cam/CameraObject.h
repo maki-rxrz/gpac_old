@@ -35,16 +35,16 @@
     //    AVCaptureDevice *device;
     AVCaptureDeviceInput *input;
     AVCaptureVideoDataOutput *output;
-    
+
     int desiredWidth;
     int desiredHeight;
     int desiredColor;
-    
+
     int m_width;
     int m_height;
     int m_color;
     int m_stride;
-    
+
     GetPixelsCallback *callback;
 }
 

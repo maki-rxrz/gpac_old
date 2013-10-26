@@ -57,7 +57,7 @@ int dc_str_to_resolution(char *str, int *width, int *height)
 #define DEFAULT_AUDIO_CODEC      "mp2"
 
 static void dc_create_configuration(CmdData *cmd_data)
-{	
+{
 	u32 i;
 	GF_Config *conf = cmd_data->conf;
 	u32 sec_count = gf_cfg_get_section_count(conf);
@@ -67,7 +67,7 @@ static void dc_create_configuration(CmdData *cmd_data)
 		sec_count = gf_cfg_get_section_count(conf);
 	}
 	for (i=0; i<sec_count; i++) {
-		char value[GF_MAX_PATH];		
+		char value[GF_MAX_PATH];
 		const char *section_name = gf_cfg_get_section_name(conf, i);
 		const char *section_type = gf_cfg_get_key(conf, section_name, "type");
 
@@ -78,32 +78,32 @@ static void dc_create_configuration(CmdData *cmd_data)
 				snprintf(value, sizeof(value), "%d", cmd_data->video_data_conf.bitrate);
 				gf_cfg_set_key(conf, section_name, "bitrate", value);
 			}
-		
+
 			if (!gf_cfg_get_key(conf, section_name, "framerate")) {
 				if (cmd_data->video_data_conf.framerate == -1)
 					cmd_data->video_data_conf.framerate = DEFAULT_VIDEO_FRAMERATE;
 				snprintf(value, sizeof(value), "%d", cmd_data->video_data_conf.framerate);
 				gf_cfg_set_key(conf, section_name, "framerate", value);
 			}
-		
+
 			if (!gf_cfg_get_key(conf, section_name, "width")) {
 				if (cmd_data->video_data_conf.width == -1)
 					cmd_data->video_data_conf.width = DEFAULT_VIDEO_WIDTH;
 				snprintf(value, sizeof(value), "%d", cmd_data->video_data_conf.width);
 				gf_cfg_set_key(conf, section_name, "width", value);
 			}
-		
+
 			if (!gf_cfg_get_key(conf, section_name, "height")) {
 				if (cmd_data->video_data_conf.height == -1)
 					cmd_data->video_data_conf.height = DEFAULT_VIDEO_HEIGHT;
 				snprintf(value, sizeof(value), "%d", cmd_data->video_data_conf.height);
 				gf_cfg_set_key(conf, section_name, "height", value);
 			}
-			
+
 			if (!gf_cfg_get_key(conf, section_name, "codec"))
 				gf_cfg_set_key(conf, section_name, "codec", DEFAULT_VIDEO_CODEC);
 		}
-		
+
 		if (strcmp(section_type, "audio") == 0) {
 			if (!gf_cfg_get_key(conf, section_name, "bitrate")) {
 				if (cmd_data->audio_data_conf.bitrate == -1)
@@ -111,21 +111,21 @@ static void dc_create_configuration(CmdData *cmd_data)
 				snprintf(value, sizeof(value), "%d", cmd_data->audio_data_conf.bitrate);
 				gf_cfg_set_key(conf, section_name, "bitrate", value);
 			}
-			
+
 			if (!gf_cfg_get_key(conf, section_name, "samplerate")) {
 				if (cmd_data->audio_data_conf.samplerate == -1)
 					cmd_data->audio_data_conf.samplerate = DEFAULT_AUDIO_SAMPLERATE;
 				snprintf(value, sizeof(value), "%d", cmd_data->audio_data_conf.samplerate);
 				gf_cfg_set_key(conf, section_name, "samplerate", value);
 			}
-			
+
 			if (!gf_cfg_get_key(conf, section_name, "channels")) {
 				if (cmd_data->audio_data_conf.channels == -1)
 					cmd_data->audio_data_conf.channels = DEFAULT_AUDIO_CHANNELS;
 				snprintf(value, sizeof(value), "%d", cmd_data->audio_data_conf.channels);
 				gf_cfg_set_key(conf, section_name, "channels", value);
 			}
-			
+
 			if (!gf_cfg_get_key(conf, section_name, "codec"))
 				gf_cfg_set_key(conf, section_name, "codec", DEFAULT_AUDIO_CODEC);
 		}
@@ -849,7 +849,7 @@ int dc_parse_command(int argc, char **argv, CmdData *cmd_data)
 	}
 	fprintf(stdout, "\33[0m");
 //	fflush(stdout);
-		
+
 	if (!cmd_data->conf) {
 		cmd_data->conf = gf_cfg_force_new(NULL, "dashcast.conf");
 		dc_create_configuration(cmd_data);

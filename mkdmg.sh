@@ -76,10 +76,10 @@ cd $cur_dir
 full_version=$version
 if [ "$rev" != "" ]
 then
-	full_version="$full_version-r$rev"
+  full_version="$full_version-r$rev"
 else
-	#if no revision can be extracted from SVN, use date
-   	$rev = $(date +%Y%m%d)
+  #if no revision can be extracted from SVN, use date
+  $rev = $(date +%Y%m%d)
 fi
 
 sed 's/<string>.*<\/string><!-- VERSION_REV_REPLACE -->/<string>'"$version"'<\/string>/' tmpdmg/Osmo4.app/Contents/Info.plist > tmpdmg/Osmo4.app/Contents/Info.plist.new && sed 's/<string>.*<\/string><!-- BUILD_REV_REPLACE -->/<string>'"$rev"'<\/string>/' tmpdmg/Osmo4.app/Contents/Info.plist.new > tmpdmg/Osmo4.app/Contents/Info.plist && rm tmpdmg/Osmo4.app/Contents/Info.plist.new

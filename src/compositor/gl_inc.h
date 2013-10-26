@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -109,18 +109,18 @@ extern proc_ ## funname funname;	\
 //no extensions with OpenGL ES
 #elif defined(WIN32) || defined (GPAC_CONFIG_WIN32)
 #define LOAD_GL_FUNCS
-#define GET_GLFUN(funname) funname = (proc_ ## funname) wglGetProcAddress(#funname) 
+#define GET_GLFUN(funname) funname = (proc_ ## funname) wglGetProcAddress(#funname)
 #elif defined(CONFIG_DARWIN_GL)
 extern void (*glutGetProcAddress(const GLubyte *procname))( void );
-#define GET_GLFUN(funname) funname = (proc_ ## funname) glutGetProcAddress(#funname)  
+#define GET_GLFUN(funname) funname = (proc_ ## funname) glutGetProcAddress(#funname)
 #else
 #define LOAD_GL_FUNCS
 extern void (*glXGetProcAddress(const GLubyte *procname))( void );
-#define GET_GLFUN(funname) funname = (proc_ ## funname) glXGetProcAddress(#funname) 
+#define GET_GLFUN(funname) funname = (proc_ ## funname) glXGetProcAddress(#funname)
 #endif
 
 
-#if !defined(GPAC_USE_OGL_ES) 
+#if !defined(GPAC_USE_OGL_ES)
 
 /*redefine all ext needed*/
 
@@ -466,7 +466,7 @@ GLDECL(void, glUniformMatrix4x3fv, (GLint location, GLsizei count, GLboolean tra
 
 #endif //GL_VERSION_2_0
 
-#endif //GPAC_USE_OGL_ES 
+#endif //GPAC_USE_OGL_ES
 
 #endif	/*GPAC_DISABLE_3D*/
 

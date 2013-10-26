@@ -11,19 +11,19 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
  *	fixed-point trigo routines taken from freetype
- *		Copyright 1996-2001, 2002, 2004 by                                   
+ *		Copyright 1996-2001, 2002, 2004 by
  *		David Turner, Robert Wilhelm, and Werner Lemberg.
  *	License: FTL or GPL
  *
@@ -92,7 +92,7 @@ static GFINLINE s32 gf_trig_prenorm(GF_Point2D *vec)
 
       vec->x = x << shift;
       vec->y = y << shift;
-    }    
+    }
 	else if ( z > ( 1L << 28 ) ) {
 		do {
 			shift++;
@@ -165,7 +165,7 @@ static GFINLINE void gf_trig_pseudo_polarize(GF_Point2D *vec)
 	while ( ++i < GF_TRIG_MAX_ITERS );
 
 	/* round theta */
-	if ( theta >= 0 ) 
+	if ( theta >= 0 )
 		theta = GF_PAD_ROUND( theta, 32 );
 	else
 		theta = - GF_PAD_ROUND( -theta, 32 );
@@ -473,10 +473,10 @@ static void gf_v2d_rotate(GF_Point2D *vec, Fixed angle)
 {
     s32 shift;
     GF_Point2D v;
-    
+
 	v.x   = vec->x;
     v.y   = vec->y;
-	
+
     if ( angle && ( v.x != 0 || v.y != 0 ) ) {
 		shift = gf_trig_prenorm( &v );
 		gf_trig_pseudo_rotate( &v, angle );
@@ -745,7 +745,7 @@ void gf_mx2d_add_rotation(GF_Matrix2D *_this, Fixed cx, Fixed cy, Fixed angle)
 	gf_mx2d_init(tmp);
 
 	gf_mx2d_add_translation(_this, -cx, -cy);
-	
+
 	tmp.m[0] = gf_cos(angle);
 	tmp.m[4] = tmp.m[0];
 	tmp.m[3] = gf_sin(angle);
@@ -960,7 +960,7 @@ GF_IRect gf_rect_pixelize(GF_Rect *r)
 
 /*adds @rc2 to @rc1 - the new @rc1 contains the old @rc1 and @rc2*/
 GF_EXPORT
-void gf_rect_union(GF_Rect *rc1, GF_Rect *rc2) 
+void gf_rect_union(GF_Rect *rc1, GF_Rect *rc2)
 {
 	if (!rc1->width || !rc1->height) {*rc1=*rc2; return;}
 	if (!rc2->width || !rc2->height) return;
@@ -990,8 +990,8 @@ Bool gf_rect_overlaps(GF_Rect rc1, GF_Rect rc2)
 }
 
 GF_EXPORT
-Bool gf_rect_equal(GF_Rect rc1, GF_Rect rc2) 
-{ 
+Bool gf_rect_equal(GF_Rect rc1, GF_Rect rc2)
+{
 	if ( (rc1.x == rc2.x)  && (rc1.y == rc2.y) && (rc1.width == rc2.width) && (rc1.height == rc2.height) )
 		return GF_TRUE;
 	return GF_FALSE;
@@ -1052,7 +1052,7 @@ Fixed gf_vec_lensq(GF_Vec v)
 		return ( gf_mulfix(v.x, v.x) + gf_mulfix(v.y, v.y) + gf_mulfix(v.z, v.z) ) << 16;
 	}
 	return gf_mulfix(v.x, v.x) + gf_mulfix(v.y, v.y) + gf_mulfix(v.z, v.z);
-	
+
 #endif
 }
 
@@ -1090,7 +1090,7 @@ void gf_vec_norm(GF_Vec *v)
 	gppVec3DNormalize_16_32s((GPP_VEC3D *) &v);
 #else
 	Fixed __res = gf_vec_len(*v);
-	v->x = gf_divfix(v->x, __res); 
+	v->x = gf_divfix(v->x, __res);
 	v->y = gf_divfix(v->y, __res);
 	v->z = gf_divfix(v->z, __res);
 #endif
@@ -1100,8 +1100,8 @@ GF_EXPORT
 GF_Vec gf_vec_scale(GF_Vec v, Fixed f)
 {
 	GF_Vec res;
-	res.x = gf_mulfix(v.x, f); 
-	res.y = gf_mulfix(v.y, f); 
+	res.x = gf_mulfix(v.x, f);
+	res.y = gf_mulfix(v.y, f);
 	res.z = gf_mulfix(v.z, f);
 	return res;
 }
@@ -1158,7 +1158,7 @@ void gf_vec_norm(GF_Vec *v)
 	if (!__res ) return;
 	if (__res == FIX_ONE) return;
 	__res = 1.0f/__res;
-	v->x *= __res; 
+	v->x *= __res;
 	v->y *= __res;
 	v->z *= __res;
 }
@@ -1167,8 +1167,8 @@ GF_EXPORT
 GF_Vec gf_vec_scale(GF_Vec v, Fixed f)
 {
 	GF_Vec res = v;
-	res.x *= f; 
-	res.y *= f; 
+	res.x *= f;
+	res.y *= f;
 	res.z *= f;
 	return res;
 }
@@ -1271,9 +1271,9 @@ void gf_mx_add_scale(GF_Matrix *mat, Fixed sx, Fixed sy, Fixed sz)
 	Fixed tmp[3];
 	u32 i, j;
 
-	tmp[0] = sx; 
-	tmp[1] = sy; 
-	tmp[2] = sz; 
+	tmp[0] = sx;
+	tmp[1] = sy;
+	tmp[2] = sz;
 
 	for (i=0; i<3; i++) {
 		for (j=0; j<3; j++) {
@@ -1292,17 +1292,17 @@ void gf_mx_add_rotation(GF_Matrix *mat, Fixed angle, Fixed x, Fixed y, Fixed z)
 	Fixed sin_a = gf_sin(angle);
 	Fixed icos_a = FIX_ONE - cos_a;
 
-	if (nor && (nor!=FIX_ONE)) { 
-		x = gf_divfix(x, nor); 
-		y = gf_divfix(y, nor); 
-		z = gf_divfix(z, nor); 
+	if (nor && (nor!=FIX_ONE)) {
+		x = gf_divfix(x, nor);
+		y = gf_divfix(y, nor);
+		z = gf_divfix(z, nor);
 	}
 	xx = gf_mulfix(x,x); yy = gf_mulfix(y,y); zz = gf_mulfix(z,z); xy = gf_mulfix(x,y); xz = gf_mulfix(x,z); yz = gf_mulfix(y,z);
 	gf_mx_init(tmp);
     tmp.m[0] = gf_mulfix(icos_a,xx) + cos_a;
     tmp.m[1] = gf_mulfix(xy,icos_a) + gf_mulfix(z,sin_a);
     tmp.m[2] = gf_mulfix(xz,icos_a) - gf_mulfix(y,sin_a);
-    
+
 	tmp.m[4] = gf_mulfix(xy,icos_a) - gf_mulfix(z,sin_a);
     tmp.m[5] = gf_mulfix(icos_a,yy) + cos_a;
     tmp.m[6] = gf_mulfix(yz,icos_a) + gf_mulfix(x,sin_a);
@@ -1469,7 +1469,7 @@ GF_EXPORT
 void gf_mx_lookat(GF_Matrix *mx, GF_Vec eye, GF_Vec center, GF_Vec upVector)
 {
 	GF_Vec f, s, u;
-	
+
 	gf_vec_diff(f, center, eye);
 	gf_vec_norm(&f);
 	gf_vec_norm(&upVector);
@@ -1477,7 +1477,7 @@ void gf_mx_lookat(GF_Matrix *mx, GF_Vec eye, GF_Vec center, GF_Vec upVector)
 	s = gf_vec_cross(f, upVector);
 	u = gf_vec_cross(s, f);
 	gf_mx_init(*mx);
-	
+
 	mx->m[0] = s.x;
 	mx->m[1] = u.x;
 	mx->m[2] = -f.x;
@@ -1501,7 +1501,7 @@ void gf_mx_decompose(GF_Matrix *mx, GF_Vec *translate, GF_Vec *scale, GF_Vec4 *r
 	Fixed locmat[16];
 	GF_Matrix tmp;
 	GF_Vec row0, row1, row2;
-	Fixed shear_xy, shear_xz, shear_yz; 
+	Fixed shear_xy, shear_xz, shear_yz;
 	assert(mx->m[15]);
 
 	memcpy(locmat, mx->m, sizeof(Fixed)*16);
@@ -1562,15 +1562,15 @@ void gf_mx_apply_bbox_sphere(GF_Matrix *mx, GF_BBox *box)
 	gf_mx_apply_vec(mx, &box->min_edge);
 	gf_mx_apply_vec(mx, &box->max_edge);
 
-	if (box->min_edge.x > box->max_edge.x) 
+	if (box->min_edge.x > box->max_edge.x)
 	{
 		var = box->min_edge.x; box->min_edge.x = box->max_edge.x; box->max_edge.x = var;
 	}
-	if (box->min_edge.y > box->max_edge.y) 
+	if (box->min_edge.y > box->max_edge.y)
 	{
 		var = box->min_edge.y; box->min_edge.y = box->max_edge.y; box->max_edge.y = var;
 	}
-	if (box->min_edge.z > box->max_edge.z) 
+	if (box->min_edge.z > box->max_edge.z)
 	{
 		var = box->min_edge.z; box->min_edge.z = box->max_edge.z; box->max_edge.z = var;
 	}
@@ -1692,7 +1692,7 @@ Bool gf_mx_inverse_4x4(GF_Matrix *mx)
 	if (ABS(r2[0]) > ABS(r1[0])) SWAP_ROWS(r2, r1);
 	if (ABS(r1[0]) > ABS(r0[0])) SWAP_ROWS(r1, r0);
 	if (r0[0]==0) return 0;
-	
+
 	/*eliminate first variable*/
 	m1 = gf_divfix(r1[0], r0[0]);
 	m2 = gf_divfix(r2[0], r0[0]);
@@ -1738,7 +1738,7 @@ Bool gf_mx_inverse_4x4(GF_Matrix *mx)
 	if (fabs(r3[1]) > fabs(r2[1])) SWAP_ROWS(r3, r2);
 	if (fabs(r2[1]) > fabs(r1[1])) SWAP_ROWS(r2, r1);
 	if (r1[1]==0) return 0;
-	
+
 	/* eliminate second variable */
 	m2 = gf_divfix(r2[1], r1[1]);
 	m3 = gf_divfix(r3[1], r1[1]);
@@ -1783,14 +1783,14 @@ Bool gf_mx_inverse_4x4(GF_Matrix *mx)
 	r3[5] = gf_mulfix(r3[5], s);
 	r3[6] = gf_mulfix(r3[6], s);
 	r3[7] = gf_mulfix(r3[7], s);
-	
+
 	m2 = r2[3];			/* now back substitute row 2 */
 	s = gf_invfix(r2[2]);
 	r2[4] = gf_mulfix(s, r2[4] - gf_mulfix(r3[4], m2));
 	r2[5] = gf_mulfix(s, r2[5] - gf_mulfix(r3[5], m2));
 	r2[6] = gf_mulfix(s, r2[6] - gf_mulfix(r3[6], m2));
 	r2[7] = gf_mulfix(s, r2[7] - gf_mulfix(r3[7], m2));
-	m1 = r1[3]; 
+	m1 = r1[3];
 	r1[4] -= gf_mulfix(r3[4], m1); r1[5] -= gf_mulfix(r3[5], m1); r1[6] -= gf_mulfix(r3[6], m1); r1[7] -= gf_mulfix(r3[7], m1);
 	m0 = r0[3];
 	r0[4] -= gf_mulfix(r3[4], m0); r0[5] -= gf_mulfix(r3[5], m0); r0[6] -= gf_mulfix(r3[6], m0); r0[7] -= gf_mulfix(r3[7], m0);
@@ -1807,7 +1807,7 @@ Bool gf_mx_inverse_4x4(GF_Matrix *mx)
 	m0 = r0[1];			/* now back substitute row 0 */
 	s = gf_invfix(r0[0]);
 	r0[4] = gf_mulfix(s, r0[4] - gf_mulfix(r1[4], m0));
-	r0[5] = gf_mulfix(s, r0[5] - gf_mulfix(r1[5], m0)); 
+	r0[5] = gf_mulfix(s, r0[5] - gf_mulfix(r1[5], m0));
 	r0[6] = gf_mulfix(s, r0[6] - gf_mulfix(r1[6], m0));
 	r0[7] = gf_mulfix(s, r0[7] - gf_mulfix(r1[7], m0));
 
@@ -1907,7 +1907,7 @@ Bool gf_ray_hit_box(GF_Ray *ray, GF_Vec box_min, GF_Vec box_max, GF_Vec *outPoin
 	Fixed t1, t2, tNEAR=FIX_MIN, tFAR=FIX_MAX;
 	Fixed temp;
 	//s8 xyorz, sign;
-	
+
 	if (ray->dir.x == 0) {
 		if ((ray->orig.x < box_min.x) || (ray->orig.x > box_max.x))
 			return 0;
@@ -1930,7 +1930,7 @@ Bool gf_ray_hit_box(GF_Ray *ray, GF_Vec box_min, GF_Vec box_max, GF_Vec *outPoin
 	}
 
 	if (ray->dir.y == 0) {
-		if ((ray->orig.y < box_min.y) || (ray->orig.y > box_max.y)) 
+		if ((ray->orig.y < box_min.y) || (ray->orig.y > box_max.y))
 			return 0;
 	} else {
 		tNEAR=FIX_MIN;
@@ -1997,7 +1997,7 @@ Bool gf_ray_hit_sphere(GF_Ray *ray, GF_Vec *center, Fixed radius, GF_Vec *outPoi
 	dist = gf_vec_len(radv);
 	center_proj = gf_vec_dot(radv, ray->dir);
 	if (radius + ABS(center_proj) < dist ) return 0;
-	
+
 	center_proj_sq = gf_mulfix(center_proj, center_proj);
 	hcord = center_proj_sq - gf_mulfix(dist, dist) + gf_mulfix(radius , radius);
     if (hcord < 0) return 0;
@@ -2012,7 +2012,7 @@ Bool gf_ray_hit_sphere(GF_Ray *ray, GF_Vec *center, Fixed radius, GF_Vec *outPoi
 
 /*
  *		Tomas M�ller and Ben Trumbore.
- *	 Fast, minimum storage ray-triangle intersection. 
+ *	 Fast, minimum storage ray-triangle intersection.
  *		Journal of graphics tools, 2(1):21-28, 1997
  *
  */

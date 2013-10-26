@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,15 +11,15 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -61,15 +61,15 @@ u32 gf_isom_solve_uuid_box(char *UUID)
 		sprintf(strChar, "%02X", (unsigned char) UUID[i]);
 		strcat(strUUID, strChar);
 	}
-	if (!strnicmp(strUUID, "8974dbce7be74c5184f97148f9882554", 32)) 
+	if (!strnicmp(strUUID, "8974dbce7be74c5184f97148f9882554", 32))
 		return GF_ISOM_BOX_UUID_TENC;
-	if (!strnicmp(strUUID, "D4807EF2CA3946958E5426CB9E46A79F", 32)) 
+	if (!strnicmp(strUUID, "D4807EF2CA3946958E5426CB9E46A79F", 32))
 		return GF_ISOM_BOX_UUID_TFRF;
-	if (!strnicmp(strUUID, "6D1D9B0542D544E680E2141DAFF757B2", 32)) 
+	if (!strnicmp(strUUID, "6D1D9B0542D544E680E2141DAFF757B2", 32))
 		return GF_ISOM_BOX_UUID_TFXD;
-	if (!strnicmp(strUUID, "A2394F525A9B4F14A2446C427C648DF4", 32)) 
+	if (!strnicmp(strUUID, "A2394F525A9B4F14A2446C427C648DF4", 32))
 		return GF_ISOM_BOX_UUID_PSEC;
-	if (!strnicmp(strUUID, "D08A4F1810F34A82B6C832D8ABA183D3", 32)) 
+	if (!strnicmp(strUUID, "D08A4F1810F34A82B6C832D8ABA183D3", 32))
 		return GF_ISOM_BOX_UUID_PSSH;
 	return 0;
 }
@@ -125,7 +125,7 @@ proceed_box:
 		hdr_size += 16;
 		uuid_type = gf_isom_solve_uuid_box(uuid);
 	}
-	
+
 	//handle large box
 	if (size == 1) {
 		size = gf_bs_read_u64(bs);
@@ -154,7 +154,7 @@ proceed_box:
 		((GF_UnknownUUIDBox *)newBox)->internal_4cc = uuid_type;
 	}
 
-	if (!newBox->type) newBox->type = type; 
+	if (!newBox->type) newBox->type = type;
 
 	end = gf_bs_available(bs);
 	if (size - hdr_size > end ) {
@@ -168,9 +168,9 @@ proceed_box:
 		*outBox = newBox;
 		return GF_OK;
 	}
-	
+
 	newBox->size = size - hdr_size;
-	e = gf_isom_box_read(newBox, bs);	
+	e = gf_isom_box_read(newBox, bs);
 	newBox->size = size;
 	end = gf_bs_get_position(bs);
 
@@ -225,7 +225,7 @@ void gf_isom_box_array_del(GF_List *other_boxes)
 	u32 count, i;
 	GF_Box *a;
 	if (!other_boxes) return;
-	count = gf_list_count(other_boxes); 
+	count = gf_list_count(other_boxes);
 	for (i = 0; i < count; i++) {
 		a = (GF_Box *)gf_list_get(other_boxes, i);
 		if (a) gf_isom_box_del(a);
@@ -325,7 +325,7 @@ GF_Err gf_isom_box_write_header(GF_Box *ptr, GF_BitStream *bs)
 
 		gf_bs_write_data(bs, uuid, 16);
 	}
-	if (ptr->size > 0xFFFFFFFF) 
+	if (ptr->size > 0xFFFFFFFF)
 		gf_bs_write_u64(bs, ptr->size);
 	return GF_OK;
 }
@@ -447,8 +447,8 @@ GF_Box *gf_isom_box_new(u32 boxType)
 	case GF_ISOM_BOX_TYPE_TREF: return tref_New();
 	case GF_ISOM_BOX_TYPE_MDIA: return mdia_New();
 
-	case GF_ISOM_BOX_TYPE_FTYP: 
-	case GF_ISOM_BOX_TYPE_STYP: 
+	case GF_ISOM_BOX_TYPE_FTYP:
+	case GF_ISOM_BOX_TYPE_STYP:
         a = ftyp_New();
         if (a) a->type = boxType;
         return a;
@@ -503,7 +503,7 @@ GF_Box *gf_isom_box_new(u32 boxType)
 	case GF_ISOM_BOX_TYPE_TRAF: return traf_New();
 	case GF_ISOM_BOX_TYPE_TFHD: return tfhd_New();
 	case GF_ISOM_BOX_TYPE_TRUN: return trun_New();
-#endif 
+#endif
 
 	/*3GPP boxes*/
 	case GF_ISOM_SUBTYPE_3GP_AMR:
@@ -512,22 +512,22 @@ GF_Box *gf_isom_box_new(u32 boxType)
 	case GF_ISOM_SUBTYPE_3GP_QCELP:
 	case GF_ISOM_SUBTYPE_3GP_SMV:
 		return gppa_New(boxType);
-	case GF_ISOM_SUBTYPE_3GP_H263: 
+	case GF_ISOM_SUBTYPE_3GP_H263:
 		return gppv_New(boxType);
-	case GF_ISOM_BOX_TYPE_DAMR: 
-	case GF_ISOM_BOX_TYPE_DEVC: 
+	case GF_ISOM_BOX_TYPE_DAMR:
+	case GF_ISOM_BOX_TYPE_DEVC:
 	case GF_ISOM_BOX_TYPE_DQCP:
 	case GF_ISOM_BOX_TYPE_DSMV:
 	case GF_ISOM_BOX_TYPE_D263:
 		return gppc_New(boxType);
 
 	/*AVC boxes*/
-	case GF_ISOM_BOX_TYPE_AVCC: 
-	case GF_ISOM_BOX_TYPE_SVCC: 
+	case GF_ISOM_BOX_TYPE_AVCC:
+	case GF_ISOM_BOX_TYPE_SVCC:
 		a = avcc_New();
 		if (a) a->type = boxType;
 		return a;
-	case GF_ISOM_BOX_TYPE_HVCC: 
+	case GF_ISOM_BOX_TYPE_HVCC:
 		return hvcc_New();
 
 	case GF_ISOM_BOX_TYPE_BTRT: return btrt_New();
@@ -580,9 +580,9 @@ GF_Box *gf_isom_box_new(u32 boxType)
 	case GF_ISOM_BOX_UUID_TENC: return piff_tenc_New();
 	case GF_ISOM_BOX_UUID_PSEC: return piff_psec_New();
 	case GF_ISOM_BOX_UUID_PSSH: return piff_pssh_New();
-	case GF_ISOM_BOX_UUID_TFRF: 
-	case GF_ISOM_BOX_UUID_TFXD: 
-	case GF_ISOM_BOX_TYPE_UUID: 
+	case GF_ISOM_BOX_UUID_TFRF:
+	case GF_ISOM_BOX_UUID_TFXD:
+	case GF_ISOM_BOX_TYPE_UUID:
 		return uuid_New();
 
 #ifndef GPAC_DISABLE_ISOM_ADOBE
@@ -595,7 +595,7 @@ GF_Box *gf_isom_box_new(u32 boxType)
 
 	/* Apple extensions */
 	case GF_ISOM_BOX_TYPE_ILST: return ilst_New();
-	
+
 	case GF_ISOM_BOX_TYPE_0xA9NAM:
 	case GF_ISOM_BOX_TYPE_0xA9CMT:
 	case GF_ISOM_BOX_TYPE_0xA9DAY:
@@ -621,14 +621,14 @@ GF_Box *gf_isom_box_new(u32 boxType)
 		return ListItem_New(boxType);
 
 	case GF_ISOM_BOX_TYPE_DATA: return data_New();
-	
+
 	case GF_ISOM_BOX_TYPE_OHDR: return ohdr_New();
 	case GF_ISOM_BOX_TYPE_GRPI: return grpi_New();
 	case GF_ISOM_BOX_TYPE_MDRI: return mdri_New();
 	case GF_ISOM_BOX_TYPE_ODTT: return odtt_New();
 	case GF_ISOM_BOX_TYPE_ODRB: return odrb_New();
 	case GF_ISOM_BOX_TYPE_ODKM: return odkm_New();
-	case GF_ISOM_BOX_TYPE_ODAF: 
+	case GF_ISOM_BOX_TYPE_ODAF:
 		a = iSFM_New();
 		a->type = GF_ISOM_BOX_TYPE_ODAF;
 		return a;
@@ -644,13 +644,13 @@ GF_Box *gf_isom_box_new(u32 boxType)
 	case GF_ISOM_BOX_TYPE_METT:
 		return metx_New(boxType);
 
-	case GF_ISOM_BOX_TYPE_AC3: 
-	case GF_ISOM_BOX_TYPE_EC3: 
+	case GF_ISOM_BOX_TYPE_AC3:
+	case GF_ISOM_BOX_TYPE_EC3:
 		return ac3_New(boxType);
-	case GF_ISOM_BOX_TYPE_DAC3: 
-	case GF_ISOM_BOX_TYPE_DEC3: 
+	case GF_ISOM_BOX_TYPE_DAC3:
+	case GF_ISOM_BOX_TYPE_DEC3:
 		return dac3_New(boxType);
-	
+
 	case GF_ISOM_BOX_TYPE_LSRC: return lsrc_New();
 	case GF_ISOM_BOX_TYPE_LSR1: return lsr1_New();
 
@@ -732,9 +732,9 @@ void gf_isom_box_del(GF_Box *a)
 	case GF_ISOM_BOX_TYPE_IODS: iods_del(a); return;
 	case GF_ISOM_BOX_TYPE_TRAK: trak_del(a); return;
 	case GF_ISOM_BOX_TYPE_MP4S: mp4s_del(a); return;
-	case GF_4CC('2','6','4','b'): 
-	case GF_ISOM_BOX_TYPE_MP4V: 
-		mp4v_del(a); 
+	case GF_4CC('2','6','4','b'):
+	case GF_ISOM_BOX_TYPE_MP4V:
+		mp4v_del(a);
 		return;
 	case GF_ISOM_BOX_TYPE_MP4A: mp4a_del(a); return;
 	case GF_ISOM_BOX_TYPE_GNRM: gnrm_del(a); return;
@@ -764,9 +764,9 @@ void gf_isom_box_del(GF_Box *a)
 	case GF_ISOM_BOX_TYPE_TKHD: tkhd_del(a); return;
 	case GF_ISOM_BOX_TYPE_TREF: tref_del(a); return;
 	case GF_ISOM_BOX_TYPE_MDIA: mdia_del(a); return;
-	case GF_ISOM_BOX_TYPE_FTYP: 
-	case GF_ISOM_BOX_TYPE_STYP: 
-        ftyp_del(a); 
+	case GF_ISOM_BOX_TYPE_FTYP:
+	case GF_ISOM_BOX_TYPE_STYP:
+        ftyp_del(a);
         return;
 	case GF_ISOM_BOX_TYPE_PADB: padb_del(a); return;
 	case GF_ISOM_BOX_TYPE_VOID: void_del(a); return;
@@ -828,24 +828,24 @@ void gf_isom_box_del(GF_Box *a)
 		gppa_del(a);
 		return;
 	case GF_ISOM_SUBTYPE_3GP_H263: gppv_del(a); return;
-	case GF_ISOM_BOX_TYPE_DAMR: 
-	case GF_ISOM_BOX_TYPE_DEVC: 
+	case GF_ISOM_BOX_TYPE_DAMR:
+	case GF_ISOM_BOX_TYPE_DEVC:
 	case GF_ISOM_BOX_TYPE_DQCP:
 	case GF_ISOM_BOX_TYPE_DSMV:
-	case GF_ISOM_BOX_TYPE_D263: 
+	case GF_ISOM_BOX_TYPE_D263:
 		gppc_del(a); return;
 
 	/*AVC boxes*/
-	case GF_ISOM_BOX_TYPE_AVCC: 
-	case GF_ISOM_BOX_TYPE_SVCC: 
+	case GF_ISOM_BOX_TYPE_AVCC:
+	case GF_ISOM_BOX_TYPE_SVCC:
 		avcc_del(a); return;
 	case GF_ISOM_BOX_TYPE_BTRT: btrt_del(a); return;
 	case GF_ISOM_BOX_TYPE_M4DS: m4ds_del(a); return;
-	case GF_ISOM_BOX_TYPE_AVC1: 
-	case GF_ISOM_BOX_TYPE_AVC2: 
-	case GF_ISOM_BOX_TYPE_AVC3: 
-	case GF_ISOM_BOX_TYPE_AVC4: 
-	case GF_ISOM_BOX_TYPE_SVC1: 
+	case GF_ISOM_BOX_TYPE_AVC1:
+	case GF_ISOM_BOX_TYPE_AVC2:
+	case GF_ISOM_BOX_TYPE_AVC3:
+	case GF_ISOM_BOX_TYPE_AVC4:
+	case GF_ISOM_BOX_TYPE_SVC1:
 	case GF_ISOM_BOX_TYPE_HVC1:
 	case GF_ISOM_BOX_TYPE_HEV1:
 		mp4v_del(a); return;
@@ -883,29 +883,29 @@ void gf_isom_box_del(GF_Box *a)
 	case GF_ISOM_BOX_TYPE_SCHM:		schm_del(a); return;
 	case GF_ISOM_BOX_TYPE_SCHI: schi_del(a); return;
 
-	case GF_ISOM_BOX_TYPE_ENCA: 
+	case GF_ISOM_BOX_TYPE_ENCA:
 	case GF_ISOM_BOX_TYPE_ENCV:
 	case GF_ISOM_BOX_TYPE_ENCS:
 		{
 			GF_ProtectionInfoBox *sinf = gf_list_get(((GF_SampleEntryBox *)a)->protections, 0);
 			a->type = sinf->original_format->data_format;
-			gf_isom_box_del(a); 
+			gf_isom_box_del(a);
 		}
 		return;
 	case GF_ISOM_BOX_TYPE_SENC: senc_del(a); return;
 	case GF_ISOM_BOX_TYPE_UUID:
 		switch (((GF_UnknownUUIDBox *)a)->internal_4cc) {
-		case GF_ISOM_BOX_UUID_TENC: 
+		case GF_ISOM_BOX_UUID_TENC:
 			piff_tenc_del(a);
-			return; 
-		case GF_ISOM_BOX_UUID_PSEC: 
+			return;
+		case GF_ISOM_BOX_UUID_PSEC:
 			piff_psec_del(a);
-			return; 
-		case GF_ISOM_BOX_UUID_PSSH: 
+			return;
+		case GF_ISOM_BOX_UUID_PSSH:
 			piff_pssh_del(a);
-			return; 
-		case GF_ISOM_BOX_UUID_TFRF: 
-		case GF_ISOM_BOX_UUID_TFXD: 
+			return;
+		case GF_ISOM_BOX_UUID_TFRF:
+		case GF_ISOM_BOX_UUID_TFXD:
 		default:
 			uuid_del(a);
 			return;
@@ -922,7 +922,7 @@ void gf_isom_box_del(GF_Box *a)
 
 	/* Apple extensions */
 	case GF_ISOM_BOX_TYPE_ILST: ilst_del(a); return;
-	
+
 	case GF_ISOM_BOX_TYPE_0xA9NAM:
 	case GF_ISOM_BOX_TYPE_0xA9CMT:
 	case GF_ISOM_BOX_TYPE_0xA9DAY:
@@ -1057,8 +1057,8 @@ GF_Err gf_isom_box_read(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_TREF: return tref_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_MDIA: return mdia_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_CHPL: return chpl_Read(a, bs);
-	case GF_ISOM_BOX_TYPE_FTYP: 
-	case GF_ISOM_BOX_TYPE_STYP: 
+	case GF_ISOM_BOX_TYPE_FTYP:
+	case GF_ISOM_BOX_TYPE_STYP:
         return ftyp_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_PADB: return padb_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_VOID: return void_Read(a, bs);
@@ -1098,7 +1098,7 @@ GF_Err gf_isom_box_read(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_PAYT: return payt_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_NAME: return name_Read(a, bs);
 #endif /*GPAC_DISABLE_ISOM_HINTING*/
-	
+
 #ifndef	GPAC_DISABLE_ISOM_FRAGMENTS
 	case GF_ISOM_BOX_TYPE_MVEX: return mvex_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_MEHD: return mehd_Read(a, bs);
@@ -1110,7 +1110,7 @@ GF_Err gf_isom_box_read(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_TFDT: return tfdt_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_TRUN: return trun_Read(a, bs);
 #endif
-	
+
 
 	/*3GPP boxes*/
 	case GF_ISOM_SUBTYPE_3GP_AMR:
@@ -1121,26 +1121,26 @@ GF_Err gf_isom_box_read(GF_Box *a, GF_BitStream *bs)
 		return gppa_Read(a, bs);
 	case GF_ISOM_SUBTYPE_3GP_H263: return gppv_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_DAMR:
-	case GF_ISOM_BOX_TYPE_DEVC: 
+	case GF_ISOM_BOX_TYPE_DEVC:
 	case GF_ISOM_BOX_TYPE_DQCP:
 	case GF_ISOM_BOX_TYPE_DSMV:
 	case GF_ISOM_BOX_TYPE_D263:
 		return gppc_Read(a, bs);
 
-	case GF_ISOM_BOX_TYPE_AVCC: 
-	case GF_ISOM_BOX_TYPE_SVCC: 
+	case GF_ISOM_BOX_TYPE_AVCC:
+	case GF_ISOM_BOX_TYPE_SVCC:
 		return avcc_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_BTRT: return btrt_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_M4DS: return m4ds_Read(a, bs);
-	case GF_ISOM_BOX_TYPE_AVC1: 
-	case GF_ISOM_BOX_TYPE_AVC2: 
-	case GF_ISOM_BOX_TYPE_AVC3: 
-	case GF_ISOM_BOX_TYPE_AVC4: 
-	case GF_ISOM_BOX_TYPE_SVC1: 
+	case GF_ISOM_BOX_TYPE_AVC1:
+	case GF_ISOM_BOX_TYPE_AVC2:
+	case GF_ISOM_BOX_TYPE_AVC3:
+	case GF_ISOM_BOX_TYPE_AVC4:
+	case GF_ISOM_BOX_TYPE_SVC1:
 	case GF_ISOM_BOX_TYPE_HVC1:
 	case GF_ISOM_BOX_TYPE_HEV1:
 		return mp4v_Read(a, bs);
-	case GF_ISOM_BOX_TYPE_HVCC: 
+	case GF_ISOM_BOX_TYPE_HVCC:
 		return hvcc_Read(a, bs);
 
 	/*3GPP streaming text*/
@@ -1178,13 +1178,13 @@ GF_Err gf_isom_box_read(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_ENCV: return mp4v_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_ENCS: return mp4s_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_SENC: return senc_Read(a, bs);
-	case GF_ISOM_BOX_TYPE_UUID: 
+	case GF_ISOM_BOX_TYPE_UUID:
 		switch (((GF_UnknownUUIDBox *)a)->internal_4cc) {
-		case GF_ISOM_BOX_UUID_TENC: return piff_tenc_Read(a, bs); 
+		case GF_ISOM_BOX_UUID_TENC: return piff_tenc_Read(a, bs);
 		case GF_ISOM_BOX_UUID_PSEC: return piff_psec_Read(a, bs);
 		case GF_ISOM_BOX_UUID_PSSH: return piff_pssh_Read(a, bs);
-		case GF_ISOM_BOX_UUID_TFRF: 
-		case GF_ISOM_BOX_UUID_TFXD: 
+		case GF_ISOM_BOX_UUID_TFRF:
+		case GF_ISOM_BOX_UUID_TFXD:
 		default:
 			return uuid_Read(a, bs);
 		}
@@ -1245,13 +1245,13 @@ GF_Err gf_isom_box_read(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_DIMC: return dimC_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_DIST: return diST_Read(a, bs);
 
-	case GF_ISOM_BOX_TYPE_AC3: return ac3_Read(a, bs); 
-	case GF_ISOM_BOX_TYPE_DAC3: return dac3_Read(a, bs); 
+	case GF_ISOM_BOX_TYPE_AC3: return ac3_Read(a, bs);
+	case GF_ISOM_BOX_TYPE_DAC3: return dac3_Read(a, bs);
 
-	case GF_ISOM_BOX_TYPE_LSRC: return lsrc_Read(a, bs); 
-	case GF_ISOM_BOX_TYPE_LSR1: return lsr1_Read(a, bs); 
+	case GF_ISOM_BOX_TYPE_LSRC: return lsrc_Read(a, bs);
+	case GF_ISOM_BOX_TYPE_LSR1: return lsr1_Read(a, bs);
 
-	case GF_ISOM_BOX_TYPE_SIDX: return sidx_Read(a, bs); 
+	case GF_ISOM_BOX_TYPE_SIDX: return sidx_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_SUBS: return subs_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_RVCC: return rvcc_Read(a, bs);
 	case GF_ISOM_BOX_TYPE_PCRB: return pcrb_Read(a, bs);
@@ -1335,8 +1335,8 @@ GF_Err gf_isom_box_write_listing(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_TKHD: return tkhd_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_TREF: return tref_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_MDIA: return mdia_Write(a, bs);
-	case GF_ISOM_BOX_TYPE_FTYP: 
-	case GF_ISOM_BOX_TYPE_STYP: 
+	case GF_ISOM_BOX_TYPE_FTYP:
+	case GF_ISOM_BOX_TYPE_STYP:
         return ftyp_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_PADB: return padb_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_VOID: return void_Write(a, bs);
@@ -1385,9 +1385,9 @@ GF_Err gf_isom_box_write_listing(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_MFHD: return mfhd_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_TRAF: return traf_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_TFHD: return tfhd_Write(a, bs);
-	case GF_ISOM_BOX_TYPE_TFDT: return tfdt_Write(a, bs); 
+	case GF_ISOM_BOX_TYPE_TFDT: return tfdt_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_TRUN: return trun_Write(a, bs);
-#endif 
+#endif
 
 	/*3GPP boxes*/
 	case GF_ISOM_SUBTYPE_3GP_AMR:
@@ -1396,27 +1396,27 @@ GF_Err gf_isom_box_write_listing(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_SUBTYPE_3GP_QCELP:
 	case GF_ISOM_SUBTYPE_3GP_SMV:
 		return gppa_Write(a, bs);
-	case GF_ISOM_SUBTYPE_3GP_H263: 
+	case GF_ISOM_SUBTYPE_3GP_H263:
 		return gppv_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_DAMR:
-	case GF_ISOM_BOX_TYPE_DEVC: 
+	case GF_ISOM_BOX_TYPE_DEVC:
 	case GF_ISOM_BOX_TYPE_DQCP:
 	case GF_ISOM_BOX_TYPE_DSMV:
 	case GF_ISOM_BOX_TYPE_D263:
 		return gppc_Write(a, bs);
 
-	case GF_ISOM_BOX_TYPE_AVCC: 
-	case GF_ISOM_BOX_TYPE_SVCC: 
+	case GF_ISOM_BOX_TYPE_AVCC:
+	case GF_ISOM_BOX_TYPE_SVCC:
 		return avcc_Write(a, bs);
-	case GF_ISOM_BOX_TYPE_HVCC: 
+	case GF_ISOM_BOX_TYPE_HVCC:
 		return hvcc_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_BTRT: return btrt_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_M4DS: return m4ds_Write(a, bs);
-	case GF_ISOM_BOX_TYPE_AVC1: 
-	case GF_ISOM_BOX_TYPE_AVC2: 
-	case GF_ISOM_BOX_TYPE_AVC3: 
-	case GF_ISOM_BOX_TYPE_AVC4: 
-	case GF_ISOM_BOX_TYPE_SVC1: 
+	case GF_ISOM_BOX_TYPE_AVC1:
+	case GF_ISOM_BOX_TYPE_AVC2:
+	case GF_ISOM_BOX_TYPE_AVC3:
+	case GF_ISOM_BOX_TYPE_AVC4:
+	case GF_ISOM_BOX_TYPE_SVC1:
 	case GF_ISOM_BOX_TYPE_HVC1:
 	case GF_ISOM_BOX_TYPE_HEV1:
 		return mp4v_Write(a, bs);
@@ -1434,7 +1434,7 @@ GF_Err gf_isom_box_write_listing(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_TBOX: return tbox_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_BLNK: return blnk_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_TWRP: return twrp_Write(a, bs);
-	
+
 	/* ISMA 1.0 Encryption and Authentication V 1.0 */
 	case GF_ISOM_BOX_TYPE_IKMS: return iKMS_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_ISFM: return iSFM_Write(a, bs);
@@ -1458,13 +1458,13 @@ GF_Err gf_isom_box_write_listing(GF_Box *a, GF_BitStream *bs)
 
 	case GF_ISOM_BOX_TYPE_SENC: return senc_Write(a, bs);
 
-	case GF_ISOM_BOX_TYPE_UUID: 
+	case GF_ISOM_BOX_TYPE_UUID:
 		switch ( ((GF_UnknownUUIDBox *)a)->internal_4cc) {
 		case GF_ISOM_BOX_UUID_TENC: return piff_tenc_Write(a, bs);
 		case GF_ISOM_BOX_UUID_PSEC: return piff_psec_Write(a, bs);
 		case GF_ISOM_BOX_UUID_PSSH: return piff_pssh_Write(a, bs);
-		case GF_ISOM_BOX_UUID_TFRF: 
-		case GF_ISOM_BOX_UUID_TFXD: 
+		case GF_ISOM_BOX_UUID_TFRF:
+		case GF_ISOM_BOX_UUID_TFXD:
 		default:
 			return uuid_Write(a, bs);
 		}
@@ -1525,16 +1525,16 @@ GF_Err gf_isom_box_write_listing(GF_Box *a, GF_BitStream *bs)
 	case GF_ISOM_BOX_TYPE_DIMC: return dimC_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_DIST: return diST_Write(a, bs);
 
-	case GF_ISOM_BOX_TYPE_AC3: return ac3_Write(a, bs); 
-	case GF_ISOM_BOX_TYPE_DAC3: return dac3_Write(a, bs); 
+	case GF_ISOM_BOX_TYPE_AC3: return ac3_Write(a, bs);
+	case GF_ISOM_BOX_TYPE_DAC3: return dac3_Write(a, bs);
 
-	case GF_ISOM_BOX_TYPE_LSRC: return lsrc_Write(a, bs); 
-	case GF_ISOM_BOX_TYPE_LSR1: return lsr1_Write(a, bs); 
+	case GF_ISOM_BOX_TYPE_LSRC: return lsrc_Write(a, bs);
+	case GF_ISOM_BOX_TYPE_LSR1: return lsr1_Write(a, bs);
 
-	case GF_ISOM_BOX_TYPE_SIDX: return sidx_Write(a, bs); 
-	case GF_ISOM_BOX_TYPE_PCRB: return pcrb_Write(a, bs); 
+	case GF_ISOM_BOX_TYPE_SIDX: return sidx_Write(a, bs);
+	case GF_ISOM_BOX_TYPE_PCRB: return pcrb_Write(a, bs);
 	case GF_ISOM_BOX_TYPE_SUBS: return subs_Write(a, bs);
-	case GF_ISOM_BOX_TYPE_RVCC: return rvcc_Write(a, bs); 
+	case GF_ISOM_BOX_TYPE_RVCC: return rvcc_Write(a, bs);
 
 #ifndef GPAC_DISABLE_TTXT
 	case GF_ISOM_BOX_TYPE_STSE: return stse_Write(a, bs);
@@ -1623,8 +1623,8 @@ static GF_Err gf_isom_box_size_listing(GF_Box *a)
 	case GF_ISOM_BOX_TYPE_TKHD: return tkhd_Size(a);
 	case GF_ISOM_BOX_TYPE_TREF: return tref_Size(a);
 	case GF_ISOM_BOX_TYPE_MDIA: return mdia_Size(a);
-	case GF_ISOM_BOX_TYPE_FTYP: 
-	case GF_ISOM_BOX_TYPE_STYP: 
+	case GF_ISOM_BOX_TYPE_FTYP:
+	case GF_ISOM_BOX_TYPE_STYP:
         return ftyp_Size(a);
 	case GF_ISOM_BOX_TYPE_PADB: return padb_Size(a);
 	case GF_ISOM_BOX_TYPE_VOID: return void_Size(a);
@@ -1677,7 +1677,7 @@ static GF_Err gf_isom_box_size_listing(GF_Box *a)
 	case GF_ISOM_BOX_TYPE_TFDT: return tfdt_Size(a);
 	case GF_ISOM_BOX_TYPE_TRUN: return trun_Size(a);
 #endif
-	
+
 	/*3GPP boxes*/
 	case GF_ISOM_SUBTYPE_3GP_AMR:
 	case GF_ISOM_SUBTYPE_3GP_AMR_WB:
@@ -1687,24 +1687,24 @@ static GF_Err gf_isom_box_size_listing(GF_Box *a)
 		return gppa_Size(a);
 	case GF_ISOM_SUBTYPE_3GP_H263: return gppv_Size(a);
 	case GF_ISOM_BOX_TYPE_DAMR:
-	case GF_ISOM_BOX_TYPE_DEVC: 
+	case GF_ISOM_BOX_TYPE_DEVC:
 	case GF_ISOM_BOX_TYPE_DQCP:
 	case GF_ISOM_BOX_TYPE_DSMV:
 	case GF_ISOM_BOX_TYPE_D263:
 		return gppc_Size(a);
 
-	case GF_ISOM_BOX_TYPE_AVCC: 
-	case GF_ISOM_BOX_TYPE_SVCC: 
+	case GF_ISOM_BOX_TYPE_AVCC:
+	case GF_ISOM_BOX_TYPE_SVCC:
 		return avcc_Size(a);
-	case GF_ISOM_BOX_TYPE_HVCC: 
+	case GF_ISOM_BOX_TYPE_HVCC:
 		return hvcc_Size(a);
 	case GF_ISOM_BOX_TYPE_BTRT: return btrt_Size(a);
 	case GF_ISOM_BOX_TYPE_M4DS: return m4ds_Size(a);
-	case GF_ISOM_BOX_TYPE_AVC1: 
-	case GF_ISOM_BOX_TYPE_AVC2: 
-	case GF_ISOM_BOX_TYPE_AVC3: 
-	case GF_ISOM_BOX_TYPE_AVC4: 
-	case GF_ISOM_BOX_TYPE_SVC1: 
+	case GF_ISOM_BOX_TYPE_AVC1:
+	case GF_ISOM_BOX_TYPE_AVC2:
+	case GF_ISOM_BOX_TYPE_AVC3:
+	case GF_ISOM_BOX_TYPE_AVC4:
+	case GF_ISOM_BOX_TYPE_SVC1:
 	case GF_ISOM_BOX_TYPE_HVC1:
 	case GF_ISOM_BOX_TYPE_HEV1:
 		return mp4v_Size(a);
@@ -1749,8 +1749,8 @@ static GF_Err gf_isom_box_size_listing(GF_Box *a)
 		case GF_ISOM_BOX_UUID_TENC: return piff_tenc_Size(a);
 		case GF_ISOM_BOX_UUID_PSEC: return piff_psec_Size(a);
 		case GF_ISOM_BOX_UUID_PSSH: return piff_pssh_Size(a);
-		case GF_ISOM_BOX_UUID_TFRF: 
-		case GF_ISOM_BOX_UUID_TFXD: 
+		case GF_ISOM_BOX_UUID_TFRF:
+		case GF_ISOM_BOX_UUID_TFXD:
 		default:
 			return uuid_Size(a);
 		}
@@ -1811,14 +1811,14 @@ static GF_Err gf_isom_box_size_listing(GF_Box *a)
 	case GF_ISOM_BOX_TYPE_DIMC: return dimC_Size(a);
 	case GF_ISOM_BOX_TYPE_DIST: return diST_Size(a);
 
-	case GF_ISOM_BOX_TYPE_AC3: return ac3_Size(a); 
-	case GF_ISOM_BOX_TYPE_DAC3: return dac3_Size(a); 
+	case GF_ISOM_BOX_TYPE_AC3: return ac3_Size(a);
+	case GF_ISOM_BOX_TYPE_DAC3: return dac3_Size(a);
 
-	case GF_ISOM_BOX_TYPE_LSRC: return lsrc_Size(a); 
-	case GF_ISOM_BOX_TYPE_LSR1: return lsr1_Size(a); 
+	case GF_ISOM_BOX_TYPE_LSRC: return lsrc_Size(a);
+	case GF_ISOM_BOX_TYPE_LSR1: return lsr1_Size(a);
 
-	case GF_ISOM_BOX_TYPE_SIDX: return sidx_Size(a); 
-	case GF_ISOM_BOX_TYPE_PCRB: return pcrb_Size(a); 
+	case GF_ISOM_BOX_TYPE_SIDX: return sidx_Size(a);
+	case GF_ISOM_BOX_TYPE_PCRB: return pcrb_Size(a);
 	case GF_ISOM_BOX_TYPE_SUBS: return subs_Size(a);
 	case GF_ISOM_BOX_TYPE_RVCC: return rvcc_Size(a);
 
@@ -1852,6 +1852,6 @@ GF_Err gf_isom_box_size(GF_Box *a)
 	return GF_OK;
 }
 
-#endif /*GPAC_DISABLE_ISOM_WRITE*/ 
+#endif /*GPAC_DISABLE_ISOM_WRITE*/
 
 #endif /*GPAC_DISABLE_ISOM*/

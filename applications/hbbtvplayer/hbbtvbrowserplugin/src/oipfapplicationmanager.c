@@ -5,17 +5,17 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
- *		Authors:    Stanislas Selle		
- *				
+ *		Authors:    Stanislas Selle
+ *
  */
 #include "oipfapplicationmanager.h"
 #include "applicationclass.h"
@@ -77,13 +77,13 @@ NPObject *          OAM_Allocate(NPP npp, NPClass *theClass)
 {
     TRACEINFO;
 
-	
+
     if (!v_bOAMIdentifiersInitialized)
     {
         v_bOAMIdentifiersInitialized = true;
         OAMinitializeIdentifiers();
     }
-    
+
     NPObj_OAM* newapplicationmanager = (NPObj_OAM*)MEMALLOC(sizeof(NPObj_OAM));
 	fprintf(stderr, "\t%s : Allocation at \x1b[%i;3%im%p\n\x1b[0m ",__FUNCTION__, 1, 1, newapplicationmanager );
     newapplicationmanager->npp = npp;
@@ -96,7 +96,7 @@ NPObject *          OAM_Allocate(NPP npp, NPClass *theClass)
 {
     TRACEINFO;
     NPObj_OAM* oamobj = (NPObj_OAM*)obj;
-    sBrowserFuncs->releaseobject(oamobj->ownerApplication);    
+    sBrowserFuncs->releaseobject(oamobj->ownerApplication);
     MEMFREE(oamobj);
     return;
 }
@@ -122,7 +122,7 @@ NPObject *          OAM_Allocate(NPP npp, NPClass *theClass)
         }
         i++;
     }
-	
+
     return result;
 }
 
@@ -138,7 +138,7 @@ bool        OAM_Invoke(NPObject* obj, NPIdentifier name, const NPVariant* args, 
     }
     else
     {
-        
+
         fctresult = false;
     }
     return fctresult;
@@ -165,7 +165,7 @@ bool        OAM_Invoke(NPObject* obj, NPIdentifier name, const NPVariant* args, 
         }
         i++;
     }
-   
+
     return result;
 }
 
@@ -199,5 +199,5 @@ void 		OAM_ObjectMain_Invoke_GetOwnerApplication(NPObj_OAM* obj,const NPVariant*
 {
 	TRACEINFO;
 	sBrowserFuncs->retainobject(obj->ownerApplication);
-	OBJECT_TO_NPVARIANT((NPObject*)(obj->ownerApplication), *result);	
+	OBJECT_TO_NPVARIANT((NPObject*)(obj->ownerApplication), *result);
 }

@@ -22,7 +22,7 @@ endif
 #common obj
 OBJS=directfb_out.o directfb_wrapper.o
 
-SRCS := $(OBJS:.o=.c) 
+SRCS := $(OBJS:.o=.c)
 
 LIB=gm_directfb_out.$(DYN_LIB_SUFFIX)
 
@@ -33,13 +33,13 @@ all: $(LIB)
 $(LIB): $(OBJS)
 	$(CC) $(SHFLAGS) -o ../../bin/gcc/$@ $(OBJS) $(LDFLAGS) -L../../bin/gcc -lgpac
 
-clean: 
+clean:
 	rm -f $(OBJS) ../../bin/gcc/$(LIB)
 
 dep: depend
 
 depend:
-	rm -f .depend	
+	rm -f .depend
 	$(CC) -MM $(CFLAGS) $(SRCS) 1>.depend
 
 distclean: clean

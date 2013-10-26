@@ -162,7 +162,7 @@ int dc_video_encoder_open(VideoOutputFile *video_output_file, VideoDataConf *vid
 //		video_stream->codec->flags |= CODEC_FLAG_GLOBAL_HEADER;
 
 	video_output_file->vstream_idx = 0;//video_stream->index;
-	
+
 	/* open the video codec - options are passed thru video_output_file->codec_ctx->priv_data */
 	if (avcodec_open2(video_output_file->codec_ctx, video_output_file->codec, NULL) < 0) {
 		fprintf(stderr, "Cannot open output video codec\n");
@@ -206,8 +206,8 @@ int dc_video_encoder_encode(VideoOutputFile *video_output_file, VideoScaledData 
 	 */
 	if (!video_output_file->use_source_timing) {
 		video_data_node->vframe->pts = video_codec_ctx->frame_number;
-	}	
-	
+	}
+
 	/* Encoding video */
 	{
 		int got_packet = 0;
@@ -223,7 +223,7 @@ int dc_video_encoder_encode(VideoOutputFile *video_output_file, VideoScaledData 
 #endif
 		if (video_output_file->encoded_frame_size >= 0) {
 			video_output_file->encoded_frame_size = pkt.size;
-			if (got_packet) {	
+			if (got_packet) {
 				video_codec_ctx->coded_frame->pts = pkt.pts;
 				video_codec_ctx->coded_frame->pkt_dts = pkt.dts;
 				video_codec_ctx->coded_frame->key_frame = !!(pkt.flags & AV_PKT_FLAG_KEY);

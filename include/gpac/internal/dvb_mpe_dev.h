@@ -228,7 +228,7 @@ void gf_m2ts_gather_ipdatagram_information(MPE_FEC_FRAME *mff,GF_M2TS_Demuxer *t
 
 void socket_simu(GF_M2TS_IP_Packet *ip_packet, GF_M2TS_Demuxer *ts, Bool yield);
 
-void gf_m2ts_mpe_send_datagram(GF_M2TS_Demuxer *ts, u32 pid, unsigned char *data, u32 data_size);			
+void gf_m2ts_mpe_send_datagram(GF_M2TS_Demuxer *ts, u32 pid, unsigned char *data, u32 data_size);
 
 /* allocate the necessary memory space*/
 u32 init_frame(MPE_FEC_FRAME * mff, u32 rows);

@@ -1,7 +1,7 @@
 /*
  *			GPAC - Multimedia Framework C SDK
  *
- *			Authors: Jean Le Feuvre 
+ *			Authors: Jean Le Feuvre
  *			Copyright (c) Telecom ParisTech 2000-2012
  *					All rights reserved
  *
@@ -11,22 +11,22 @@
  *  it under the terms of the GNU Lesser General Public License as published by
  *  the Free Software Foundation; either version 2, or (at your option)
  *  any later version.
- *   
+ *
  *  GPAC is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
- *   
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; see the file COPYING.  If not, write to
- *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA. 
+ *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
 #include "dx_hw.h"
 
 
-static u32 get_yuv_base(u32 in_pf) 
+static u32 get_yuv_base(u32 in_pf)
 {
 	switch (in_pf) {
 	case GF_PIXEL_I420:
@@ -118,7 +118,7 @@ static void write_yv12_to_yuv(GF_VideoSurface *vs,  unsigned char *pY, u32 src_s
 
 			src = pY;
 			dst = vs->video_buffer;
-			
+
 			src2 = (vs->pixel_format != GF_PIXEL_YV12) ? pU : pV;
 			dst2 = vs->video_buffer + vs->pitch_y * vs->height;
 			src3 = (vs->pixel_format != GF_PIXEL_YV12) ? pV : pU;
@@ -273,7 +273,7 @@ static void write_yvyu_to_yuv(GF_VideoSurface *vs,  unsigned char *src, u32 src_
 		}
 		return;
 	}
-	
+
 	if (get_yuv_base(src_pf) == get_yuv_base(vs->pixel_format)) {
 		u32 i;
 		for (i=0; i<src_wnd->h; i++) {
@@ -403,7 +403,7 @@ void rgb_to_555(GF_VideoSurface *vs, unsigned char *src, u32 src_stride, u32 src
 			}
 		}
 		break;
-	}	
+	}
 }
 
 void rgb_to_565(GF_VideoSurface *vs, unsigned char *src, u32 src_stride, u32 src_w, u32 src_h, u32 src_pf, const GF_Window *src_wnd)
@@ -582,7 +582,7 @@ void dx_copy_pixels(GF_VideoSurface *dst_s, const GF_VideoSurface *src_s, const 
 			return;
 		}
 	}
-	
+
 	gf_stretch_bits(dst_s, (GF_VideoSurface*) src_s, NULL, (GF_Window *)src_wnd, 0xFF, 0, NULL, NULL);
 }
 
